@@ -1,0 +1,19 @@
+$fontSize : 20px; //數值
+$fontFamily : 'Gill Sans','Gill Sans MT',Calibri,'Trebuchet MS',sans-serif; //字串
+
+$h1 : 40px;
+$h2 : 36px;
+$h3 : 30px;
+$h4 : 26px;
+
+//標題文字大小
+$title : (
+  body : 16px,
+  span : 18px,
+  h1 : 45,
+  h2 : 40,
+  h3 : 36,
+  h4 : 30,
+  h5 : 24,
+  '.box' : 40
+);  // map 

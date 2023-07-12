@@ -1,19 +1,15 @@
 <template>
   <div class="home">
-    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <HelloWorld :sctionTitle="title" sectionBg="grayGreen"/>
-    <HelloWorld sctionTitle="Welcome to Your Vue.js App"  sectionBg="gray"/>
-    <HelloWorld sctionTitle="sction 2" sectionBg="red"/>
+    home
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+// import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   components: {
-    HelloWorld
   },
   created() {
     fetch('https://api.json-generator.com/templates/GW6mr0Of9PaC/data', {

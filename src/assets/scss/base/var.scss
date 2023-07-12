@@ -1,0 +1,86 @@
+//變數
+
+
+$color : #333; //color 
+$margin : 10px 20px; // list
+// $padding : null; // null
+
+.box_default {
+   @if $color {
+      // true
+      color: $color
+   }
+
+   @else {
+      color: null
+   }
+
+   width: 100px;
+   height: 100px;
+}
+
+// map 
+$map : (key : value,
+   h1 : 40px,
+   h2 : 36px,
+   h3 : 30px);
+
+
+   //變數作用域
+
+$a : 60px;
+$a : 30px !default;
+
+$class : '.fgw';
+
+// 變數轉型 
+$file : 'images';
+
+//斷點變數
+$desktop : 1200px;
+$medium : 1100px;
+$small : 760px;
+
+
+// layout
+//如果是滿版100 / 固定寬 1200px
+
+$layoutWidth :1400px ;
+
+
+// @for $i from 1 through 10 {
+//     .spacing#{$i} {
+//       margin-top: $i * 4px;
+//     }
+// }
+
+
+@mixin space($num){
+      margin-top: $num * 3px;
+}
+
+
+.card {
+   padding: 10px 8px;
+   border: 1px solid #333;
+   border-radius: 10px;
+   width: 100%;
+   .img {
+        width: 100%;
+        height: 300px;
+        margin: 0 auto;
+   } 
+   h2 {
+      @include space(2) 
+   }
+   .content{
+         @include space(1)
+   }
+
+}
+
+
+
+
+
+

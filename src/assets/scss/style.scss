@@ -1,0 +1,30 @@
+// sass 註解
+/*css 註解*/
+//base
+@import 'base/var';
+@import 'base/color';
+@import 'base/font';
+
+// mixin
+@import 'mixin/all';
+
+// plugin 
+// @import '../node_modules/bootstrap/scss/bootstrap';
+
+//組件
+@import 'component/btn';
+@import 'component/grid';
+@import 'component/slider';
+@import 'component/form';
+
+// layout
+@import 'layout/cart';
+@import 'layout/footer';
+@import 'layout/header';
+@import 'layout/login';
+@import 'layout/nav';
+@import 'layout/title';
+
+// page
+@import 'page/index';
+@import 'page/about';

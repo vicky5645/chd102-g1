@@ -1,0 +1,169 @@
+@mixin name() {
+    // 屬性or 組件
+}
+
+@include name();
+
+@mixin rect($w, $h:$w) {
+    width: $w;
+    height: $h;
+}
+
+.box {
+    @include rect(1000px, 200px);
+    background-color: #fff;
+}
+
+.cardbox {
+    @include rect(200px, 40px);
+    background-color: #f20;
+}
+
+
+
+// layout 
+
+// 
+@mixin layout($w) {
+        @if $w == 100 {
+            width: 100%;
+            @content;
+        }
+        @else {
+            width: 100%;
+            max-width: $w + px;
+            margin: auto;
+            @content;
+        }
+}
+
+//rwd mixin
+
+@mixin t(){
+    @media all and (max-width: $medium) {
+        @content;
+    }
+}
+
+@mixin m(){
+    @media all and (max-width: $small) {
+        @content;
+    }
+}
+
+//LOOP
+
+@for $i from 1 through 6 {
+    .title_h#{$i} {
+        font-size: $i * 10px;
+    } 
+   
+} 
+
+
+// space 
+
+@mixin push($num , $dir){
+    @for $i from 1 through $num{
+        .#{$dir}-#{$i} {
+            position: relative;
+            #{$dir}: $i + px;
+        } 
+    }
+}
+
+
+@mixin grid($num , $breakpoint:null){
+    @for $i from 1 through $num {
+        @if $breakpoint == null {
+        .col-#{$i} {
+         width: ($i / 12) * 100%;
+          }
+        }
+        @else {
+         .col-#{$breakpoint}-#{$i} {
+            width: ($i / 12) * 100%;
+         }
+        }
+    }
+}
+
+
+  @mixin grid($num , $breakpoint:null){
+    @for $i from 1 through $num {
+        @if $breakpoint == null {
+      .col-#{$i} {
+         width: ($i / $num) * 100%;
+         background-color: $colbg;
+      }
+        }
+        @else {
+         .col-#{$breakpoint}-#{$i} {
+            width: ($i / $num) * 100%;
+            background-color: $colbg;
+         }
+        }
+    }
+}
+
+//背景圖片
+
+@mixin bgimage($img) {
+    @each $i in $img {
+       .bg-slider-#{$i} {
+          background-image: url('images/#{$i}.jpg');
+          background-size: cover;
+          width: 100%;
+       }
+    }
+ }
+
+
+//標題文字
+ @mixin title($title){
+    @each $k , $v in $title {
+       #{$k} {
+          font-size: $v + px;
+       }
+     }
+ }
+
+
+ //顏色
+ @each $k , $v in $bgColor {
+    .#{$k} {
+       background-color: $v;
+    }
+}
+
+ 
+
+
+
+
+
+
+// @include push(100 , top);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

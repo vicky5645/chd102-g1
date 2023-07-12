@@ -10,6 +10,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import '@/assets/scss/footer.scss';
-</style>
+<style lang="scss"></style>

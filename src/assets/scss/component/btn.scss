@@ -1,0 +1,43 @@
+.btn {
+    padding: 8px 20px;
+    text-align: center;
+    font-size: $fontSize;
+    font-family: $fontFamily;
+    max-width: 300px;
+    cursor: pointer;
+    // background-color: #e1e1e1;
+    &.primary {
+        background-color: #30abf7;
+        transition: cubic-bezier(0.39, 0.575, 0.565, 1);
+        &:hover {
+          background-color: darken(#30abf7, 20);
+
+        }
+    }
+    &.secondary {
+         background-color: #afafaf;
+         &:hover {
+            background-color: darken(#afafaf, 20);
+  
+          }
+    }
+    &.error {
+       background-color: #f14242;
+       color : #fff;
+       &:hover {
+        background-color: darken(#f14242, 20);
+
+      }
+       
+    }
+    &.radius {
+      border-radius: 10px;
+    }
+    &.round {
+      border-radius: 30px;  
+    }
+}
+
+
+
+
