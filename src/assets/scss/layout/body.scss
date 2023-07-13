@@ -1,0 +1,57 @@
+body {
+  //$margin : 0px; //區域變數
+  margin: $margin;
+  padding: null; // null 屬性被刪出
+  color: $color;
+  font-family: $fontFamily;
+  background-color: $bodyBgColor;
+  h1 {
+      font-size: 50px;
+      @include t(){
+         font-size: 36px;
+         color: #f20;
+       }
+      @include m(){
+         font-size: 60px;
+         color: #19cef6
+
+      } 
+  }
+}
+
+.wrapper {
+//桌機
+@include layout(1200);
+// 平板
+@include t(){
+  @include layout(800);
+}
+
+//手機 
+
+@include m(){
+  @include layout(100);
+}
+ 
+
+// @if $layoutWidth == 100 {
+//   width: 100%;
+// }@else {
+//   width: 100%;
+//   max-width: $layoutWidth;
+//   margin: auto;
+// }
+}
+
+.h100 {
+height: 100px;
+}
+
+.left {
+ background-color: #ff9f9f;
+}
+
+.right {
+
+background-color: #bcfffe;
+}

@@ -1,10 +1,11 @@
 <template>
   <header>
-    <div class="icon"></div>
+    <div class="icon">Logo-icon</div>
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/login">Login</router-link>
+      <router-link to="/">漫遊列車之旅</router-link> |
+      <router-link to="/about">小火車介紹</router-link> |
+      <router-link to="/css">元件樣式</router-link> |
+      <router-link to="/login">登入/註冊</router-link>
     </nav>
     <div class="ham"></div>
   </header>

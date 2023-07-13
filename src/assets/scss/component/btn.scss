@@ -7,26 +7,24 @@
     cursor: pointer;
     // background-color: #e1e1e1;
     &.primary {
-        background-color: #30abf7;
+        background-color: map-get($bgColor, primary);
         transition: cubic-bezier(0.39, 0.575, 0.565, 1);
         &:hover {
-          background-color: darken(#30abf7, 20);
+          background-color: darken(map-get($bgColor, primary), 20);
 
         }
     }
     &.secondary {
-         background-color: #afafaf;
+         background-color: map-get($bgColor, secondary);
          &:hover {
-            background-color: darken(#afafaf, 20);
-  
+            background-color: darken(map-get($bgColor, secondary), 20);
           }
     }
     &.error {
-       background-color: #f14242;
+       background-color: map-get($bgColor, error);
        color : #fff;
        &:hover {
-        background-color: darken(#f14242, 20);
-
+        background-color: darken(map-get($bgColor, error), 20);
       }
        
     }

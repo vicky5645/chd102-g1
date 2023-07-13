@@ -6,13 +6,21 @@ const routesUser = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta: {
+      title: 'home'
+    }
   },
   {
     path: '/about',
     name: 'about',
     // component: AboutView
     component: () => import(/* webpackChunkName: "about" */ '@/views/AboutView.vue')
+  },
+  {
+    path: '/css',
+    name: 'css',
+    component: () => import(/* webpackChunkName: "css" */ '@/views/css.vue')
   },
   {
     path: '/login',
