@@ -1,3 +1,4 @@
 #mainFooter{
-  background-color: map-get($bgColor, Primary);
+  background-color: map-get($bgColor, secondary);
+  color: white;
 }

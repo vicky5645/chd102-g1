@@ -17,11 +17,11 @@ const routesUser = [
     // component: AboutView
     component: () => import(/* webpackChunkName: "about" */ '@/views/AboutView.vue')
   },
-  {
-    path: '/css',
-    name: 'css',
-    component: () => import(/* webpackChunkName: "css" */ '@/views/css.vue')
-  },
+  // {
+  //   path: '/css',
+  //   name: 'css',
+  //   component: () => import(/* webpackChunkName: "css" */ '@/views/css.vue')
+  // },
   {
     path: '/login',
     name: 'login',

@@ -1,10 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  //$margin : 0px; //區域變數
-  margin: $margin;
   padding: null; // null 屬性被刪出
   color: $color;
   font-family: $fontFamily;
-  background-color: $bodyBgColor;
+  position: relative;
   h1 {
       font-size: 50px;
       @include t(){
@@ -27,13 +30,13 @@ body {
   @include layout(800);
 }
 
-//手機 
+//手機                                           
 
-@include m(){
-  @include layout(100);
-}
+@include m(){                                                                         
+  @include layout    (100);                                                                               
+}       
  
-
+          
 // @if $layoutWidth == 100 {
 //   width: 100%;
 // }@else {
