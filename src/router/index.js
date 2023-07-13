@@ -21,7 +21,13 @@ const routesUser = [
     path: '/product-details',
     name: 'product-details',
     // component: ProductDetails
-    component: () => import(/* webpackChunkName: "about" */ '@/views/ProductDetails.vue')
+    component: () => import(/* webpackChunkName: "product-details" */ '@/views/ProductDetails.vue')
+  },
+  {
+    path: '/online-mall',
+    name: 'online-mall',
+    // component: OnlineMall
+    component: () => import(/* webpackChunkName: "online-mal" */ '@/views/OnlineMall.vue')
   },
   // {
   //   path: '/css',

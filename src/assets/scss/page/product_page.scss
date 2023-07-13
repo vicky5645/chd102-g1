@@ -1,3 +1,8 @@
+$Gray-colors: rgba(255, 255, 255, 1);
+
+
+
+
 main.product_page {
   max-width: 1200px;
   width: 100%;
@@ -128,7 +133,7 @@ main.product_page {
           padding: 12px 24px;
           justify-content: center;
           align-items: center;
-          background-color: $Brand_colors_primary;
+          background-color: map-get($bgColor, primary);
           border-radius: 8px;
           border: none;
         }
@@ -148,14 +153,14 @@ main.product_page {
           padding: 12px 24px;
           justify-content: center;
           align-items: center;
-          background-color: $Brand_colors_primary;
+          background-color: map-get($bgColor, primary);
           border-radius: 8px;
           border: none;
           transition: 0.2s;
         }
 
         .selected {
-          outline: 2px solid $Brand_colors_secondary;
+          outline: 2px solid map-get($bgColor, secondary);
         }
       }
 
@@ -176,8 +181,8 @@ main.product_page {
         button {
           padding: 10px 14px;
           border-radius: 8px;
-          border: 1px solid $Brand_colors_secondary;
-          background: $Brand_colors_primary;
+          border: 1px solid map-get($bgColor, secondary);
+          background: map-get($bgColor, primary);
 
           i {
             font-size: 24px;
@@ -198,7 +203,7 @@ main.product_page {
 
         button {
           padding: 18px 27px;
-          background-color: $Brand_colors_primary;
+          background-color: map-get($bgColor, primary);
           border-radius: 8px;
           border: none;
           color: #fff;
@@ -211,7 +216,7 @@ main.product_page {
   }
 
   .product_txt {
-    color: $Brand_colors_secondary;
+    color: map-get($bgColor, secondary);
     margin-bottom: 40px;
 
     button {
@@ -220,19 +225,19 @@ main.product_page {
       line-height: 36px;
       padding: 4px 16px;
       background-color: #fff;
-      border: 0.5px solid $Brand_colors_secondary;
+      border: 0.5px solid map-get($bgColor, secondary);
       border-bottom: #fff;
       translate: 0 1px;
-      color: $Brand_colors_secondary;
+      color: map-get($bgColor, secondary);
     }
 
     .unselected {
       background-color: #d9d9d9;
-      border-bottom: 0.5px solid $Brand_colors_secondary;
+      border-bottom: 0.5px solid map-get($bgColor, secondary);
     }
 
     .txt_block {
-      border: 0.5px solid $Brand_colors_secondary;
+      border: 0.5px solid map-get($bgColor, secondary);
       padding: 8px 20px;
 
       p {
@@ -246,7 +251,7 @@ main.product_page {
     font-size: 32px;
     font-weight: 500;
     line-height: 36px;
-    color: $Brand_colors_secondary;
+    color: map-get($bgColor, secondary);
     margin-bottom: 20px;
     // padding-left: 16px;
     text-align: center;
@@ -259,8 +264,8 @@ main.product_page {
     overflow: hidden;
 
     button {
-      background-color: $Brand_colors_primary;
-      color: $Brand_colors_secondary;
+      background-color: map-get($bgColor, primary);
+      color: map-get($bgColor, secondary);
       padding: 8px 13px;
       border-radius: 50%;
       position: absolute;
@@ -322,7 +327,7 @@ main.product_page {
 
       a {
         text-decoration: none;
-        color: $Brand_colors_secondary;
+        color: map-get($bgColor, secondary);
         width: 25%;
         .product {
           img {
