@@ -1,160 +1,160 @@
 <template>
-<main>
-            <ol class="breadCrumbs">
-                <i class="fa-solid fa-house"></i>
-                <li v-for="item in [...breadCrumbs]" :key="item.index">
-                    <a :href="item.link" :style="item.color">
-                        {{item.index}}</a>
+  <main>
+    <ol class="breadCrumbs">
+        <i class="fa-solid fa-house"></i>
+        <li v-for="item in [...breadCrumbs]" :key="item.index">
+            <a :href="item.link" :style="item.color">
+                {{item.index}}</a>
+        </li>
+    </ol>
+    <div class="container">
+        <div class="category">
+            <h3>商品分類</h3>
+            <ul class="categoryItem">
+                <li v-for="(item, key) in categoryItem"
+                @click="updateTab(key)">
+                    {{item}}<i class="fa-solid fa-chevron-right"></i>
                 </li>
-            </ol>
-            <div class="container">
-                <div class="category">
-                    <h3>商品分類</h3>
-                    <ul class="categoryItem">
-                        <li v-for="(item, key) in categoryItem"
-                        @click="updateTab(key)">
-                            {{item}}<i class="fa-solid fa-chevron-right"></i>
-                        </li>
-                    </ul>
+            </ul>
+        </div>
+        <div class="product">
+            <div class="topBar">
+                <h2>所有商品</h2>
+                <div class="searchBar">
+                    <input type="search" placeholder="輸入關鍵字查詢" v-model="search">
+                    <button><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
-                <div class="product">
-                    <div class="topBar">
-                        <h2>所有商品</h2>
-                        <div class="searchBar">
-                            <input type="search" placeholder="輸入關鍵字查詢" v-model="search">
-                            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <div class="productList row row-cols-lg-3"
+            v-if="tabActive == 1">
+                <div v-for="(item,index) in [...goods]" :key="item.id" class="col">
+                    <div class="card">
+                        <div class="cradPic">
+                            <img :src="item.img">
+                            <button class="cardFavorite" @click="toggleFavorite(index)">
+                                <i :class="favoriteIcon(index)"></i>
+                            </button>
+                            <button class="cardCart">
+                                <i :class="goodsBtn.cart.i"></i>
+                            </button>
                         </div>
-                    </div>
-                    <div class="productList row row-cols-lg-3"
-                    v-if="tabActive == 1">
-                        <div v-for="(item,index) in [...goods]" :key="item.id" class="col">
-                            <div class="card">
-                                <div class="cradPic">
-                                    <img :src="item.img">
-                                    <button class="cardFavorite" @click="toggleFavorite(index)">
-                                        <i :class="favoriteIcon(index)"></i>
-                                    </button>
-                                    <button class="cardCart">
-                                        <i :class="goodsBtn.cart.i"></i>
-                                    </button>
-                                </div>
-                                <h3>{{item.name}}</h3>
-                                <div class="price">
-                                    <span>{{item.price}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productList row row-cols-lg-3"
-                    v-else-if="tabActive == 2">
-                        <div v-for="(item,index) in [...goods]" :key="item.id" class="col">
-                            <div class="card">
-                                <div class="cradPic">
-                                    <img :src="item.img">
-                                    <button class="cardFavorite" @click="toggleFavorite(index)">
-                                        <i :class="favoriteIcon(index)"></i>
-                                    </button>
-                                    <button class="cardCart">
-                                        <i :class="goodsBtn.cart.i"></i>
-                                    </button>
-                                </div>
-                                <h3>{{item.name}}</h3>
-                                <div class="price">
-                                    <span>{{item.price}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productList row row-cols-lg-3"
-                    v-else-if="tabActive == 3">
-                        <div v-for="(item,index) in [...goods]" :key="item.id" class="col" v-show="item.type === '食品'">
-                            <div class="card">
-                                <div class="cradPic">
-                                    <img :src="item.img">
-                                    <button class="cardFavorite" @click="toggleFavorite(index)">
-                                        <i :class="favoriteIcon(index)"></i>
-                                    </button>
-                                    <button class="cardCart">
-                                        <i :class="goodsBtn.cart.i"></i>
-                                    </button>
-                                </div>
-                                <h3>{{item.name}}</h3>
-                                <div class="price">
-                                    <span>{{item.price}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="productList row row-cols-lg-3"
-                    v-else-if="tabActive == 4">
-                        <div v-for="(item,index) in [...goods]" :key="item.id" class="col">
-                            <div class="card">
-                                <div class="cradPic">
-                                    <img :src="item.img">
-                                    <button class="cardFavorite" @click="toggleFavorite(index)">
-                                        <i :class="favoriteIcon(index)"></i>
-                                    </button>
-                                    <button class="cardCart">
-                                        <i :class="goodsBtn.cart.i"></i>
-                                    </button>
-                                </div>
-                                <h3>{{item.name}}</h3>
-                                <div class="price">
-                                    <span>{{item.price}}</span>
-                                </div>
-                            </div>
+                        <h3>{{item.name}}</h3>
+                        <div class="price">
+                            <span>{{item.price}}</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
+            <div class="productList row row-cols-lg-3"
+            v-else-if="tabActive == 2">
+                <div v-for="(item,index) in [...goods]" :key="item.id" class="col">
+                    <div class="card">
+                        <div class="cradPic">
+                            <img :src="item.img">
+                            <button class="cardFavorite" @click="toggleFavorite(index)">
+                                <i :class="favoriteIcon(index)"></i>
+                            </button>
+                            <button class="cardCart">
+                                <i :class="goodsBtn.cart.i"></i>
+                            </button>
+                        </div>
+                        <h3>{{item.name}}</h3>
+                        <div class="price">
+                            <span>{{item.price}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="productList row row-cols-lg-3"
+            v-else-if="tabActive == 3">
+                <div v-for="(item,index) in [...goods]" :key="item.id" class="col" v-show="item.type === '食品'">
+                    <div class="card">
+                        <div class="cradPic">
+                            <img :src="item.img">
+                            <button class="cardFavorite" @click="toggleFavorite(index)">
+                                <i :class="favoriteIcon(index)"></i>
+                            </button>
+                            <button class="cardCart">
+                                <i :class="goodsBtn.cart.i"></i>
+                            </button>
+                        </div>
+                        <h3>{{item.name}}</h3>
+                        <div class="price">
+                            <span>{{item.price}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="productList row row-cols-lg-3"
+            v-else-if="tabActive == 4">
+                <div v-for="(item,index) in [...goods]" :key="item.id" class="col">
+                    <div class="card">
+                        <div class="cradPic">
+                            <img :src="item.img">
+                            <button class="cardFavorite" @click="toggleFavorite(index)">
+                                <i :class="favoriteIcon(index)"></i>
+                            </button>
+                            <button class="cardCart">
+                                <i :class="goodsBtn.cart.i"></i>
+                            </button>
+                        </div>
+                        <h3>{{item.name}}</h3>
+                        <div class="price">
+                            <span>{{item.price}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </main>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      goodsBtn: {
-          fillHeart: {
-              i: "fa-solid fa-heart"
-          },
-          hollowHeart: {
-              i: "fa-regular fa-heart"
-          },
-          cart: {
-              i: "fa-solid fa-cart-shopping"
-          }
-      },
-      breadCrumbs: [
-          {
-              index: "Goods",
-              link: "index.html",
-              color: "color:#9CA3AF;"
-          },
-          {
-              index: "Detail",
-              link: "detail.html",
-              color: "color:#9CA3AF;"
-          },
-          {
-              index: "Pricing",
-              link: "pricing.html",
-              color: "color:#F29C50;"
-          }
-      ],
-      tabActive: 1,
-      categoryItem: {
-          1: "所有商品",
-          2: "熱銷商品",
-          3: "分類1",
-          4: "分類2"
-      },
-      goods: [
+    data() {
+        return {
+        goodsBtn: {
+            fillHeart: {
+                i: "fa-solid fa-heart"
+            },
+            hollowHeart: {
+                i: "fa-regular fa-heart"
+            },
+            cart: {
+                i: "fa-solid fa-cart-shopping"
+            }
+        },
+        breadCrumbs: [
+            {
+                index: "Goods",
+                link: "index.html",
+                color: "color:#9CA3AF;"
+            },
+            {
+                index: "Detail",
+                link: "detail.html",
+                color: "color:#9CA3AF;"
+            },
+            {
+                index: "Pricing",
+                link: "pricing.html",
+                color: "color:#F29C50;"
+            }
+        ],
+        tabActive: 1,
+        categoryItem: {
+            1: "所有商品",
+            2: "熱銷商品",
+            3: "分類1",
+            4: "分類2"
+        },
+        goods: [
         {
             id: 1,
             name: "火車叉叉",
             type: "周邊商品",
-            img: "img/fork.png",
+            img: require("../assets/images/online-mall/fork.png"),
             price: 300,
             isFavorite: false
         },
@@ -162,7 +162,7 @@ export default {
             id: 2,
             name: "車車模型",
             type: "周邊商品",
-            img: "img/Train_model.png",
+            img: require("../assets/images/online-mall/Train_model.png"),
             price: 890,
             isFavorite: false
         },
@@ -170,7 +170,7 @@ export default {
             id: 3,
             name: "車車吊牌",
             type: "周邊商品",
-            img: "img/Keychain_pendant_B.png",
+            img: require("../assets/images/online-mall/Keychain_pendant_B.png"),
             price: 200,
             isFavorite: false
         },
@@ -178,7 +178,7 @@ export default {
             id: 4,
             name: "超讚大獎章",
             type: "周邊商品",
-            img: "img/Badge.png",
+            img: require("../assets/images/online-mall/Badge.png"),
             price: 300,
             isFavorite: false
         },
@@ -186,7 +186,7 @@ export default {
             id: 5,
             name: "車車手帕",
             type: "周邊商品",
-            img: "img/Towel.png",
+            img: require("../assets/images/online-mall/Towel.png"),
             price: 100,
             isFavorite: false
         },
@@ -194,7 +194,7 @@ export default {
             id: 6,
             name: "車車便當",
             type: "食品",
-            img: "img/Train_bento_box.png",
+            img: require("../assets/images/online-mall/Train_bento_box.png"),
             price: 120,
             isFavorite: false
         },
@@ -202,26 +202,26 @@ export default {
             id: 7,
             name: "車車吊飾",
             type: "周邊商品",
-            img: "img/Keychain_pendant_A.png",
+            img: require("../assets/images/online-mall/Keychain_pendant_A.png"),
             price: 250,
             isFavorite: false
         }
-      ]
+        ]
     }
-  },
-  computed: {
-  },
-  methods: {
-      updateTab (index) {
-          this.tabActive = index
-      },
-      toggleFavorite(index) {
-          this.goods[index].isFavorite = !this.goods[index].isFavorite;
-      },
-      favoriteIcon(index) {
-          return this.goods[index].isFavorite ? this.goodsBtn.fillHeart.i : this.goodsBtn.hollowHeart.i;
-      }
-  }
+    },
+    computed: {
+    },
+    methods: {
+        updateTab (index) {
+            this.tabActive = index
+        },
+        toggleFavorite(index) {
+            this.goods[index].isFavorite = !this.goods[index].isFavorite;
+        },
+        favoriteIcon(index) {
+            return this.goods[index].isFavorite ? this.goodsBtn.fillHeart.i : this.goodsBtn.hollowHeart.i;
+        }
+    }
 }
 </script>
 
@@ -257,7 +257,7 @@ main{
 .container{
     display: flex;
     justify-content: space-between;
-    max-width: 1200px;
+    // max-width: 1200px;
 }
 .category {
     width: 30%;
