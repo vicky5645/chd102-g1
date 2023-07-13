@@ -1,3 +1,8 @@
+// 全部按鈕都會顯示手指
+button {
+  cursor: pointer;
+}
+
 .btn {
     padding: 8px 20px;
     text-align: center;
@@ -15,18 +20,17 @@
         }
     }
     &.secondary {
-         background-color: map-get($bgColor, secondary);
-         &:hover {
-            background-color: darken(map-get($bgColor, secondary), 20);
-          }
+        background-color: map-get($bgColor, secondary);
+        &:hover {
+          background-color: darken(map-get($bgColor, secondary), 20);
+        }
     }
     &.error {
-       background-color: map-get($bgColor, error);
-       color : #fff;
-       &:hover {
+      background-color: map-get($bgColor, error);
+      color : #fff;
+      &:hover {
         background-color: darken(map-get($bgColor, error), 20);
       }
-       
     }
     &.radius {
       border-radius: 10px;
@@ -35,7 +39,6 @@
       border-radius: 30px;  
     }
 }
-
 
 
 

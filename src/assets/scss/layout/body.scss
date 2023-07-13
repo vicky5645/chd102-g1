@@ -31,7 +31,6 @@ body {
 @include mobile(){                                                                         
   @include layout    (100);                                                                               
 }       
- 
           
 // @if $layoutWidth == 100 {
 //   width: 100%;
@@ -40,17 +39,4 @@ body {
 //   max-width: $layoutWidth;
 //   margin: auto;
 // }
-}
-
-.h100 {
-height: 100px;
-}
-
-.left {
- background-color: #ff9f9f;
-}
-
-.right {
-
-background-color: #bcfffe;
 }
