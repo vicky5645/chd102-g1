@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    outline: 1px solid black;
 }
 .container {
     max-width: 1200px;
@@ -34,7 +35,7 @@
 
 
 //手機
-@include m(){
+@include mobile(){
     @include grid(12, md)
 }
 

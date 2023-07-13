@@ -1,8 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 body {
   padding: null; // null 屬性被刪出
   color: $color;
@@ -10,15 +5,15 @@ body {
   position: relative;
   h1 {
       font-size: 50px;
-      @include t(){
-         font-size: 36px;
-         color: #f20;
-       }
-      @include m(){
-         font-size: 60px;
-         color: #19cef6
+    @include t(){
+        font-size: 36px;
+        color: #f20;
+      }
+    @include mobile(){
+        font-size: 60px;
+        color: #19cef6
 
-      } 
+    } 
   }
 }
 
@@ -32,7 +27,7 @@ body {
 
 //手機                                           
 
-@include m(){                                                                         
+@include mobile(){                                                                         
   @include layout    (100);                                                                               
 }       
  

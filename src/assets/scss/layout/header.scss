@@ -29,27 +29,25 @@ header {
                text-decoration: none;
                padding: 0 15px;
                transition: .3 all ease;
-            &:hover {
-               color: map-get($bgColor, primary);
+               &:hover {
+                  color: map-get($bgColor, primary);
                }
             }
-            .chrt {
-               color: #7aacbf;
-               font-family: Noto Sans Malayalam UI;
-               font-size: 16px;
-               font-weight: 400;
-               line-height: 110%;
-               text-decoration: none;
-               padding-right: 24px;
-            }
-            .login {
-               color: #7aacbf;
-               font-family: Noto Sans Malayalam UI;
-               font-size: 16px;
-               font-weight: 400;
-               line-height: 110%;
-               text-decoration: none;
-            }
          }
+      .chrt, .login {
+         color: #7aacbf;
+         font-family: Noto Sans Malayalam UI;
+         font-size: 16px;
+         font-weight: 400;
+         line-height: 110%;
+         text-decoration: none;
+         &:hover{
+            color: map-get($bgColor, primary);
+         }
+         
+      }
+      .chrt {
+         padding-right: 24px;
+      }
    }
 }

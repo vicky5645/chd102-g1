@@ -39,7 +39,7 @@
     }
 }
 
-@mixin m(){
+@mixin mobile(){
     @media all and (max-width: $small) {
         @content;
     }
@@ -51,7 +51,6 @@
     .title_h#{$i} {
         font-size: $i * 10px;
     } 
-   
 } 
 
 
@@ -70,32 +69,32 @@
 @mixin grid($num , $breakpoint:null){
     @for $i from 1 through $num {
         @if $breakpoint == null {
-        .col-#{$i} {
-         width: ($i / 12) * 100%;
-          }
+            .col-#{$i} {
+            width: ($i / 12) * 100%;
+            }
         }
         @else {
-         .col-#{$breakpoint}-#{$i} {
-            width: ($i / 12) * 100%;
-         }
+            .col-#{$breakpoint}-#{$i} {
+                width: ($i / 12) * 100%;
+            }
         }
     }
 }
 
 
-  @mixin grid($num , $breakpoint:null){
+@mixin grid($num , $breakpoint:null){
     @for $i from 1 through $num {
         @if $breakpoint == null {
-      .col-#{$i} {
-         width: ($i / $num) * 100%;
-         background-color: $colbg;
-      }
+            .col-#{$i} {
+                width: ($i / $num) * 100%;
+                background-color: $colbg;
+            }
         }
         @else {
-         .col-#{$breakpoint}-#{$i} {
-            width: ($i / $num) * 100%;
-            background-color: $colbg;
-         }
+            .col-#{$breakpoint}-#{$i} {
+                width: ($i / $num) * 100%;
+                background-color: $colbg;
+            }
         }
     }
 }
@@ -104,33 +103,31 @@
 
 @mixin bgimage($img) {
     @each $i in $img {
-       .bg-slider-#{$i} {
-          background-image: url('images/#{$i}.jpg');
-          background-size: cover;
-          width: 100%;
-       }
-    }
- }
-
-
-//標題文字
- @mixin title($title){
-    @each $k , $v in $title {
-       #{$k} {
-          font-size: $v + px;
-       }
-     }
- }
-
-
- //顏色
- @each $k , $v in $bgColor {
-    .#{$k} {
-       background-color: $v;
+        .bg-slider-#{$i} {
+            background-image: url('images/#{$i}.jpg');
+            background-size: cover;
+            width: 100%;
+        }
     }
 }
 
- 
+
+//標題文字
+@mixin title($title){
+    @each $k , $v in $title {
+        #{$k} {
+            font-size: $v + px;
+        }
+    }
+}
+
+
+ //顏色
+@each $k , $v in $bgColor {
+    .#{$k} {
+        background-color: $v;
+    }
+}
 
 
 
