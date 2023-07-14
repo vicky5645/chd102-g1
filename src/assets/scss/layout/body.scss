@@ -6,31 +6,30 @@ body {
   position: relative;
   h1 {
       font-size: 50px;
-    @include t(){
+    @include pad(){
         font-size: 36px;
         color: #f20;
-      }
-    @include mobile(){
+    }
+    @include pc(){
         font-size: 60px;
-        color: #19cef6
-
-    } 
+        color: #19cef6;
+    }
   }
 }
 
 .wrapper {
 //桌機
-@include layout(1200);
+// @include layout(1200);
 // 平板
-@include t(){
-  @include layout(800);
-}
+// @include t(){
+//   @include layout(800);
+// }
 
 //手機                                           
 
-@include mobile(){                                                                         
-  @include layout    (100);                                                                               
-}       
+// @include mobile(){                                                                         
+//   @include layout    (100);                                                                               
+// }       
           
 // @if $layoutWidth == 100 {
 //   width: 100%;

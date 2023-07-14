@@ -19,39 +19,43 @@
 
 // 
 @mixin layout($w) {
-        @if $w == 100 {
-            width: 100%;
-            @content;
-        }
-        @else {
-            width: 100%;
-            max-width: $w + px;
-            margin: auto;
-            @content;
-        }
-}
-
-//rwd mixin
-
-@mixin t(){
-    @media all and (max-width: $medium) {
+    @if $w == 100 {
+        width: 100%;
+        @content;
+    }
+    @else {
+        width: 100%;
+        max-width: $w + px;
+        margin: auto;
         @content;
     }
 }
 
-@mixin mobile(){
-    @media all and (max-width: $small) {
+//rwd mixin //Sass自適應分塊(由小到大)
+
+@mixin mobile {
+    @media all and (min-width: $mobile-width) {
         @content;
     }
 }
 
-//LOOP
+@mixin pad {
+    @media all and (min-width: $pad-width) {
+        @content;
+    }
+}
 
-@for $i from 1 through 6 {
-    .title_h#{$i} {
-        font-size: $i * 10px;
-    } 
-} 
+@mixin pc {
+    @media all and (min-width: $pc-width) {
+        @content;
+    }
+}
+
+@mixin tv {
+    @media all and (min-width: $layoutWidth) {
+        @content;
+    }
+}
 
 
 // space 
@@ -81,35 +85,6 @@
     }
 }
 
-
-@mixin grid($num , $breakpoint:null){
-    @for $i from 1 through $num {
-        @if $breakpoint == null {
-            .col-#{$i} {
-                width: ($i / $num) * 100%;
-                background-color: $colbg;
-            }
-        }
-        @else {
-            .col-#{$breakpoint}-#{$i} {
-                width: ($i / $num) * 100%;
-                background-color: $colbg;
-            }
-        }
-    }
-}
-
-//背景圖片
-
-@mixin bgimage($img) {
-    @each $i in $img {
-        .bg-slider-#{$i} {
-            background-image: url('images/#{$i}.jpg');
-            background-size: cover;
-            width: 100%;
-        }
-    }
-}
 
 
 //標題文字

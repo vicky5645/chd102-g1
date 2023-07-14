@@ -1,6 +1,4 @@
 //變數
-
-
 $color : #333; //color 
 $margin : 10px 20px; // list
 // $padding : null; // null
@@ -19,33 +17,21 @@ $margin : 10px 20px; // list
    height: 100px;
 }
 
-// map 
-$map : (key : value,
-   h1 : 40px,
-   h2 : 36px,
-   h3 : 30px);
-
-
-   //變數作用域
-
-$a : 60px;
-$a : 30px !default;
 
 $class : '.fgw';
 
 // 變數轉型 
 $file : 'images';
 
-//斷點變數
-$desktop : 1200px;
-$medium : 1100px;
-$small : 760px;
 
+//小到大斷點變數 (表示大於斷點)
+$mobile-width: 0;
+$pad-width: 768px;
+$pc-width: 1024px;
 
 // layout
 //如果是滿版100 / 固定寬 1200px
-
-$layoutWidth :1400px ;
+$layoutWidth :1200px ;
 
 
 // @for $i from 1 through 10 {
@@ -74,7 +60,7 @@ $layoutWidth :1400px ;
       @include space(2) 
    }
    .content{
-         @include space(1)
+      @include space(1)
    }
 
 }
