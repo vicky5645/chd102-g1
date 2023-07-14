@@ -14,9 +14,9 @@
         <router-link to="/online-mall">線上商城</router-link>
         <router-link to="/product-details">商品內頁</router-link>
         <!-- <router-link to="/online-booking">線上訂票</router-link> -->
+        <router-link to="/css">元件樣式</router-link>
       </div>
-      <!-- <router-link to="/css">元件樣式</router-link> | -->
-      <!-- <router-link to="/cart" class="chrt"><i class="fa fa-shopping-cart" aria-hidden="true"></i></router-link> -->
+      <router-link to="/cart" class="chrt"><i class="fa fa-shopping-cart" aria-hidden="true"></i></router-link>
       <router-link to="/login" class="login">登入/註冊</router-link>
     </nav>
     <!-- <div class="ham"></div> -->

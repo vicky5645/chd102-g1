@@ -1,6 +1,7 @@
 <template>
   <!-- <img src="../assets/images/img/project/1.jpg" alt="clock" /> -->
   <main class="product_page">
+    <BreadCrumbs detailName="aaaaa" />
     <ol class="bread_crumbs">
       <i class="fa-solid fa-house"></i>
       <li v-for="item in [...breadCrumbs]" :key="item.index">
@@ -132,7 +133,11 @@
 </template>
 
 <script>
+import BreadCrumbs from '@/components/BreadCrumbs.vue'
 export default {
+  components: {
+    BreadCrumbs
+  },
   data() {
     return {
       // 麵包屑

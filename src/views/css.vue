@@ -1,6 +1,8 @@
 <template>
   CCCSS{{ title }}
   <img src="~@/assets/logo.png" alt="">
+
+  <div class="box_default"></div>
   <button class="btn primary"></button>
 
   <h2>Icon sets</h2>

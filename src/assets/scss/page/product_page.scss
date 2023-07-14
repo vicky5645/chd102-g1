@@ -5,29 +5,6 @@ main.product_page {
   width: 100%;
   margin: auto;
 
-  .bread_crumbs {
-    margin: 12px 0;
-
-    i {
-      color: #f29c50;
-      margin-right: 10px;
-    }
-
-    li {
-      & + li::before {
-        content: " > ";
-        color: #9ca3af;
-      }
-
-      list-style: none;
-      display: inline;
-
-      a {
-        text-decoration: none;
-      }
-    }
-  }
-
   .back_button {
     margin-bottom: 12px;
     box-shadow: 0px -1px 0px 0px #f29c50 inset;

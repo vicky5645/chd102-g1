@@ -21,7 +21,8 @@ const routesUser = [
     path: '/product-details',
     name: 'product-details',
     // component: ProductDetails
-    component: () => import(/* webpackChunkName: "product-details" */ '@/views/ProductDetails.vue')
+    component: () => import(/* webpackChunkName: "product-details" */ '@/views/ProductDetails.vue'),
+    meta: { title: '' }
   },
   {
     path: '/online-mall',
@@ -29,11 +30,11 @@ const routesUser = [
     // component: OnlineMall
     component: () => import(/* webpackChunkName: "online-mal" */ '@/views/OnlineMall.vue')
   },
-  // {
-  //   path: '/css',
-  //   name: 'css',
-  //   component: () => import(/* webpackChunkName: "css" */ '@/views/css.vue')
-  // }, 
+  {
+    path: '/css',
+    name: 'css',
+    component: () => import(/* webpackChunkName: "css" */ '@/views/css.vue')
+  }, 
   {
     path: '/announcements',
     name: 'announcements',

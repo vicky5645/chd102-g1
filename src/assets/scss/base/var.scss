@@ -34,11 +34,11 @@ $pc-width: 1024px;
 $layoutWidth :1200px ;
 
 
-// @for $i from 1 through 10 {
-//     .spacing#{$i} {
-//       margin-top: $i * 4px;
-//     }
-// }
+@for $i from 1 through 10 {
+   .spacing#{$i} {
+      margin-top: $i * 4px;
+   }
+}
 
 
 @mixin space($num){

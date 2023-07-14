@@ -34,25 +34,25 @@
 //rwd mixin //Sass自適應分塊(由小到大)
 
 @mixin mobile {
-    @media all and (min-width: $mobile-width) {
+    @media screen and (min-width: $mobile-width) {
         @content;
     }
 }
 
 @mixin pad {
-    @media all and (min-width: $pad-width) {
+    @media screen and (min-width: $pad-width) {
         @content;
     }
 }
 
 @mixin pc {
-    @media all and (min-width: $pc-width) {
+    @media screen and (min-width: $pc-width) {
         @content;
     }
 }
 
 @mixin tv {
-    @media all and (min-width: $layoutWidth) {
+    @media screen and (min-width: $layoutWidth) {
         @content;
     }
 }
