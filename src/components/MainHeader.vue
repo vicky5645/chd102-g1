@@ -8,8 +8,8 @@
         <!-- 漫遊列車之旅 -->
       </router-link>
       <div class="nav_item">
-        <!-- <router-link to="/about">小火車介紹</router-link>
-        <router-link to="/announcements">公告</router-link> -->
+        <!-- <router-link to="/about">小火車介紹</router-link>-->
+        <router-link to="/announcements">公告</router-link>
         <!-- <router-link to="/forum">論壇</router-link> -->
         <router-link to="/online-mall">線上商城</router-link>
         <router-link to="/product-details">商品內頁</router-link>
@@ -23,5 +23,4 @@
   </header>
 </template>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>
