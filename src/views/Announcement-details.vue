@@ -1,8 +1,8 @@
-<!-- 公告 -->
+<!-- 公告內頁 -->
 
 <template>
-  公告
+  公告內頁
   <h1>{{ $route.meta.title }}</h1>
   <img src="~@/assets/logo.png" alt="" />
-  <router-link to="/Announcement-details">公告內頁</router-link>
+  
 </template>

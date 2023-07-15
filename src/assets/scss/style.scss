@@ -1,32 +1,35 @@
 // sass 註解
 /*css 註解*/
 //base
-@import 'base/var';
-@import 'base/color';
-@import 'base/font';
+@import "base/var";
+@import "base/color";
+@import "base/font";
 
 // mixin
-@import 'mixin/all';
+@import "mixin/all";
 
-// plugin 
+// plugin
 // @import '../node_modules/bootstrap/scss/bootstrap';
 
 //組件
-@import 'component/btn';
-@import 'component/grid';
-@import 'component/slider';
-@import 'component/form';
+@import "component/btn";
+@import "component/grid";
+@import "component/slider";
+@import "component/form";
 
 // layout
-@import 'layout/cart';
-@import 'layout/footer';
-@import 'layout/header';
-@import 'layout/login';
-@import 'layout/nav';
-@import 'layout/title';
-@import 'layout/body';
+@import "layout/cart";
+@import "layout/footer";
+@import "layout/header";
+@import "layout/login";
+@import "layout/nav";
+@import "layout/title";
+@import "layout/body";
 
 // page
-@import 'page/index';
-@import 'page/about';
-@import 'page/product_page';
+@import "page/index";
+@import "page/about";
+@import "page/product_page";
+@import "page/Forum";
+@import "page/Announcements";
+@import "page/Announcement-details";
