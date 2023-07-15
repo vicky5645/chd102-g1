@@ -22,8 +22,8 @@
         ><i class="fa fa-shopping-cart" aria-hidden="true"></i
       ></router-link>
       <router-link to="/login" class="login">登入/註冊</router-link>
+      <!-- <div class="ham"></div> -->
     </nav>
-    <!-- <div class="ham"></div> -->
   </header>
 </template>
 
