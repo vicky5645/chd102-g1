@@ -67,14 +67,17 @@ main.Announcement-details {
 
 @include pad {
   main.Announcement-details {
-    margin: 0 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
     .back_button {
       font-size: 20px;
     }
     .article_card {
       .type {
         font-size: 16px;
-        padding-bottom: 12px;
+        padding-bottom: 8px;
+        margin-bottom: 0;
       }
       h3 {
         font-size: 36px;
@@ -88,7 +91,7 @@ main.Announcement-details {
 
       p {
         /* 表格 & 列表 內文字高 */
-        font-size: 26px;
+        font-size: 24px;
         line-height: 34px; /* 150% */
       }
     }

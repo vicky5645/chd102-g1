@@ -147,7 +147,8 @@ main.Announcements {
 @include pad {
   main.Announcements {
     max-width: 1200px;
-    margin: 0 40px;
+    margin: 20px auto;
+    padding: 0 40px;
 
     .button_and_search {
       display: flex;
