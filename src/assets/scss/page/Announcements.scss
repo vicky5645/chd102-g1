@@ -1,1 +1,251 @@
 // 公告
+main.Announcements {
+  margin: 0 20px;
+  height: 100%;
+  padding: 20px 0;
+
+  .button_and_search {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .button_list {
+      display: flex;
+      gap: 20px;
+
+      button {
+        flex-grow: 1;
+        padding: 10px 24px;
+        border-radius: 7px;
+        border: 2px solid var(--brand-colors-primary, #f29c50);
+
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--brand-colors-primary, #f29c50);
+      }
+
+      .selected-button {
+        background-color: var(--brand-colors-primary, #f29c50);
+        color: #fff;
+      }
+    }
+
+    .search_bar {
+      display: flex;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+
+      input {
+        margin-bottom: 0;
+        padding: 12px;
+        border: 2px solid var(--brand-colors-primary, #f29c50);
+        flex-grow: 1;
+
+        // 外框線 沒效果但移除預設樣式了
+        &:focus {
+          outline: 4px solid var(--brand-colors-primary, #f29c50);
+        }
+      }
+      button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+
+        padding: 0 12px;
+        background-color: var(--brand-colors-primary, #f29c50);
+        border: none;
+        font-size: 16px;
+        color: #fff;
+      }
+    }
+  }
+
+  .article_card {
+    padding: 16px 0;
+    box-shadow: 0px -1px 0px 0px rgba(158, 158, 158, 0.25) inset;
+
+    .pic {
+      margin-bottom: 8px;
+
+      img {
+        width: 100%;
+        vertical-align: top;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .article_card_txt {
+      display: flex;
+      flex-direction: column;
+      .type {
+        //   color: #7aacbf;
+        font-size: 13px;
+        font-weight: 400;
+        //   line-height: 20px;
+        display: inline;
+        padding-bottom: 4px;
+        margin-left: 16px;
+        margin-bottom: 0;
+
+        span {
+          color: #9ca3af;
+        }
+      }
+
+      .important {
+        color: #7aacbf;
+      }
+
+      .normal {
+        color: #f29c50;
+      }
+
+      h3 {
+        color: #000;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 28px;
+        margin: 0 16px;
+        margin-bottom: 8px;
+      }
+
+      .card_txt_content {
+        color: #000;
+        /* 表格 & 列表 內文字高 */
+        font-size: 18px;
+        font-weight: 400;
+        margin: 0 16px;
+
+        line-height: 1.3em;
+        height: 2.6em; /* 2 * line-height */
+        overflow: hidden;
+      }
+
+      .more {
+        margin-top: 16px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        border: 1px solid var(--brand-colors-primary, #f29c50);
+        // display: block;
+        margin-right: 16px;
+        margin-left: auto;
+
+        // 文字
+        color: var(--brand-colors-primary, #f29c50);
+        /* small 按紐文字 */
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// 768px
+@include pad {
+  main.Announcements {
+    max-width: 1200px;
+    margin: 0 40px;
+
+    .button_and_search {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+
+      .button_list {
+        display: flex;
+        gap: 20px;
+        flex-grow: 1;
+
+        button {
+          flex-grow: 1;
+          padding: 10px 24px;
+          border-radius: 7px;
+          border: 2px solid var(--brand-colors-primary, #f29c50);
+
+          font-size: 16px;
+          font-weight: 500;
+          color: var(--brand-colors-primary, #f29c50);
+        }
+
+        .selected-button {
+          background-color: var(--brand-colors-primary, #f29c50);
+          color: #fff;
+        }
+      }
+
+      .search_bar {
+        display: flex;
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        flex-grow: 1;
+
+        input {
+          margin-bottom: 0;
+          padding: 12px;
+          border: 2px solid var(--brand-colors-primary, #f29c50);
+          flex-grow: 1;
+
+          // 外框線 沒效果但移除預設樣式了
+          &:focus {
+            outline: 4px solid var(--brand-colors-primary, #f29c50);
+          }
+        }
+        button {
+          position: absolute;
+          right: 0;
+          top: 0;
+          bottom: 0;
+
+          padding: 0 12px;
+          background-color: var(--brand-colors-primary, #f29c50);
+          border: none;
+          font-size: 16px;
+        }
+      }
+    }
+
+    .article_card {
+      padding: 20px 0;
+      //   padding-left: 40px;
+
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 40px;
+
+      .pic {
+        margin-bottom: 0;
+      }
+
+      .article_card_txt {
+        .type {
+          font-size: 16px;
+          padding-bottom: 8px;
+          margin-left: 0;
+          display: block;
+          margin-bottom: 0;
+        }
+
+        h3 {
+          font-size: 32px;
+          margin: 0;
+          margin-bottom: 16px;
+        }
+
+        .card_txt_content {
+          /* 表格 & 列表 內文字高 */
+          margin: 0;
+        }
+
+        .more {
+          margin-top: 32px;
+          margin-right: 0;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}

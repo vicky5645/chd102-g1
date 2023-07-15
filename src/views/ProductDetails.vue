@@ -166,8 +166,8 @@ export default {
       buttons: ["規格1", "規格2"],
 
       // 點擊小圖換大圖
-      bigPic: require("../assets/images/img/1.png"),
-      smallPics: [require("../assets/images/img/2.png"), require("../assets/images/img/3.png"), require("../assets/images/img/4.png")],
+      bigPic: require("../assets/images/img/ProductDetails/p1.png"),
+      smallPics: [require("../assets/images/img/ProductDetails//p2.png"), require("../assets/images/img/ProductDetails//p3.png"), require("../assets/images/img/ProductDetails//p4.png")],
 
       // content 區塊切換
       selectedTab: "Tab1", 
