@@ -33,7 +33,7 @@ const routesUser = [
     path: '/forum',
     name: 'forum',
     // component: Forum
-    component: () => import(/* webpackChunkName: "about" */ '@/views/Forum.vue'),
+    component: () => import(/* webpackChunkName: "forum" */ '@/views/Forum.vue'),
     meta: {
       title: '論壇'
     }
