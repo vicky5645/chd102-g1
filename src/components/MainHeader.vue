@@ -15,6 +15,7 @@
         <router-link to="/forum">論壇</router-link>
         <router-link to="/online-mall">線上商城</router-link>
         <router-link to="/product-details">商品內頁</router-link>
+        <router-link to="/package">行程選擇</router-link>
         <!-- <router-link to="/online-booking">線上訂票</router-link> -->
         <!-- <router-link to="/css">元件樣式</router-link> -->
       </div>
