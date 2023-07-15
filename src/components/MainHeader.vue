@@ -8,16 +8,16 @@
         <!-- 漫遊列車之旅 -->
       </router-link>
       <div class="nav_item">
-        <router-link to="/about">小火車介紹</router-link>
+        <!-- <router-link to="/about">小火車介紹</router-link>
         <router-link to="/announcements">公告</router-link>
-        <router-link to="/forum">論壇</router-link>
+        <router-link to="/forum">論壇</router-link> -->
         <router-link to="/online-mall">線上商城</router-link>
-        <router-link to="/product-details">商品內頁</router-link>
+        <router-link to="/product-details2">商品內頁</router-link>
         <!-- <router-link to="/online-booking">線上訂票</router-link> -->
-        <!-- <router-link to="/css">元件樣式</router-link> -->
+        <router-link to="/product">商品</router-link>
       </div>
-      <router-link to="/cart" class="chrt"><i class="fa fa-shopping-cart" aria-hidden="true"></i></router-link>
-      <router-link to="/login" class="login">登入/註冊</router-link>
+      <!-- <router-link to="/cart" class="chrt"><i class="fa fa-shopping-cart" aria-hidden="true"></i></router-link>
+      <router-link to="/login" class="login">登入/註冊</router-link> -->
     </nav>
     <!-- <div class="ham"></div> -->
   </header>

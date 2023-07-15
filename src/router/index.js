@@ -39,10 +39,10 @@ const routesUser = [
     }
   },
   {
-    path: '/product-details',
-    name: 'product-details',
+    path: '/product-details2',
+    name: 'product-details2',
     // component: ProductDetails
-    component: () => import(/* webpackChunkName: "product-details" */ '@/views/ProductDetails.vue'),
+    component: () => import(/* webpackChunkName: "product-details" */ '@/views/ProductDetails2.vue'),
     meta: { title: ' ' }
   },
   {
@@ -52,14 +52,24 @@ const routesUser = [
     component: () => import(/* webpackChunkName: "online-mal" */ '@/views/OnlineMall.vue')
   },
   {
-    path: '/css',
-    name: 'css',
-    component: () => import(/* webpackChunkName: "css" */ '@/views/css.vue')
+    path: '/products',
+    name: 'products',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/OnlineMall.vue')
+  },
+  {
+    path: '/productDetail/:id',
+    name: 'productDetail',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/ProductDetailView.vue')
+  },
+  {
+    path: '/product',
+    name: 'product',
+    component: () => import(/* webpackChunkName: "product" */ '@/views/ProductView.vue')
   },
   {
     path: '/cart',
     name: 'cart',
-    component: () => import(/* webpackChunkName: "login" */ '@/views/Cart.vue'),
+    component: () => import(/* webpackChunkName: "cart" */ '@/views/Cart.vue'),
     meta: {
       title: '購物車'
     }

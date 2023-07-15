@@ -1,14 +1,14 @@
 <template>
   <main>
-    <BreadCrumbs detailName="所有商品" />
-    <ol class="breadCrumbs">
-        <i class="fa-solid fa-house"></i>
-        <li v-for="item in [...breadCrumbs]" :key="item.index">
-            <a :href="item.link" :style="item.color">
-                {{item.index}}</a>
-        </li>
-    </ol>
-    <div class="container">
+      <BreadCrumbs detailName="所有商品" />
+      <ol class="breadCrumbs">
+          <i class="fa-solid fa-house"></i>
+          <li v-for="item in [...breadCrumbs]" :key="item.index">
+              <a :href="item.link" :style="item.color">
+                  {{item.index}}</a>
+          </li>
+      </ol>
+      <div class="container">
         <div class="category">
             <h3>商品分類</h3>
             <ul class="categoryItem">
@@ -119,7 +119,8 @@ export default {
     },
     data() {
         return {
-        goodsBtn: {
+            search: '',
+            goodsBtn: {
             fillHeart: {
                 i: "fa-solid fa-heart"
             },
