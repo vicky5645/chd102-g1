@@ -55,7 +55,15 @@ const routesUser = [
     path: '/css',
     name: 'css',
     component: () => import(/* webpackChunkName: "css" */ '@/views/css.vue')
-  }, 
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: () => import(/* webpackChunkName: "login" */ '@/views/Cart.vue'),
+    meta: {
+      title: '購物車'
+    }
+  },
   {
     path: '/login',
     name: 'login',
