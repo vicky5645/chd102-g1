@@ -1,33 +1,38 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "@/views/HomeView.vue";
 // import AboutView from '@/views/AboutView.vue'
 
 const routesUser = [
   {
-    path: '/',
-    name: 'home',
+    path: "/",
+    name: "home",
     component: HomeView,
     meta: {
-      title: 'home'
-    }
+      title: "home",
+    },
   },
   {
-    path: '/about',
-    name: 'about',
+    path: "/about",
+    name: "about",
     // component: AboutView
-    component: () => import(/* webpackChunkName: "about" */ '@/views/AboutView.vue')
+    component: () =>
+      import(/* webpackChunkName: "about" */ "@/views/AboutView.vue"),
   },
   {
-    path: '/product-details',
-    name: 'product-details',
+    path: "/product-details",
+    name: "product-details",
     // component: ProductDetails
-    component: () => import(/* webpackChunkName: "product-details" */ '@/views/ProductDetails.vue')
+    component: () =>
+      import(
+        /* webpackChunkName: "product-details" */ "@/views/ProductDetails.vue"
+      ),
   },
   {
-    path: '/online-mall',
-    name: 'online-mall',
+    path: "/online-mall",
+    name: "online-mall",
     // component: OnlineMall
-    component: () => import(/* webpackChunkName: "online-mal" */ '@/views/OnlineMall.vue')
+    component: () =>
+      import(/* webpackChunkName: "online-mal" */ "@/views/OnlineMall.vue"),
   },
   // {
   //   path: '/css',
@@ -35,15 +40,23 @@ const routesUser = [
   //   component: () => import(/* webpackChunkName: "css" */ '@/views/css.vue')
   // },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import(/* webpackChunkName: "login" */ '@/views/LoginView.vue')
-  }
-]
+    path: "/login",
+    name: "login",
+    component: () =>
+      import(/* webpackChunkName: "login" */ "@/views/LoginView.vue"),
+  },
+
+  {
+    path: "/package",
+    name: "package",
+    component: () =>
+      import(/* webpackChunkName: "login" */ "@/views/Package.vue"),
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes: routesUser
-})
+  routes: routesUser,
+});
 
-export default router
+export default router;
