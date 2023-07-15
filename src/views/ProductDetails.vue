@@ -1,13 +1,13 @@
 <template>
   <!-- <img src="../assets/images/img/project/1.jpg" alt="clock" /> -->
   <main class="product_page">
-    <BreadCrumbs detailName="aaaaa" />
-    <ol class="bread_crumbs">
+    <BreadCrumbs detailName="火車懷錶" />
+    <!-- <ol class="bread_crumbs">
       <i class="fa-solid fa-house"></i>
       <li v-for="item in [...breadCrumbs]" :key="item.index">
         <a :href="item.link" :style="item.color"> {{item.index}}</a>
       </li>
-    </ol>
+    </ol> -->
 
     <div class="back_button">
         <a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i> 返回商城</a>
@@ -281,4 +281,26 @@ export default {
 
 
 <style lang="scss" scoped>
+.bread_crumbs {
+  margin: 12px 0;
+
+  i {
+    color: #f29c50;
+    margin-right: 10px;
+  }
+
+  li {
+    & + li::before {
+      content: " > ";
+      color: #9ca3af;
+    }
+
+    list-style: none;
+    display: inline;
+
+    a {
+      text-decoration: none;
+    }
+  }
+}
 </style>

@@ -8,21 +8,42 @@ const routesUser = [
     name: 'home',
     component: HomeView,
     meta: {
-      title: 'home'
+      title: '首頁'
     }
   },
   {
     path: '/about',
     name: 'about',
     // component: AboutView
-    component: () => import(/* webpackChunkName: "about" */ '@/views/AboutView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '@/views/AboutView.vue'),
+    meta: {
+      title: '小火車介紹'
+    }
+  },
+  {
+    path: '/announcements',
+    name: 'announcements',
+    // component: Announcements
+    component: () => import(/* webpackChunkName: "about" */ '@/views/Announcements.vue'),
+    meta: {
+      title: '公告'
+    }
+  },
+  {
+    path: '/forum',
+    name: 'forum',
+    // component: Forum
+    component: () => import(/* webpackChunkName: "about" */ '@/views/Forum.vue'),
+    meta: {
+      title: '論壇'
+    }
   },
   {
     path: '/product-details',
     name: 'product-details',
     // component: ProductDetails
     component: () => import(/* webpackChunkName: "product-details" */ '@/views/ProductDetails.vue'),
-    meta: { title: '' }
+    meta: { title: ' ' }
   },
   {
     path: '/online-mall',
@@ -35,12 +56,6 @@ const routesUser = [
     name: 'css',
     component: () => import(/* webpackChunkName: "css" */ '@/views/css.vue')
   }, 
-  {
-    path: '/announcements',
-    name: 'announcements',
-    component: () => import(/* webpackChunkName: "css" */ '@/views/Announcements.vue')
-  },
-
   {
     path: '/login',
     name: 'login',

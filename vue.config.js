@@ -4,5 +4,5 @@ module.exports = defineConfig({
   filenameHashing: false,
   css:{
     sourceMap: true
-  },
+  }
 })

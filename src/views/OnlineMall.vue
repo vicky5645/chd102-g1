@@ -1,5 +1,6 @@
 <template>
   <main>
+    <BreadCrumbs detailName="所有商品" />
     <ol class="breadCrumbs">
         <i class="fa-solid fa-house"></i>
         <li v-for="item in [...breadCrumbs]" :key="item.index">
@@ -111,7 +112,11 @@
 </template>
 
 <script>
+import BreadCrumbs from '@/components/BreadCrumbs.vue'
 export default {
+    components: {
+    BreadCrumbs
+    },
     data() {
         return {
         goodsBtn: {
