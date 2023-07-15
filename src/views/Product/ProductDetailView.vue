@@ -1,32 +1,73 @@
 <template>
-  {{ $route.params.id }}
+  <!-- {{ $route.params.id }} -->
   <main class="product_page">
-    <!-- <BreadCrumbs detailName="火車懷錶" /> -->
+    <BreadCrumbs detailName="火車懷錶" />
     <div v-if="productData">
-      
-      <ol class="bread_crumbs">
+      <!-- <ol class="bread_crumbs">
         <i class="fa-solid fa-house"></i>
         <li v-for="item in [...breadCrumbs]" :key="item.index">
           <a :href="item.link" :style="item.color"> {{item.index}}</a>
         </li>
-      </ol>
+      </ol> -->
       <div class="back_button">
-          <a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i> 返回商城</a>
+          <router-link to="/">
+            <i class="fa fa-angle-left" aria-hidden="true"></i> 返回商城
+          </router-link>
       </div>
       <section class="product_data">
         <!-- 點擊小圖換大圖 -->
         <div class="product_data_left">
-          <img :src="productData.image" alt="">
-          <p>{{ productData.title }}</p>
-          <p>{{ productData.description }}</p>
-          <p>{{ productData.category }}</p>
-          <p>${{ productData.price }}</p>
-          <span v-for="item in Math.round(productData.rating.rate)">
-            🌟
-          </span>
-          <span>{{ productData.rating.count }}</span>
+
+        <div class="big_pic">
+          <img :src="productDataItem.image" :alt="productDataItem.title">
+        </div>
+        <div class="small_pic_list">
+          <div
+            v-for="(pic, index) in smallPics"
+            :key="index"
+            class="small_pic"
+            @click="changeBigPic(pic)"
+          >
+            <img :src="pic" alt="clock" />
+          </div>
+        </div>
+
         </div>
         <div class="product_data_right">
+          <div class="information">
+            <div class="name">{{ productDataItem.title }}</div>
+            <div class="price">售價 NT$ {{ productDataItem.price }}</div>
+          </div>
+          <div class="type_and_like">
+            <div class="type">選擇商品規格</div>
+            <button class="like">加入收藏</button>
+          </div>
+
+          <div class="type_button_list">
+            <button
+              v-for="button in buttons"
+              :key="button"
+              class="type_button_item"
+              :class="{ selected: selectedButton === button }"
+              @click="selectButton(button)"
+            >
+              {{ button }}
+            </button>
+          </div>
+
+        <div class="quantity_txt">購買數量</div>
+
+          <!-- 加減按鈕 -->
+          <div class="quantity_button">
+            <button @click="increment">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+            <div class="quantity">{{ quantity }}</div>
+            <button @click="decrement">
+              <i class="fa fa-minus" aria-hidden="true"></i>
+            </button>
+          </div>
+
           <div class="add_and_buy">
             <button class="add">加入購物車</button>
             <button class="buy">立即購買</button>
@@ -51,7 +92,7 @@
         </button>
 
         <div class="txt_block" v-show="selectedTab === 'Tab1'">
-          <p v-for="text in tab1_content" :key="text">{{ text }}</p>
+          {{ productDataItem.description }}
         </div>
 
         <div class="txt_block" v-show="selectedTab === 'Tab2'">
@@ -70,7 +111,6 @@
 
         <transition
           mode="out-in"
-          :name="transitionName"
           enter-active-class="slide-enter-active"
           leave-active-class="slide-leave-active"
           enter-from-class="slide-enter-from"
@@ -107,24 +147,7 @@ export default {
   data(){
     return {
       productData: null,
-      // 麵包屑
-      breadCrumbs: [
-        {
-          index: "商城",
-          link: "index.html",
-          color: "color:#9CA3AF;",
-        },
-        {
-          index: "物品",
-          link: "detail.html",
-          color: "color:#9CA3AF;",
-        },
-        {
-          index: "火車懷錶",
-          link: "#",
-          color: "color:#F29C50;",
-        },
-      ],
+      productDataItem: [],
       // 數量初始值
       quantity: 1,
 
@@ -133,8 +156,8 @@ export default {
       buttons: ["規格1", "規格2"],
 
       // 點擊小圖換大圖
-      bigPic: require("../assets/images/img/1.png"),
-      smallPics: [require("../assets/images/img/2.png"), require("../assets/images/img/3.png"), require("../assets/images/img/4.png")],
+      bigPic: "/images/product-img/1.png",
+      smallPics: ["/images/product-img/2.png", "/images/product-img/3.png", "/images/product-img/4.png"],
 
       // content 區塊切換
       selectedTab: "Tab1", 
@@ -154,35 +177,35 @@ export default {
       allProducts: [
         {
           name: "小黃復古拍立得",
-          image: require("../assets/images/img/project/1.jpg"),
+          image: "/images/product-img/project/1.jpg",
         },
         {
           name: "泥漿去角質霜",
-          image: require("../assets/images/img/project/2.jpg"),
+          image: "/images/product-img/project/2.jpg",
         },
         {
           name: "真的皮的復古皮鞋",
-          image: require("../assets/images/img/project/3.jpg"),
+          image: "/images/product-img/project/3.jpg",
         },
         {
           name: "大地色包包",
-          image: require("../assets/images/img/project/4.jpg"),
+          image: "/images/product-img/project/4.jpg",
         },
         {
           name: "可站立復古拍立得(黑)",
-          image: require("../assets/images/img/project/5.jpg"),
+          image: "/images/product-img/project/5.jpg",
         },
         {
           name: "森林系後背包",
-          image: require("../assets/images/img/project/6.jpg"),
+          image: "/images/product-img/project/6.jpg",
         },
         {
           name: "可站立復古拍立得(白)",
-          image: require("../assets/images/img/project/7.jpg"),
+          image: "/images/product-img/project/7.jpg",
         },
         {
           name: "青春活力勾勾籃球鞋",
-          image: require("../assets/images/img/project/8.jpg"),
+          image: "/images/product-img/project/8.jpg",
         },
       ],
       currentProducts: [],
@@ -191,12 +214,11 @@ export default {
     }
   },
   created() {
-    // console.log(this.$route.params);
-    // https://fakestoreapi.com/
-    fetch(`https://fakestoreapi.com/products/${this.$route.params.id}`)
+    fetch(`/data/productData.json`)
     .then(res=>res.json())
     .then(json=>{
-      this.productData = json
+      this.productData = json;
+      this.productDataItem = this.productData[`${parseFloat(this.$route.params.id)-1}`];
     })
   },
   methods: {
@@ -250,8 +272,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-img{
-  width: 10rem;
-}
+<style lang="scss" scoped>
+
 </style>

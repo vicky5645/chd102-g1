@@ -42,16 +42,7 @@ export default {
 }
 </script>
 
-<style scoped>
-  /* li::after {
-    content: '/';
-    display: inline-block;
-    padding-left: .5rem;
-  }
-  li:last-child::after {
-    content: '';
-  } */
-
+<style lang="scss" scoped>
 .bread_crumbs {
   margin: 12px 0;
 

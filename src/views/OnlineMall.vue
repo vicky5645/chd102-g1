@@ -26,8 +26,7 @@
                     <button><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
             </div>
-            <div class="productList row row-cols-lg-3"
-            v-if="tabActive == 1">
+            <div class="productList row row-cols-lg-3" v-if="tabActive == 1">
                 <div v-for="(item,index) in [...goods]" :key="item.id" class="col">
                     <div class="card">
                         <div class="cradPic">
@@ -130,24 +129,24 @@ export default {
             cart: {
                 i: "fa-solid fa-cart-shopping"
             }
-        },
-        breadCrumbs: [
-            {
-                index: "Goods",
-                link: "index.html",
-                color: "color:#9CA3AF;"
             },
-            {
-                index: "Detail",
-                link: "detail.html",
-                color: "color:#9CA3AF;"
-            },
-            {
-                index: "Pricing",
-                link: "pricing.html",
-                color: "color:#F29C50;"
-            }
-        ],
+            breadCrumbs: [
+                {
+                    index: "Goods",
+                    link: "index.html",
+                    color: "color:#9CA3AF;"
+                },
+                {
+                    index: "Detail",
+                    link: "detail.html",
+                    color: "color:#9CA3AF;"
+                },
+                {
+                    index: "Pricing",
+                    link: "pricing.html",
+                    color: "color:#F29C50;"
+                }
+            ],
         tabActive: 1,
         categoryItem: {
             1: "所有商品",

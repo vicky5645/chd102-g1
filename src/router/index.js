@@ -57,14 +57,15 @@ const routesUser = [
     component: () => import(/* webpackChunkName: "about" */ '@/views/OnlineMall.vue')
   },
   {
-    path: '/productDetail/:id',
-    name: 'productDetail',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/ProductDetailView.vue')
-  },
-  {
     path: '/product',
     name: 'product',
-    component: () => import(/* webpackChunkName: "product" */ '@/views/ProductView.vue')
+    component: () => import(/* webpackChunkName: "product" */ '@/views/Product/ProductView.vue'),
+    meta: { title: '商品' }
+  },
+  {
+    path: '/productDetail/:id',
+    name: 'productDetail',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/Product/ProductDetailView.vue')
   },
   {
     path: '/cart',

@@ -281,26 +281,26 @@ export default {
 
 
 <style lang="scss" scoped>
-.bread_crumbs {
-  margin: 12px 0;
+// .bread_crumbs {
+//   margin: 12px 0;
 
-  i {
-    color: #f29c50;
-    margin-right: 10px;
-  }
+//   i {
+//     color: #f29c50;
+//     margin-right: 10px;
+//   }
 
-  li {
-    & + li::before {
-      content: " > ";
-      color: #9ca3af;
-    }
+//   li {
+//     & + li::before {
+//       content: " > ";
+//       color: #9ca3af;
+//     }
 
-    list-style: none;
-    display: inline;
+//     list-style: none;
+//     display: inline;
 
-    a {
-      text-decoration: none;
-    }
-  }
-}
+//     a {
+//       text-decoration: none;
+//     }
+//   }
+// }
 </style>
