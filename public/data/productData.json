@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1,
+    "title": "火車懷錶",
+    "type": "周邊商品",
+    "price": 1200,
+    "isFavorite": false,
+    "description": "懷錶，這個由過去走進現在的獨特鐘錶，與火車之間有著深厚的歷史聯繫。在鐵路早期，火車司機們都需要一個準確的時間工具來確保列車的準時運行，而懷錶就是這個工具的最佳選擇。/n我們的火車懷錶就是這種歷史情懷的象徵，它巧妙地將古典風格與現代功能結合在一起。錶殼由堅固的不銹鋼製成，既耐用又具有視覺吸引力。白色的錶面上，有著樸實的黑色羅馬數字時間標記，體現出簡約而古典的美感。懷錶內部裝有精密的機械運作系統，保證時間的準確無誤。/n這款火車懷錶不僅是一種時尚配件，也是一種實用的時間工具，更是一種記錄歷史，表達對火車文化熱愛的獨特方式。它將為你的生活增添一份別樣的風情，並在你的火車之旅中扮演著一個不可或缺的角色。",
+    "category": "men's clothing",
+    "image": "/images/product-img/1.png",
+    "rating": {
+      "rate": 3.9,
+      "count": 120
+    }
+  },
+  {
+    "id": 2,
+    "title": "火車叉叉",
+    "type": "周邊商品",
+    "price": 22.3,
+    "isFavorite": false,
+    "description": "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
+    "category": "men's clothing",
+    "image": "/images/online-mall/fork.png",
+    "rating": {
+      "rate": 4.1,
+      "count": 259
+    }
+  },
+  {
+    "id": 3,
+    "title": "車車模型",
+    "type": "周邊商品",
+    "price": 55.99,
+    "isFavorite": false,
+    "description": "great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.",
+    "category": "men's clothing",
+    "image": "/images/online-mall/Train_model.png",
+    "rating": {
+      "rate": 4.7,
+      "count": 500
+    }
+  },
+  {
+    "id": 4,
+    "title": "車車吊牌",
+    "type": "周邊商品",
+    "price": 15.99,
+    "isFavorite": false,
+    "description": "The color could be slightly different between on the screen and in practice. / Please note that body builds vary by person, therefore, detailed size information should be reviewed below on the product description.",
+    "category": "men's clothing",
+    "image": "/images/online-mall/Keychain_pendant_B.png",
+    "rating": {
+      "rate": 2.1,
+      "count": 430
+    }
+  },
+  {
+    "id": 5,
+    "title": "超讚大獎章",
+    "type": "周邊商品",
+    "price": 695,
+    "isFavorite": false,
+    "description": "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
+    "category": "jewelery",
+    "image": "/images/online-mall/Badge.png",
+    "rating": {
+      "rate": 4.6,
+      "count": 400
+    }
+  },
+  {
+    "id": 6,
+    "title": "車車手帕",
+    "type": "周邊商品",
+    "price": 168,
+    "isFavorite": false,
+    "description": "Satisfaction Guaranteed. Return or exchange any order within 30 days.Designed and sold by Hafeez Center in the United States. Satisfaction Guaranteed. Return or exchange any order within 30 days.",
+    "category": "jewelery",
+    "image": "/images/online-mall/Towel.png",
+    "rating": {
+      "rate": 3.9,
+      "count": 70
+    }
+  },
+  {
+    "id": 7,
+    "title": "車車便當",
+    "type": "食品",
+    "price": 9.99,
+    "isFavorite": false,
+    "description": "Classic Created Wedding Engagement Solitaire Diamond Promise Ring for Her. Gifts to spoil your love more for Engagement, Wedding, Anniversary, Valentine's Day...",
+    "category": "jewelery",
+    "image": "/images/online-mall/Train_bento_box.png",
+    "rating": {
+      "rate": 3,
+      "count": 400
+    }
+  },
+  {
+    "id": 8,
+    "title": "車車吊飾",
+    "type": "周邊商品",
+    "price": 10.99,
+    "isFavorite": false,
+    "description": "Rose Gold Plated Double Flared Tunnel Plug Earrings. Made of 316L Stainless Steel",
+    "category": "jewelery",
+    "image": "/images/online-mall/Keychain_pendant_A.png",
+    "rating": {
+      "rate": 1.9,
+      "count": 100
+    }
+  }
+]
