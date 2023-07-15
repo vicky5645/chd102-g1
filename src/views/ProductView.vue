@@ -1,6 +1,4 @@
 <template>
-
-  sssss
   <div class="product_container">
     <aside>
       <input type="text" v-model="searchText">
