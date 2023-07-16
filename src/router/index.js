@@ -8,11 +8,7 @@ const routesUser = [
     name: "home",
     component: HomeView,
     meta: {
-<<<<<<< HEAD
       title: "首頁",
-=======
-      title: "home",
->>>>>>> ShengYu
     },
   },
   {
@@ -21,7 +17,6 @@ const routesUser = [
     // component: AboutView
     component: () =>
       import(/* webpackChunkName: "about" */ "@/views/AboutView.vue"),
-<<<<<<< HEAD
     meta: {
       title: "小火車介紹",
     },
@@ -59,10 +54,6 @@ const routesUser = [
     },
   },
   {
-=======
-  },
-  {
->>>>>>> ShengYu
     path: "/product-details",
     name: "product-details",
     // component: ProductDetails
@@ -70,10 +61,7 @@ const routesUser = [
       import(
         /* webpackChunkName: "product-details" */ "@/views/ProductDetails.vue"
       ),
-<<<<<<< HEAD
     meta: { title: " " },
-=======
->>>>>>> ShengYu
   },
   {
     path: "/online-mall",
@@ -83,7 +71,6 @@ const routesUser = [
       import(/* webpackChunkName: "online-mal" */ "@/views/OnlineMall.vue"),
   },
   {
-<<<<<<< HEAD
     path: "/css",
     name: "css",
     component: () => import(/* webpackChunkName: "css" */ "@/views/css.vue"),
@@ -97,23 +84,11 @@ const routesUser = [
     },
   },
   {
-=======
->>>>>>> ShengYu
     path: "/login",
     name: "login",
     component: () =>
       import(/* webpackChunkName: "login" */ "@/views/LoginView.vue"),
   },
-<<<<<<< HEAD
-=======
-
-  {
-    path: "/package",
-    name: "package",
-    component: () =>
-      import(/* webpackChunkName: "login" */ "@/views/Package.vue"),
-  },
->>>>>>> ShengYu
 ];
 
 const router = createRouter({
