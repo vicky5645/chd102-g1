@@ -73,26 +73,33 @@ const routesUser = [
   {
     path: "/product",
     name: "product",
-    component: () => import(/* webpackChunkName: "product" */ "@/views/Product/ProductView.vue"),
-    meta: { title: '商品' }
+    component: () =>
+      import(
+        /* webpackChunkName: "product" */ "@/views/Product/ProductView.vue"
+      ),
+    meta: { title: "商品" },
   },
   {
-    path: '/productDetail/:id',
-    name: 'productDetail',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/Product/ProductDetailView.vue')
+    path: "/productDetail/:id",
+    name: "productDetail",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "@/views/Product/ProductDetailView.vue"
+      ),
   },
   {
-    path: '/online-booking',
-    name: 'online-booking',
-    component: () => import(/* webpackChunkName: "online-booking" */ '@/views/Package.vue'),
+    path: "/online-booking",
+    name: "online-booking",
+    component: () =>
+      import(/* webpackChunkName: "online-booking" */ "@/views/Package.vue"),
     meta: {
       title: "線上訂票",
     },
   },
   {
-    path: '/cart',
-    name: 'cart',
-    component: () => import(/* webpackChunkName: "cart" */ '@/views/Cart.vue'),
+    path: "/cart",
+    name: "cart",
+    component: () => import(/* webpackChunkName: "cart" */ "@/views/Cart.vue"),
     meta: {
       title: "購物車",
     },
