@@ -26,7 +26,7 @@
             <button @click="updateDisplay"><i class="fa-solid fa-magnifying-glass"></i>search</button>
           </div>
         </div>
-        <div v-if="productData.length > 0 && tabActive == 1" class="productList row row-cols-lg-3">
+        <div v-if="productData.length > 0 && tabActive == 1" class="productList row row-cols-lg-3 row-cols-2">
           <div v-for="item,index in productDisplay" 
             :key="item.id"
             class="col">
@@ -49,7 +49,7 @@
             </div>
           </div>
         </div>
-        <div v-else-if="tabActive == 2" class="productList row row-cols-lg-3">
+        <div v-else-if="tabActive == 2" class="productList row row-cols-lg-3 row-cols-2">
           <div v-for="item,index in productDisplay" 
             :key="item.id"
             class="col">
@@ -72,7 +72,7 @@
             </div>
           </div>
         </div>
-        <div v-else-if="tabActive == 3" class="productList row row-cols-lg-3">
+        <div v-else-if="tabActive == 3" class="productList row row-cols-lg-3 row-cols-2">
           <div v-for="item,index in productDisplay" 
             :key="item.id"
             class="col" v-show="item.type === '食品'">
@@ -95,7 +95,7 @@
             </div>
           </div>
         </div>
-        <div v-else-if="tabActive == 4" class="productList row row-cols-lg-3">
+        <div v-else-if="tabActive == 4" class="productList row row-cols-lg-3 row-cols-2">
           <div v-for="item,index in productDisplay" 
             :key="item.id"
             class="col">
@@ -171,8 +171,8 @@ export default {
       categoryItem: {
           1: "所有商品",
           2: "熱銷商品",
-          3: "分類1",
-          4: "分類2"
+          3: "食品",
+          4: "玩具"
       },
     }
   },
