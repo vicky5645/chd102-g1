@@ -5,20 +5,24 @@
 
 //預設 -> 手機
 @include grid(12);
+@include row-cols(12);
 
 //平板
 @include pad(){
-    @include grid(12, md)
+    @include grid(12, md);
+    @include row-cols(12, md);
 }
 
 //桌機
 @include pc(){
-    @include grid(12, lg)
+    @include grid(12, lg);
+    @include row-cols(12, lg);
 }
 
 
 @include tv(){
-    @include grid(12, xl)
+    @include grid(12, xl);
+    @include row-cols(12, xl);
 }
 
 /* --------------------------------------- */
@@ -46,81 +50,3 @@ html{
     margin-bottom: 10px;
 }
 
-.row-cols-1 > .col{
-    width: 100%;
-}
-.row-cols-2 > .col{
-    width: 50%;
-}
-.row-cols-3 > .col{
-    width: 33.333333%;
-}
-.row-cols-4 > .col{
-    width: 25%;
-}
-.row-cols-5 > .col{
-    width: 20%;
-}
-.row-cols-6 > .col{
-    width: 16.666666%;
-}
-@media screen and (min-width:768px){
-.row-cols-md-1 > .col{
-    width: 100%;
-}
-.row-cols-md-2 > .col{
-    width: 50%;
-}
-.row-cols-md-3 > .col{
-    width: 33.333333%;
-}
-.row-cols-md-4 > .col{
-    width: 25%;
-}
-.row-cols-md-5 > .col{
-    width: 20%;
-}
-.row-cols-md-6 > .col{
-    width: 16.666666%;
-}
-}
-@media screen and (min-width:1024px){
-.row-cols-lg-1 > .col{
-    width: 100%;
-}
-.row-cols-lg-2 > .col{
-    width: 50%;
-}
-.row-cols-lg-3 > .col{
-    width: 33.333333%;
-}
-.row-cols-lg-4 > .col{
-    width: 25%;
-}
-.row-cols-lg-5 > .col{
-    width: 20%;
-}
-.row-cols-lg-6 > .col{
-    width: 16.666666%;
-}
-}
-@media screen and (min-width:1200px){
-.row-cols-xl-1 > .col{
-    width: 100%;
-}
-.row-cols-xl-2 > .col{
-    width: 50%;
-}
-.row-cols-xl-3 > .col{
-    width: 33.333333%;
-}
-.row-cols-xl-4 > .col{
-    width: 25%;
-}
-.row-cols-xl-5 > .col{
-    width: 20%;
-}
-.row-cols-xl-6 > .col{
-    width: 16.666666%;
-}
-}

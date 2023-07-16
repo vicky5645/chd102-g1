@@ -7,6 +7,8 @@ main:has(.productIndex){
     justify-content: space-between;
     // max-width: 1200px;
 }
+$topBarheight: 44px;
+//商品分類標題、container標題、搜尋框高度
 .productIndex {
     a { 
         color: #012840;
@@ -17,7 +19,7 @@ main:has(.productIndex){
         h3 {
             color: #7AACBF;
             margin-bottom: 10px;
-            height: 44px;
+            height: $topBarheight;
         }
     
         .categoryItem {
@@ -45,7 +47,7 @@ main:has(.productIndex){
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 44px;
+            height: $topBarheight;
             margin-bottom: 10px;
             h2 {
                 color: #012840;
@@ -53,8 +55,8 @@ main:has(.productIndex){
                 line-height: 36px;
             }
             .searchBar {
-                width: 300px;
-                height: 44px;
+                width: calc(33.333333% - var(--gs-gap));
+                height: 100%;
                 display: flex;
                 border-radius: 7px;
                 border: 1px solid #D1D5DB;
@@ -64,7 +66,8 @@ main:has(.productIndex){
                 input[type="search"] {
                     background-color: unset;
                     width: 100%;
-                    font-size: 20px;
+                    height: 100%;
+              font-size: 20px;
                     padding: 12px;
                     border: none;
     
@@ -99,7 +102,7 @@ main:has(.productIndex){
     }
     
     .card{
-        width: 260px;
+        width: auto;
         padding: 10px;
         border: 1px solid #D1D5DB;
         box-sizing: border-box;
@@ -160,6 +163,6 @@ main:has(.productIndex){
                     content: " $ ";
                 }
             }
-        }
-    }
+        }    }
+
 }

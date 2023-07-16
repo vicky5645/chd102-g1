@@ -85,6 +85,21 @@
     }
 }
 
+@mixin row-cols($num , $breakpoint:null){
+    @for $i from 1 through $num {
+        @if $breakpoint == null {
+            .row-cols-#{$i} > .col {
+            width: (1 / $i) * 100%;
+            }
+        }
+        @else {
+            .row-cols-#{$breakpoint}-#{$i} > .col {
+                width: (1 / $i) * 100%;
+            }
+        }
+    }
+}
+
 
 
 //標題文字
