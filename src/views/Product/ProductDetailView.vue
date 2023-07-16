@@ -1,7 +1,7 @@
 <template>
   <!-- {{ $route.params.id }} -->
   <main class="product_page">
-    <BreadCrumbs detailName="火車懷錶" />
+    <BreadCrumbs v-if="productDataItem" :detailName="productDataItem.title" />
     <div v-if="productData">
       <!-- <ol class="bread_crumbs">
         <i class="fa-solid fa-house"></i>
@@ -10,7 +10,7 @@
         </li>
       </ol> -->
       <div class="back_button">
-          <router-link to="/">
+          <router-link to="/product">
             <i class="fa fa-angle-left" aria-hidden="true"></i> 返回商城
           </router-link>
       </div>
@@ -111,7 +111,6 @@
         </button>
         <transition
           mode="out-in"
-          :name="transitionName"
           enter-active-class="slide-enter-active"
           leave-active-class="slide-leave-active"
           enter-from-class="slide-enter-from"

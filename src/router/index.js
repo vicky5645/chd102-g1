@@ -8,7 +8,7 @@ const routesUser = [
     name: "home",
     component: HomeView,
     meta: {
-      title: "首頁",
+      title: "home",
     },
   },
   {
@@ -69,17 +69,19 @@ const routesUser = [
     // component: OnlineMall
     component: () =>
       import(/* webpackChunkName: "online-mal" */ "@/views/OnlineMall.vue"),
+    meta: { title: '所有商品' }
   },
   {
     path: "/product",
     name: "product",
     component: () => import(/* webpackChunkName: "product" */ "@/views/Product/ProductView.vue"),
-    meta: { title: '商品' }
+    meta: { title: '商城' }
   },
   {
     path: '/productDetail/:id',
-    name: 'productDetail',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/Product/ProductDetailView.vue')
+    name: 'productDetail/:id',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/Product/ProductDetailView.vue'),
+    meta: { title: '物品' }
   },
   {
     path: '/online-booking',
