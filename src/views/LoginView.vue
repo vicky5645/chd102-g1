@@ -34,6 +34,7 @@ export default {
       // 登入驗證邏輯
       // 如果驗證成功，導航到登入成功頁面
       if(this.username === 'test' && this.password === 'test'){
+        this.$store.commit('setName', this.username )
         this.$router.push('/login-success');
       }else{
         this.username = ''

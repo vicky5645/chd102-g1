@@ -1,0 +1,113 @@
+@mixin size($w,$h:$w){
+  width: $w;
+  height: $h;
+}
+@mixin card-shadow(){
+  border-radius: 13px;
+  border: 1px solid map-get($GrayColors, gray5);
+  background: map-get($GrayColors, white);
+  /* 淡陰影 */
+  box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.20);
+}
+@mixin flexCenter(){
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin text-18-md(){
+  /* body/text-18-md */
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 34px; /* 188.889% */
+  letter-spacing: -0.18px;
+}
+
+main:has(.user){
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user{
+  margin: 24px auto;
+  max-width: 1200px;
+  width: 100%;
+  background-color: #a6beaa;
+  .icon {
+    @include size(24px);
+  }
+  @include pad {
+    column-gap: 20px;
+    display: flex;
+  }
+  >aside{
+      display: none;
+      height: 100%;
+      padding: 0;
+      
+      @include pc {
+        background-color: #acbfd1;
+        display: flex;
+        align-items: start;
+        flex-direction: column;
+        row-gap: 20px;
+        .profile-top {
+          width: 100%;
+          height: 220px;
+          @include card-shadow;
+          @include flexCenter;
+          flex-direction: column;
+          @include text-18-md;
+          padding: 16px 0;
+          .avatar {
+            @include size(120px);
+            margin: 16px;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: (120px / 2);
+            }
+          }
+        }
+        .link-list {
+          width: 100%;
+          @include card-shadow;
+          li {
+            list-style: none;
+            padding: 0 16px;
+            min-height: 44px;
+            display: flex;
+            a {
+              display: flex;
+              align-items: center;
+              justify-content: start;
+              column-gap: 20px;
+            }
+            &:hover,&:active{
+              background-color: rgba(#B3CEE2,30%);
+            }
+          }
+        }
+      }
+  }
+  >main{
+    padding: 8px 16px;
+    height: 100%;
+    @include card-shadow;
+    display: flex;
+    row-gap: 16px;
+    .settings {
+      width: 100%;
+      // background-color: gold;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      row-gap: 16px;
+    }
+    hr {
+      width: 100%;
+      border: 1px solid map-get($BrandColors, Secondary);
+    }
+  }
+}

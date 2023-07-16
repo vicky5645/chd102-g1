@@ -17,14 +17,24 @@
         <router-link to="/product-details">商品內頁</router-link>
         <router-link to="/product">商品</router-link>
         <router-link to="/online-booking">線上訂票</router-link>
+        <router-link to="/user">會員專區</router-link> 
       </div>
       <router-link to="/cart" class="chrt"
         ><i class="fa fa-shopping-cart" aria-hidden="true"></i
       ></router-link>
-      <router-link to="/login" class="login">登入/註冊</router-link>
-      <!-- <div class="ham"></div> -->
+      <router-link to="/login" class="login">{{ $store.state.name }}</router-link>
+      <!-- <div class="ham" @click="openSidebar = true">open</div> -->
     </nav>
   </header>
 </template>
 
 <style scoped lang="scss"></style>
+
+<script>
+export default {
+  data() {
+    return {
+    }
+  },
+}
+</script>

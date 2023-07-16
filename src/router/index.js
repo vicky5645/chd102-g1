@@ -106,6 +106,24 @@ const routesUser = [
     component: () =>
       import(/* webpackChunkName: "login" */ "@/views/LoginView.vue"),
   },
+  {
+    path: '/user',
+    component: () => import(/* webpackChunkName: "" */ '@/views/User/UserIndex.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserLink.vue'),
+      },
+      {
+        path: '/user/info',
+        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserInfo.vue'),
+      },
+      {
+        path: '/user/order',
+        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserOrder.vue'),
+      }
+    ]
+  },
 ];
 
 const router = createRouter({
