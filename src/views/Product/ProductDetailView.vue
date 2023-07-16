@@ -19,7 +19,7 @@
         <div class="product_data_left">
 
         <div class="big_pic">
-          <img :src="productDataItem.image" :alt="productDataItem.title">
+          <img :src="bigPic" :alt="productDataItem.title">
         </div>
         <div class="small_pic_list">
           <div
@@ -92,7 +92,7 @@
         </button>
 
         <div class="txt_block" v-show="selectedTab === 'Tab1'">
-          {{ productDataItem.description }}
+          <p v-for="text in productDataItem.description" :key="text">{{ text }}</p>
         </div>
 
         <div class="txt_block" v-show="selectedTab === 'Tab2'">
@@ -100,6 +100,7 @@
         </div>
       </section>
       <!-- 推薦商品 -->
+      <!-- <img src="/images/img/project/2.jpg" alt=""> -->
       <h3>推薦商品</h3>
       <section class="recommended_product">
         <button class="left" @click="previousProducts">
@@ -108,9 +109,9 @@
         <button class="right" @click="nextProducts">
           <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </button>
-
         <transition
           mode="out-in"
+          :name="transitionName"
           enter-active-class="slide-enter-active"
           leave-active-class="slide-leave-active"
           enter-from-class="slide-enter-from"
@@ -118,7 +119,7 @@
         >
           <div :class="['product_list', slideDirection]" :key="productsKey">
             <a
-              v-for="product in currentProducts"
+            v-for="product in currentProducts"
               :key="product.name"
               href="#"
             >
@@ -148,6 +149,24 @@ export default {
     return {
       productData: null,
       productDataItem: [],
+      // 麵包屑
+      breadCrumbs: [
+        {
+          index: "商城",
+          link: "index.html",
+          color: "color:#9CA3AF;",
+        },
+        {
+          index: "物品",
+          link: "detail.html",
+          color: "color:#9CA3AF;",
+        },
+        {
+          index: "火車懷錶",
+          link: "#",
+          color: "color:#F29C50;",
+        },
+      ],
       // 數量初始值
       quantity: 1,
 
@@ -156,8 +175,8 @@ export default {
       buttons: ["規格1", "規格2"],
 
       // 點擊小圖換大圖
-      bigPic: "/images/product-img/1.png",
-      smallPics: ["/images/product-img/2.png", "/images/product-img/3.png", "/images/product-img/4.png"],
+      bigPic: "",
+      smallPics: ["/images/img/ProductDetails/p2.png", "/images/img/ProductDetails/p3.png", "/images/img/ProductDetails/p4.png"],
 
       // content 區塊切換
       selectedTab: "Tab1", 
@@ -177,35 +196,35 @@ export default {
       allProducts: [
         {
           name: "小黃復古拍立得",
-          image: "/images/product-img/project/1.jpg",
+          image: "/images/img/project/1.jpg",
         },
         {
           name: "泥漿去角質霜",
-          image: "/images/product-img/project/2.jpg",
+          image: "/images/img/project/2.jpg",
         },
         {
           name: "真的皮的復古皮鞋",
-          image: "/images/product-img/project/3.jpg",
+          image: "/images/img/project/3.jpg",
         },
         {
           name: "大地色包包",
-          image: "/images/product-img/project/4.jpg",
+          image: "/images/img/project/4.jpg",
         },
         {
           name: "可站立復古拍立得(黑)",
-          image: "/images/product-img/project/5.jpg",
+          image: "/images/img/project/5.jpg",
         },
         {
           name: "森林系後背包",
-          image: "/images/product-img/project/6.jpg",
+          image: "/images/img/project/6.jpg",
         },
         {
           name: "可站立復古拍立得(白)",
-          image: "/images/product-img/project/7.jpg",
+          image: "/images/img/project/7.jpg",
         },
         {
           name: "青春活力勾勾籃球鞋",
-          image: "/images/product-img/project/8.jpg",
+          image: "/images/img/project/8.jpg",
         },
       ],
       currentProducts: [],
@@ -219,7 +238,9 @@ export default {
     .then(json=>{
       this.productData = json;
       this.productDataItem = this.productData[`${parseFloat(this.$route.params.id)-1}`];
-    })
+      this.bigPic = this.productDataItem.image;
+    });
+    this.currentProducts = this.allProducts.slice(0, 4); // 初始化 currentProducts
   },
   methods: {
     // 規格按鈕
@@ -249,7 +270,7 @@ export default {
 
     // 推薦商品
     nextProducts() {
-      if (this.productsKey < this.allProducts.length / 4 - 1) {
+      if (this.productsKey < Math.ceil(this.allProducts.length / 4) - 1) {
         this.productsKey++;
         this.slideDirection = "slide-right";
         this.currentProducts = this.allProducts.slice(
@@ -267,9 +288,9 @@ export default {
           this.productsKey * 4 + 4
         );
       }
-    },
+    }
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
