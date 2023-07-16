@@ -33,7 +33,12 @@ export default {
     login() {
       // 登入驗證邏輯
       // 如果驗證成功，導航到登入成功頁面
-      this.$router.push('/login-success');
+      if(this.username === 'test' && this.password === 'test'){
+        this.$router.push('/login-success');
+      }else{
+        this.username = ''
+        this.password = ''
+      }
     },
     goToRegister() {
       // 導航到註冊頁面
