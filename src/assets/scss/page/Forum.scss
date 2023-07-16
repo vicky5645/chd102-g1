@@ -1,5 +1,395 @@
 // 論壇
-.Forum {
-  background-color: #abc;
-  p {color: blue}
+
+main.Forum {
+  // margin: 0 20px;
+  height: 100%;
+  padding: 20px 20px;
+  // position: relative;
+
+  .button_and_search {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .button_list {
+      display: flex;
+      gap: 20px;
+
+      button {
+        flex-grow: 1;
+        padding: 10px 24px;
+        border-radius: 7px;
+        border: 2px solid var(--brand-colors-primary, #f29c50);
+
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--brand-colors-primary, #f29c50);
+      }
+
+      .selected-button {
+        background-color: var(--brand-colors-primary, #f29c50);
+        color: #fff;
+      }
+    }
+
+    .search_bar {
+      display: flex;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+
+      input {
+        margin-bottom: 0;
+        padding: 12px;
+        border: 2px solid var(--brand-colors-primary, #f29c50);
+        flex-grow: 1;
+
+        // 外框線 沒效果但移除預設樣式了
+        &:focus {
+          outline: 4px solid var(--brand-colors-primary, #f29c50);
+        }
+      }
+      button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+
+        padding: 0 12px;
+        background-color: var(--brand-colors-primary, #f29c50);
+        border: none;
+        font-size: 16px;
+        color: #fff;
+      }
+    }
+  }
+
+  // 文章列表
+  .post_list {
+    // display: flex;
+    // flex-direction: column;
+    // gap: 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+    border: 0.5px solid #ccc;
+    background: #fff;
+
+    .post_content {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+
+      .avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        overflow: hidden;
+        img {
+          width: 100%;
+          vertical-align: top;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .name_and_data {
+        flex-grow: 1;
+        margin-left: 12px;
+        .name {
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 20px;
+        }
+
+        .data {
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 20px;
+          color: var(--gray-5, #9ca3af);
+        }
+      }
+
+      .post_more {
+        border: none;
+        background-color: #fff;
+      }
+    }
+
+    .post_pic {
+      margin-bottom: 12px;
+      img {
+        width: 100%;
+        vertical-align: top;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .post_title {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 28px;
+      margin: 0 16px;
+      margin-bottom: 8px;
+    }
+
+    .post_txt {
+      margin-bottom: 0;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22px;
+      margin: 0 16px;
+      padding-bottom: 12px;
+      box-shadow: 0px -1px 0px 0px var(--gray-6, #d1d5db) inset;
+    }
+
+    .button_list {
+      margin: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+
+      button {
+        display: inline-flex;
+        align-items: center;
+        border: none;
+        background: var(--white, #fff);
+        // txt
+        color: var(--secondary-1, #012840);
+
+        span {
+          font-size: 18px;
+          font-weight: 500;
+          margin-left: 8px;
+        }
+      }
+
+      // .b_like {}
+
+      // .b_message {}
+
+      .b_share {
+        position: relative;
+
+        .share_list {
+          display: flex;
+          gap: 12px;
+          padding: 12px;
+          background-color: rgba(255, 255, 255, 0.8);
+          box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.2);
+          border-radius: 8px;
+          border: 1px solid var(--gray-colors-gray-5, #9ca3af8f);
+
+          position: absolute;
+          bottom: 115%;
+          right: 0;
+        }
+      }
+    }
+  }
+
+  //文章詳細視窗
+  .post_modal {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    overflow-y: scroll;
+    padding: 20px;
+
+    .post_content {
+      // padding: 12px 16px;
+      display: flex;
+      align-items: center;
+
+      .b_close {
+        border: none;
+        background-color: #fff;
+        margin-right: 12px;
+      }
+
+      .avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        overflow: hidden;
+        img {
+          width: 100%;
+          vertical-align: top;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .name_and_data {
+        flex-grow: 1;
+        margin-left: 12px;
+        .name {
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 20px;
+        }
+
+        .data {
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 20px;
+          color: var(--gray-5, #9ca3af);
+        }
+      }
+
+      .post_more {
+        border: none;
+        background-color: #fff;
+      }
+    }
+
+    .post_pic {
+      margin-top: 12px;
+      margin-bottom: 12px;
+      img {
+        width: 100%;
+        vertical-align: top;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .post_title {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 28px;
+      margin: 0 16px;
+      margin-bottom: 8px;
+    }
+
+    .post_txt {
+      margin-bottom: 0;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22px;
+      margin: 0 16px;
+      padding-bottom: 12px;
+      box-shadow: 0px -1px 0px 0px var(--gray-6, #d1d5db) inset;
+    }
+
+    .button_list {
+      padding: 12px 0;
+      margin: 0 16px;
+      display: flex;
+      justify-content: space-between;
+      box-shadow: 0px -1px 0px 0px var(--gray-6, #d1d5db) inset;
+
+      button {
+        display: inline-flex;
+        align-items: center;
+        border: none;
+        background: var(--white, #fff);
+        // txt
+        color: var(--secondary-1, #012840);
+
+        span {
+          font-size: 18px;
+          font-weight: 500;
+          margin-left: 8px;
+        }
+      }
+
+      .b_share {
+        position: relative;
+
+        .share_list {
+          display: flex;
+          gap: 12px;
+          padding: 12px;
+          background-color: rgba(255, 255, 255, 0.8);
+          box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.2);
+          border-radius: 8px;
+          border: 1px solid var(--gray-colors-gray-5, #9ca3af8f);
+
+          position: absolute;
+          bottom: 115%;
+          right: 0;
+        }
+      }
+    }
+
+    .talk_bar {
+      display: flex;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      margin: 12px 16px;
+
+      input {
+        margin-bottom: 0;
+        padding: 12px;
+        border: 2px solid var(--brand-colors-primary, #f29c50);
+        flex-grow: 1;
+
+        // 外框線 沒效果但移除預設樣式了
+        &:focus {
+          outline: 4px solid var(--brand-colors-primary, #f29c50);
+        }
+      }
+      button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+
+        padding: 0 12px;
+        background-color: var(--brand-colors-primary, #f29c50);
+        border: none;
+        font-size: 16px;
+        color: #fff;
+      }
+    }
+
+    .message_list {
+      margin: 0 16px;
+
+      .message_list_row {
+        display: flex;
+        gap: 12px;
+        box-shadow: 0px -1px 0px 0px #dddfe4 inset;
+        padding-top: 8px;
+        padding-bottom: 12px;
+
+        .message_avatar_name {
+          display: flex;
+          width: 88px;
+          gap: 8px;
+          flex-shrink: 0;
+
+          .message_avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+
+            img {
+              width: 100%;
+              vertical-align: top;
+            }
+          }
+
+          .message_name {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 40px;
+          }
+        }
+
+        .message_txt {
+          color: var(--gray-5, #9ca3af);
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 22px;
+          margin-top: 8px;
+        }
+      }
+    }
+  }
 }

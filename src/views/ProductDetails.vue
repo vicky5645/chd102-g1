@@ -10,7 +10,14 @@
     </ol> -->
 
     <div class="back_button">
-        <a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i> 返回商城</a>
+      <!-- <a href="#"
+        ><i class="fa fa-angle-left" aria-hidden="true"></i> 返回商城</a
+      > -->
+      <!-- BUG 連到商城，但看起來是空白的 -->
+      <router-link to="/OnlineMall"
+        ><i class="fa fa-angle-left" aria-hidden="true"></i>
+        返回公告</router-link
+      >
     </div>
 
     <section class="product_data">
@@ -37,11 +44,12 @@
           <div class="price">售價 NT$ 1200</div>
         </div>
         <div class="type_and_like">
-          <div class="type">選擇商品規格</div>
+          <!-- <div class="type">選擇商品規格</div> -->
+          <div class="type">選擇購買數量</div>
           <button class="like">加入收藏</button>
         </div>
 
-        <div class="type_button_list">
+        <!-- <div class="type_button_list">
           <button
             v-for="button in buttons"
             :key="button"
@@ -51,9 +59,9 @@
           >
             {{ button }}
           </button>
-        </div>
+        </div> -->
 
-        <div class="quantity_txt">購買數量</div>
+        <!-- <div class="quantity_txt">購買數量</div> -->
 
         <!-- 加減按鈕 -->
         <div class="quantity_button">
@@ -103,6 +111,7 @@
       <button class="left" @click="previousProducts">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
       </button>
+
       <button class="right" @click="nextProducts">
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </button>
@@ -116,13 +125,11 @@
         leave-to-class="slide-leave-to"
       >
         <div :class="['product_list', slideDirection]" :key="productsKey">
-          <a
-            v-for="product in currentProducts"
-            :key="product.name"
-            href="#"
-          >
+          <a v-for="product in currentProducts" :key="product.name" href="#">
             <div class="product">
-              <img :src="product.image" :alt="product.name" />
+              <div class="product_pic">
+                <img :src="product.image" :alt="product.name" />
+              </div>
               <p>{{ product.name }}</p>
             </div>
           </a>
@@ -133,10 +140,10 @@
 </template>
 
 <script>
-import BreadCrumbs from '@/components/BreadCrumbs.vue'
+import BreadCrumbs from "@/components/BreadCrumbs.vue";
 export default {
   components: {
-    BreadCrumbs
+    BreadCrumbs,
   },
   data() {
     return {
@@ -167,10 +174,14 @@ export default {
 
       // 點擊小圖換大圖
       bigPic: require("../assets/images/img/ProductDetails/p1.png"),
-      smallPics: [require("../assets/images/img/ProductDetails//p2.png"), require("../assets/images/img/ProductDetails//p3.png"), require("../assets/images/img/ProductDetails//p4.png")],
+      smallPics: [
+        require("../assets/images/img/ProductDetails//p2.png"),
+        require("../assets/images/img/ProductDetails//p3.png"),
+        require("../assets/images/img/ProductDetails//p4.png"),
+      ],
 
       // content 區塊切換
-      selectedTab: "Tab1", 
+      selectedTab: "Tab1",
       tab1_content: [
         "懷錶，這個由過去走進現在的獨特鐘錶，與火車之間有著深厚的歷史聯繫。在鐵路早期，火車司機們都需要一個準確的時間工具來確保列車的準時運行，而懷錶就是這個工具的最佳選擇。",
         "我們的火車懷錶就是這種歷史情懷的象徵，它巧妙地將古典風格與現代功能結合在一起。錶殼由堅固的不銹鋼製成，既耐用又具有視覺吸引力。白色的錶面上，有著樸實的黑色羅馬數字時間標記，體現出簡約而古典的美感。懷錶內部裝有精密的機械運作系統，保證時間的準確無誤。",
@@ -226,7 +237,7 @@ export default {
   },
   // 推薦商品
   created() {
-        this.currentProducts = this.allProducts.slice(0, 4);
+    this.currentProducts = this.allProducts.slice(0, 4);
   },
   methods: {
     // 規格按鈕
@@ -276,9 +287,8 @@ export default {
       }
     },
   },
-}
+};
 </script>
-
 
 <style lang="scss" scoped>
 // .bread_crumbs {

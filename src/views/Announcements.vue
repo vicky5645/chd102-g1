@@ -31,16 +31,20 @@
         </button>
       </div>
       <div class="search_bar">
-        <input type="search" placeholder="輸入關鍵字查詢" />
-        <button>搜尋</button>
+        <input
+          v-model="searchText"
+          type="search"
+          placeholder="輸入關鍵字查詢"
+        />
+        <button @click="searchArticles">搜尋</button>
       </div>
     </div>
 
-    <template v-for="(article, index) in airticles" :key="index">
-      <!-- move the v-if to the child element -->
+    <template v-if="filteredArticles.length">
       <div
+        v-for="(article, index) in filteredArticles"
+        :key="index"
         class="article_card"
-        v-if="selectedType === '所有' || selectedType === article.type"
       >
         <div class="pic"><img :src="article.image" alt="Article Image" /></div>
         <div class="article_card_txt">
@@ -51,36 +55,16 @@
             {{ article.type }} <span>{{ article.date }}</span>
           </p>
           <h3>{{ article.title }}</h3>
-
           <p class="card_txt_content">{{ article.content }}</p>
-
           <router-link to="/Announcement-details" class="more"
             >查看更多</router-link
           >
         </div>
       </div>
     </template>
-    <!-- <div
-      class="article_card"
-      v-for="(article, index) in airticles"
-      v-if="selectedType === '所有' || selectedType === article.type"
-      :key="index"
-    >
-      <div class="pic"><img :src="article.image" alt="Article Image" /></div>
-      <div class="article_card_txt">
-        <p
-          class="type"
-          :class="article.type === '重要' ? 'important' : 'normal'"
-        >
-          {{ article.type }} <span>{{ article.date }}</span>
-        </p>
-        <h3>{{ article.title }}</h3>
-
-        <p class="card_txt_content">{{ article.content }}</p>
-
-        <router-link to="/announcements" class="more">查看更多</router-link>
-      </div>
-    </div> -->
+    <template v-else>
+      <p class="article_card_no">暫時沒有相關公告，換個關鍵字查查吧😣</p>
+    </template>
   </main>
 </template>
 
@@ -123,21 +107,46 @@ export default {
             "在『漫遊列車之旅』，我們深知旅遊活動對環境的影響，因此我們決心致力於永續旅遊。我們很高興地宣布，我們已經開始進行一項新的計劃，這個計劃旨在降低我們的碳足跡，並支持當地的環保工作。每預訂一個行程，我們將捐出一部分的收益用於植樹活動，以抵消我們的碳排放。同時，我們也正在積極與當地的環保組織合作，提供更多的支援和幫助。我們期待您的參與，一起為了更美好的地球做出努力！",
         },
       ],
-      // 按鈕
+      // 分類按鈕
       selectedType: "所有",
+      // 搜尋
+      searchText: "",
+      filteredArticles: [],
+      isSearching: false,
     };
   },
-  // props: {
-  //   article: {
-  //     type: Object,
-  //     required: true,
+  // computed: {
+  //   filteredArticles() {
+  //     if (this.isSearching) {
+  //       return this.airticles.filter(
+  //         (article) =>
+  //           article.title.includes(this.searchText) ||
+  //           article.content.includes(this.searchText)
+  //       );
+  //     } else {
+  //       return this.airticles;
+  //     }
   //   },
   // },
   methods: {
-    // 按鈕
+    // 分類按鈕
     selectType(type) {
       this.selectedType = type;
+      this.searchArticles();
     },
+    // 搜尋
+    searchArticles() {
+      this.isSearching = true;
+      this.filteredArticles = this.airticles.filter(
+        (article) =>
+          (article.title.includes(this.searchText) ||
+            article.content.includes(this.searchText)) &&
+          (this.selectedType === "所有" || this.selectedType === article.type)
+      );
+    },
+  },
+  created() {
+    this.filteredArticles = this.airticles;
   },
 };
 </script>

@@ -84,17 +84,18 @@ const routesUser = [
     meta: { title: '物品' }
   },
   {
-    path: '/online-booking',
-    name: 'online-booking',
-    component: () => import(/* webpackChunkName: "online-booking" */ '@/views/Package.vue'),
+    path: "/online-booking",
+    name: "online-booking",
+    component: () =>
+      import(/* webpackChunkName: "online-booking" */ "@/views/Package.vue"),
     meta: {
       title: "線上訂票",
     },
   },
   {
-    path: '/cart',
-    name: 'cart',
-    component: () => import(/* webpackChunkName: "cart" */ '@/views/Cart.vue'),
+    path: "/cart",
+    name: "cart",
+    component: () => import(/* webpackChunkName: "cart" */ "@/views/Cart.vue"),
     meta: {
       title: "購物車",
     },

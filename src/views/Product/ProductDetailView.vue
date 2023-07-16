@@ -122,10 +122,12 @@
               :key="product.name"
               href="#"
             >
-              <div class="product">
+            <div class="product">
+              <div class="product_pic">
                 <img :src="product.image" :alt="product.name" />
-                <p>{{ product.name }}</p>
               </div>
+              <p>{{ product.name }}</p>
+            </div>
             </a>
           </div>
         </transition>
