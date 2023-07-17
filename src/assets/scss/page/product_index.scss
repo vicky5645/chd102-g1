@@ -4,8 +4,7 @@ main:has(.productIndex){
 }
 .container.productIndex {
     display: flex;
-    justify-content: space-between;
-    // max-width: 1200px;
+    flex-direction: column;
 }
 $topBarheight: 44px;
 //商品分類標題、container標題、搜尋框高度
@@ -15,11 +14,13 @@ $topBarheight: 44px;
         text-decoration: none;
     }
     .category {
-        width: 30%;
+        width: 100%;
         h3 {
             color: #7AACBF;
             margin-bottom: 10px;
             height: $topBarheight;
+            font-size: 20px;
+            line-height: $topBarheight;
         }
     
         .categoryItem {
@@ -27,36 +28,44 @@ $topBarheight: 44px;
             border: 1px solid #D1D5DB;
             border-radius: 7px;
             box-sizing: border-box;
+            // display: none;
     
             li {
+                position: relative;
                 padding: 10px;
                 display: flex;
                 justify-content: space-between;
                 cursor: pointer;
-    
-                &:hover {
-                    background-color: #b1cde233;
+                + li::before{
+                    position: absolute;
+                    content: "";
+                    width: 100%;
+                    left: 0;
+                    top: 0;
+                    border-bottom: 1px solid #D1D5DB;
                 }
             }
         }
     }
     
     .product {
-        width: 68.333333%;
+        width: 100%;
         .topBar {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: $topBarheight;
+            flex-direction: column;
+            align-items: flex-start;
+            height: auto;
             margin-bottom: 10px;
             h2 {
                 color: #012840;
                 font-size: 32px;
                 line-height: 36px;
+                order: 1;
+                margin-top: 16px;
             }
             .searchBar {
-                width: calc(33.333333% - var(--gs-gap));
-                height: 100%;
+                width: 100%;
+                height: $topBarheight;
                 display: flex;
                 border-radius: 7px;
                 border: 1px solid #D1D5DB;
@@ -67,7 +76,7 @@ $topBarheight: 44px;
                     background-color: unset;
                     width: 100%;
                     height: 100%;
-              font-size: 20px;
+                    font-size: 20px;
                     padding: 12px;
                     border: none;
     
@@ -88,11 +97,6 @@ $topBarheight: 44px;
                     font-size: 0;
                     cursor: pointer;
     
-                    &:hover i {
-                        color: #F29C50;
-                        transform: scale(1.1);
-                    }
-    
                     i {
                         font-size: 24px;
                     }
@@ -109,11 +113,6 @@ $topBarheight: 44px;
         border-radius: 7px;
         background-color: #fff;
         box-shadow: 10px #00000033;
-        &:hover{
-            transform: scale(1.02);
-            transition: .2s;
-            box-shadow: 2px 2px 10px #00000033;
-        }
         .cradPic{
             border-radius: 7px;
             border: 1px solid #D1D5DB;
@@ -163,6 +162,67 @@ $topBarheight: 44px;
                     content: " $ ";
                 }
             }
-        }    }
+        }    
+    }
+}
 
+
+//斷點: min-width:768px
+@include pad {
+    .container.productIndex {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .productIndex {
+        .category {
+            width: 30%;
+
+            .categoryItem {
+                display: block;
+        
+                li {
+                    &:hover {
+                        background-color: #b1cde233;
+                    }
+                    + li::before{
+                        display: none;
+                    }
+                }
+            }
+        }
+        
+        .product {
+            width: 68.333333%;
+            .topBar {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                height: $topBarheight;
+                h2 {
+                    order: 0;
+                    margin-top: 0;
+                }
+                .searchBar {
+                    width: calc(33.333333% - var(--gs-gap));
+                    height: 100%;
+        
+                    button {
+                        &:hover i {
+                            color: #F29C50;
+                            transform: scale(1.1);
+                        }
+                    }
+                }
+            }
+        }
+        
+        .card{
+            &:hover{
+                transform: scale(1.02);
+                transition: .2s;
+                box-shadow: 2px 2px 10px #00000033;
+            }  
+        }
+    }
 }
