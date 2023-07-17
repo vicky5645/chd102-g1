@@ -17,6 +17,7 @@
         <router-link to="/product-details">商品內頁</router-link>
         <router-link to="/product">商品</router-link>
         <router-link to="/online-booking">線上訂票</router-link>
+        <router-link to="/booking-info">訂票資訊</router-link>
       </div>
       <router-link to="/cart" class="chrt"
         ><i class="fa fa-shopping-cart" aria-hidden="true"></i

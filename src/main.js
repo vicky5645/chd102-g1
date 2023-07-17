@@ -1,9 +1,10 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import { register } from "swiper/element/bundle";
 
-import '@/assets/scss/style.scss';
+import "@/assets/scss/style.scss";
 
 // package
 // import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
@@ -14,4 +15,4 @@ import '@/assets/scss/style.scss';
 // Vue.use(BootstrapVue)
 // Vue.use(BootstrapVueIcons)
 
-createApp(App).use(store).use(router).mount('#app')
+createApp(App).use(register).use(store).use(router).mount("#app");
