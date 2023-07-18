@@ -19,12 +19,18 @@
         <router-link to="/online-booking">線上訂票</router-link>
       </div>
       <router-link to="/cart" class="chrt"
-        ><i class="fa fa-shopping-cart" aria-hidden="true"></i
-      ></router-link>
-      <router-link to="/login" class="login">登入/註冊</router-link>
+      ><i class="fa fa-shopping-cart" aria-hidden="true"></i
+        ></router-link>
+        <router-link to="/login" class="login">
+          {{ $store.state.name }}
+          
+          登入/註冊</router-link>
       <!-- <div class="ham"></div> -->
     </nav>
   </header>
 </template>
 
 <style scoped lang="scss"></style>
+
+<script>
+</script>
