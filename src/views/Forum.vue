@@ -4,8 +4,8 @@
     <!-- 頁面標題 -->
     <div class="button_and_search">
       <div class="button_list">
-        <button class="selected-button">所有</button>
-        <button>熱門</button>
+        <button class="selected_button">所有</button>
+        <button class="hot_button">熱門</button>
       </div>
 
       <div class="search_bar">
@@ -29,10 +29,6 @@
           <div class="name">{{ post.name }}</div>
           <div class="data">{{ post.data }}</div>
         </div>
-
-        <button class="post_more">
-          <img src="../assets/images/img/Forum/more_dots.svg" alt="" />
-        </button>
       </div>
 
       <div class="post_pic"><img :src="post.image" alt="Post Image" /></div>
@@ -88,9 +84,16 @@
           <div class="data">{{ selectedPost.data }}</div>
         </div>
 
-        <button class="post_more">
-          <img src="../assets/images/img/Forum/more_dots.svg" alt="" />
-        </button>
+        <!-- 檢舉/刪除按鈕 -->
+        <div class="post_more_block">
+          <button class="post_more" @click.stop="toggleMenu" ref="button">
+            <img src="../assets/images/img/Forum/more_dots.svg" alt="" />
+          </button>
+          <div v-show="showMenu" class="popup_content" ref="menu">
+            <button @click="toggleDelete">刪除文章</button>
+            <button @click="toggleReport">檢舉文章</button>
+          </div>
+        </div>
       </div>
 
       <div class="post_pic">
@@ -154,6 +157,31 @@
           <div class="message_txt">{{ message.txt }}</div>
         </div>
       </div>
+
+      <!-- 刪除文章視窗 -->
+      <div v-if="showDeleteModal">
+        <div class="modal-overlay"></div>
+        <div class="modal">
+          <div class="modal_title">您確定要刪除此文章嗎？</div>
+          <div class="modal_button_list">
+            <button @click="confirmDelete" class="b_sure">確定</button>
+            <button @click="cancelDelete">取消</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 檢舉文章視窗 -->
+      <div v-if="showReportModal">
+        <div class="modal-overlay"></div>
+
+        <div class="modal">
+          <div class="modal_title">您確定要檢舉此文章嗎？</div>
+          <div class="modal_button_list">
+            <button @click="confirmReport" class="b_sure">確定</button>
+            <button @click="cancelReport">取消</button>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </template>
@@ -179,8 +207,8 @@ export default {
         {
           id: 2,
           avatar: require("../assets/images/img/Forum/ava1.png"),
-          data: "6/23 20:38",
-          name: "Lily",
+          data: "6/17 15:22",
+          name: "Aric",
           image: require("../assets/images/img/Forum/f2.jpg"),
           title: "蒸汽火車與手工藝品的完美結合",
           content:
@@ -192,8 +220,8 @@ export default {
         {
           id: 3,
           avatar: require("../assets/images/img/Forum/ava1.png"),
-          data: "6/23 20:38",
-          name: "Lily",
+          data: "6/6 09:17",
+          name: "Amy",
           image: require("../assets/images/img/Forum/f3.jpg"),
           title: "永續旅遊的承諾",
           content:
@@ -205,8 +233,8 @@ export default {
         {
           id: 4,
           avatar: require("../assets/images/img/Forum/ava1.png"),
-          data: "6/23 20:38",
-          name: "Lily",
+          data: "6/1 18:50",
+          name: "Beeeeee",
           image: require("../assets/images/img/Forum/f4.jpg"),
           title: "美食與美景的雙重享受",
           content:
@@ -248,9 +276,15 @@ export default {
       searchText: "",
       filteredPosts: [],
 
-      // 分享
+      // 檢舉
+      showMenu: false, // 控制菜单的显示或隐藏
+      // 檢舉選單
+      showMenu: false,
+      showDeleteModal: false,
+      showReportModal: false,
     };
   },
+
   methods: {
     // 按讚文章
     likePost(post) {
@@ -292,11 +326,59 @@ export default {
     togglePopup(post) {
       post.showPopup = !post.showPopup;
     },
+
+    // 檢舉文章
+    toggleMenu() {
+      this.showMenu = !this.showMenu; // 切换菜单的显示或隐藏
+    },
+
+    // 檢舉選單
+    toggleDelete() {
+      this.showDeleteModal = true;
+      this.showMenu = false;
+    },
+    toggleReport() {
+      this.showReportModal = true;
+      this.showMenu = false;
+    },
+    handleClickOutside(e) {
+      const menuEl = this.$refs.menu;
+      const buttonEl = this.$refs.button;
+      // 檢查 menuEl 是否被正確渲染
+      if (
+        menuEl &&
+        menuEl.$el &&
+        !(menuEl.$el.contains(e.target) || buttonEl.$el.contains(e.target))
+      ) {
+        this.showMenu = false;
+      }
+    },
+    confirmDelete() {
+      // 在此處實現刪除文章的邏輯
+      this.showDeleteModal = false;
+    },
+    cancelDelete() {
+      this.showDeleteModal = false;
+    },
+    confirmReport() {
+      // 在此處實現檢舉文章的邏輯
+      this.showReportModal = false;
+    },
+    cancelReport() {
+      this.showReportModal = false;
+    },
   },
 
   mounted() {
     // 當組件被加載時，執行一次搜尋，顯示所有帖子
     this.searchArticles();
+
+    // 檢舉選單
+    document.addEventListener("click", this.handleClickOutside);
+  },
+  beforeDestroy() {
+    // 檢舉選單
+    document.removeEventListener("click", this.handleClickOutside);
   },
 };
 </script>

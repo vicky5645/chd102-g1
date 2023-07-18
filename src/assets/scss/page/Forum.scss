@@ -18,17 +18,25 @@ main.Forum {
       button {
         flex-grow: 1;
         padding: 10px 24px;
-        border-radius: 7px;
-        border: 2px solid var(--brand-colors-primary, #f29c50);
+        border-radius: 8px;
+        border: 2px solid #f29c50;
 
         font-size: 16px;
         font-weight: 500;
-        color: var(--brand-colors-primary, #f29c50);
+        color: #f29c50;
       }
 
-      .selected-button {
-        background-color: var(--brand-colors-primary, #f29c50);
+      .selected_button {
+        background-color: #f29c50;
         color: #fff;
+      }
+
+      .hot_button {
+        transition: all 0.3s ease;
+        &:hover {
+          background-color: #f29c50;
+          color: #fff;
+        }
       }
     }
 
@@ -41,12 +49,12 @@ main.Forum {
       input {
         margin-bottom: 0;
         padding: 12px;
-        border: 2px solid var(--brand-colors-primary, #f29c50);
+        border: 2px solid #f29c50;
         flex-grow: 1;
 
         // 外框線 沒效果但移除預設樣式了
         &:focus {
-          outline: 4px solid var(--brand-colors-primary, #f29c50);
+          outline: 4px solid #f29c50;
         }
       }
       button {
@@ -56,7 +64,7 @@ main.Forum {
         bottom: 0;
 
         padding: 0 12px;
-        background-color: var(--brand-colors-primary, #f29c50);
+        background-color: #f29c50;
         border: none;
         font-size: 16px;
         color: #fff;
@@ -108,11 +116,41 @@ main.Forum {
           color: var(--gray-5, #9ca3af);
         }
       }
+      // .post_more_block {
+      //   position: relative;
+      //   .post_more {
+      //     border: none;
+      //     background-color: #fff;
+      //   }
 
-      .post_more {
-        border: none;
-        background-color: #fff;
-      }
+      //   .popup_content {
+      //     position: absolute;
+      //     display: flex;
+      //     flex-direction: column;
+      //     top: 100%;
+      //     right: 0;
+      //     min-width: 160px;
+      //     padding: 12px 0;
+      //     background-color: rgba(255, 255, 255, 0.8);
+      //     box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.2);
+      //     border-radius: 8px;
+      //     border: 1px solid #9ca3af8f;
+      //     z-index: 1;
+
+      //     button {
+      //       border: none;
+      //       background-color: transparent;
+      //       margin-bottom: 0;
+      //       margin: 4px 0;
+      //       padding: 4px 0;
+      //       font-size: 16px;
+
+      //       &:hover {
+      //         background-color: #9ca3af8f;
+      //       }
+      //     }
+      //   }
+      // }
     }
 
     .post_pic {
@@ -177,7 +215,7 @@ main.Forum {
           background-color: rgba(255, 255, 255, 0.8);
           box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.2);
           border-radius: 8px;
-          border: 1px solid var(--gray-colors-gray-5, #9ca3af8f);
+          border: 1px solid #9ca3af8f;
 
           position: absolute;
           bottom: 115%;
@@ -239,9 +277,44 @@ main.Forum {
         }
       }
 
-      .post_more {
-        border: none;
-        background-color: #fff;
+      // .post_more {
+      //   border: none;
+      //   background-color: #fff;
+      // }
+      .post_more_block {
+        position: relative;
+        .post_more {
+          border: none;
+          background-color: #fff;
+        }
+
+        .popup_content {
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          top: 100%;
+          right: 0;
+          min-width: 160px;
+          padding: 12px 0;
+          background-color: rgba(255, 255, 255, 0.8);
+          box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.2);
+          border-radius: 8px;
+          border: 1px solid #9ca3af8f;
+          z-index: 1;
+
+          button {
+            border: none;
+            background-color: transparent;
+            margin-bottom: 0;
+            margin: 4px 0;
+            padding: 4px 0;
+            font-size: 16px;
+
+            &:hover {
+              background-color: #9ca3af8f;
+            }
+          }
+        }
       }
     }
 
@@ -392,4 +465,61 @@ main.Forum {
       }
     }
   }
+
+  // 刪除文章視窗
+  .modal-overlay {
+    position: fixed; /* Fixed position */
+    z-index: 1; /* Sit on top */
+    left: 0; /* Full width */
+    top: 0; /* Full height */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Black color */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+  }
+
+  .modal {
+    position: fixed;
+    width: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 24px;
+    border: 1px solid #9ca3af;
+    z-index: 2;
+    border-radius: 8px;
+    box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.2);
+
+    .modal_title {
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+
+    .modal_button_list {
+      display: flex;
+      gap: 20px;
+      button {
+        padding: 8px 0;
+        border-radius: 8px;
+        border: 2px solid #f29c50;
+
+        font-size: 16px;
+        font-weight: 500;
+        color: #f29c50;
+        flex-grow: 1;
+        background-color: transparent;
+      }
+
+      .b_sure {
+        color: #9ca3af;
+        border: 2px solid #9ca3af;
+      }
+    }
+  }
+}
+
+@include pad {
 }
