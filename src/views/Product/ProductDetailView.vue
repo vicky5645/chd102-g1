@@ -10,7 +10,7 @@
         </li>
       </ol> -->
       <div class="back_button">
-        <router-link to="/product">
+        <router-link to="/online-mall">
           <i class="fa fa-angle-left" aria-hidden="true"></i> 返回商城
         </router-link>
       </div>
