@@ -30,23 +30,25 @@
           <div v-for="item,index in productDisplay" 
             :key="item.id"
             class="col">
-            <router-link :to="`/productDetail/${item.id}`">
               <div class="card">
-                <div class="cradPic">
-                  <img :src="item.image" :alt="item.title">
-                  <button class="cardFavorite" @click="toggleFavorite(index)">
+                <button class="cardFavorite" @click="toggleFavorite(index)">
                     <i :class="favoriteIcon(index)"></i>
                   </button>
                   <button class="cardCart">
                     <i :class="goodsBtn.cart.i"></i>
                   </button>
+                <router-link :to="`/productDetail/${item.id}`">
+                <div class="cradPic">
+                  <img :src="item.image" :alt="item.title">
                 </div>
+              </router-link>
+              <router-link :to="`/productDetail/${item.id}`">
                 <h3>{{ item.title }}</h3>
+              </router-link>
                 <div class="price">
                   <span>{{ item.price }}</span>
                 </div>
               </div>
-            </router-link>
           </div>
         </div>
         <div v-else-if="tabActive == 2" class="productList row row-cols-lg-3 row-cols-2">
@@ -54,21 +56,23 @@
             :key="item.id"
             class="col">
             <div class="card">
-              <div class="cradPic">
-                <img :src="item.image" :alt="item.title">
-                <button class="cardFavorite" @click="toggleFavorite(index)">
-                  <i :class="favoriteIcon(index)"></i>
-                </button>
-                <button class="cardCart">
-                  <i :class="goodsBtn.cart.i"></i>
-                </button>
-              </div>
-              <router-link :to="`/productDetail/${item.id}`">
-              <h3>{{ item.title }}</h3>
+              <button class="cardFavorite" @click="toggleFavorite(index)">
+                    <i :class="favoriteIcon(index)"></i>
+                  </button>
+                  <button class="cardCart">
+                    <i :class="goodsBtn.cart.i"></i>
+                  </button>
+                <router-link :to="`/productDetail/${item.id}`">
+                <div class="cradPic">
+                  <img :src="item.image" :alt="item.title">
+                </div>
               </router-link>
-              <div class="price">
-                <span>{{ item.price }}</span>
-              </div>
+              <router-link :to="`/productDetail/${item.id}`">
+                <h3>{{ item.title }}</h3>
+              </router-link>
+                <div class="price">
+                  <span>{{ item.price }}</span>
+                </div>
             </div>
           </div>
         </div>
@@ -77,21 +81,23 @@
             :key="item.id"
             class="col" v-show="item.type === '食品'">
             <div class="card">
-              <div class="cradPic">
-                <img :src="item.image" :alt="item.title">
-                <button class="cardFavorite" @click="toggleFavorite(index)">
-                  <i :class="favoriteIcon(index)"></i>
-                </button>
-                <button class="cardCart">
-                  <i :class="goodsBtn.cart.i"></i>
-                </button>
-              </div>
-              <router-link :to="`/productDetail/${item.id}`">
-              <h3>{{ item.title }}</h3>
+              <button class="cardFavorite" @click="toggleFavorite(index)">
+                    <i :class="favoriteIcon(index)"></i>
+                  </button>
+                  <button class="cardCart">
+                    <i :class="goodsBtn.cart.i"></i>
+                  </button>
+                <router-link :to="`/productDetail/${item.id}`">
+                <div class="cradPic">
+                  <img :src="item.image" :alt="item.title">
+                </div>
               </router-link>
-              <div class="price">
-                <span>{{ item.price }}</span>
-              </div>
+              <router-link :to="`/productDetail/${item.id}`">
+                <h3>{{ item.title }}</h3>
+              </router-link>
+                <div class="price">
+                  <span>{{ item.price }}</span>
+                </div>
             </div>
           </div>
         </div>
@@ -100,21 +106,23 @@
             :key="item.id"
             class="col">
             <div class="card">
-              <div class="cradPic">
-                <img :src="item.image" :alt="item.title">
-                <button class="cardFavorite" @click="toggleFavorite(index)">
-                  <i :class="favoriteIcon(index)"></i>
-                </button>
-                <button class="cardCart">
-                  <i :class="goodsBtn.cart.i"></i>
-                </button>
-              </div>
-              <router-link :to="`/productDetail/${item.id}`">
-              <h3>{{ item.title }}</h3>
+              <button class="cardFavorite" @click="toggleFavorite(index)">
+                    <i :class="favoriteIcon(index)"></i>
+                  </button>
+                  <button class="cardCart">
+                    <i :class="goodsBtn.cart.i"></i>
+                  </button>
+                <router-link :to="`/productDetail/${item.id}`">
+                <div class="cradPic">
+                  <img :src="item.image" :alt="item.title">
+                </div>
               </router-link>
-              <div class="price">
-                <span>{{ item.price }}</span>
-              </div>
+              <router-link :to="`/productDetail/${item.id}`">
+                <h3>{{ item.title }}</h3>
+              </router-link>
+                <div class="price">
+                  <span>{{ item.price }}</span>
+                </div>
             </div>
           </div>
         </div>

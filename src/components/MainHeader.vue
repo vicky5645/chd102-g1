@@ -16,6 +16,8 @@
         <!-- <router-link to="/online-mall">線上商城</router-link> -->
         <router-link to="/online-mall">線上商城</router-link>
         <router-link to="/online-booking">線上訂票</router-link>
+        <router-link to="/test-se">test-se</router-link>
+        <router-link to="/booking-info">訂票資訊</router-link>
       </div>
       <router-link to="/cart" class="chrt"
       ><i class="fa fa-shopping-cart" aria-hidden="true"></i
