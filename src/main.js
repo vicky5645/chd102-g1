@@ -3,15 +3,14 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// 引入 scss資料夾所有樣式
 import '@/assets/scss/style.scss';
 
-// package
-// import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+// swiper
+import { register } from 'swiper/element/bundle'
 
-// import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap-vue/dist/bootstrap-vue.css'
-
-// Vue.use(BootstrapVue)
-// Vue.use(BootstrapVueIcons)
-
-createApp(App).use(store).use(router).mount('#app')
+const app = createApp(App)
+app.use(store)
+app.use(router)
+app.use(register)
+app.mount('#app')

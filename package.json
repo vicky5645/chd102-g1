@@ -7,8 +7,8 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",
+    "swiper": "^10.0.4",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
