@@ -8,31 +8,31 @@
         <div>麥 大明</div>
       </div>
       <div class="link-list">
-        <li>
-          <router-link to="/user/info">
-            <img class="icon" src="@/assets/images/icon/basic/settings_filled.png" alt="settings-icon">
+        <router-link to="/user/info">
+          <li>
+            <img class="custom-svg" src="@/assets/images/icon/basic/settings.svg" alt="settings-icon">
             <span>帳號設定</span>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/user/order">
-            <img class="icon" src="@/assets/images/icon/basic/settings_filled.png" alt="settings-icon">
+          </li>
+        </router-link>
+        <router-link to="/user/order">
+          <li>
+            <img class="custom-svg" src="@/assets/images/icon/basic/list.svg" alt="list-icon">
             <span>訂單管理</span>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/">
+          </li>
+        </router-link>
+        <router-link to="/">
+          <li>
             <img class="icon" src="@/assets/images/icon/basic/message_writing.png" alt="message-icon">
             <span>論壇訊息</span>
-          </router-link>
-        </li>
+          </li>
+        </router-link>
         
-        <li>
-          <router-link to="/">
+        <router-link to="/">
+          <li>
             <img class="icon" src="@/assets/images/icon/basic/settings_filled.png" alt="settings-icon">
             <span>我的收藏</span>
-          </router-link>
-        </li>
+          </li>
+        </router-link>
       </div>
     </aside>
     <main class="col-12 user-control-content">
@@ -41,9 +41,20 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'YourComponent',
+  mounted() {
+    const script = document.createElement('script');
+    script.src = '/js/svgcolor.js';
+    script.onload = () => {
+      svg_icon('.custom-svg', 'currentColor');
+    };
+    document.body.appendChild(script);
+  },
+};
+</script>
+
 <style lang="scss" scoped>
-* {
-  border: 1px solid #000;
-}
 
 </style>

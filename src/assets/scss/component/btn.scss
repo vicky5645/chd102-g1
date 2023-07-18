@@ -33,8 +33,8 @@ button {
         background-color: darken(map-get($bgColor, error), 20);
       }
     &.disable {
-      background-color: map-get($bgColor, disable);
-      color : #fff;
+      background-color: map-get($GrayColors, disable);
+      color: white;
     }
     }
     &.radius {

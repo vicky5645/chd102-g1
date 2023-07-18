@@ -6,6 +6,9 @@ $btnTextColor : #fff;
 $bg : #333;
 $colbg : #fdf1ad;
 
+
+$hover: red;
+
 $bgColor : (
    primary : rgba(242, 156, 80, 1),
    secondary : rgba(1, 40, 64, 1),
@@ -16,11 +19,11 @@ $bgColor : (
 );
 
 $BrandColors : (
-   primary : #F29C50,
-   secondary1 : #012840,
+   Primary : #F29C50,
+   Secondary1 : #012840,
    Secondary2 : #7AACBF,
-   secondary3 : #F2DAD8,
-   secondary4 : #BEA85C
+   Secondary3 : #F2DAD8,
+   Secondary4 : #BEA85C
 );
 
 $StateColors : (
@@ -31,13 +34,13 @@ $StateColors : (
 );
 
 $GrayColors : (
-   black : #000000,
-   gray1 : #1F2937,
-   gray2 : #012840,
-   gray3 : #4B5563,
-   gray4 : #6B7280,
-   gray5 : #9CA3AF,
-   gray6 : #D1D5DB,
-   gray7 : #F3F4F6,
-   white : #FFFFFF
+   Black : #000000,
+   Gray1 : #1F2937,
+   Gray2 : #012840,
+   Gray3 : #4B5563,
+   Gray4 : #6B7280,
+   Gray5 : #9CA3AF,
+   Gray6 : #D1D5DB,
+   Gray7 : #F3F4F6,
+   White : #FFFFFF
 );

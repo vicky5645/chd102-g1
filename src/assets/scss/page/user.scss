@@ -4,7 +4,7 @@
 }
 @mixin card-shadow(){
   border-radius: 13px;
-  border: 1px solid map-get($GrayColors, gray5);
+  border: 1px solid map-get($GrayColors, Gray5);
   background: map-get($GrayColors, white);
   /* 淡陰影 */
   box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.20);
@@ -27,12 +27,15 @@ main:has(.user){
   display: flex;
   justify-content: center;
   align-items: center;
+  & * {
+    // outline: 1px solid #000;
+    box-sizing: border-box;
+  } 
 }
 .user{
   margin: 24px auto;
   max-width: 1200px;
   width: 100%;
-  background-color: #a6beaa;
   .icon {
     @include size(24px);
   }
@@ -46,7 +49,6 @@ main:has(.user){
       padding: 0;
       
       @include pc {
-        background-color: #acbfd1;
         display: flex;
         align-items: start;
         flex-direction: column;
@@ -73,37 +75,110 @@ main:has(.user){
         .link-list {
           width: 100%;
           @include card-shadow;
-          li {
-            list-style: none;
+          a {
+            color: map-get($BrandColors, Secondary1);
+            text-decoration: none;
             padding: 0 16px;
             min-height: 44px;
             display: flex;
-            a {
-              display: flex;
-              align-items: center;
-              justify-content: start;
-              column-gap: 20px;
-            }
+            transition: all 0.5s;
             &:hover,&:active{
               background-color: rgba(#B3CEE2,30%);
             }
+            &:hover {
+              color: map-get($BrandColors, Secondary2);
+            }
+          }
+          li {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            column-gap: 20px;
           }
         }
       }
   }
   >main{
-    padding: 8px 16px;
+    padding:16px;
     height: 100%;
-    @include card-shadow;
+    border: 1px solid map-get($GrayColors, Gray5);
+    background: map-get($GrayColors, White);
+    /* 淡陰影 */
+    box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.20);
+    @include pad {
+      border-radius: 13px;
+    }
     display: flex;
     row-gap: 16px;
     .settings {
       width: 100%;
-      // background-color: gold;
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
       row-gap: 16px;
+      & .input-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        @include pad {
+          flex: 1;
+          &.long {
+            grid-column: span 2;
+          }
+        }
+        input {
+          min-height: 44px;
+          /* label/text-16-light */
+          font-size: 16px;
+          font-weight: 300;
+          line-height: 20px; /* 125% */
+          padding: 8px 16px;
+        }
+        &.login{ 
+          // width: 500px;
+          position: relative;
+          // margin-top: 50px;
+          & input{
+            &:focus + label,
+            &:valid + label {
+              font-size: $caption;
+              line-height: 20px;
+              transform: translateY(-175%) translateX(8px);
+              color: map-get($BrandColors, Secondary2);
+              background-color: #fff;
+            }
+          }
+          & label {
+            position: absolute;
+            top: 50%;
+            left: 0px;
+            padding-left: 8px;
+            padding-right: 8px;
+            transform: translateY(-75%);
+            color: #000;
+            font-size: 16px;
+            pointer-events: none;
+            transition: all 0.5s;
+            // background-color: gold;
+          }
+        }
+      }
+      .left {
+        display: flex;
+      }
+      .right {
+        display: flex;
+        justify-content: end;
+      }
+      .user-control-content {
+        @include pad {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+        }
+        
+      }
     }
     hr {
       width: 100%;

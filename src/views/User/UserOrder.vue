@@ -1,6 +1,14 @@
 <template>
-  <div>
+  <div class="settings">
     <h4>訂單管理</h4>
-    <router-link to="/user">返回</router-link>
+    <hr>
+    <div class="input-wrap login">
+      <input v-model="username" type="text" placeholder="" required>
+      <label>搜尋</label>
+    </div>
+    <div class="user-control-content">
+    </div>
   </div>
 </template>
+
+<script></script>
