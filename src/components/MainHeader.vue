@@ -13,9 +13,8 @@
         <router-link to="/Announcement-details">公告內頁</router-link>
 
         <router-link to="/forum">論壇</router-link>
+        <!-- <router-link to="/online-mall">線上商城</router-link> -->
         <router-link to="/online-mall">線上商城</router-link>
-        <router-link to="/product-details">商品內頁</router-link>
-        <router-link to="/product">商品</router-link>
         <router-link to="/online-booking">線上訂票</router-link>
       </div>
       <router-link to="/cart" class="chrt"
