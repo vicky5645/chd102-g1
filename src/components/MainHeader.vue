@@ -13,7 +13,6 @@
         <router-link to="/Announcement-details">公告內頁</router-link>
 
         <router-link to="/forum">論壇</router-link>
-        <!-- <router-link to="/online-mall">線上商城</router-link> -->
         <router-link to="/online-mall">線上商城</router-link>
         <router-link to="/online-booking">線上訂票</router-link>
         <router-link to="/user">會員專區</router-link> 
