@@ -25,15 +25,15 @@ export default {
     const getBreadcrumbs = () => {
       const matched = route.matched
       const isHome = () => route.name === 'home'
-      const isProductPage = matched.some(route => route.name === 'product')
+      const isProductPage = matched.some(route => route.name === 'online-mall')
       const isProductDetailPage = matched.some(route => route.name === 'productDetail/:id')
       if (!isHome()) {
         breadcrumbList.value.push({ title: '', path: '/' })
 
         if (isProductPage) {
-          breadcrumbList.value.push({ title: '商城', path: '/product' })
+          breadcrumbList.value.push({ title: '所有商品', path: '/online-mall' })
         } else if (isProductDetailPage) {
-          breadcrumbList.value.push({ title: '商城', path: '/product' })
+          breadcrumbList.value.push({ title: '所有商品', path: '/online-mall' })
           breadcrumbList.value.push({ title: `物品-${props.detailName}`, path: '' })
           if (props.detailName) {
             breadcrumbList.value.push({ title: props.detailName, path: '' })

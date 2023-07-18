@@ -138,7 +138,7 @@ section.package-list {
 
     .sale {
       position: absolute;
-      background-color: map-get($bgColor, warning);
+      background-color: map-get($StateColors, Warning);
       top: 1rem;
       padding: 0.5rem;
       border-radius: 5px;
