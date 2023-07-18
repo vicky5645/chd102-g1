@@ -29,6 +29,7 @@
         
         <router-link to="/">
           <li>
+            <i class="fa-solid fa-heart"></i>
             <img class="icon" src="@/assets/images/icon/basic/settings_filled.png" alt="settings-icon">
             <span>我的收藏</span>
           </li>

@@ -106,6 +106,11 @@ const routesUser = [
       }
     ]
   },
+  {
+    path: '/test-se',
+    name: 'test-se',
+    component: () => import(/* webpackChunkName: "test-se" */ '@/views/TestSe.vue')
+  },
 ];
 
 const router = createRouter({

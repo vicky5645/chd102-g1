@@ -21,7 +21,7 @@
         <input type="date" id="birthdate">
       </div>
       <div class="input-wrap">
-        <label for="phone" class="c aption">電話號碼</label>
+        <label for="phone" class="caption">電話號碼</label>
         <input type="tel" id="phone">
       </div>
       <div class="input-wrap long">

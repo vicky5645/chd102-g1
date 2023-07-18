@@ -23,15 +23,6 @@
   letter-spacing: -0.18px;
 }
 
-main:has(.user){
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  & * {
-    // outline: 1px solid #000;
-    box-sizing: border-box;
-  } 
-}
 .user{
   margin: 24px auto;
   max-width: 1200px;
@@ -132,8 +123,9 @@ main:has(.user){
           /* label/text-16-light */
           font-size: 16px;
           font-weight: 300;
-          line-height: 20px; /* 125% */
+          line-height: 125%;
           padding: 8px 16px;
+          box-sizing: border-box;
         }
         &.login{ 
           // width: 500px;

@@ -5,11 +5,11 @@
       <p>隨時收到獨家優惠</p>
     </div>
     <button class="google-btn" @click=" loginWithGoogle">使用Google帳戶繼續操作</button>
-    <div class="login">
+    <div class="input-wrap login">
       <input v-model="username" type="text" placeholder="" required>
       <label>帳號</label>
     </div>
-    <div class="login">
+    <div class="input-wrap login">
       <input v-model="password" type="text" placeholder="" required>
       <label>密碼</label>
     </div>
@@ -57,37 +57,4 @@ export default {
 
 
 <style lang="scss" scoped>
-.login{ 
-  // width: 500px;
-  position: relative;
-  // margin-top: 50px;
-  & input{
-    /* outline: none; */
-    /* border: none; */
-    width: 100%;
-    // padding: 10px 0;
-    // color: #000;
-    font-size: 16px;
-    /* border-bottom: 1px solid red; */
-    background: none;
-    &:focus + label,
-    &:valid + label {
-      font-size: 12px;
-      transform: translateY(-75%);
-      color: red;
-    }
-  }
-  & label {
-    position: absolute;
-    top: 25%;
-    left: 0;
-    transform: translateY(-25%);
-    color: #000;
-    font-size: 16px;
-    pointer-events: none;
-    transition: all 0.5s;
-    background-color: gold;
-  }
-}
-
 </style>

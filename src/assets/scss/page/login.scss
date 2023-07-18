@@ -1,0 +1,47 @@
+.login-wrap{ 
+  // width: 500px;
+  position: relative;
+  // margin-top: 50px;
+  .input-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    input {
+      min-height: 44px;
+      /* label/text-16-light */
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 125%;
+      padding: 8px 16px;
+      box-sizing: border-box;
+    }
+    &.login{ 
+      // width: 500px;
+      position: relative;
+      // margin-top: 50px;
+      & input{
+        &:focus + label,
+        &:valid + label {
+          font-size: $caption;
+          line-height: 20px;
+          transform: translateY(-175%) translateX(8px);
+          color: map-get($BrandColors, Secondary2);
+          background-color: #fff;
+        }
+      }
+      & label {
+        position: absolute;
+        top: 50%;
+        left: 0px;
+        padding-left: 8px;
+        padding-right: 8px;
+        transform: translateY(-75%);
+        color: #000;
+        font-size: 16px;
+        pointer-events: none;
+        transition: all 0.5s;
+        // background-color: gold;
+      }
+    }
+  }
+}
