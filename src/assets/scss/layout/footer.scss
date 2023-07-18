@@ -1,4 +1,63 @@
-#mainFooter{
-  background-color: map-get($BrandColors, Secondary1);
+#mainFooter {
+
+  background-image:url('/public/images/travel/bg3.png');
+  background-size: cover;
+  background-position: center;
   color: white;
+  font-size: $body;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 100PX;
+
+  // >*{
+  //   outline: 1px solid gold;
+  //   &::after{
+  //     content: attr(class);
+  //   }
+  // }
+
+  & img {}
+
+  .logo {
+    img {
+      width: 200px;
+    }
+
+  }
+
+  >.image-row {
+    margin: 100px 0;
+    // width: 50%;
+
+    @include pc {
+      img {
+        width: 300px;
+      }
+    }
+
+    img {
+
+      width: 100px;
+      height: 95px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+    }
+  }
+
+
+  ul {
+    li {
+      padding: 10px;
+      list-style: none;
+    }
+    i {
+      padding: 10px;
+    }
+
+  }
 }
