@@ -70,6 +70,17 @@ main.Forum {
         color: #fff;
       }
     }
+
+    .new_button_pad {
+      flex-grow: 1;
+      padding: 10px 24px;
+      border-radius: 8px;
+      border: 2px solid #f29c50;
+
+      font-size: 16px;
+      font-weight: 500;
+      color: #f29c50;
+    }
   }
 
   // 文章列表
@@ -178,7 +189,7 @@ main.Forum {
       line-height: 22px;
       margin: 0 16px;
       padding-bottom: 12px;
-      box-shadow: 0px -1px 0px 0px var(--gray-6, #d1d5db) inset;
+      box-shadow: 0px -1px 0px 0px #d1d5db inset;
     }
 
     .button_list {
@@ -190,9 +201,9 @@ main.Forum {
         display: inline-flex;
         align-items: center;
         border: none;
-        background: var(--white, #fff);
+        background: #fff;
         // txt
-        color: var(--secondary-1, #012840);
+        color: #012840;
 
         span {
           font-size: 18px;
@@ -220,6 +231,114 @@ main.Forum {
           position: absolute;
           bottom: 115%;
           right: 0;
+        }
+      }
+    }
+  }
+
+  // 新增文章手機版按鈕
+  .new_button_phone {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid #f29c50;
+    background-color: #fff;
+    box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.2);
+    font-size: 24px;
+    font-weight: 500;
+    color: #f29c50;
+
+    transition: all 0.3s ease;
+    &:hover {
+      background-color: #f29c50;
+      color: #fff;
+    }
+  }
+
+  // 新增文章視窗
+  .post_form {
+    position: fixed;
+    inset: 0;
+    background-color: #fff;
+    overflow-y: scroll;
+    // padding: 20px 0;
+    z-index: 5;
+
+    .post_form_top {
+      display: flex;
+      height: 60px;
+      border-bottom: 1px solid #9ca3af;
+      background: #7aacbf;
+      align-items: center;
+      padding: 0 20px;
+      .post_form_back {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        font-size: 24px;
+        border: none;
+        background-color: transparent;
+      }
+
+      h3 {
+        margin: auto;
+        font-size: 24px;
+      }
+
+      .post_form_submit {
+        padding: 8px 16px;
+        border-radius: 7px;
+        border: 1px solid #012840;
+        background: rgba(255, 255, 255, 0.6);
+
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+    .post_form_content {
+      padding: 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      input {
+        border: 1px solid #a0a0a0;
+        border-radius: 8px;
+        padding: 8px 16px;
+        margin-bottom: 0;
+      }
+
+      .error {
+        background-color: transparent;
+        font-size: 14px;
+        margin-top: -4px;
+        margin-left: 16px;
+        color: #BA0000;
+      }
+
+      .post_form_title {
+      }
+
+      textarea {
+        padding: 8px 16px;
+        border-radius: 8px;
+        height: 56px;
+      }
+
+      .post_form_pic {
+      }
+
+      .pic_preview {
+        width: 100%;
+        img {
+          width: 100%;
+          vertical-align: top;
+          height: 100%;
+          object-fit: cover;
         }
       }
     }

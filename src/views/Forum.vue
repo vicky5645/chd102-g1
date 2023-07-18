@@ -16,6 +16,7 @@
         />
         <button @click="searchArticles">搜尋</button>
       </div>
+      <button class="new_button_pad" @click="showForm = true">新增文章</button>
     </div>
 
     <!-- 文章列表 -->
@@ -65,6 +66,43 @@
             </div>
           </div>
         </button>
+      </div>
+    </div>
+
+    <!-- 新增文章手機版按鈕 -->
+    <button class="new_button_phone" @click="showForm = true">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+    </button>
+
+    <!-- 新增文章視窗 -->
+    <div v-if="showForm" class="post_form">
+      <div class="post_form_top">
+        <button @click="showForm = false" class="post_form_back">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </button>
+        <h3>新增文章</h3>
+        <button @click="submitPost" class="post_form_submit">發布</button>
+      </div>
+      <div class="post_form_content">
+        <input
+          type="text"
+          v-model="title"
+          class="post_form_title"
+          placeholder="輸入文章標題"
+        />
+        <div v-if="titleError" class="error">{{ titleError }}</div>
+
+        <textarea v-model="content" placeholder="輸入文章內容"></textarea>
+        <div v-if="contentError" class="error">{{ contentError }}</div>
+        <input
+          class="post_form_pic"
+          type="file"
+          accept=".jpg,.png"
+          @change="onFileChange"
+        />
+        <div class="pic_preview">
+          <img :src="imagePreview" v-if="imagePreview" />
+        </div>
       </div>
     </div>
 
@@ -187,6 +225,9 @@
 </template>
 
 <script>
+// 新增文章
+import { ref, watch } from "vue";
+
 export default {
   data() {
     return {
@@ -379,6 +420,89 @@ export default {
   beforeDestroy() {
     // 檢舉選單
     document.removeEventListener("click", this.handleClickOutside);
+  },
+
+  // 新增文章
+  setup() {
+    const showForm = ref(false);
+    const title = ref("");
+    const content = ref("");
+    const image = ref(null);
+    const imagePreview = ref(null);
+    const titleError = ref("");
+    const contentError = ref("");
+
+    watch(title, (newValue) => {
+      if (newValue.trim() === "" || newValue.length < 8) {
+        titleError.value = "* 文章標題至少需要8個字符";
+      } else {
+        titleError.value = "";
+      }
+    });
+
+    watch(content, (newValue) => {
+      if (newValue.trim() === "" || newValue.length < 20) {
+        contentError.value = "文章內容至少需要20個字符";
+      } else {
+        contentError.value = "";
+      }
+    });
+
+    const onFileChange = (e) => {
+      const file = e.target.files[0];
+      const fileType = file.type;
+
+      // 驗證文件類型
+      if (fileType !== "image/jpeg" && fileType !== "image/png") {
+        alert("請選擇一個.jpg或.png的圖片文件。");
+        return;
+      }
+
+      // 使用 FileReader 讀取圖片
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        imagePreview.value = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+      image.value = file;
+    };
+
+    const submitPost = () => {
+      if (title.value.trim() === "" || title.value.length < 3) {
+        titleError.value = "文章標題至少需要3個字符且不能為空";
+        return;
+      }
+      if (content.value.trim() === "" || content.value.length < 10) {
+        contentError.value = "文章內容至少需要10個字符且不能為空";
+        return;
+      }
+
+      // 如果有错误，不提交
+      if (titleError.value || contentError.value) {
+        return;
+      }
+
+      // 在此處處理提交後的邏輯，例如將數據發送到伺服器
+      console.log(title.value, content.value, image.value);
+      showForm.value = false;
+      title.value = "";
+      content.value = "";
+      image.value = null;
+      imagePreview.value = null;
+    };
+
+    return {
+      showForm,
+      title,
+      content,
+      image,
+      imagePreview,
+      onFileChange,
+      submitPost,
+      titleError,
+      contentError,
+    };
   },
 };
 </script>
