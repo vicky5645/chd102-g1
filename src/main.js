@@ -1,16 +1,13 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import { register } from "swiper/element/bundle";
 
-// 引入 scss資料夾所有樣式
-import '@/assets/scss/style.scss';
+import "@/assets/scss/style.scss";
 
-// swiper
-import { register } from 'swiper/element/bundle'
-
-const app = createApp(App)
-app.use(store)
-app.use(router)
-app.use(register)
-app.mount('#app')
+const app = createApp(App);
+app.use(store);
+app.use(router);
+app.use(register);
+app.mount("#app");

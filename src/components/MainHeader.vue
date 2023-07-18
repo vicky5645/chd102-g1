@@ -15,9 +15,10 @@
         <router-link to="/forum">論壇</router-link>
         <router-link to="/online-mall">線上商城</router-link>
         <router-link to="/online-booking">線上訂票</router-link>
+        <router-link to="/booking-info">訂票資訊</router-link>
         <router-link to="/user">會員專區
-          <img class="custom-svg" src="@/assets/images/icon/basic/member-login.png" alt="list-icon">
-          <img class="custom-svg" src="@/assets/images/icon/menu/close_big.png" alt="list-icon">
+          <!-- <img class="custom-svg" src="@/assets/images/icon/basic/member-login.png" alt="list-icon">
+          <img class="custom-svg" src="@/assets/images/icon/menu/close_big.png" alt="list-icon"> -->
         </router-link>
       </div>
       <router-link to="/cart" class="chrt"><i class="fa fa-shopping-cart" aria-hidden="true"></i></router-link>
