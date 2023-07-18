@@ -8,8 +8,6 @@ $secondary2: #b3cee2;
 }
 
 section.title {
-  width: 1200px;
-  margin: auto;
   text-align: center;
 
   h1 {
@@ -19,8 +17,8 @@ section.title {
 }
 
 section.spot-filter {
-  width: 1200px;
-  margin: auto;
+  // width: 1200px;
+  // margin: auto;
   background-color: white;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   border-radius: 15px;
@@ -44,6 +42,7 @@ section.spot-filter {
         font-weight: bold;
       }
       .spot-img {
+        cursor: pointer;
         img {
           border-radius: 50%;
           width: 100%;
@@ -78,8 +77,8 @@ section.spot-filter {
 }
 
 section.package-list {
-  width: 1200px;
-  margin: 1rem auto;
+  // width: 1200px;
+  // margin: 1rem auto;
   .package-item {
     display: flex;
     background-color: white;
@@ -91,6 +90,7 @@ section.package-list {
     .img {
       width: 42.5%;
       img {
+        display: block;
         width: 100%;
         border-radius: 15px 0 0 15px;
       }
@@ -284,7 +284,7 @@ export default {
           link: require("@/assets/images/spot/10.webp"),
           seat: 20,
           date: "2025-05-18",
-          train: "seven stars",
+          train: "golden",
           sale: true,
           origin: 36888,
           price: 31888,
@@ -308,7 +308,7 @@ export default {
           link: require("@/assets/images/spot/09.jpg"),
           seat: 20,
           date: "2025-07-18",
-          train: "seven stars",
+          train: "royal",
           sale: true,
           origin: 36888,
           price: 31888,
