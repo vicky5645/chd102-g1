@@ -16,58 +16,64 @@
         />
         <button @click="searchArticles">搜尋</button>
       </div>
-      <button class="new_button_pad" @click="showForm = true">新增文章</button>
+      <button class="new_button_pad" @click="showForm = true">
+        <i class="fa fa-pencil" aria-hidden="true"></i> 新增文章
+      </button>
     </div>
 
     <!-- 文章列表 -->
-    <div v-for="post in filteredPosts" :key="post.id" class="post_list">
-      <div class="post_content">
-        <div class="avatar">
-          <img :src="post.avatar" alt="" />
-        </div>
-
-        <div class="name_and_data">
-          <div class="name">{{ post.name }}</div>
-          <div class="data">{{ post.data }}</div>
-        </div>
-      </div>
-
-      <div class="post_pic"><img :src="post.image" alt="Post Image" /></div>
-      <h2 class="post_title">{{ post.title }}</h2>
-      <p class="post_txt">{{ post.content }}</p>
-
-      <!-- 功能按鈕 -->
-      <div class="button_list">
-        <button class="b_like" @click="likePost(post)">
-          <img src="../assets/images/img/Forum/like.svg" alt="like" />
-          <span>{{ post.likes }}</span>
-        </button>
-        <button class="b_message" @click="showArticle(post.id)">
-          <img src="../assets/images/img/Forum/message.svg" alt="message" />
-          <span>{{ post.comments }}</span>
-        </button>
-        <button class="b_share" @click="togglePopup(post)">
-          <img src="../assets/images/img/Forum/share.svg" alt="share" />
-          <div v-if="post.showPopup" id="popup" class="share_list">
-            <div>
-              <img src="../assets/images/img/Forum/s_fb.svg" alt="fb" />
-            </div>
-            <div>
-              <img src="../assets/images/img/Forum/s_line.svg" alt="line" />
-            </div>
-            <div>
-              <img src="../assets/images/img/Forum/s_ins.svg" alt="ins" />
-            </div>
-            <div>
-              <img
-                src="../assets/images/img/Forum/s_twitter.svg"
-                alt="twitter"
-              />
-            </div>
+    <div v-if="filteredPosts.length" class="post_grid">
+      <div v-for="post in filteredPosts" :key="post.id" class="post_list">
+        <div class="post_content">
+          <div class="avatar">
+            <img :src="post.avatar" alt="" />
           </div>
-        </button>
+
+          <div class="name_and_data">
+            <div class="name">{{ post.name }}</div>
+            <div class="data">{{ post.data }}</div>
+          </div>
+        </div>
+
+        <div class="post_pic"><img :src="post.image" alt="Post Image" /></div>
+        <h2 class="post_title">{{ post.title }}</h2>
+        <p class="post_txt">{{ post.content }}</p>
+
+        <!-- 功能按鈕 -->
+        <div class="button_list">
+          <button class="b_like" @click="likePost(post)">
+            <img src="../assets/images/img/Forum/like.svg" alt="like" />
+            <span>{{ post.likes }}</span>
+          </button>
+          <button class="b_message" @click="showArticle(post.id)">
+            <img src="../assets/images/img/Forum/message.svg" alt="message" />
+            <span>{{ post.comments }}</span>
+          </button>
+          <button class="b_share" @click="togglePopup(post)">
+            <img src="../assets/images/img/Forum/share.svg" alt="share" />
+            <div v-if="post.showPopup" id="popup" class="share_list">
+              <div>
+                <img src="../assets/images/img/Forum/s_fb.svg" alt="fb" />
+              </div>
+              <div>
+                <img src="../assets/images/img/Forum/s_line.svg" alt="line" />
+              </div>
+              <div>
+                <img src="../assets/images/img/Forum/s_ins.svg" alt="ins" />
+              </div>
+              <div>
+                <img
+                  src="../assets/images/img/Forum/s_twitter.svg"
+                  alt="twitter"
+                />
+              </div>
+            </div>
+          </button>
+        </div>
       </div>
     </div>
+    <!-- 當沒有文章時的提示 -->
+    <div v-else class="no_posts">目前無相關文章，建議您換個關鍵字查找😣</div>
 
     <!-- 新增文章手機版按鈕 -->
     <button class="new_button_phone" @click="showForm = true">
@@ -108,10 +114,10 @@
 
     <!-- 文章詳細視窗 -->
     <div v-if="selectedPost" class="post_modal">
-      <div class="post_content">
+      <div class="post_top">
         <!-- 關閉按鈕 -->
         <button class="b_close" @click="closeArticle">
-          <img src="../assets/images/img/Forum/close.svg" alt="close" />
+          <i class="fa fa-arrow-left" aria-hidden="true"></i>
         </button>
         <div class="avatar">
           <img :src="selectedPost.avatar" alt="" />
@@ -125,7 +131,7 @@
         <!-- 檢舉/刪除按鈕 -->
         <div class="post_more_block">
           <button class="post_more" @click.stop="toggleMenu" ref="button">
-            <img src="../assets/images/img/Forum/more_dots.svg" alt="" />
+            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
           </button>
           <div v-show="showMenu" class="popup_content" ref="menu">
             <button @click="toggleDelete">刪除文章</button>
@@ -147,10 +153,10 @@
           <span>{{ selectedPost.likes }}</span>
         </button>
 
-        <button class="b_message">
+        <!-- <button class="b_message">
           <img src="../assets/images/img/Forum/message.svg" alt="message" />
           <span>{{ selectedPost.comments }}</span>
-        </button>
+        </button> -->
 
         <button class="b_share" @click="togglePopup(selectedPost)">
           <img src="../assets/images/img/Forum/share.svg" alt="share" />
@@ -442,7 +448,7 @@ export default {
 
     watch(content, (newValue) => {
       if (newValue.trim() === "" || newValue.length < 20) {
-        contentError.value = "文章內容至少需要20個字符";
+        contentError.value = "* 文章內容至少需要20個字符";
       } else {
         contentError.value = "";
       }
