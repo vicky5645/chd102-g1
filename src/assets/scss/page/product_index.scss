@@ -106,6 +106,7 @@ $topBarheight: 44px;
     }
     
     .card{
+        position: relative;
         width: auto;
         padding: 10px;
         border: 1px solid #D1D5DB;
@@ -113,6 +114,31 @@ $topBarheight: 44px;
         border-radius: 7px;
         background-color: #fff;
         box-shadow: 10px #00000033;
+        $btnSize: 45px;
+        //收藏及購物車的長寬
+        .cardFavorite,
+        .cardCart{
+            font-size: 24px;
+            position: absolute;
+            width: $btnSize;
+            height: $btnSize;
+            background-color: #fff;
+            color: #F29C50;
+            border: 1px solid #F29C50;;
+            border-radius: 7px;
+            left: 15px;
+            top: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            svg{
+                fill: #F29C50;
+            }
+        }
+        .cardCart{
+            top: calc($btnSize + 20px);
+
+        }
         .cradPic{
             border-radius: 7px;
             border: 1px solid #D1D5DB;
@@ -120,37 +146,11 @@ $topBarheight: 44px;
             overflow: hidden;
             margin-bottom: 30px;
             aspect-ratio: 1/1;
-            position: relative;
-            $btnSize: 45px;
-            //收藏及購物車的長寬
             img{
                 display: block;
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-            }
-            .cardFavorite,
-            .cardCart{
-                font-size: 24px;
-                position: absolute;
-                width: $btnSize;
-                height: $btnSize;
-                background-color: #fff;
-                color: #F29C50;
-                border: 1px solid #F29C50;;
-                border-radius: 7px;
-                left: 5px;
-                top: 5px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                svg{
-                    fill: #F29C50;
-                }
-            }
-            .cardCart{
-                top: calc($btnSize + 10px);
-    
             }
         }
         h3{
