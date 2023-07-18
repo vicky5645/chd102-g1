@@ -23,13 +23,15 @@
   letter-spacing: -0.18px;
 }
 
+.icon-24 {
+  @include size(24px);
+  @include flexCenter;
+  background-color: red;
+}
 .user{
   margin: 24px auto;
   max-width: 1200px;
   width: 100%;
-  .icon {
-    @include size(24px);
-  }
   @include pad {
     column-gap: 20px;
     display: flex;

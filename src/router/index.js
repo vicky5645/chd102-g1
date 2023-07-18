@@ -103,14 +103,17 @@ const routesUser = [
       {
         path: '/user/order',
         component: () => import(/* webpackChunkName: "" */ '@/views/User/UserOrder.vue'),
+      },
+      {
+        path: '/user/forum',
+        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserForum.vue'),
+      },
+      {
+        path: '/user/like',
+        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserLike.vue'),
       }
     ]
-  },
-  {
-    path: '/test-se',
-    name: 'test-se',
-    component: () => import(/* webpackChunkName: "test-se" */ '@/views/TestSe.vue')
-  },
+  }
 ];
 
 const router = createRouter({

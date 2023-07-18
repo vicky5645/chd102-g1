@@ -20,17 +20,17 @@
             <span>訂單管理</span>
           </li>
         </router-link>
-        <router-link to="/">
+        <router-link to="/user/forum">
           <li>
-            <img class="icon" src="@/assets/images/icon/basic/message_writing.png" alt="message-icon">
+            <img class="custom-svg" src="@/assets/images/icon/basic/message_writing.svg" alt="message_writing">
             <span>論壇訊息</span>
           </li>
         </router-link>
-        
-        <router-link to="/">
+        <router-link to="/user/like">
           <li>
-            <i class="fa-solid fa-heart"></i>
-            <img class="icon" src="@/assets/images/icon/basic/settings_filled.png" alt="settings-icon">
+            <div class="icon-12">
+              <i class="fa-solid fa-heart"></i>
+            </div>
             <span>我的收藏</span>
           </li>
         </router-link>
@@ -57,5 +57,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
