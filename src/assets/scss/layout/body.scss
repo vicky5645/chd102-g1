@@ -2,18 +2,15 @@ body {
   padding: null; // null 屬性被刪出
   color: $color;
   font-family: $fontFamily;
-  background-color: #ededed;
+  background-color: $bodyBgColor;
   position: relative;
-  h1 {
-      font-size: 50px;
-    @include pad(){
-        font-size: 36px;
-        color: #f20;
-    }
-    @include pc(){
-        font-size: 60px;
-        color: #19cef6;
-    }
+  //一般內文
+  & p {
+    font-size: $body;
+    line-height: 34px;
+  }
+  & .bold {
+    font-weight: 500;
   }
 }
 

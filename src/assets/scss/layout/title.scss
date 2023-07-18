@@ -1,3 +1,35 @@
-h1 {
-    font-size: $h1;
- }
+h1,.h1 {
+  font-size: $h1;
+  line-height: 56px;
+}
+h2,.h2 {
+  font-size: $h2;
+  line-height: 36px;
+}
+h3, .h3 {
+  font-size: $h3;
+  line-height: 28px;
+  letter-spacing: -0.48px;
+}
+h4, .h4 {
+  font-size: $h4;
+  line-height: 24px;
+  letter-spacing: -0.16px;
+}
+label {
+  font-size: $label;
+  line-height: 20px;
+  &.bold {
+    font-weight: 500;
+  }
+  &.regular {
+    font-weight: 400;
+  }
+}
+.caption {
+  font-size: $caption;
+  line-height: 20px;
+  &.bold {
+    font-weight: 500;
+  }
+}

@@ -54,28 +54,10 @@ const routesUser = [
     },
   },
   {
-    path: "/product-details",
-    name: "product-details",
-    // component: ProductDetails
-    component: () =>
-      import(
-        /* webpackChunkName: "product-details" */ "@/views/ProductDetails.vue"
-      ),
-    meta: { title: " " },
-  },
-  {
     path: "/online-mall",
     name: "online-mall",
-    // component: OnlineMall
-    component: () =>
-      import(/* webpackChunkName: "online-mal" */ "@/views/OnlineMall.vue"),
+    component: () => import(/* webpackChunkName: "online-mall" */ "@/views/Product/ProductView.vue"),
     meta: { title: '所有商品' }
-  },
-  {
-    path: "/product",
-    name: "product",
-    component: () => import(/* webpackChunkName: "product" */ "@/views/Product/ProductView.vue"),
-    meta: { title: '商城' }
   },
   {
     path: '/productDetail/:id',

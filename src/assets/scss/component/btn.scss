@@ -32,6 +32,10 @@ button {
         background-color: darken(map-get($StateColors, Error), 20);
       }
     }
+    &.disable {
+      background-color: map-get($GrayColors, Gray5);
+      color : $btnTextColor;
+    }
     &.radius {
       border-radius: 10px;
     }
