@@ -12,24 +12,24 @@ button {
     cursor: pointer;
     // background-color: #e1e1e1;
     &.primary {
-        background-color: map-get($bgColor, primary);
+        background-color: map-get($BrandColors, Primary);
         transition: cubic-bezier(0.39, 0.575, 0.565, 1);
         &:hover {
-          background-color: darken(map-get($bgColor, primary), 20);
+          background-color: darken(map-get($BrandColors, Primary), 20);
 
         }
     }
     &.secondary {
-        background-color: map-get($bgColor, secondary);
+        background-color: map-get($BrandColors, Secondary1);
         &:hover {
-          background-color: darken(map-get($bgColor, secondary), 20);
+          background-color: darken(map-get($BrandColors, Secondary1), 20);
         }
     }
     &.error {
-      background-color: map-get($bgColor, error);
-      color : #fff;
+      background-color: map-get($StateColors, Error);
+      color : $btnTextColor;
       &:hover {
-        background-color: darken(map-get($bgColor, error), 20);
+        background-color: darken(map-get($StateColors, Error), 20);
       }
     }
     &.radius {

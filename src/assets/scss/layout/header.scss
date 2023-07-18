@@ -31,7 +31,7 @@ header {
                padding: 0 15px;
                transition: .3 all ease;
                &:hover {
-                  color: map-get($bgColor, primary);
+                  color: map-get($BrandColors, Primary);
                }
             }
          }
@@ -43,7 +43,7 @@ header {
          line-height: 110%;
          text-decoration: none;
          &:hover{
-            color: map-get($bgColor, primary);
+            color: map-get($BrandColors, Primary);
          }
          
       }
