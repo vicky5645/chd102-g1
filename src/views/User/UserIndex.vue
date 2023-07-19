@@ -3,7 +3,7 @@
     <aside class="col-md-3">
       <div class="profile-top">
         <div class="avatar">
-          <img src="https://picsum.photos/100/100/?random=22" alt="avatar"/>
+          <img src="https://picsum.photos/100/100/?random=22" alt="avatar" />
         </div>
         <div>麥 大明</div>
       </div>
@@ -28,7 +28,7 @@
         </router-link>
         <router-link to="/user/like">
           <li>
-            <div class="icon-12">
+            <div class="icon-24">
               <i class="fa-solid fa-heart"></i>
             </div>
             <span>我的收藏</span>
@@ -57,4 +57,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.icon-12 {
+  background-color: blue;
+}
 </style>

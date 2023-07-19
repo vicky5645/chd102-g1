@@ -26,7 +26,9 @@
 .icon-24 {
   @include size(24px);
   @include flexCenter;
-  background-color: red;
+  img {
+    width: 100%;
+  }
 }
 .user{
   margin: 24px auto;
@@ -79,7 +81,7 @@
               background-color: rgba(#B3CEE2,30%);
             }
             &:hover {
-              color: map-get($BrandColors, Secondary2);
+              color: $linkColor;
             }
           }
           li {

@@ -10,6 +10,7 @@ header {
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: space-between;
       max-width: 1200px;
       width: 100%;
       margin: auto;
@@ -21,9 +22,9 @@ header {
          }
          .nav_item {
             margin: auto;
+            display: none;
             a {
                color: #7aacbf;
-               // font-family: Noto Sans Malayalam UI;
                font-size: 16px;
                font-weight: 400;
                line-height: 110%;
@@ -34,26 +35,66 @@ header {
                   color: map-get($BrandColors, Primary);
                }
             }
+            @include pad {
+               display: inline-flex;
+               align-items: center;
+            }
          }
       .chrt, .login {
          color: #7aacbf;
-         // font-family: Noto Sans Malayalam UI;
          font-size: 16px;
          font-weight: 400;
          line-height: 110%;
          text-decoration: none;
+         display: none;
          &:hover{
             color: map-get($BrandColors, Primary);
          }
-         
+         @include pad {
+            display: inline-flex;
+            align-items: center;
+         }
       }
       .chrt {
          padding-right: 24px;
       }
       .ham{
-         width: 50px;
-         height: 50px;
-         background-color: #999;
+         // width: 50px;
+         // height: 50px;
+         width: 40px;
+         height: 40px;
+         position: relative;
+         &:hover , &:active {
+            span {
+               background-color: map-get($BrandColors, Primary);
+            }
+         }
+         @include pad {
+            display: none;
+         }
+         span {
+            width: 84%;
+            height: 4px;
+            background-color: map-get($BrandColors, Secondary2);
+            border-radius: 2px;
+            position: absolute;
+            margin: auto;
+            left: 0;
+            right: 0;
+            transition: .3s;
+            rotate: 0deg;
+            &:nth-child(1) {
+               top: 8px;
+               // transition: top .5s .5s,rotate .5s;
+            }
+            &:nth-child(2) {
+               top: 18px;
+            }
+            &:nth-child(3) {
+               top: 28px;
+               // transition: top .5s .5s,rotate .5s;
+            }
+         }
       }
    }
 }

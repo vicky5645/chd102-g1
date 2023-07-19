@@ -1,10 +1,14 @@
 <template>
-  <div>
-    <li>
-      <router-link to="/user/info">我的收藏</router-link> | 
-    </li>
-    <li>
-      <router-link to="/user/order">order</router-link>
-    </li>
+  <div class="settings">
+    <h1>我的收藏</h1>
+    <hr>
+    <div class="user-control-content">
+      
+    </div>
+    <div class="right">
+      <button type="submit" class="btn disable radius">儲存</button>
+    </div>
+    <hr>
+    <h4>帳號安全</h4>
   </div>
 </template>

@@ -16,22 +16,98 @@
         <router-link to="/online-mall">線上商城</router-link>
         <router-link to="/online-booking">線上訂票</router-link>
         <router-link to="/booking-info">訂票資訊</router-link>
-        <router-link to="/user">會員專區
-          <!-- <img class="custom-svg" src="@/assets/images/icon/basic/member-login.png" alt="list-icon">
-          <img class="custom-svg" src="@/assets/images/icon/menu/close_big.png" alt="list-icon"> -->
+        <router-link to="/user">
+          <div class="icon-24">
+            <img class="custom-svg" src="@/assets/images/icon/basic/member-login.svg" alt="list-icon">
+          </div>
+          <span>會員專區</span>
         </router-link>
       </div>
       <router-link to="/cart" class="chrt"><i class="fa fa-shopping-cart" aria-hidden="true"></i></router-link>
       <router-link to="/login" class="login">{{ $store.state.name }}</router-link>
-      <div class="ham" @click="openSidebar = true">open</div>
+      <div id="menu-switch" class="ham" @click="openSidebar = true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </nav>
   </header>
   <MainSidebar :sidebarOpen="openSidebar" @close="menuclose">
     <template v-slot:slotheader>
-      <h1>title1</h1>
+      <div class="link-list">
+        <router-link to="/about">
+          <li>
+            小火車介紹
+          </li>
+        </router-link>
+        <router-link to="/announcements">
+          <li>
+            公告
+          </li>
+        </router-link>
+        <router-link to="/forum">
+          <li>
+            論壇
+          </li>
+        </router-link>
+        <router-link to="/online-mall">
+          <li>
+            線上商城
+          </li>
+        </router-link>
+        <router-link to="/online-booking">
+          <li>
+            線上訂票
+          </li>
+        </router-link>
+      </div>
     </template>
     <template v-slot:slotfooter>
-      <h1>佛祖保佑我</h1>
+      <div class="link-list">
+        <router-link to="/user/info">
+          <li>
+            <div class="icon-24">
+              <img class="custom-svg" src="@/assets/images/icon/basic/member-login.svg" alt="list-icon">
+            </div>
+            <span>麥大名</span>
+            <img class="custom-svg" src="@/assets/images/icon/basic/settings.svg" alt="settings-icon">
+            <!-- <span>帳號設定</span> -->
+          </li>
+        </router-link>
+        <router-link to="/user/order">
+          <li>
+            <img class="custom-svg" src="@/assets/images/icon/basic/list.svg" alt="list-icon">
+            <span>訂單管理</span>
+          </li>
+        </router-link>
+        <router-link to="/user/forum">
+          <li>
+            <img class="custom-svg" src="@/assets/images/icon/basic/message_writing.svg" alt="message_writing">
+            <span>論壇訊息</span>
+          </li>
+        </router-link>
+        <router-link to="/user/like">
+          <li>
+            <div class="icon-24">
+              <i class="fa-solid fa-heart"></i>
+            </div>
+            <span>我的收藏</span>
+          </li>
+        </router-link>
+        <router-link to="/cart" class="chrt">
+          <li>
+            <div class="icon-24">
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            </div>
+            <span>購物車</span>
+          </li>
+        </router-link>
+        <router-link to="/login" class="login">
+          <li>
+            {{ $store.state.name }}
+          </li>
+        </router-link>
+      </div>
     </template>
   </MainSidebar>
 </template>
@@ -57,3 +133,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+
+
+</style>

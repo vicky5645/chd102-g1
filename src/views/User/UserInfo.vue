@@ -1,6 +1,6 @@
 <template>
   <div class="settings">
-    <h4>帳號設定</h4>
+    <h1>帳號設定</h1>
     <hr>
     <div class="user-control-content">
       <div class="input-wrap">
@@ -25,7 +25,7 @@
         <input type="tel" id="phone">
       </div>
       <div class="input-wrap long">
-        <label for="email" class="caption">聯絡 E-mail(必填)</label>
+        <label for="email" class="caption" required>聯絡 E-mail(必填)</label>
         <input type="email" id="email">
       </div>
     </div>
