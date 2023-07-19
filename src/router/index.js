@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/HomeView.vue";
+import HomeView from "@/views/StartView.vue";
 // import AboutView from '@/views/AboutView.vue'
 
 const routesUser = [
@@ -8,7 +8,27 @@ const routesUser = [
     name: "home",
     component: HomeView,
     meta: {
+      title: "登入頁面",
+    },
+  },
+  {
+    path: "/roaming-orbit",
+    name: "roaming-orbit",
+    // component: AboutView
+    component: () =>
+      import(/* webpackChunkName: "about" */ "@/views/HomeView.vue"),
+    meta: {
       title: "home",
+    },
+  },
+  {
+    path: "/backend",
+    name: "backend",
+    // component: AboutView
+    component: () =>
+      import(/* webpackChunkName: "about" */ "@/views/BackEnd/BackIndex.vue"),
+    meta: {
+      title: "後台首頁",
     },
   },
   {
@@ -96,6 +116,32 @@ const routesUser = [
     name: "login",
     component: () =>
       import(/* webpackChunkName: "login" */ "@/views/LoginView.vue"),
+  },
+  {
+    path: '/user',
+    component: () => import(/* webpackChunkName: "" */ '@/views/User/UserIndex.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserLink.vue'),
+      },
+      {
+        path: '/user/info',
+        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserInfo.vue'),
+      },
+      {
+        path: '/user/order',
+        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserOrder.vue'),
+      },
+      {
+        path: '/user/forum',
+        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserForum.vue'),
+      },
+      {
+        path: '/user/like',
+        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserLike.vue'),
+      }
+    ]
   }
 ];
 

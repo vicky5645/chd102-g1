@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    name: 'hi',
+    name: '登入/註冊',
   },
   getters: {
   },

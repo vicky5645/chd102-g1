@@ -1,9 +1,11 @@
 // 全部按鈕都會顯示手指
 button {
   cursor: pointer;
+  // border:0;
 }
 
 .btn {
+    border:0;
     padding: 8px 20px;
     text-align: center;
     font-size: $fontSize;
@@ -31,6 +33,10 @@ button {
       &:hover {
         background-color: darken(map-get($StateColors, Error), 20);
       }
+    &.disable {
+      background-color: map-get($GrayColors, disable);
+      color: white;
+    }
     }
     &.disable {
       background-color: map-get($GrayColors, Gray5);

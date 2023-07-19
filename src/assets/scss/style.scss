@@ -14,7 +14,7 @@
 //組件
 @import "component/btn";
 @import "component/grid";
-@import "component/slider";
+@import "component/sidebar";
 @import "component/form";
 
 // layout
@@ -34,4 +34,5 @@
 @import "page/Announcements";
 @import "page/Announcement-details";
 @import 'page/product_index';
-@import 'page/login';
+@import 'page/user.scss';
+@import 'page/login.scss';

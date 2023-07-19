@@ -4,6 +4,7 @@ body {
   font-family: $fontFamily;
   background-color: $bodyBgColor;
   position: relative;
+  overflow-x: hidden;
   //一般內文
   & p {
     font-size: $body;

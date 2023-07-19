@@ -53,7 +53,7 @@ export default {
         },
         {
           id: 4,
-          src: "/images/travel/spa/spa (4).jpg",
+          src: "/images/travel/spa/spa(4).jpg",
           alt: "Image 4",
           link: "/online-booking",
         },
