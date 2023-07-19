@@ -1,9 +1,9 @@
 <template>
-  <MainHeader></MainHeader>
+  <MainHeader v-if="!hasStartView"></MainHeader>
 
-  <router-view/>
+  <router-view />
 
-  <MainFooter></MainFooter>
+  <MainFooter v-if="!hasStartView"></MainFooter>
 </template>
 
 <script>
@@ -13,7 +13,14 @@ export default {
   components: {
     MainHeader,
     MainFooter,
-  }
+  },
+  computed: {
+    hasStartView() {
+      const isStart = this.$route.matched.some(route => route.name === 'start');
+      const isBackEnd = this.$route.matched.some(route => route.name === 'backend');
+      return isStart || isBackEnd;
+    },
+  },
 }
 </script>
 
