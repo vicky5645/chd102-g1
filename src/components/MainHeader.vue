@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav>
-      <router-link to="/">
+      <router-link to="/roaming-orbit">
         <div class="logo">
           <img src="~@/assets/LOGO.svg" alt="logo" />
         </div>
@@ -22,6 +22,8 @@
           </div>
           <span>會員專區</span>
         </router-link>
+        <router-link to="/">開始</router-link>
+        <router-link to="/backend">後台</router-link>
       </div>
       <router-link to="/cart" class="chrt"><i class="fa fa-shopping-cart" aria-hidden="true"></i></router-link>
       <router-link to="/login" class="login">{{ $store.state.name }}</router-link>
