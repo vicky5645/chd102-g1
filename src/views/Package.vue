@@ -1,15 +1,18 @@
 <style lang="scss" scoped>
-@import "@/assets/scss/style.scss";
-
 $secondary2: #b3cee2;
 
 * {
   box-sizing: border-box;
 }
 
+.container {
+  width: 1200px;
+  margin: auto;
+}
+
 section.title {
   text-align: center;
-
+  background-color: white;
   h1 {
     font-size: 2rem;
     padding: 1.25rem;
@@ -17,21 +20,33 @@ section.title {
 }
 
 section.spot-filter {
-  // width: 1200px;
-  // margin: auto;
   background-color: white;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   border-radius: 15px;
   padding: 0.5rem 0;
+  margin-top: 1rem;
   .spot-tag {
     margin: 1rem 0;
+    position: relative;
+    left: -8px;
     span {
       font-size: 1.5rem;
       font-weight: bold;
-      color: $color;
+      color: #012840;
       background-color: $secondary2;
-      border-radius: 5px;
+      border-radius: 0 5px 5px 0;
       padding: 0.5rem 0.75rem;
+    }
+
+    .triangle {
+      position: absolute;
+      top: 105%;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 8px 8px 0;
+      border-color: transparent #7aacbf transparent transparent;
     }
   }
   .spot-list {
@@ -39,15 +54,28 @@ section.spot-filter {
     .spot-item {
       text-align: center;
       p {
+        font-size: 1.25rem;
         font-weight: bold;
       }
       .spot-img {
         cursor: pointer;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        transition: all 0.3s ease-in-out;
+        overflow: hidden;
         img {
           border-radius: 50%;
           width: 100%;
           aspect-ratio: 1/1;
           object-fit: cover;
+          transition: all 0.3s ease-in-out;
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+
+        &:hover {
+          box-shadow: 0 0 30px #f29c50;
         }
       }
     }
@@ -56,9 +84,10 @@ section.spot-filter {
   .filter {
     display: flex;
     align-items: center;
-    border-top: 1px solid $bg;
+    border-top: 1px solid #333;
     padding: 0.5rem 0 0.25rem 0;
     .inner {
+      font-size: 1.25rem;
       margin: 0 1.5rem 0 3rem;
       font-weight: bold;
     }
@@ -67,6 +96,7 @@ section.spot-filter {
       margin-right: auto;
       button {
         display: inline-block;
+        font-size: 1.25rem;
         font-weight: bold;
         background-color: transparent;
         border: none;
@@ -77,8 +107,6 @@ section.spot-filter {
 }
 
 section.package-list {
-  // width: 1200px;
-  // margin: 1rem auto;
   .package-item {
     display: flex;
     background-color: white;
@@ -111,12 +139,13 @@ section.package-list {
       .seat,
       .date,
       .train {
-        padding: 0.25rem 0;
+        padding: 0.1rem 0;
+        font-size: 1.25rem;
       }
 
-      p {
-        padding: 0.25rem 0;
-      }
+      // p {
+      //   padding: 0.25rem 0;
+      // }
     }
 
     .price {
@@ -131,11 +160,22 @@ section.package-list {
       }
 
       span {
-        color: #fff;
+        background-color: #fbc756;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #012840;
         border-radius: 10px;
+        border: 1px solid #012840;
       }
     }
 
+    i.heart {
+      position: absolute;
+      top: 0;
+      right: 1.5rem;
+      font-size: 2.5rem;
+      color: red;
+    }
     .sale {
       position: absolute;
       background-color: #fbc756;
@@ -152,51 +192,73 @@ section.package-list {
   <section class="title">
     <h1>行程選擇</h1>
   </section>
-  <section class="spot-filter">
-    <div class="spot-tag"><span>景點篩選</span></div>
-    <div class="spot-list">
+  <div class="container">
+    <section class="spot-filter">
+      <div class="spot-tag">
+        <span>景點篩選</span>
+        <div class="triangle"></div>
+      </div>
+      <div class="spot-list">
+        <div
+          class="spot-item col-2"
+          v-for="(item, index) in spotList"
+          :key="index"
+        >
+          <div class="spot-img">
+            <img :src="item.link" alt="" />
+          </div>
+          <p>{{ item.name }}</p>
+        </div>
+      </div>
+      <div class="filter">
+        <div class="inner">排序</div>
+        <div class="btn-wrap">
+          <button
+            class="filter"
+            v-for="(item, index) in filterList"
+            :key="index"
+          >
+            {{ item.name }}
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="package-list">
       <div
-        class="spot-item col-2"
-        v-for="(item, index) in spotList"
+        class="package-item"
+        v-for="(item, index) in packageList"
         :key="index"
       >
-        <div class="spot-img">
+        <div class="img">
           <img :src="item.link" alt="" />
         </div>
-        <p>{{ item.name }}</p>
+        <div class="info">
+          <h3>{{ item.title }}<br />{{ item.title2 }}</h3>
+          <div class="seat">
+            <Icon type="md-contact" />剩餘<b>{{ item.seat }}</b
+            >個名額
+          </div>
+          <div class="date"><Icon type="md-calendar" />{{ item.date }}</div>
+          <div class="train"><Icon type="md-train" />{{ item.train }}</div>
+          <p>{{ item.info }}</p>
+        </div>
+        <div class="price">
+          <del v-if="item.sale">NT${{ item.origin }}</del>
+          <p :style="{ 'margin-top': !item.sale ? 'auto' : 'initial' }">
+            <span
+              class="btn primary"
+              @mouseover="change(index)"
+              @mouseleave="reset(index)"
+              >{{ item.inner }}</span
+            >
+          </p>
+        </div>
+        <Icon type="md-heart-outline" class="heart" />
+        <div class="sale" v-show="item.sale == true">早鳥優惠中</div>
       </div>
-    </div>
-    <div class="filter">
-      <div class="inner">排序</div>
-      <div class="btn-wrap">
-        <button class="filter" v-for="(item, index) in filterList" :key="index">
-          {{ item.name }}
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <section class="package-list">
-    <div class="package-item" v-for="(item, index) in packageList" :key="index">
-      <div class="img">
-        <img :src="item.link" alt="" />
-      </div>
-      <div class="info">
-        <h3>{{ item.title }}<br />{{ item.title2 }}</h3>
-        <div class="seat">剩餘{{ item.seat }}個名額</div>
-        <div class="date">{{ item.date }}</div>
-        <div class="train">{{ item.train }}</div>
-        <p>{{ item.info }}</p>
-      </div>
-      <div class="price">
-        <del>NT${{ item.origin }}</del>
-        <p>
-          <span class="btn primary">NT${{ item.price }}</span>
-        </p>
-      </div>
-      <div class="sale" v-show="item.sale == true">早鳥優惠中</div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -263,8 +325,18 @@ export default {
           train: "seven stars",
           sale: false,
           origin: 36888,
-          price: 31888,
+          price: "NT$31888",
+          inner: "NT$31888",
+
+          hover: "立即購票",
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
+          pass: [
+            { name: "高原遺跡" },
+            { name: "銀月山脈" },
+            { name: "綠野牧場" },
+            { name: "海底餐廳" },
+            { name: "景觀公園" },
+          ],
         },
         {
           title: "探尋島嶼之美，搭乘尊爵的ROYAL豪華列車",
@@ -275,8 +347,19 @@ export default {
           train: "royal",
           sale: false,
           origin: 41888,
-          price: 36888,
+          price: "NT$36888",
+          inner: "NT$36888",
+
+          hover: "立即購票",
+
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
+          pass: [
+            { name: "忘卻之湖" },
+            { name: "銀月山脈" },
+            { name: "綠野牧場" },
+            { name: "海底餐廳" },
+            { name: "景觀公園" },
+          ],
         },
         {
           title: "探尋島嶼之美，搭乘閃耀的GOLDEN豪華列車",
@@ -286,9 +369,18 @@ export default {
           date: "2025-05-18",
           train: "golden",
           sale: true,
-          origin: 36888,
-          price: 31888,
+          origin: 31888,
+          price: "NT$26888",
+          inner: "NT$26888",
+
+          hover: "立即購票",
+
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
+          pass: [
+            { name: "海底餐廳" },
+            { name: "忘卻之湖" },
+            { name: "景觀公園" },
+          ],
         },
         {
           title: "探尋島嶼之美，搭乘耀眼的七星豪華列車",
@@ -299,8 +391,19 @@ export default {
           train: "seven stars",
           sale: true,
           origin: 36888,
-          price: 31888,
+          price: "NT$31888",
+          inner: "NT$31888",
+
+          hover: "立即購票",
+
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
+          pass: [
+            { name: "高原遺跡" },
+            { name: "銀月山脈" },
+            { name: "綠野牧場" },
+            { name: "海底餐廳" },
+            { name: "景觀公園" },
+          ],
         },
         {
           title: "探尋島嶼之美，搭乘尊爵的ROYAL豪華列車",
@@ -311,11 +414,61 @@ export default {
           train: "royal",
           sale: true,
           origin: 36888,
-          price: 31888,
+          price: "NT$31888",
+          inner: "NT$31888",
+
+          hover: "立即購票",
+
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
+          pass: [
+            { name: "忘卻之湖" },
+            { name: "銀月山脈" },
+            { name: "綠野牧場" },
+            { name: "海底餐廳" },
+            { name: "景觀公園" },
+          ],
+        },
+        {
+          title: "探尋島嶼之美，搭乘閃耀的GOLDEN豪華列車",
+          title2: "—————————「GOLDEN EXPRESS」",
+          link: require("@/assets/images/spot/06.webp"),
+          seat: 20,
+          date: "2025-06-08",
+          train: "golden",
+          sale: true,
+          origin: 31888,
+          price: "NT$26888",
+          inner: "NT$26888",
+
+          hover: "立即購票",
+
+          info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
+          pass: [
+            { name: "綠野牧場" },
+            { name: "忘卻之湖" },
+            { name: "景觀公園" },
+          ],
         },
       ],
     };
+  },
+
+  computed: {
+    // displayInner(index) {
+    //   return this.isHover
+    //     ? this.packageList[index].hover
+    //     : `NT$${this.packageList[index].price}`;
+    // },
+  },
+
+  methods: {
+    change(index) {
+      this.packageList[index].inner = this.packageList[index].hover;
+    },
+
+    reset(index) {
+      this.packageList[index].inner = this.packageList[index].price;
+    },
   },
 };
 </script>
