@@ -16,19 +16,52 @@ $topBarheight: 44px;
     .category {
         width: 100%;
         h3 {
-            color: #7AACBF;
-            margin-bottom: 10px;
-            height: $topBarheight;
-            font-size: 20px;
-            line-height: $topBarheight;
+            display: none;
         }
-    
+        .categoryBtn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            color: #7AACBF;
+            font-size: 20px;
+            font-weight: 600;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #D1D5DB;
+            border-radius: 7px;
+            text-align: left;
+            i {
+                transition: all .08s ease;
+            }
+        }
+        .accordion-enter-active,
+        .accordion-leave-active {
+            transition: all .3s ease;
+        }
+        .accordion-enter-from,
+        .accordion-leave-to {
+            // opacity: 0;
+            transform-origin: top;
+            transform: scaleY(0);
+        }
+        .accordion-enter-to,
+        .accordion-leave-from {
+            // opacity: 1;
+            transform-origin: top;
+            transform: scaleY(1);
+        }
         .categoryItem {
+            left: 0;
+            top: 30;
+            z-index: 50;
+            width: 100%;
             background-color: #fff;
             border: 1px solid #D1D5DB;
             border-radius: 7px;
             box-sizing: border-box;
             // display: none;
+            margin-bottom: 5px;
     
             li {
                 position: relative;
@@ -104,7 +137,11 @@ $topBarheight: 44px;
             }
         }
     }
-    
+    .empty{
+        font-size: 20px;
+        color: #777;
+        font-weight: 600;
+    }
     .card{
         position: relative;
         width: auto;
@@ -177,7 +214,17 @@ $topBarheight: 44px;
     .productIndex {
         .category {
             width: 30%;
-
+            h3 {
+                display: block;
+                color: #7AACBF;
+                margin-bottom: 10px;
+                height: $topBarheight;
+                font-size: 20px;
+                line-height: $topBarheight;
+            }
+            .categoryBtn {
+                display: none;
+            }
             .categoryItem {
                 display: block;
         
