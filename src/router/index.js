@@ -1,34 +1,22 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/StartView.vue";
-// import AboutView from '@/views/AboutView.vue'
+import HomeView from "@/views/HomeView.vue";
+import SpecialPage from '@/views/StartView.vue';
 
 const routesUser = [
   {
-    path: "/",
-    name: "home",
-    component: HomeView,
-    meta: {
-      title: "登入頁面",
-    },
-  },
-  {
     path: "/roaming-orbit",
     name: "roaming-orbit",
-    // component: AboutView
-    component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/HomeView.vue"),
+    component: HomeView,
     meta: {
       title: "home",
     },
   },
   {
-    path: "/backend",
-    name: "backend",
-    // component: AboutView
-    component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/BackEnd/BackIndex.vue"),
+    path: "/",
+    name: "start",
+    component: SpecialPage,
     meta: {
-      title: "後台首頁",
+      title: "登入頁面",
     },
   },
   {
@@ -142,7 +130,29 @@ const routesUser = [
         component: () => import(/* webpackChunkName: "" */ '@/views/User/UserLike.vue'),
       }
     ]
-  }
+  },
+  {
+    path: "/backend",
+    name: "backend",
+    // component: AboutView
+    component: () =>
+      import(/* webpackChunkName: "about" */ "@/views/BackEnd/BackIndex.vue"),
+    meta: {
+      title: "後台首頁",
+    },
+    children: [
+      {
+        path: '/backend/package',
+        component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackPackage.vue'),
+        meta: { title: '行程' }
+      },
+      {
+        path: '/backend/organize',
+        component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackOrganize.vue'),
+        meta: { title: '開團' }
+      },
+    ]
+  },
 ];
 
 const router = createRouter({
@@ -151,3 +161,24 @@ const router = createRouter({
 });
 
 export default router;
+
+
+// {
+//   path: "/backend",
+//   name: "backend",
+//   // component: AboutView
+//   meta: {
+//     title: "後台首頁",
+//   },
+//   component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackIndex.vue'),
+//   children: [
+//     {
+//       path: '/backend/package',
+//       component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackPackage.vue'),
+//     },
+//     {
+//       path: '/backend/organize',
+//       component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackOrganize.vue'),
+//     },
+//   ]
+// },

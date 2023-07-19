@@ -1,14 +1,14 @@
 <template>
-  <h1>{{ $route.meta.title }}</h1>
-
-  起始頁面
-  <div>
-    <router-link to="/roaming-orbit">前台</router-link>
+  <div class="start-view">
+    <h1>{{ $route.meta.title }}</h1>
+    起始頁面
+    <div>
+      <router-link to="/roaming-orbit">前台</router-link>
+    </div>
+    <div>
+      <router-link to="/backend">後台</router-link>
+    </div>
   </div>
-  <div>
-    <router-link to="/backend">後台</router-link>
-  </div>
-  
 </template>
 
 <script>
@@ -17,7 +17,7 @@
 export default {
   components: {
   },
-  data(){
+  data() {
     return {
     }
   }
