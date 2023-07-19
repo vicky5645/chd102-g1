@@ -15,7 +15,8 @@
     "rating": {
       "rate": 3.9,
       "count": 120
-    }
+    },
+    "hot": true
   },
   {
     "id": 2,
@@ -29,7 +30,8 @@
     "rating": {
       "rate": 4.1,
       "count": 259
-    }
+    },
+    "hot": false
   },
   {
     "id": 3,
@@ -43,7 +45,8 @@
     "rating": {
       "rate": 4.7,
       "count": 500
-    }
+    },
+    "hot": true
   },
   {
     "id": 4,
@@ -57,7 +60,8 @@
     "rating": {
       "rate": 2.1,
       "count": 430
-    }
+    },
+    "hot": false
   },
   {
     "id": 5,
@@ -71,7 +75,8 @@
     "rating": {
       "rate": 4.6,
       "count": 400
-    }
+    },
+    "hot": false
   },
   {
     "id": 6,
@@ -85,7 +90,8 @@
     "rating": {
       "rate": 3.9,
       "count": 70
-    }
+    },
+    "hot": false
   },
   {
     "id": 7,
@@ -99,7 +105,8 @@
     "rating": {
       "rate": 3,
       "count": 400
-    }
+    },
+    "hot": true
   },
   {
     "id": 8,
@@ -113,6 +120,7 @@
     "rating": {
       "rate": 1.9,
       "count": 100
-    }
+    },
+    "hot": false
   }
 ]
