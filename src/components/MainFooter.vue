@@ -1,5 +1,4 @@
 <template>
-  
   <footer id="mainFooter">
 
     <div class="left-section">
@@ -9,11 +8,7 @@
     </div>
 
     <div class="image-row">
-      <router-link
-        v-for="image in trvelImages"
-        :to="image.link"
-        :key="image.id"
-      >
+      <router-link v-for="image in trvelImages" :to="image.link" :key="image.id">
         <img :src="image.src" :alt="image.alt" />
       </router-link>
     </div>
@@ -26,9 +21,15 @@
     </ul>
 
     <div class="social-links">
-      <a href="https://www.facebook.com"><i class="fab fa-facebook"></i></a>
-      <a href="https://www.google.com/maps"><i class="fas fa-map"></i></a>
-      <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.facebook.com">
+        <div class="icon-24"><i class="fab fa-facebook"></i></div>
+      </a>
+      <a href="https://www.google.com/maps">
+        <div class="icon-24"><i class="fas fa-map"></i></div>
+      </a>
+      <a href="https://www.instagram.com">
+        <div class="icon-24"><i class="fab fa-instagram"></i></div>
+      </a>
     </div>
 
   </footer>
@@ -41,31 +42,31 @@ export default {
       trvelImages: [
         {
           id: 2,
-          src: "/images/travel/star/star(1).jpg",
-          alt: "star(1)",
+          src: "/images/travel/star/star1.jpg",
+          alt: "star1",
           link: "/online-booking",
         },
         {
           id: 3,
-          src: "/images/travel/Mountain/Mountain(2).jpg",
-          alt: "Lake(1)",
+          src: "/images/travel/mountain/mountain2.jpg",
+          alt: "Lake1",
           link: "/online-booking",
         },
         {
           id: 4,
-          src: "/images/travel/spa/spa(4).jpg",
+          src: "/images/travel/spa/spa8.jpg",
           alt: "Image 4",
           link: "/online-booking",
         },
         {
           id: 5,
-          src: "/images/travel/history/history(11).jpg",
+          src: "/images/travel/history/history11.jpg",
           alt: "Image 5",
           link: "/online-booking",
         },
         {
           id: 6,
-          src: "/images/travel/park/park(2).jpg",
+          src: "/images/travel/park/park2.jpg",
           alt: "Image 6",
           link: "/online-booking",
         },

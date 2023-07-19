@@ -1,6 +1,6 @@
 <template>
   <h1>{{ $route.meta.title }}</h1>
-  <img src="~@/assets/LOGO.svg" alt="">
+  <img src="~@/assets/logo.svg" alt="">
   <Collapse v-model="value">
         <Panel name="1">
             史蒂夫·乔布斯

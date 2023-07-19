@@ -3,7 +3,7 @@
     <nav>
       <router-link to="/roaming-orbit">
         <div class="logo">
-          <img src="~@/assets/LOGO.svg" alt="logo" />
+          <img src="~@/assets/logo.svg" alt="logo" />
         </div>
         <!-- 漫遊列車之旅 -->
       </router-link>
