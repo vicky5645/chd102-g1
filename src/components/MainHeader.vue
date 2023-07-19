@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav>
-      <router-link to="/">
+      <router-link to="/roaming-orbit">
         <div class="logo">
           <img src="~@/assets/LOGO.svg" alt="logo" />
         </div>
@@ -17,6 +17,8 @@
         <router-link to="/online-mall">線上商城</router-link>
         <router-link to="/online-booking">線上訂票</router-link>
         <router-link to="/booking-info">訂票資訊</router-link>
+        <router-link to="/">開始</router-link>
+        <router-link to="/backend">後台</router-link>
       </div>
       <router-link to="/cart" class="chrt"
       ><i class="fa fa-shopping-cart" aria-hidden="true"></i

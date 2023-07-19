@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/HomeView.vue";
+import HomeView from "@/views/StartView.vue";
 // import AboutView from '@/views/AboutView.vue'
 
 const routesUser = [
@@ -8,7 +8,27 @@ const routesUser = [
     name: "home",
     component: HomeView,
     meta: {
+      title: "前台首頁",
+    },
+  },
+  {
+    path: "/roaming-orbit",
+    name: "roaming-orbit",
+    // component: AboutView
+    component: () =>
+      import(/* webpackChunkName: "about" */ "@/views/HomeView.vue"),
+    meta: {
       title: "home",
+    },
+  },
+  {
+    path: "/backend",
+    name: "backend",
+    // component: AboutView
+    component: () =>
+      import(/* webpackChunkName: "about" */ "@/views/BackEnd/BackIndex.vue"),
+    meta: {
+      title: "後台首頁",
     },
   },
   {
