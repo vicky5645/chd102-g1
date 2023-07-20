@@ -170,6 +170,7 @@ section.package-list {
     }
 
     i.heart {
+      cursor: pointer;
       position: absolute;
       top: 0;
       right: 1.5rem;
@@ -254,7 +255,8 @@ section.package-list {
             >
           </p>
         </div>
-        <Icon type="md-heart-outline" class="heart" />
+        <Icon :type="item.iconType" class="heart" @click="toggleHeart(index)" />
+
         <div class="sale" v-show="item.sale == true">早鳥優惠中</div>
       </div>
     </section>
@@ -325,10 +327,11 @@ export default {
           train: "seven stars",
           sale: false,
           origin: 36888,
-          price: "NT$31888",
-          inner: "NT$31888",
+          price: "NT$36888",
+          inner: "NT$36888",
 
           hover: "立即購票",
+          iconType: "md-heart-outline",
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
           pass: [
             { name: "高原遺跡" },
@@ -351,7 +354,7 @@ export default {
           inner: "NT$36888",
 
           hover: "立即購票",
-
+          iconType: "md-heart-outline",
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
           pass: [
             { name: "忘卻之湖" },
@@ -374,10 +377,31 @@ export default {
           inner: "NT$26888",
 
           hover: "立即購票",
-
+          iconType: "md-heart-outline",
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
           pass: [
             { name: "海底餐廳" },
+            { name: "忘卻之湖" },
+            { name: "景觀公園" },
+          ],
+        },
+        {
+          title: "探尋島嶼之美，搭乘閃耀的GOLDEN豪華列車",
+          title2: "—————————「GOLDEN EXPRESS」",
+          link: require("@/assets/images/spot/06.webp"),
+          seat: 20,
+          date: "2025-06-08",
+          train: "golden",
+          sale: true,
+          origin: 31888,
+          price: "NT$26888",
+          inner: "NT$26888",
+
+          hover: "立即購票",
+          iconType: "md-heart-outline",
+          info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
+          pass: [
+            { name: "綠野牧場" },
             { name: "忘卻之湖" },
             { name: "景觀公園" },
           ],
@@ -395,7 +419,7 @@ export default {
           inner: "NT$31888",
 
           hover: "立即購票",
-
+          iconType: "md-heart-outline",
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
           pass: [
             { name: "高原遺跡" },
@@ -418,7 +442,7 @@ export default {
           inner: "NT$31888",
 
           hover: "立即購票",
-
+          iconType: "md-heart-outline",
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
           pass: [
             { name: "忘卻之湖" },
@@ -428,46 +452,26 @@ export default {
             { name: "景觀公園" },
           ],
         },
-        {
-          title: "探尋島嶼之美，搭乘閃耀的GOLDEN豪華列車",
-          title2: "—————————「GOLDEN EXPRESS」",
-          link: require("@/assets/images/spot/06.webp"),
-          seat: 20,
-          date: "2025-06-08",
-          train: "golden",
-          sale: true,
-          origin: 31888,
-          price: "NT$26888",
-          inner: "NT$26888",
-
-          hover: "立即購票",
-
-          info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
-          pass: [
-            { name: "綠野牧場" },
-            { name: "忘卻之湖" },
-            { name: "景觀公園" },
-          ],
-        },
       ],
     };
   },
 
-  computed: {
-    // displayInner(index) {
-    //   return this.isHover
-    //     ? this.packageList[index].hover
-    //     : `NT$${this.packageList[index].price}`;
-    // },
-  },
-
   methods: {
+    //價錢切換成立即購買
     change(index) {
       this.packageList[index].inner = this.packageList[index].hover;
     },
 
     reset(index) {
       this.packageList[index].inner = this.packageList[index].price;
+    },
+    // ---------------------------
+    //愛心切換
+    toggleHeart(index) {
+      this.packageList[index].iconType =
+        this.packageList[index].iconType === "md-heart-outline"
+          ? "md-heart"
+          : "md-heart-outline";
     },
   },
 };

@@ -276,7 +276,7 @@ section.next-step {
 
       <div class="btn primary">
         <router-link to="/">
-          <span>確認訂單</span>
+          <span>確認購票</span>
         </router-link>
       </div>
     </section>
