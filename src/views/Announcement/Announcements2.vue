@@ -33,12 +33,12 @@
           </p>
           <h3>{{ article.title }}</h3>
           <p class="card_txt_content">{{ article.content }}</p>
-          <!-- <router-link :to="`/announcement-details/${item.id}`">
+          <!-- <router-link :to="`/announcement-details2/${item.id}`">
             <div class="cradPic">
               <img :src="item.image" :alt="item.title">
             </div>
           </router-link> -->
-          <router-link :to="`/announcement-details/${item.id}`" class="more">查看更多</router-link>
+          <router-link :to="`/announcement-details2/${item.id}`" class="more">查看更多</router-link>
         </div>
       </div>
     </template>

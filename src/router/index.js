@@ -34,25 +34,25 @@ const routesUser = [
     name: "announcements2",
     // component: Announcements
     component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/Announcement/Announcements.vue"),
+      import(/* webpackChunkName: "about" */ "@/views/Announcement/Announcements2.vue"),
     meta: {
       title: "公告2",
     },
   },
   // {
-  //   path: '/productDetail/:id',
-  //   name: 'productDetail/:id',
-  //   component: () => import(/* webpackChunkName: "about" */ '@/views/Product/ProductDetailView.vue'),
-  //   meta: { title: '物品' }
+  //   path: '/announcement-details2/:id',
+  //   name: 'announcement-details2/:id',
+  //   component: () => import(/* webpackChunkName: "" */ '@/views/Announcement/Announcement-details.vue'),
+  //   meta: { title: '公告內頁2' }
   // },
   {
-    path: "/announcement-details/:id",
-    name: "announcement-details/:id",
+    path: "/announcements",
+    name: "announcements",
     // component: Announcements
     component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/Announcement/Announcement-details.vue"),
+      import(/* webpackChunkName: "" */ "@/views/Announcements.vue"),
     meta: {
-      title: "公告2",
+      title: "公告",
     },
   },
   {
@@ -61,7 +61,7 @@ const routesUser = [
     // component: Announcement-details
     component: () =>
       import(
-        /* webpackChunkName: "about" */ "@/views/Announcement-details.vue"
+        /* webpackChunkName: "" */ "@/views/Announcement-details.vue"
       ),
     meta: {
       title: "公告內頁",
@@ -86,7 +86,7 @@ const routesUser = [
   {
     path: '/productDetail/:id',
     name: 'productDetail/:id',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/Product/ProductDetailView.vue'),
+    component: () => import(/* webpackChunkName: "" */ '@/views/Product/ProductDetailView.vue'),
     meta: { title: '物品' }
   },
   {
@@ -177,24 +177,3 @@ const router = createRouter({
 });
 
 export default router;
-
-
-// {
-//   path: "/backend",
-//   name: "backend",
-//   // component: AboutView
-//   meta: {
-//     title: "後台首頁",
-//   },
-//   component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackIndex.vue'),
-//   children: [
-//     {
-//       path: '/backend/package',
-//       component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackPackage.vue'),
-//     },
-//     {
-//       path: '/backend/organize',
-//       component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackOrganize.vue'),
-//     },
-//   ]
-// },
