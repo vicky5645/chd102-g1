@@ -34,22 +34,16 @@ const routesUser = [
     name: "announcements",
     // component: Announcements
     component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/Announcements.vue"),
+      import(/* webpackChunkName: "about" */ "@/views/Announcement/Announcements2.vue"),
     meta: {
-      title: "公告",
+      title: "公告2",
     },
   },
   {
-    path: "/Announcement-details",
-    name: "Announcement-details",
-    // component: Announcement-details
-    component: () =>
-      import(
-        /* webpackChunkName: "about" */ "@/views/Announcement-details.vue"
-      ),
-    meta: {
-      title: "公告內頁",
-    },
+    path: '/announcement-details/:id',
+    name: 'announcement-details/:id',
+    component: () => import(/* webpackChunkName: "" */ '@/views/Announcement/Announcement-details.vue'),
+    meta: { title: '公告內頁2' }
   },
   {
     path: "/forum",
@@ -231,23 +225,3 @@ const router = createRouter({
 });
 
 export default router;
-
-// {
-//   path: "/backend",
-//   name: "backend",
-//   // component: AboutView
-//   meta: {
-//     title: "後台首頁",
-//   },
-//   component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackIndex.vue'),
-//   children: [
-//     {
-//       path: '/backend/package',
-//       component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackPackage.vue'),
-//     },
-//     {
-//       path: '/backend/organize',
-//       component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackOrganize.vue'),
-//     },
-//   ]
-// },
