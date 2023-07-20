@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
-import SpecialPage from '@/views/StartView.vue';
+import SpecialPage from "@/views/StartView.vue";
 
 const routesUser = [
   {
@@ -64,14 +64,20 @@ const routesUser = [
   {
     path: "/online-mall",
     name: "online-mall",
-    component: () => import(/* webpackChunkName: "online-mall" */ "@/views/Product/ProductView.vue"),
-    meta: { title: '所有商品' }
+    component: () =>
+      import(
+        /* webpackChunkName: "online-mall" */ "@/views/Product/ProductView.vue"
+      ),
+    meta: { title: "所有商品" },
   },
   {
-    path: '/productDetail/:id',
-    name: 'productDetail/:id',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/Product/ProductDetailView.vue'),
-    meta: { title: '物品' }
+    path: "/productDetail/:id",
+    name: "productDetail/:id",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "@/views/Product/ProductDetailView.vue"
+      ),
+    meta: { title: "物品" },
   },
   {
     path: "/online-booking",
@@ -106,30 +112,36 @@ const routesUser = [
       import(/* webpackChunkName: "login" */ "@/views/LoginView.vue"),
   },
   {
-    path: '/user',
-    component: () => import(/* webpackChunkName: "" */ '@/views/User/UserIndex.vue'),
+    path: "/user",
+    component: () =>
+      import(/* webpackChunkName: "" */ "@/views/User/UserIndex.vue"),
     children: [
       {
-        path: '',
-        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserLink.vue'),
+        path: "",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/User/UserLink.vue"),
       },
       {
-        path: '/user/info',
-        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserInfo.vue'),
+        path: "/user/info",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/User/UserInfo.vue"),
       },
       {
-        path: '/user/order',
-        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserOrder.vue'),
+        path: "/user/order",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/User/UserOrder.vue"),
       },
       {
-        path: '/user/forum',
-        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserForum.vue'),
+        path: "/user/forum",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/User/UserForum.vue"),
       },
       {
-        path: '/user/like',
-        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserLike.vue'),
-      }
-    ]
+        path: "/user/like",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/User/UserLike.vue"),
+      },
+    ],
   },
   {
     path: "/backend",
@@ -142,26 +154,75 @@ const routesUser = [
     },
     children: [
       {
-        path: '/backend/package',
+        path: "/backend/package",
         name: "package",
-        component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackPackage.vue'),
-        meta: { title: '行程管理' }
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/BackEnd/BackPackage.vue"),
+        meta: { title: "行程管理" },
       },
       {
-        path: '/backend/organize',
+        path: "/backend/organize",
         name: "organize",
-        component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackOrganize.vue'),
-        meta: { title: '開團管理' }
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/BackEnd/BackOrganize.vue"),
+        meta: { title: "開團管理" },
       },
       {
         path: "/backend/bootstrap",
-        component: () => import(/* webpackChunkName: "cart" */ "@/views/BackEnd/Bootstrap.vue"),
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/Bootstrap.vue"
+          ),
         meta: {
           title: "bootstrap test",
         },
       },
-    ]
-  }
+      {
+        path: "/backend/BackForum",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackForum.vue"
+          ),
+        name: "BackForum",
+        meta: {
+          title: "論壇文章管理",
+        },
+      },
+      {
+        path: "/backend/BackForumMessage",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackForumMessage.vue"
+          ),
+        name: "BackForumMessage",
+        meta: {
+          title: "論壇文章留言管理",
+        },
+      },
+      {
+        path: "/backend/BackForumReport",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackForumReport.vue"
+          ),
+        name: "BackForumReport",
+        meta: {
+          title: "論壇文章檢舉管理",
+        },
+      },
+      {
+        path: "/backend/BackAnnouncements",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackAnnouncements.vue"
+          ),
+        name: "BackAnnouncements",
+        meta: {
+          title: "公告",
+        },
+      },
+    ],
+  },
 ];
 
 const router = createRouter({
@@ -170,7 +231,6 @@ const router = createRouter({
 });
 
 export default router;
-
 
 // {
 //   path: "/backend",
