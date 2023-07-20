@@ -94,10 +94,15 @@ const routesUser = [
   {
     path: "/cart",
     name: "cart",
-    component: () => import(/* webpackChunkName: "cart" */ "@/views/Cart.vue"),
+    component: () => import(/* webpackChunkName: "cart" */ "@/views/Cart/Cart.vue"),
     meta: {
       title: "購物車",
     },
+  },
+  {
+    path: "/checkout",
+    name: "結帳資訊",
+    component: () => import(/* webpackChunkName: "cart" */ "@/views/Cart/CheckOut.vue"),
   },
   {
     path: "/login",
