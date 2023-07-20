@@ -6,7 +6,7 @@ import store from "./store";
 import { register } from "swiper/element/bundle";
 // 外部函式庫 view-ui-plus
 import ViewUIPlus from 'view-ui-plus'
-import 'view-ui-plus/dist/styles/viewuiplus.css'
+import 'view-ui-plus/dist/styles/viewuiplus.css';
 // 全域的scss
 import "@/assets/scss/style.scss";
 

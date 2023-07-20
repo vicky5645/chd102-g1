@@ -1,23 +1,19 @@
-<style lang="scss">
+<style lang="scss" scoped>
 * {
   box-sizing: border-box;
 }
-
-main:has(section.title) {
-  max-width: none !important;
-
-  & > *:not(section.title) {
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+.container {
+  width: 1200px;
+  margin: auto;
 }
 
 section.title {
   text-align: center;
   padding: 1.5rem 0;
   background-color: white;
-
+  h1 {
+    font-size: 2rem;
+  }
   p {
     padding-top: 1rem;
     font-size: 1.25rem;
@@ -214,75 +210,77 @@ section.next-step {
     <p>在星光的指引下，踏上光芒閃耀的旅程，展開無垠的探索之旅</p>
   </section>
 
-  <swiper-container
-    class="mySwiper"
-    navigation="{
+  <div class="container">
+    <swiper-container
+      class="mySwiper"
+      navigation="{
       true
     }"
-    loop="true"
-    css-mode="true"
-  >
-    <swiper-slide v-for="(item, index) in swiperImg" :key="index">
-      <img :src="item.link" alt="" />
-    </swiper-slide>
-    <!-- 
+      loop="true"
+      css-mode="true"
+    >
+      <swiper-slide v-for="(item, index) in swiperImg" :key="index">
+        <img :src="item.link" alt="" />
+      </swiper-slide>
+      <!-- 
     <button class="swiper-button-prev"></button>
     <button class="swiper-button-next"></button> -->
-  </swiper-container>
+    </swiper-container>
 
-  <div class="dash"></div>
+    <div class="dash"></div>
 
-  <section class="notice">
-    <h2>注意事項</h2>
-    <ul>
-      <li v-for="(item, index) in notice" :key="index">{{ item.text }}</li>
-    </ul>
-  </section>
+    <section class="notice">
+      <h2>注意事項</h2>
+      <ul>
+        <li v-for="(item, index) in notice" :key="index">{{ item.text }}</li>
+      </ul>
+    </section>
 
-  <div class="dash"></div>
+    <div class="dash"></div>
 
-  <section class="itinerary">
-    <h2>行程列表</h2>
-    <div class="stage">
-      <div class="stage-left">
-        <div class="day1">DAY1</div>
-        <div class="day2" :style="{ marginTop: marginTop + 'px' }">DAY2</div>
-      </div>
-      <div class="stage-list">
-        <div
-          class="stage-item"
-          @click="toggleClass(index)"
-          v-for="(item, index) in stageList"
-          :key="index"
-        >
-          <div class="item">
-            {{ item.name }}
-            <div class="symbol" :class="{ minus: item.isActive }">
-              <span></span>
-              <span></span>
+    <section class="itinerary">
+      <h2>行程列表</h2>
+      <div class="stage">
+        <div class="stage-left">
+          <div class="day1">DAY1</div>
+          <div class="day2" :style="{ marginTop: marginTop + 'px' }">DAY2</div>
+        </div>
+        <div class="stage-list">
+          <div
+            class="stage-item"
+            @click="toggleClass(index)"
+            v-for="(item, index) in stageList"
+            :key="index"
+          >
+            <div class="item">
+              {{ item.name }}
+              <div class="symbol" :class="{ minus: item.isActive }">
+                <span></span>
+                <span></span>
+              </div>
             </div>
-          </div>
-          <div class="desc" :class="{ 'slide-down': item.isActive }">
-            {{ item.desc }}
+            <div class="desc" :class="{ 'slide-down': item.isActive }">
+              {{ item.desc }}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="next-step">
-    <div class="btn secondary">
-      <router-link to="/online-booking">
-        <span>返回</span>
-      </router-link>
-    </div>
+    <section class="next-step">
+      <div class="btn secondary">
+        <router-link to="/online-booking">
+          <span>返回</span>
+        </router-link>
+      </div>
 
-    <div class="btn primary">
-      <router-link to="/">
-        <span>確認訂單</span>
-      </router-link>
-    </div>
-  </section>
+      <div class="btn primary">
+        <router-link to="/">
+          <span>確認購票</span>
+        </router-link>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>

@@ -67,6 +67,8 @@
             線上訂票
           </li>
         </router-link>
+        <router-link to="/">開始</router-link>
+        <router-link to="/backend">後台</router-link>
       </div>
     </template>
     <template v-slot:slotfooter>
