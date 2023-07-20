@@ -1,6 +1,6 @@
 <template>
   <ol class="bread_crumbs">
-    <router-link to="/">
+    <router-link to="/roaming-orbit">
       <i class="fa-solid fa-house"></i>
     </router-link>
     <li v-for="(item, i) in breadcrumbList" :key="i" class="pl-2">
@@ -21,23 +21,17 @@ export default {
   setup(props) {
     const route = useRoute()
     const breadcrumbList = ref([])
-    breadcrumbList.value = []
     const getBreadcrumbs = () => {
       const matched = route.matched
       const isHome = () => route.name === 'home'
       const isProductPage = matched.some(route => route.name === 'online-mall')
-      const isProductDetailPage = matched.some(route => route.name === 'productDetail/:id')
+      const isProductDetailPage = matched.some(route => route.name === 'productDetail')
       if (!isHome()) {
-        breadcrumbList.value.push({ title: '', path: '/' })
-
-        if (isProductPage) {
+        if (isProductPage || isProductDetailPage) {
           breadcrumbList.value.push({ title: '所有商品', path: '/online-mall' })
-        } else if (isProductDetailPage) {
-          breadcrumbList.value.push({ title: '所有商品', path: '/online-mall' })
+        }
+        if (isProductDetailPage) {
           breadcrumbList.value.push({ title: `物品-${props.detailName}`, path: '' })
-          if (props.detailName) {
-            breadcrumbList.value.push({ title: props.detailName, path: '' })
-          }
         }
       }
     }
@@ -62,17 +56,19 @@ export default {
   }
 
   li {
-    &+li::before {
+    &::before {
       content: " > ";
       color: #9ca3af;
     }
 
     list-style: none;
     display: inline;
-
     a {
       text-decoration: none;
       color: #9ca3af;
+    }
+    & + li a {
+      color: #f29c50;
     }
   }
 }
