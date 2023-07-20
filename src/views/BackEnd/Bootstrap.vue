@@ -1,9 +1,5 @@
 <template>
   <h1>{{ $route.meta.title }}</h1>
-  <div class="home">
-  </div>
-
-  <h1>{{ $route.meta.title }}</h1>
   <img src="~@/assets/logo.svg" alt="">
   <div class="container py-4 px-3 mx-auto">
     <h1>Hello, Bootstrap and Vite!</h1>
@@ -39,13 +35,10 @@
 </template>
 
 <script>
-// @ is an alias to /src
-
 export default {
-  components: {
-  },
-  data(){
+  data() {
     return {
+      value: '1'
     }
   }
 }

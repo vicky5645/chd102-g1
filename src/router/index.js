@@ -143,16 +143,25 @@ const routesUser = [
     children: [
       {
         path: '/backend/package',
+        name: "package",
         component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackPackage.vue'),
-        meta: { title: '行程' }
+        meta: { title: '行程管理' }
       },
       {
         path: '/backend/organize',
+        name: "organize",
         component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackOrganize.vue'),
-        meta: { title: '開團' }
+        meta: { title: '開團管理' }
+      },
+      {
+        path: "/backend/bootstrap",
+        component: () => import(/* webpackChunkName: "cart" */ "@/views/BackEnd/Bootstrap.vue"),
+        meta: {
+          title: "bootstrap test",
+        },
       },
     ]
-  },
+  }
 ];
 
 const router = createRouter({
