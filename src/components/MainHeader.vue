@@ -9,6 +9,11 @@
       </router-link>
       <div class="nav_item">
         <router-link to="/about">小火車介紹</router-link>
+        <router-link to="/announcements2">
+          <li>
+            公告2
+          </li>
+        </router-link>
         <router-link to="/announcements">公告</router-link>
         <router-link to="/Announcement-details">公告內頁</router-link>
 

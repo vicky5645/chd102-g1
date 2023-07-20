@@ -30,18 +30,34 @@ const routesUser = [
     },
   },
   {
-    path: "/announcements",
-    name: "announcements",
+    path: "/announcements2",
+    name: "announcements2",
     // component: Announcements
     component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/Announcements.vue"),
+      import(/* webpackChunkName: "about" */ "@/views/Announcement/Announcements.vue"),
     meta: {
-      title: "公告",
+      title: "公告2",
+    },
+  },
+  // {
+  //   path: '/productDetail/:id',
+  //   name: 'productDetail/:id',
+  //   component: () => import(/* webpackChunkName: "about" */ '@/views/Product/ProductDetailView.vue'),
+  //   meta: { title: '物品' }
+  // },
+  {
+    path: "/announcement-details/:id",
+    name: "announcement-details/:id",
+    // component: Announcements
+    component: () =>
+      import(/* webpackChunkName: "about" */ "@/views/Announcement/Announcement-details.vue"),
+    meta: {
+      title: "公告2",
     },
   },
   {
-    path: "/Announcement-details",
-    name: "Announcement-details",
+    path: "/announcement-details",
+    name: "announcement-details",
     // component: Announcement-details
     component: () =>
       import(
