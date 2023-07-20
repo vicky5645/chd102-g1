@@ -2,7 +2,7 @@
   <h1>漫遊列車之旅後台頁面</h1>
   <div class="home">home</div>
   <div class="content" style="display: flex">
-    <aside class="col-lg-2 col-xl-2" style="display: inline-block">
+    <aside class="col-2  " style="display: inline-block">
       <div class="list-group">
         <div class="list-group">
           <router-link to="/backend" exact>
@@ -82,7 +82,7 @@
         </div>
       </div>
     </aside>
-    <main class="col-lg-10 col-xl-10 user-control-content">
+    <main class="col-10 user-control-content">
       <router-view></router-view>
     </main>
   </div>
