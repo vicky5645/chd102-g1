@@ -30,8 +30,8 @@ const routesUser = [
     },
   },
   {
-    path: "/announcements2",
-    name: "announcements2",
+    path: "/announcements",
+    name: "announcements",
     // component: Announcements
     component: () =>
       import(/* webpackChunkName: "about" */ "@/views/Announcement/Announcements2.vue"),
@@ -39,33 +39,11 @@ const routesUser = [
       title: "公告2",
     },
   },
-  // {
-  //   path: '/announcement-details2/:id',
-  //   name: 'announcement-details2/:id',
-  //   component: () => import(/* webpackChunkName: "" */ '@/views/Announcement/Announcement-details.vue'),
-  //   meta: { title: '公告內頁2' }
-  // },
   {
-    path: "/announcements",
-    name: "announcements",
-    // component: Announcements
-    component: () =>
-      import(/* webpackChunkName: "" */ "@/views/Announcements.vue"),
-    meta: {
-      title: "公告",
-    },
-  },
-  {
-    path: "/announcement-details",
-    name: "announcement-details",
-    // component: Announcement-details
-    component: () =>
-      import(
-        /* webpackChunkName: "" */ "@/views/Announcement-details.vue"
-      ),
-    meta: {
-      title: "公告內頁",
-    },
+    path: '/announcement-details/:id',
+    name: 'announcement-details/:id',
+    component: () => import(/* webpackChunkName: "" */ '@/views/Announcement/Announcement-details.vue'),
+    meta: { title: '公告內頁2' }
   },
   {
     path: "/forum",

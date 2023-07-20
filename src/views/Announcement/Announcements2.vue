@@ -25,7 +25,7 @@
     </div>
 
     <template v-if="filteredArticles.length">
-      <div v-for="(article, index) in filteredArticles" :key="index" class="article_card">
+      <div v-for="article in filteredArticles" :key="article.id" class="article_card">
         <div class="pic"><img :src="article.image" alt="Article Image" /></div>
         <div class="article_card_txt">
           <p class="type" :class="article.type === '重要' ? 'important' : 'normal'">
@@ -33,12 +33,7 @@
           </p>
           <h3>{{ article.title }}</h3>
           <p class="card_txt_content">{{ article.content }}</p>
-          <!-- <router-link :to="`/announcement-details2/${item.id}`">
-            <div class="cradPic">
-              <img :src="item.image" :alt="item.title">
-            </div>
-          </router-link> -->
-          <router-link :to="`/announcement-details2/${item.id}`" class="more">查看更多</router-link>
+          <router-link :to="`/announcement-details/${article.id}`" class="more">查看更多</router-link>
         </div>
       </div>
     </template>
@@ -96,19 +91,6 @@ export default {
       isSearching: false,
     };
   },
-  // computed: {
-  //   filteredArticles() {
-  //     if (this.isSearching) {
-  //       return this.airticles.filter(
-  //         (article) =>
-  //           article.title.includes(this.searchText) ||
-  //           article.content.includes(this.searchText)
-  //       );
-  //     } else {
-  //       return this.airticles;
-  //     }
-  //   },
-  // },
   methods: {
     // 分類按鈕
     selectType(type) {
@@ -136,7 +118,6 @@ export default {
       .then(json => {
         this.airticles = json;
         this.filteredArticles = this.airticles;
-        // this.updateDisplay()
       })
   },
 };
