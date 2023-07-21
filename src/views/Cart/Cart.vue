@@ -72,8 +72,10 @@
         <span class="h3">123</span>
       </div>
       <div class="checkOut">
-        <button class="btn-back">返回</button>
+        <button class="btn-back" @click="goBack">返回</button>
+        <router-link to="/checkout">
         <button class="btn-checkOut">前往結帳</button>
+        </router-link>
       </div>
     </div>
   </main>
@@ -106,6 +108,10 @@ export default {
         this.quantity--;
       }
     },
+    goBack() {
+      // 使用 router.go() 方法導向上一頁
+      this.$router.go(-1);
+    }
   }
 }
 </script>
