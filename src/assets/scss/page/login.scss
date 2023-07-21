@@ -2,6 +2,11 @@
   // width: 500px;
   position: relative;
   // margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
   .input-wrap {
     display: flex;
     flex-direction: column;
@@ -42,5 +47,46 @@
         transition: all 0.5s;
       }
     }
+  }
+  p {
+    margin-bottom: 20px;
+  }
+  
+  // input {
+  //   margin-bottom: 10px;
+  //   padding: 8px;
+  //   border: 1px solid#a0a0a0;
+  //   border-radius: 8px;
+  // }
+  
+  .google-btn {
+    background-color: #adabab;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    margin-bottom: 20px;
+  }
+  
+  .forgot-password {
+    margin-bottom: 10px;
+  }
+  
+  .actions {}
+  
+  .login-btn {
+    background-color: #F29C50;
+    color: #fff;
+    border: 1px;
+    border-radius: 8px;
+    padding: 8px;
+    width: 200px;
+    display: block;
+    
+  
+  }
+  
+  .register-link {
+    color: #007bff;
   }
 }

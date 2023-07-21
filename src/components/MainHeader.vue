@@ -14,12 +14,12 @@
         <router-link to="/online-mall">線上商城</router-link>
         <router-link to="/online-booking">線上訂票</router-link>
         <router-link to="/booking-info">訂票資訊</router-link>
-        <router-link to="/user">
+        <!-- <router-link to="/user">
           <div class="icon-24">
             <img class="custom-svg" src="@/assets/images/icon/basic/member-login.svg" alt="list-icon">
           </div>
           <span>會員專區</span>
-        </router-link>
+        </router-link> -->
         <router-link to="/">開始</router-link>
         <router-link to="/backend">後台</router-link>
       </div>
@@ -65,7 +65,7 @@
       </div>
     </template>
     <template v-slot:slotfooter>
-      <div class="link-list">
+      <!-- <div class="link-list">
         <router-link to="/user/info">
           <li>
             <div class="icon-24">
@@ -73,7 +73,6 @@
             </div>
             <span>麥大名</span>
             <img class="custom-svg" src="@/assets/images/icon/basic/settings.svg" alt="settings-icon">
-            <!-- <span>帳號設定</span> -->
           </li>
         </router-link>
         <router-link to="/user/order">
@@ -109,7 +108,7 @@
             {{ $store.state.name }}
           </li>
         </router-link>
-      </div>
+      </div> -->
     </template>
   </MainSidebar>
 </template>
