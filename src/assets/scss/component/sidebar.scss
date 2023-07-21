@@ -1,28 +1,29 @@
 .sidebar {
+  padding-top: 0px;
   box-sizing: border-box;
-  position: absolute;
+  position: fixed;
   width: 15rem;
   height: 100vh;
-  right: -15rem;
+  right: 0;
+  transform: translateX(15rem);
   top: 0;
-  z-index: 100;
+  z-index: 1;
   background-color: #fff;
-  
-  transition: right 1s ease-in-out;
+  transition: all 1s ease-in-out;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
   background-color: map-get($BrandColors, Primary);
+  @include pad {
+    display: none;
+    transform: translateX(15rem);
+  }
   &.active {
-    right: 0;
+    padding-top: 60px;
+    transform: translateX(0);
   }
 
-  #close-btn {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 2rem;
-  }
 
   &_content {
     text-align: left;

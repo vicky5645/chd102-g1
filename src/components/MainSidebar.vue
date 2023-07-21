@@ -1,8 +1,5 @@
 <template>
   <div class="sidebar" :class="{ active: sidebarOpen }">
-    <div id="close-btn" class="icon-24">
-      <img @click="closeSidebar" class="custom-svg" src="@/assets/images/icon/menu/close_big.png" alt="list-icon">
-    </div>
     <slot name="slotheader"></slot>
     ==========
     <slot name="slotfooter"></slot>
