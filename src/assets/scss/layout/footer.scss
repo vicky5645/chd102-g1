@@ -1,65 +1,190 @@
 #mainFooter {
 
-  background-image:url('/public/images/travel/bg3.png');
+  text-align: center;
+  background-image: url('/public/images/travel/bg3.png');
   background-size: cover;
   background-position: center;
-  color: white;
+  color: $bodyBgColor;
   font-size: $body;
   font-weight: 400;
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 100PX;
 
-  // >*{
+  padding: 100PX 0;
+
+  // >* {
   //   outline: 1px solid gold;
-  //   &::after{
+
+  //   &::after {
   //     content: attr(class);
   //   }
   // }
-  .social-links{
+
+
+
+  .social-links {
+    
     display: flex;
+    justify-content: center;
+    
+    i {
+      margin: 4px;
+      padding: 30px;
+      border: 1px dashed map-get($BrandColors, Secondary2);
+      border-radius: 50%;
+      color: map-get($BrandColors, Secondary2);
+
+      &:hover {
+        transform: scale(1.07);
+        filter: brightness(110%);
+        background-color: #476b7a73;
+
+      }
+    }
+
   }
-  & img {}
+
+
+
+  & img {
+
+    &:hover {
+      transform: scale(1.07);
+      filter: brightness(110%);
+
+    }
+
+  }
+
 
   .logo {
+
     img {
       width: 200px;
     }
 
   }
 
-  >.image-row {
-    margin: 100px 0;
-    // width: 50%;
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 
-    @include pc {
-      img {
-        width: 300px;
-      }
-    }
-
-    img {
-
-      width: 100px;
-      height: 95px;
-      border-radius: 50%;
-      overflow: hidden;
-      background-size: cover;
-      background-position: center;
-    }
-  }
-
-
-  ul {
     li {
+      display: flex;
       padding: 10px;
-      list-style: none;
     }
+
     i {
       padding: 10px;
     }
 
   }
+
+
+  .scroll {
+    width: 300px;
+    padding: 0.8rem 2rem;
+    margin: 20px;
+    background: map-get($BrandColors, Secondary2);
+    color: $bodyBgColor;
+    font: 24px "Margarine", sans-serif;
+    border: 3px solid map-get($BrandColors, Secondary2);
+    ;
+    border-radius: 50px;
+    cursor: pointer;
+    position: relative;
+    transition: 0.2s ease-in-out;
+    letter-spacing: 2px;
+  }
+
+  .SHARE {
+    font-size: $h2;
+    color: map-get($BrandColors, Secondary2);
+  }
+
+  .left-section-wrap {
+
+
+
+
+    >.image-row {
+
+      margin: 100px 0;
+      display: grid;
+      grid-template-columns: repeat(2, 2fr);
+      grid-gap: 10px;
+
+      img {
+
+        width: 100px;
+        height: 95px;
+        border-radius: 50%;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+
+      }
+    }
+
+    .footer-table {}
+
+    .table-cell {}
+
+  }
+
+}
+
+
+@include pc {
+
+  #mainFooter {
+    flex-direction: row;
+
+    .left-section-wrap {
+      >.image-row {
+
+        grid-template-columns: repeat(6, 2fr);
+        grid-gap: 10px;
+
+      }
+
+    }
+  }
+
+
+  ul {
+
+    display: flex;
+
+    align-items: center;
+    flex-direction: column;
+
+    li {
+      padding: 10px;
+      list-style: none;
+
+
+    }
+
+    i {
+      padding: 10px;
+    }
+
+  }
+
+  .footer-table {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    /* 六欄，每列平均佈局 */
+    grid-template-rows: repeat(4, 50px);
+    /* 四列，每行高度為50px，你可以根據需要調整 */
+    grid-gap: 10px;
+    font-size: $h3;
+  }
+
+  .table-cell {}
 }
