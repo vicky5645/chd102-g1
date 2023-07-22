@@ -1,7 +1,7 @@
 <template>
   <!-- {{ $route.params.id }} -->
   <main class="product_page">
-    <BreadCrumbs v-if="productDataItem" :detailName="productDataItem.title" />
+    <BreadCrumbs v-if="productDataItem.title" :detailName="productDataItem.title" />
     <div v-if="productData">
       <!-- <ol class="bread_crumbs">
         <i class="fa-solid fa-house"></i>

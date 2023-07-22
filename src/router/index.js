@@ -34,22 +34,21 @@ const routesUser = [
     name: "announcements",
     // component: Announcements
     component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/Announcements.vue"),
+      import(
+        /* webpackChunkName: "about" */ "@/views/Announcement/Announcements2.vue"
+      ),
     meta: {
-      title: "公告",
+      title: "公告2",
     },
   },
   {
-    path: "/Announcement-details",
-    name: "Announcement-details",
-    // component: Announcement-details
+    path: "/announcement-details/:id",
+    name: "announcement-details/:id",
     component: () =>
       import(
-        /* webpackChunkName: "about" */ "@/views/Announcement-details.vue"
+        /* webpackChunkName: "" */ "@/views/Announcement/Announcement-details.vue"
       ),
-    meta: {
-      title: "公告內頁",
-    },
+    meta: { title: "公告內頁2" },
   },
   {
     path: "/forum",
@@ -72,7 +71,7 @@ const routesUser = [
   },
   {
     path: "/productDetail/:id",
-    name: "productDetail/:id",
+    name: "productDetail",
     component: () =>
       import(
         /* webpackChunkName: "about" */ "@/views/Product/ProductDetailView.vue"
@@ -109,10 +108,17 @@ const routesUser = [
   {
     path: "/cart",
     name: "cart",
-    component: () => import(/* webpackChunkName: "cart" */ "@/views/Cart.vue"),
+    component: () =>
+      import(/* webpackChunkName: "cart" */ "@/views/Cart/Cart.vue"),
     meta: {
       title: "購物車",
     },
+  },
+  {
+    path: "/checkout",
+    name: "結帳資訊",
+    component: () =>
+      import(/* webpackChunkName: "cart" */ "@/views/Cart/CheckOut.vue"),
   },
   {
     path: "/login",
@@ -164,15 +170,71 @@ const routesUser = [
     children: [
       {
         path: "/backend/package",
+        name: "package",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/BackEnd/BackPackage.vue"),
-        meta: { title: "行程" },
+        meta: { title: "行程管理" },
       },
       {
         path: "/backend/organize",
+        name: "organize",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/BackEnd/BackOrganize.vue"),
-        meta: { title: "開團" },
+        meta: { title: "開團管理" },
+      },
+      {
+        path: "/backend/bootstrap",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/Bootstrap.vue"
+          ),
+        meta: {
+          title: "bootstrap test",
+        },
+      },
+      {
+        path: "/backend/BackForum",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackForum.vue"
+          ),
+        name: "BackForum",
+        meta: {
+          title: "論壇文章管理",
+        },
+      },
+      {
+        path: "/backend/BackForumMessage",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackForumMessage.vue"
+          ),
+        name: "BackForumMessage",
+        meta: {
+          title: "論壇文章留言管理",
+        },
+      },
+      {
+        path: "/backend/BackForumReport",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackForumReport.vue"
+          ),
+        name: "BackForumReport",
+        meta: {
+          title: "論壇文章檢舉管理",
+        },
+      },
+      {
+        path: "/backend/BackAnnouncements",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackAnnouncements.vue"
+          ),
+        name: "BackAnnouncements",
+        meta: {
+          title: "公告",
+        },
       },
     ],
   },
@@ -184,23 +246,3 @@ const router = createRouter({
 });
 
 export default router;
-
-// {
-//   path: "/backend",
-//   name: "backend",
-//   // component: AboutView
-//   meta: {
-//     title: "後台首頁",
-//   },
-//   component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackIndex.vue'),
-//   children: [
-//     {
-//       path: '/backend/package',
-//       component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackPackage.vue'),
-//     },
-//     {
-//       path: '/backend/organize',
-//       component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackOrganize.vue'),
-//     },
-//   ]
-// },
