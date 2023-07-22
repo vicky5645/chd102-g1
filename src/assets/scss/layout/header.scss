@@ -64,13 +64,41 @@ header {
          width: 40px;
          height: 40px;
          position: relative;
+         z-index: 9;
+         cursor: pointer;
          &:hover , &:active {
             span {
-               background-color: map-get($BrandColors, Primary);
+               transition: background-color .5s;
+               // background-color: map-get($BrandColors, Primary);
             }
          }
          @include pad {
             display: none;
+         }
+         &.active {
+            // &:hover , &:active {
+            //    span {
+            //       background-color: map-get($GrayColors, White);
+            //    }
+            // }
+            span {
+               transition: background-color .5s;
+               background-color: #012840;
+               &:nth-child(1) {
+                  top: 18px;
+                  rotate: 45deg;
+                  transition: top .5s, rotate .5s .5s;
+               }
+               &:nth-child(2) {
+                  transition: opacity .1s .5s;
+                  opacity: 0;
+               }
+               &:nth-child(3) {
+                  top: 18px;
+                  rotate: -45deg;
+                  transition: top .5s, rotate .5s .5s;
+               }
+            }
          }
          span {
             width: 84%;
@@ -85,14 +113,14 @@ header {
             rotate: 0deg;
             &:nth-child(1) {
                top: 8px;
-               // transition: top .5s .5s,rotate .5s;
+               transition: top .5s .5s,rotate .5s;
             }
             &:nth-child(2) {
                top: 18px;
             }
             &:nth-child(3) {
                top: 28px;
-               // transition: top .5s .5s,rotate .5s;
+               transition: top .5s .5s,rotate .5s;
             }
          }
       }

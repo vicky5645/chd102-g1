@@ -41,6 +41,7 @@ main.Announcements {
         padding: 12px;
         border: 2px solid var(--brand-colors-primary, #f29c50);
         flex-grow: 1;
+        border-radius: 8px;
 
         // 外框線 沒效果但移除預設樣式了
         &:focus {

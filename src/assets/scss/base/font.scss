@@ -1,7 +1,7 @@
 // @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300;400;500&display=swap');
 
 $fontSize : 20px; //數值
-$fontFamily : 'Kiwi Maru', serif; //字串
+$fontFamily : 'Kiwi Maru', 'Helvetica', sans-serif, serif; //字串
 
 $h1 : 48px;
 $h2 : 32px;
@@ -11,14 +11,3 @@ $label : 16px;
 $caption : 13px;
 $body : 18px;
 
-//標題文字大小
-$title : (
-  body : 16,
-  span : 18,
-  h1 : 48,
-  h2 : 32,
-  h3 : 24,
-  h4 : 20,
-  h5 : 18,
-  '.box' : 40
-);  // map 
