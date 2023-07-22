@@ -74,10 +74,27 @@ section.itinerary {
       flex-direction: column;
       font-size: 1.5rem;
       margin-right: 1rem;
+
       .day2 {
         position: relative;
         top: 175px;
         transition: all 0.3s ease-in-out;
+      }
+    }
+
+    .icon {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s ease-in-out;
+      i {
+        font-size: 1.5rem;
+        text-align: center;
+        line-height: 40px;
+        width: 40px;
+        height: 40px;
+        background-color: rgb(122, 172, 191);
+        border-radius: 50%;
       }
     }
 
@@ -211,6 +228,10 @@ section.next-step {
           <div class="day1">DAY1</div>
           <div class="day2" :style="{ marginTop: marginTop + 'px' }">DAY2</div>
         </div>
+        <div class="icon" :style="{ height: 370 + iconMove + 'px' }">
+          <i class="fa-solid fa-location-dot"></i>
+          <i class="fa-solid fa-flag"></i>
+        </div>
         <div class="stage-list">
           <div
             class="stage-item"
@@ -312,7 +333,7 @@ export default {
         },
         {
           name: "第二站：景觀公園",
-          desc: "景觀公園是一個令人著迷的地方，充滿著幻想與神奇。這裡的樹林擁有著美麗的秋天景色，萬紅橙黃的楓葉在微風中輕輕飄落。漫步在景觀公園彷彿置身於一個夢幻般的童話故事中。這裡的寧靜與宁靜讓您的心靈得到放鬆和平靜，同時享受著大自然所賦予的美妙。",
+          desc: "景觀公園是一個令人著迷的地方，充滿著幻想與神奇。這裡的樹林擁有著美麗的秋天景色，萬紅橙黃的楓葉在微風中輕輕飄落。漫步在景觀公園彷彿置身於一個夢幻般的童話故事中。這裡的靜謐與寧靜讓您的心靈得到放鬆和平靜，同時享受著大自然所賦予的美妙。",
           isActive: false,
         },
         {
@@ -321,13 +342,13 @@ export default {
           isActive: false,
         },
         {
-          name: "第四站：歷史遺跡",
-          desc: "高原遺跡，是一個充滿歷史色彩的神秘之地。隱藏在高山脊梁上的古老遺址，它見證了遠古時代的文明興衰和人類智慧的薪火相傳。這片遺跡位於雄偉壯麗的高原地帶，被廣闊的草原和壯麗的山脈所環繞。當您踏足在這片土地上時，仿佛回到了古代文明的繁華時期。遺跡中的古建築、石碑、雕像和壁畫，展現出當時人們的智慧和藝術才華。您可以仔細觀察著古老的建築結構，感受著歷史的洪流在這裡流轉。",
+          name: "第四站：高原遺跡",
+          desc: "這是一個充滿歷史色彩的神秘之地。隱藏在高山脊梁上的古老遺址，它見證了遠古時代的文明興衰和人類智慧的薪火相傳。這片遺跡位於雄偉壯麗的高原地帶，被廣闊的草原和壯麗的山脈所環繞。當您踏足在這片土地上時，仿佛回到了古代文明的繁華時期。遺跡中的古建築、石碑、雕像和壁畫，展現出當時人們的智慧和藝術才華。您可以仔細觀察著古老的建築結構，感受著歷史的洪流在這裡流轉。",
           isActive: false,
         },
         {
           name: "第五站：海底餐廳",
-          desc: "這個根基位於海底的餐廳猶如一座透明的水晶殿堂,四周被璀璨的海底生物和色彩繽紛的珊瑚所環繞。當您坐在餐桌旁,透過透明的落地窗欣賞著游動的熱帶魚群和優雅的海龜,仿佛置身於一個夢幻般的海底世界。來到海底餐廳,讓我們引領您進入一個夢幻般的海洋世界。在這裡,美食與自然交融,讓您的味蕾和心靈同時沉浸在無盡的驚奇和美好中。",
+          desc: "這座根基位於海底的餐廳猶如一座透明的水晶殿堂,四周被璀璨的海底生物和色彩繽紛的珊瑚所環繞。當您坐在餐桌旁,透過透明的落地窗欣賞著游動的熱帶魚群和優雅的海龜,仿佛置身於一個夢幻般的海底世界。來到海底餐廳,讓我們引領您進入一個夢幻般的海洋世界。在這裡,美食與自然交融,讓您的味蕾和心靈同時沉浸在無盡的驚奇和美好中。",
           isActive: false,
         },
       ],
@@ -335,9 +356,20 @@ export default {
   },
 
   computed: {
+    //Day2隨著前三站的isActive狀態改變，marginTop的值也會跟著改變
     marginTop() {
       let count = 0;
       for (let i = 0; i < 3; i++) {
+        if (this.stageList[i].isActive) {
+          count++;
+        }
+      }
+      return count * 150;
+    },
+
+    iconMove() {
+      let count = 0;
+      for (let i = 0; i < 4; i++) {
         if (this.stageList[i].isActive) {
           count++;
         }
