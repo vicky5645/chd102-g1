@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
-import SpecialPage from '@/views/StartView.vue';
+import SpecialPage from "@/views/StartView.vue";
 
 const routesUser = [
   {
@@ -64,14 +64,20 @@ const routesUser = [
   {
     path: "/online-mall",
     name: "online-mall",
-    component: () => import(/* webpackChunkName: "online-mall" */ "@/views/Product/ProductView.vue"),
-    meta: { title: '所有商品' }
+    component: () =>
+      import(
+        /* webpackChunkName: "online-mall" */ "@/views/Product/ProductView.vue"
+      ),
+    meta: { title: "所有商品" },
   },
   {
-    path: '/productDetail/:id',
-    name: 'productDetail/:id',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/Product/ProductDetailView.vue'),
-    meta: { title: '物品' }
+    path: "/productDetail/:id",
+    name: "productDetail/:id",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "@/views/Product/ProductDetailView.vue"
+      ),
+    meta: { title: "物品" },
   },
   {
     path: "/online-booking",
@@ -92,6 +98,15 @@ const routesUser = [
     },
   },
   {
+    path: "/select-info",
+    name: "select-info",
+    component: () =>
+      import(/* webpackChunkName: "online-booking" */ "@/views/SelectSeat.vue"),
+    meta: {
+      title: "一般訂票",
+    },
+  },
+  {
     path: "/cart",
     name: "cart",
     component: () => import(/* webpackChunkName: "cart" */ "@/views/Cart.vue"),
@@ -106,30 +121,36 @@ const routesUser = [
       import(/* webpackChunkName: "login" */ "@/views/LoginView.vue"),
   },
   {
-    path: '/user',
-    component: () => import(/* webpackChunkName: "" */ '@/views/User/UserIndex.vue'),
+    path: "/user",
+    component: () =>
+      import(/* webpackChunkName: "" */ "@/views/User/UserIndex.vue"),
     children: [
       {
-        path: '',
-        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserLink.vue'),
+        path: "",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/User/UserLink.vue"),
       },
       {
-        path: '/user/info',
-        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserInfo.vue'),
+        path: "/user/info",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/User/UserInfo.vue"),
       },
       {
-        path: '/user/order',
-        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserOrder.vue'),
+        path: "/user/order",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/User/UserOrder.vue"),
       },
       {
-        path: '/user/forum',
-        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserForum.vue'),
+        path: "/user/forum",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/User/UserForum.vue"),
       },
       {
-        path: '/user/like',
-        component: () => import(/* webpackChunkName: "" */ '@/views/User/UserLike.vue'),
-      }
-    ]
+        path: "/user/like",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/User/UserLike.vue"),
+      },
+    ],
   },
   {
     path: "/backend",
@@ -142,16 +163,18 @@ const routesUser = [
     },
     children: [
       {
-        path: '/backend/package',
-        component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackPackage.vue'),
-        meta: { title: '行程' }
+        path: "/backend/package",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/BackEnd/BackPackage.vue"),
+        meta: { title: "行程" },
       },
       {
-        path: '/backend/organize',
-        component: () => import(/* webpackChunkName: "" */ '@/views/BackEnd/BackOrganize.vue'),
-        meta: { title: '開團' }
+        path: "/backend/organize",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/BackEnd/BackOrganize.vue"),
+        meta: { title: "開團" },
       },
-    ]
+    ],
   },
 ];
 
@@ -161,7 +184,6 @@ const router = createRouter({
 });
 
 export default router;
-
 
 // {
 //   path: "/backend",

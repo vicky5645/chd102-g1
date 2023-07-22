@@ -16,17 +16,26 @@
         <router-link to="/online-mall">線上商城</router-link>
         <router-link to="/online-booking">線上訂票</router-link>
         <router-link to="/booking-info">訂票資訊</router-link>
+        <router-link to="/select-info">一般訂票</router-link>
         <router-link to="/user">
           <div class="icon-24">
-            <img class="custom-svg" src="@/assets/images/icon/basic/member-login.svg" alt="list-icon">
+            <img
+              class="custom-svg"
+              src="@/assets/images/icon/basic/member-login.svg"
+              alt="list-icon"
+            />
           </div>
           <span>會員專區</span>
         </router-link>
         <router-link to="/">開始</router-link>
         <router-link to="/backend">後台</router-link>
       </div>
-      <router-link to="/cart" class="chrt"><i class="fa fa-shopping-cart" aria-hidden="true"></i></router-link>
-      <router-link to="/login" class="login">{{ $store.state.name }}</router-link>
+      <router-link to="/cart" class="chrt"
+        ><i class="fa fa-shopping-cart" aria-hidden="true"></i
+      ></router-link>
+      <router-link to="/login" class="login">{{
+        $store.state.name
+      }}</router-link>
       <div id="menu-switch" class="ham" @click="openSidebar = true">
         <span></span>
         <span></span>
@@ -38,29 +47,19 @@
     <template v-slot:slotheader>
       <div class="link-list">
         <router-link to="/about">
-          <li>
-            小火車介紹
-          </li>
+          <li>小火車介紹</li>
         </router-link>
         <router-link to="/announcements">
-          <li>
-            公告
-          </li>
+          <li>公告</li>
         </router-link>
         <router-link to="/forum">
-          <li>
-            論壇
-          </li>
+          <li>論壇</li>
         </router-link>
         <router-link to="/online-mall">
-          <li>
-            線上商城
-          </li>
+          <li>線上商城</li>
         </router-link>
         <router-link to="/online-booking">
-          <li>
-            線上訂票
-          </li>
+          <li>線上訂票</li>
         </router-link>
       </div>
     </template>
@@ -69,22 +68,38 @@
         <router-link to="/user/info">
           <li>
             <div class="icon-24">
-              <img class="custom-svg" src="@/assets/images/icon/basic/member-login.svg" alt="list-icon">
+              <img
+                class="custom-svg"
+                src="@/assets/images/icon/basic/member-login.svg"
+                alt="list-icon"
+              />
             </div>
             <span>麥大名</span>
-            <img class="custom-svg" src="@/assets/images/icon/basic/settings.svg" alt="settings-icon">
+            <img
+              class="custom-svg"
+              src="@/assets/images/icon/basic/settings.svg"
+              alt="settings-icon"
+            />
             <!-- <span>帳號設定</span> -->
           </li>
         </router-link>
         <router-link to="/user/order">
           <li>
-            <img class="custom-svg" src="@/assets/images/icon/basic/list.svg" alt="list-icon">
+            <img
+              class="custom-svg"
+              src="@/assets/images/icon/basic/list.svg"
+              alt="list-icon"
+            />
             <span>訂單管理</span>
           </li>
         </router-link>
         <router-link to="/user/forum">
           <li>
-            <img class="custom-svg" src="@/assets/images/icon/basic/message_writing.svg" alt="message_writing">
+            <img
+              class="custom-svg"
+              src="@/assets/images/icon/basic/message_writing.svg"
+              alt="message_writing"
+            />
             <span>論壇訊息</span>
           </li>
         </router-link>
@@ -117,27 +132,23 @@
 <style scoped lang="scss"></style>
 
 <script>
-import MainSidebar from '@/components/MainSidebar.vue'
+import MainSidebar from "@/components/MainSidebar.vue";
 export default {
   components: {
     MainSidebar,
   },
   data() {
     return {
-      openSidebar: false
-    }
+      openSidebar: false,
+    };
   },
   methods: {
     menuclose() {
-      console.log('父層close');
-      this.openSidebar = false
-    }
-  }
-}
+      console.log("父層close");
+      this.openSidebar = false;
+    },
+  },
+};
 </script>
 
-<style lang="scss" scoped>
-
-
-
-</style>
+<style lang="scss" scoped></style>
