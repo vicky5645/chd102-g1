@@ -167,40 +167,6 @@ section.next-step {
       color: #fff;
     }
   }
-  // .back-btn {
-  //   width: 50%;
-  //   text-align: center;
-  //   .btn {
-  //     display: inline-block;
-  //     // width: 200px;
-  //     // height: 50px;
-  //     // line-height: 50px;
-  //     background-color: rgba(1, 40, 64, 1);
-  //     // border-radius: 10px;
-  //     cursor: pointer;
-  //     span {
-  //       font-size: 1.5rem;
-  //       color: #fff;
-  //     }
-  //   }
-  // }
-  // .next-btn {
-  //   width: 50%;
-  //   text-align: center;
-  //   .btn {
-  //     display: inline-block;
-  //     // width: 200px;
-  //     // height: 50px;
-  //     // line-height: 50px;
-  //     // background-color: rgb(122, 172, 191);
-  //     // border-radius: 10px;
-  //     cursor: pointer;
-  //     span {
-  //       font-size: 1.5rem;
-  //       color: #fff;
-  //     }
-  //   }
-  // }
 }
 </style>
 
