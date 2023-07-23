@@ -1,3 +1,4 @@
+<!-- 公告管理 -->
 <template>
   <!-- select bar -->
   <div class="search_new">
@@ -6,12 +7,12 @@
         v-model="searchText"
         type="text"
         class="form-control"
-        placeholder="Search"
+        placeholder="輸入文字查詢"
         aria-label="Search"
       />
-      <button class="btn btn-outline-primary" type="button" id="button-addon2">
+      <!-- <button class="btn btn-outline-primary" type="button" id="button-addon2">
         搜尋
-      </button>
+      </button> -->
     </div>
     <button
       class="btn btn-outline-primary b_new"
@@ -159,7 +160,7 @@
               @change="handleFileUpload"
             />
           </div>
-          <div class="modeel_body_pic">
+          <div class="model_body_pic">
             <img
               v-if="currentItem.image"
               :src="currentItem.image"
@@ -177,13 +178,6 @@
           >
             儲存變更
           </button>
-          <!-- <button
-            type="button"
-            class="btn btn-secondary"
-            @click="cancelChanges"
-          >
-            取消
-          </button> -->
         </div>
       </div>
     </div>
@@ -197,10 +191,10 @@
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
         <div class="modal-header">
-          <slot name="header"> 新增公告 </slot>
+          <h5 name="header">新增公告</h5>
         </div>
 
         <div class="modal-body">
@@ -485,12 +479,16 @@ export default {
   white-space: nowrap;
   max-width: 80px; // 設定你希望的寬度
 }
-.modeel_body_pic {
+.model_body_pic {
   width: 100%;
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
+}
+
+h5 {
+  margin-bottom: 0;
 }
 </style>
