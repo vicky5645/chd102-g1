@@ -14,6 +14,7 @@
         <router-link to="/online-mall">線上商城</router-link>
         <router-link to="/online-booking">線上訂票</router-link>
         <router-link to="/booking-info">訂票資訊</router-link>
+        <router-link to="/Attractions">景點介紹</router-link>
         <!-- <router-link to="/user">
           <div class="icon-24">
             <img
