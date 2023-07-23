@@ -3,15 +3,15 @@
     height: $h;
 }
 
-.box {
-    @include rect(1000px, 200px);
-    background-color: #fff;
-}
+// .box {
+//     @include rect(1000px, 200px);
+//     background-color: #fff;
+// }
 
-.cardbox {
-    @include rect(200px, 40px);
-    background-color: #f20;
-}
+// .cardbox {
+//     @include rect(200px, 40px);
+//     background-color: #f20;
+// }
 
 
 

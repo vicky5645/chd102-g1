@@ -1,9 +1,16 @@
+@mixin h4 () {
+  font-size: $h4;
+  line-height: 24px;
+  letter-spacing: -0.16px;
+}
+
 .sidebar {
   padding-top: 0px;
   box-sizing: border-box;
   position: fixed;
   width: 15rem;
   height: 100vh;
+  overflow-y: auto;
   right: 0;
   transform: translateX(15rem);
   top: 0;
@@ -31,7 +38,6 @@
 
   .link-list {
     width: 100%;
-
     a {
       color: map-get($BrandColors, Secondary1);
       text-decoration: none;
@@ -39,6 +45,7 @@
       min-height: 44px;
       display: flex;
       transition: all 0.5s;
+      @include h4; 
 
       &:hover,
       &:active {

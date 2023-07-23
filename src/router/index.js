@@ -34,21 +34,16 @@ const routesUser = [
     name: "announcements",
     // component: Announcements
     component: () =>
-      import(
-        /* webpackChunkName: "about" */ "@/views/Announcement/Announcements2.vue"
-      ),
+      import(/* webpackChunkName: "about" */ "@/views/Announcement/Announcements.vue"),
     meta: {
       title: "公告2",
     },
   },
   {
-    path: "/announcement-details/:id",
-    name: "announcement-details/:id",
-    component: () =>
-      import(
-        /* webpackChunkName: "" */ "@/views/Announcement/Announcement-details.vue"
-      ),
-    meta: { title: "公告內頁2" },
+    path: '/announcement-details/:id',
+    name: 'announcement-details',
+    component: () => import(/* webpackChunkName: "" */ '@/views/Announcement/Announcement-details.vue'),
+    meta: { title: '公告內頁2' }
   },
   {
     path: "/forum",
@@ -124,7 +119,34 @@ const routesUser = [
     path: "/login",
     name: "login",
     component: () =>
-      import(/* webpackChunkName: "login" */ "@/views/LoginView.vue"),
+      import(/* webpackChunkName: "" */ "@/views/LogIn/Index.vue"),
+    children: [
+      {
+        path: "",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/LogIn/LoginView.vue"),
+      },
+      {
+        path: "/login/link",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/LogIn/Link.vue"),
+      },
+      {
+        path: "/register",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/LogIn/Register.vue"),
+      },
+      {
+        path: "/login/forgot",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/LogIn/ForgotPassword.vue"),
+      },
+      {
+        path: "/login/mem",
+        component: () =>
+          import(/* webpackChunkName: "" */ "@/views/LogIn/Member.vue"),
+      },
+    ],
   },
   {
     path: "/user",
@@ -133,26 +155,25 @@ const routesUser = [
     children: [
       {
         path: "",
-        component: () =>
-          import(/* webpackChunkName: "" */ "@/views/User/UserLink.vue"),
-      },
-      {
-        path: "/user/info",
+        name: "userinfo",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/User/UserInfo.vue"),
       },
       {
         path: "/user/order",
+        name: "userorder",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/User/UserOrder.vue"),
       },
       {
         path: "/user/forum",
+        name: "userforum",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/User/UserForum.vue"),
       },
       {
         path: "/user/like",
+        name: "userlike",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/User/UserLike.vue"),
       },
