@@ -1,5 +1,5 @@
 <template>
-    <div class="container cartPage cartFloat" v-show="cartStatus">
+    <div class="cartPage cartFloat" v-show="cartStatus">
         <div class="closeMark" @click="closeCart">
             <i class="fa-solid fa-xmark"></i>
         </div>
