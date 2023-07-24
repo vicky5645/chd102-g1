@@ -1,8 +1,8 @@
 <template>
-  <CartFloat 
-  :cartStatus="cartStatus"
-  @closeCart="cartStatus = false"
-  @goCartInfo="goCartInfo"
+  <CartFloat
+    :cartStatus="cartStatus"
+    @closeCart="cartStatus = false"
+    @goCartInfo="goCartInfo"
   />
   <header>
     <nav>
@@ -22,6 +22,7 @@
         <router-link to="/online-booking2">線上訂票2</router-link>
         <router-link to="/Attractions">景點介紹</router-link>
         <router-link to="/custom-tickets">客制車票</router-link>
+        <router-link to="/select-info">一般訂票</router-link>
         <!-- <router-link to="/user">
           <div class="icon-24">
             <img
@@ -35,9 +36,9 @@
         <router-link to="/">開始</router-link>
         <router-link to="/backend">後台</router-link>
       </div>
-      <div class="chrt" @click="toggleCart"
-        ><i class="fa fa-shopping-cart" aria-hidden="true"></i
-      ></div>
+      <div class="chrt" @click="toggleCart">
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+      </div>
       <router-link to="/login" class="login">{{
         $store.state.name
       }}</router-link>
@@ -138,7 +139,7 @@ export default {
   data() {
     return {
       openSidebar: false,
-      cartStatus: false
+      cartStatus: false,
     };
   },
   methods: {
@@ -149,13 +150,13 @@ export default {
       console.log("父層close");
       this.openSidebar = false;
     },
-    toggleCart(){
+    toggleCart() {
       this.cartStatus = !this.cartStatus;
     },
-    goCartInfo(){
+    goCartInfo() {
       this.cartStatus = false;
-      this.$router.push({path:"/cart"});
-    }
+      this.$router.push({ path: "/cart" });
+    },
   },
 };
 </script>

@@ -1,4 +1,6 @@
 <style lang="scss" scoped>
+@import "@/assets/scss/style.scss";
+
 * {
   box-sizing: border-box;
 }
@@ -263,7 +265,7 @@ section.next-step {
 
       <div class="btn primary">
         <router-link to="/">
-          <span>確認購票</span>
+          <span>下一步</span>
         </router-link>
       </div>
     </section>
@@ -366,7 +368,7 @@ export default {
       }
       return count * 150;
     },
-
+    //旗子icon隨著前四站的isActive狀態改變，height值也會跟著改變
     iconMove() {
       let count = 0;
       for (let i = 0; i < 4; i++) {
