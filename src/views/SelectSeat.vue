@@ -8,6 +8,8 @@ export default {
       departureSite: "有夠站",
       backSite: "SUPER站",
       startSale: "2025-01-18 12:00",
+      count: 1,
+      maxCount: 5,
       price: 36888,
       pass: [
         {
@@ -33,12 +35,14 @@ export default {
             {
               number: "1",
               id: "A1",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
             {
               number: "2",
               id: "A2",
-              status: "available",
+              isSelected: false,
+              status: "booked",
             },
           ],
         },
@@ -47,12 +51,14 @@ export default {
             {
               number: "3",
               id: "A3",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
             {
               number: "4",
               id: "A4",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
           ],
         },
@@ -61,12 +67,14 @@ export default {
             {
               number: "5",
               id: "A5",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
             {
               number: "6",
               id: "A6",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
           ],
         },
@@ -75,12 +83,14 @@ export default {
             {
               number: "7",
               id: "A7",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
             {
               number: "8",
               id: "A8",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
           ],
         },
@@ -89,12 +99,14 @@ export default {
             {
               number: "9",
               id: "A9",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
             {
               number: "10",
               id: "A10",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
           ],
         },
@@ -105,11 +117,13 @@ export default {
           seat: [
             {
               id: "B1",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
             {
               id: "B2",
-              status: "available",
+              isSelected: false,
+              status: "booked",
             },
           ],
         },
@@ -117,11 +131,13 @@ export default {
           seat: [
             {
               id: "A3",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
             {
               id: "A4",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
           ],
         },
@@ -129,11 +145,13 @@ export default {
           seat: [
             {
               id: "A5",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
             {
               id: "A6",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
           ],
         },
@@ -141,11 +159,13 @@ export default {
           seat: [
             {
               id: "A7",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
             {
               id: "A8",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
           ],
         },
@@ -153,16 +173,77 @@ export default {
           seat: [
             {
               id: "B9",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
             {
               id: "B10",
-              status: "available",
+              isSelected: false,
+              status: "unbooked",
             },
           ],
         },
       ],
     };
+  },
+
+  methods: {
+    reduce() {
+      //禁止購票數<0
+      if (this.count == 1) return;
+      this.count -= 1;
+    },
+
+    add() {
+      //禁止購票數量>maxCount
+      if (this.count === this.maxCount) return;
+      this.count += 1;
+    },
+
+    // selected(item) {
+    //   item.isSelected = !item.isSelected;
+    // },
+
+    //選擇的座位變色，能夠選擇的座位數量要和count相同
+    selected(item) {
+      const selectedSeats = this.getSelectedSeats();
+      if (selectedSeats.length < this.count || item.isSelected) {
+        item.isSelected = !item.isSelected;
+      }
+    },
+    getSelectedSeats() {
+      const allPortions = [...this.portion1, ...this.portion2];
+      return allPortions.reduce((selectedSeats, group) => {
+        const selectedInGroup = group.seat.filter((seat) => seat.isSelected);
+        return selectedSeats.concat(selectedInGroup);
+      }, []);
+    },
+    //-----------------------------------
+
+    //座位已經被預訂（即 status 為 "booked"），則用戶不應該能夠選擇它
+    selected(item) {
+      if (item.status !== "booked") {
+        item.isSelected = !item.isSelected;
+      }
+    },
+    //-----------------------------------
+
+    //驗證人數與座位數是否相符
+    validateSelection() {
+      const selectedSeats = this.getSelectedSeats();
+      return selectedSeats.length <= this.count;
+    },
+
+    confirm() {
+      if (this.validateSelection()) {
+        // 選擇有效，繼續購票流程
+        alert("前往付款頁面");
+      } else {
+        // 選擇無效，顯示錯誤消息
+        alert("人數與選擇的座位數不符合，請重新確認");
+      }
+    },
+    //----------------------
   },
 };
 </script>
@@ -183,7 +264,7 @@ export default {
           <h3>途經景點:</h3>
           <div class="wrap">
             <p v-for="(item, index) in pass" :key="index">
-              {{ item.name }}<Icon type="ios-arrow-round-forward" />
+              {{ item.name }}
             </p>
           </div>
         </div>
@@ -208,9 +289,13 @@ export default {
         </div>
         <div class="count">
           <div>人數選擇：</div>
-          <button class="minus"><i class="fa-solid fa-minus"></i></button>
-          <input type="tel" />
-          <button class="plus"><i class="fa-solid fa-plus"></i></button>
+          <button class="minus" @click="reduce">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <input type="tel" v-model="count" readonly />
+          <button class="plus" @click="add">
+            <i class="fa-solid fa-plus"></i>
+          </button>
         </div>
       </div>
     </section>
@@ -221,16 +306,29 @@ export default {
           <div class="portion1" v-for="(group, index) in portion1" :key="group">
             <div
               class="seat"
+              :class="[
+                { selected: item.isSelected },
+                item.status === 'booked' ? 'booked' : 'unbooked',
+              ]"
               v-for="(item, seatIndex) in group.seat"
               :key="seatIndex"
+              @click="selected(item)"
             >
               <div class="num">{{ item.number }}</div>
             </div>
           </div>
 
-          <div class="portion2" v-for="(item, index) in portion2" :key="item">
-            <div class="seat"></div>
-            <div class="seat"></div>
+          <div class="portion2" v-for="(group, index) in portion2" :key="group">
+            <div
+              class="seat"
+              :class="[
+                { selected: item.isSelected },
+                item.status === 'booked' ? 'booked' : 'unbooked',
+              ]"
+              v-for="(item, seatIndex) in group.seat"
+              :key="seatIndex"
+              @click="selected(item)"
+            ></div>
           </div>
 
           <div class="A">A</div>
@@ -240,19 +338,45 @@ export default {
 
       <div class="seat-color">
         <div class="item">
-          <span>已售出</span>
           <div class="booked"></div>
+          <div class="inner">已售出的座位</div>
         </div>
         <div class="item">
-          <span>可選擇</span>
           <div class="empty"></div>
+          <div class="inner">可選擇的座位</div>
         </div>
+        <div class="item">
+          <div class="select"></div>
+          <div class="inner">選擇的座位</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="total">
+      <p>
+        總計：<span>{{ price * count }}</span>
+      </p>
+    </section>
+
+    <section class="next-step">
+      <div class="btn secondary">
+        <router-link to="">
+          <span>返回</span>
+        </router-link>
+      </div>
+
+      <div class="btn primary" @click="confirm">
+        <router-link to="">
+          <span>確認購票</span>
+        </router-link>
       </div>
     </section>
   </div>
 </template>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/style.scss";
+
 * {
   box-sizing: border-box;
 }
@@ -287,8 +411,12 @@ section.info {
       h3 {
         font-size: 1.25rem;
       }
+
       .wrap {
         display: flex;
+        p {
+          padding-right: 1rem;
+        }
       }
     }
   }
@@ -305,15 +433,17 @@ section.choose {
     padding: 1.5rem;
     display: flex;
     justify-content: center;
-    // align-items: center;
+
     .select-car {
       margin-right: 2rem;
       label {
         font-size: 1.25rem;
+        font-weight: bold;
         margin-right: 0.25rem;
       }
 
       select {
+        // font-family: $fontFamily;
         width: 160px;
         height: 40px;
         line-height: 40px;
@@ -325,15 +455,23 @@ section.choose {
     .count {
       display: flex;
       font-size: 1.25rem;
+      font-weight: bold;
 
-      .minus,
+      .minus {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 5px 0 0 5px;
+        background-color: #fff;
+      }
       .plus {
         width: 30px;
         height: 30px;
         line-height: 30px;
         text-align: center;
-        border-radius: 5px;
-        background-color: #f29c50;
+        border-radius: 0 5px 5px 0;
+        background-color: #fff;
       }
 
       input {
@@ -348,11 +486,14 @@ section.choose {
 
 section.seat-pic {
   margin: 2.5rem 0;
+  border-bottom: 1px solid #333;
+
   .whole {
     width: 100%;
     height: 300px;
     border-radius: 125px;
     background-color: #9ca3af;
+    border: 4px solid #333;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -362,44 +503,70 @@ section.seat-pic {
       display: grid;
       margin: auto;
       grid-template-columns: repeat(5, 1fr);
-      // background-color: aquamarine;
       row-gap: 75px;
       column-gap: 50px;
       position: relative;
       .portion1 {
-        // background-color: yellowgreen;
         display: flex;
         justify-content: center;
         .seat {
           position: relative;
-          background-color: #fff;
+          // background-color: #fff;
           width: 50px;
           height: 65px;
+          margin: 0.5rem;
 
-          // border-radius: 50%;
-          margin: 0.25rem;
+          &:hover {
+            cursor: pointer;
+            background-color: $hoverColor;
+          }
+
+          &.booked {
+            background-color: #4b5563;
+          }
+          &.unbooked {
+            background-color: #fff;
+
+            &.selected {
+              background-color: $hoverColor;
+            }
+          }
 
           .num {
             font-size: 1.25rem;
             font-weight: bold;
             position: absolute;
-            bottom: 100%;
-            left: 40%;
+            bottom: 110%;
+            left: 35%;
           }
         }
       }
       .portion2 {
-        // background-color: yellowgreen;
         display: flex;
         justify-content: center;
         align-items: flex-end;
         .seat {
-          background-color: #fff;
+          // background-color: #fff;
           width: 50px;
           height: 65px;
+          margin: 0.5rem;
 
-          // border-radius: 50%;
-          margin: 0.25rem;
+          &:hover {
+            cursor: pointer;
+            background-color: $hoverColor;
+          }
+
+          &.booked {
+            background-color: #4b5563;
+          }
+
+          &.unbooked {
+            background-color: #fff;
+
+            &.selected {
+              background-color: $hoverColor;
+            }
+          }
         }
       }
 
@@ -422,10 +589,11 @@ section.seat-pic {
   }
 
   .seat-color {
-    margin-top: 1.5rem;
+    margin: 2.5rem 0;
     display: flex;
-
     .item {
+      display: flex;
+      align-items: center;
       .booked {
         width: 50px;
         height: 50px;
@@ -439,6 +607,51 @@ section.seat-pic {
         border: 1px solid #333;
         margin: 0 2rem;
       }
+
+      .select {
+        width: 50px;
+        height: 50px;
+        background-color: $hoverColor;
+        margin: 0 2rem;
+      }
+
+      .inner {
+        font-size: 1.25rem;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+section.total {
+  text-align: end;
+  font-weight: bold;
+  // padding: 1.25rem 0;
+  P {
+    font-size: 1.75rem;
+  }
+  span {
+    font-size: 2rem;
+  }
+}
+
+section.next-step {
+  display: flex;
+  justify-content: center;
+  margin: 6rem 0 3rem 0;
+
+  .btn {
+    display: inline-block;
+    width: 200px;
+    border-radius: 7.5px;
+    margin: 0 2rem;
+    cursor: pointer;
+
+    span {
+      line-height: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      color: #fff;
     }
   }
 }

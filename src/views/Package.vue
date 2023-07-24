@@ -1,4 +1,6 @@
 <style lang="scss" scoped>
+@import "@/assets/scss/style.scss";
+
 $secondary2: #b3cee2;
 
 * {
@@ -88,6 +90,7 @@ section.spot-filter {
     padding: 0.5rem 0 0.25rem 0;
     .inner {
       font-size: 1.25rem;
+      line-height: 42px;
       margin: 0 1.5rem 0 3rem;
       font-weight: bold;
     }
@@ -150,6 +153,7 @@ section.package-list {
 
     .price {
       text-align: center;
+      padding: 0.75rem 0;
       flex-grow: 1;
       display: flex;
       flex-direction: column;
