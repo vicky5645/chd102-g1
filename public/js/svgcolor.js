@@ -14,7 +14,7 @@ function svg_icon(className, colorValue) {
           if (paths.length > 0) {
             paths.forEach((path, index) => {
               // 逐個更改每個路徑的填充顏色
-                path.style.fill = colorValue; // 第一個路徑的顏色設置
+                path.style.fill = colorValue;
             });
             img.parentNode.insertBefore(svgDoc.documentElement, img);
             img.remove();

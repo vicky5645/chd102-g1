@@ -101,6 +101,24 @@ const routesUser = [
     },
   },
   {
+    path: "/online-booking2",
+    name: "online-booking2",
+    component: () =>
+      import(/* webpackChunkName: "online-booking" */ "@/views/Booking/Package.vue"),
+    meta: {
+      title: "線上訂票2",
+    },
+  },
+  {
+    path: "/booking-info2/:id",
+    name: "booking-info2",
+    component: () =>
+      import(/* webpackChunkName: "online-booking" */ "@/views/Booking/DetailInfo.vue"),
+    meta: {
+      title: "訂票資訊2",
+    },
+  },
+  {
     path: "/cart",
     name: "cart",
     component: () =>
