@@ -30,20 +30,35 @@ const routesUser = [
     },
   },
   {
+    path: "/Attractions",
+    name: "Attractions",
+    // component: Attractions
+    component: () =>
+      import(/* webpackChunkName: "Attractions" */ "@/views/Attractions.vue"),
+    meta: {
+      title: "景點介紹",
+    },
+  },
+  {
     path: "/announcements",
     name: "announcements",
     // component: Announcements
     component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/Announcement/Announcements.vue"),
+      import(
+        /* webpackChunkName: "about" */ "@/views/Announcement/Announcements.vue"
+      ),
     meta: {
       title: "公告2",
     },
   },
   {
-    path: '/announcement-details/:id',
-    name: 'announcement-details',
-    component: () => import(/* webpackChunkName: "" */ '@/views/Announcement/Announcement-details.vue'),
-    meta: { title: '公告內頁2' }
+    path: "/announcement-details/:id",
+    name: "announcement-details",
+    component: () =>
+      import(
+        /* webpackChunkName: "" */ "@/views/Announcement/Announcement-details.vue"
+      ),
+    meta: { title: "公告內頁2" },
   },
   {
     path: "/forum",
@@ -129,9 +144,12 @@ const routesUser = [
   },
   {
     path: "/checkout",
-    name: "結帳資訊",
+    name: "checkout",
     component: () =>
-      import(/* webpackChunkName: "cart" */ "@/views/Cart/CheckOut.vue"),
+      import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/CheckOut.vue"),
+      meta: {
+        title: "結帳資訊",
+      },
   },
   {
     path: "/login",
