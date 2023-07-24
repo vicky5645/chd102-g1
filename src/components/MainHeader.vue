@@ -21,6 +21,7 @@
         <router-link to="/booking-info">訂票資訊</router-link>
         <router-link to="/online-booking2">線上訂票2</router-link>
         <router-link to="/Attractions">景點介紹</router-link>
+        <router-link to="/custom-tickets">客制車票</router-link>
         <!-- <router-link to="/user">
           <div class="icon-24">
             <img

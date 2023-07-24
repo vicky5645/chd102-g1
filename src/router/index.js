@@ -134,6 +134,15 @@ const routesUser = [
     },
   },
   {
+    path: "/custom-tickets",
+    name: "custom-tickets",
+    component: () =>
+      import(/* webpackChunkName: "online-booking" */ "@/views/CustomTickets.vue"),
+    meta: {
+      title: "客制車票",
+    },
+  },
+  {
     path: "/cart",
     name: "cart",
     component: () =>

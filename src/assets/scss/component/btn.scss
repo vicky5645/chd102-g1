@@ -33,6 +33,11 @@ button {
     @include pad {
       @include nl-btn;
     }
+    &.big{
+      @include md-btn;
+      width: 185px;
+      height: 70px;
+    }
     &.primary {
         background-color: map-get($BrandColors, Primary);
         color : $btnTextColor;
