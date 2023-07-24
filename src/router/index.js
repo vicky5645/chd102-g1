@@ -126,9 +126,12 @@ const routesUser = [
   },
   {
     path: "/checkout",
-    name: "結帳資訊",
+    name: "checkout",
     component: () =>
-      import(/* webpackChunkName: "cart" */ "@/views/Cart/CheckOut.vue"),
+      import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/CheckOut.vue"),
+      meta: {
+        title: "結帳資訊",
+      },
   },
   {
     path: "/login",

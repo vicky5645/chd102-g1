@@ -1,4 +1,9 @@
 <template>
+  <CartFloat 
+  :cartStatus="cartStatus"
+  @closeCart="cartStatus = false"
+  @goCartInfo="goCartInfo"
+  />
   <header>
     <nav>
       <router-link to="/roaming-orbit">
@@ -28,9 +33,9 @@
         <router-link to="/">開始</router-link>
         <router-link to="/backend">後台</router-link>
       </div>
-      <router-link to="/cart" class="chrt"
+      <div class="chrt" @click="toggleCart"
         ><i class="fa fa-shopping-cart" aria-hidden="true"></i
-      ></router-link>
+      ></div>
       <router-link to="/login" class="login">{{
         $store.state.name
       }}</router-link>
@@ -122,13 +127,16 @@
 
 <script>
 import MainSidebar from "@/components/MainSidebar.vue";
+import CartFloat from "@/components/CartFloat.vue";
 export default {
   components: {
     MainSidebar,
+    CartFloat,
   },
   data() {
     return {
       openSidebar: false,
+      cartStatus: false
     };
   },
   methods: {
@@ -139,6 +147,13 @@ export default {
       console.log("父層close");
       this.openSidebar = false;
     },
+    toggleCart(){
+      this.cartStatus = !this.cartStatus;
+    },
+    goCartInfo(){
+      this.cartStatus = false;
+      this.$router.push({path:"/cart"});
+    }
   },
 };
 </script>
