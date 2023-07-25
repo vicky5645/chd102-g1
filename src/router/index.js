@@ -92,16 +92,16 @@ const routesUser = [
     path: "/online-booking",
     name: "online-booking",
     component: () =>
-      import(/* webpackChunkName: "online-booking" */ "@/views/Package.vue"),
+      import(/* webpackChunkName: "online-booking" */ "@/views/Booking/Package.vue"),
     meta: {
       title: "線上訂票",
     },
   },
   {
-    path: "/booking-info",
+    path: "/booking-info/:id",
     name: "booking-info",
     component: () =>
-      import(/* webpackChunkName: "online-booking" */ "@/views/DetailInfo.vue"),
+      import(/* webpackChunkName: "online-booking" */ "@/views/Booking/DetailInfo.vue"),
     meta: {
       title: "訂票資訊",
     },
@@ -113,6 +113,15 @@ const routesUser = [
       import(/* webpackChunkName: "online-booking" */ "@/views/SelectSeat.vue"),
     meta: {
       title: "一般訂票",
+    },
+  },
+  {
+    path: "/custom-tickets",
+    name: "custom-tickets",
+    component: () =>
+      import(/* webpackChunkName: "online-booking" */ "@/views/CustomTickets.vue"),
+    meta: {
+      title: "客制車票",
     },
   },
   {

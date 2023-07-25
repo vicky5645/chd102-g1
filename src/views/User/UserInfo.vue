@@ -1,6 +1,6 @@
 <template>
   <div class="settings">
-    <h1>帳號設定</h1>
+    <h1 class="h4">帳號設定</h1>
     <hr>
     <div class="user-control-content">
       <div class="input-wrap">
@@ -9,12 +9,10 @@
       </div>
       <div class="input-wrap">
         <label for="gender" class="caption">性別</label>
-        <input type="text" id="gender" list="gender-options">
-        <datalist id="gender-options">
-          <option disabled>-請選擇-</option>
-          <option>男性</option>
-          <option>女性</option>
-        </datalist>
+        <select id="gender-options" v-model="model">
+          <option disabled checked>-請選擇-</option>
+          <option v-for="item in gender" :value="item.value">{{ item.value }}</option>
+        </select>
       </div>
       <div class="input-wrap">
         <label for="birthdate" class="caption">出生日期</label>
@@ -39,3 +37,25 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      model: '-請選擇-',
+      gender: [
+        {
+          value: '男性',
+          label: '男性'
+        },
+        {
+          value: '女性',
+          label: '女性'
+        },
+      ],
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped></style>

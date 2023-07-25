@@ -45,7 +45,7 @@
         <td class="ellipsis">{{ item.content }}</td>
         <td class="ellipsis">{{ item.date }}</td>
         <td class="ellipsis">{{ item.image }}</td>
-        <td>
+        <td style="text-align: right">
           <button
             type="button"
             class="btn btn-outline-primary"
@@ -170,6 +170,14 @@
         </div>
 
         <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+            @click="deleteAnnouncement"
+          >
+            刪除公告
+          </button>
           <button
             type="button"
             class="btn btn-primary"
@@ -459,6 +467,17 @@ export default {
         image: null,
       };
     },
+
+    // delete announcement
+    deleteAnnouncement() {
+      const index = this.items.findIndex(
+        (item) => item.id === this.currentItem.id
+      );
+      if (index !== -1) {
+        this.items.splice(index, 1);
+        this.showModal = false;
+      }
+    },
   },
 };
 </script>
@@ -490,5 +509,9 @@ export default {
 
 h5 {
   margin-bottom: 0;
+}
+
+.modal-footer {
+  justify-content: center;
 }
 </style>

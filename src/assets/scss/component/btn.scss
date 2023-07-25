@@ -1,24 +1,49 @@
 // 全部按鈕都會顯示手指
 button {
   cursor: pointer;
-  // border:0;
+}
+
+@mixin sm-btn {
+  /* button/text-14-md */
+  font-size: $sm-font;
+  line-height: 20px; /* 142.857% */
+  letter-spacing: -0.14px;
+  
+}
+@mixin nl-btn {
+  /* label/text-16-md */
+  font-size: $label;
+  line-height: 20px; /* 125% */
+}
+@mixin md-btn {
+  /* body/text-18-md */
+  font-size: $body;
+  line-height: 34px; /* 188.889% */
+  letter-spacing: -0.18px;
 }
 
 .btn {
     border:0;
-    padding: 8px 20px;
+    padding: .6em 1.4em;
     text-align: center;
-    font-size: $fontSize;
-    font-family: $fontFamily;
-    max-width: 300px;
+    // font-family: $fontFamily;
+    // font-size: $fontSize;
+    @include sm-btn;
     cursor: pointer;
-    // background-color: #e1e1e1;
+    @include pad {
+      @include nl-btn;
+    }
+    &.big{
+      @include md-btn;
+      width: 185px;
+      height: 70px;
+    }
     &.primary {
         background-color: map-get($BrandColors, Primary);
+        color : $btnTextColor;
         transition: cubic-bezier(0.39, 0.575, 0.565, 1);
         &:hover {
           background-color: darken(map-get($BrandColors, Primary), 20);
-
         }
     }
     &.secondary {
@@ -27,23 +52,26 @@ button {
           background-color: darken(map-get($BrandColors, Secondary1), 20);
         }
     }
+    &.other {
+      background-color: map-get($GrayColors, Gray4);
+      color : $btnTextColor;
+      &:hover {
+        background-color: darken(map-get($GrayColors, Gray4), 20);
+        }
+      }
     &.error {
       background-color: map-get($StateColors, Error);
       color : $btnTextColor;
       &:hover {
         background-color: darken(map-get($StateColors, Error), 20);
       }
-    &.disable {
-      background-color: map-get($GrayColors, disable);
-      color: white;
-    }
     }
     &.disable {
       background-color: map-get($GrayColors, Gray5);
       color : $btnTextColor;
     }
     &.radius {
-      border-radius: 10px;
+      border-radius: 8px;
     }
     &.round {
       border-radius: 30px;  
