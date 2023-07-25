@@ -1,73 +1,78 @@
 <template>
   <footer id="mainFooter">
+    <div class="mainFooter-top-wrap">
+      <div class="left-section-wrap">
+        <div class="left-section">
+          <router-link to="/roaming-orbit">
+            <div class="logo">
+              <img src="/images/logo/logoBig.png" alt="logo" />
+            </div>
+          </router-link>
+        </div>
 
- 
-    
-    <div class="left-section-wrap ">
-      
-     <div class="left-section">
-        <router-link to="/roaming-orbit">
-          <div class="logo">
-            <img src="/images/logo/logoBig.png" alt="logo" />
-          </div>
-        </router-link>
+        <div class="image-row">
+          <router-link
+            v-for="image in trvelImages"
+            :to="image.link"
+            :key="image.id"
+          >
+            <img :src="image.src" :alt="image.alt" />
+          </router-link>
+        </div>
+
+        <ul class="contact-info">
+          <li v-for="contact in contactInfo" :key="contact.id">
+            <i :class="contact.iconClass"></i>
+            <span>{{ contact.label }}:</span>
+            <span>{{ contact.value }}</span>
+          </li>
+        </ul>
       </div>
 
+      <div class="right-section-wrap">
+        <p class="SHARE">SHARE</p>
 
-      <div class="image-row">
-        <router-link
-          v-for="image in trvelImages"
-          :to="image.link"
-          :key="image.id">
-        
-          <img :src="image.src" :alt="image.alt" />
-        </router-link>
-      </div>
+        <div class="social-links">
+          <a href="https://www.facebook.com">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="https://www.google.com/maps">
+            <i class="fas fa-map"></i>
+          </a>
+          <a href="https://www.instagram.com">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </div>
 
-      <ul class="contact-info">
-        <li v-for="contact in contactInfo" :key="contact.id">
-          <i :class="contact.iconClass"></i>
-          <span>{{ contact.label }}:</span>
-          <span>{{ contact.value }}</span>
-        </li>
-      </ul>
+        <div class="item button-pressure">
+          <router-link :to="buttonLinkto">
+            <marquee class="scroll" scrollamount="2">
+              <span>LOG IN LOG IN LOG IN </span>
+            </marquee>
+          </router-link>
+        </div>
 
-    </div>
-
-    <div class="right-section-wrap">
-      <p class="SHARE">SHARE</p>
-
-      <div class="social-links">
-        <a href="https://www.facebook.com"> <i class="fab fa-facebook"></i> </a>
-        <a href="https://www.google.com/maps">
-          <i class="fas fa-map"></i>
-        </a>
-        <a href="https://www.instagram.com">
-          <i class="fab fa-instagram"></i>
-        </a>
-      </div>
-
-      <div class="item button-pressure">
-        <router-link :to="buttonLinkto">
-          <marquee class="scroll" scrollamount="2">
-            <span>LOG IN LOG IN LOG IN </span>
-          </marquee>
-        </router-link>
-      </div>
-
-      <div class="footer-table">
-        <router-link
-          v-for="item in tableData"
-          :key="item.id"
-          :to="item.link"
-          class="table-cell"
-        >
-          {{ item.content }}
-        </router-link>
+        <div class="footer-table">
+          <router-link
+            v-for="item in tableData"
+            :key="item.id"
+            :to="item.link"
+            class="table-cell"
+          >
+            {{ item.content }}
+          </router-link>
+        </div>
       </div>
     </div>
-
-
+    <div class="mainFooter-under-wrap">
+      <p>
+        本網站為緯育TibaMe_前端設計工程師班第83期學員專題成果作品,本平台僅供學
+        習、展示之用。若有抵觸有關著作權,或有第三人主張侵害智慧財產權等情事,均
+        由學員負法律上責任,緯育公司概不負責。
+        若有侵權疑慮,您可以私訊<a href="https://www.facebook.com/TibaMe"> ☎ 緯育
+        TibaMe  ✴ ☎ </a>,後續會由專人協助處理。
+      </p>
+    </div>
   </footer>
 </template>
 

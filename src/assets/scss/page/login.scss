@@ -1,92 +1,372 @@
-.login-wrap{ 
+.login-wrap {
   // width: 500px;
-  position: relative;
-  // margin-top: 50px;
+  border: 1px solid#000000;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20px;
-  .input-wrap {
+
+
+  .row {
+    background-color: #fff;
+  }
+
+
+
+
+  .loin-form-wrap {
+
+
+
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    input {
-      min-height: 44px;
-      /* label/text-16-light */
-      font-size: 16px;
-      font-weight: 300;
-      line-height: 125%;
-      padding: 8px 16px;
-      box-sizing: border-box;
-    }
-    &.login{ 
-      // width: 500px;
-      position: relative;
-      // margin-top: 50px;
-      & input{
-        &:focus + label,
-        &:valid + label {
-          font-size: $caption;
-          line-height: 20px;
-          transform: translateY(-175%) translateX(8px);
-          color: map-get($BrandColors, Secondary2);
-          background-color: #fff;
+
+    // .loin-form-img{
+    //   background: linear-gradient(to right, #C8EAC0, #BFE8C4, #A7E1CE, #80D7E0, #51CAF4);
+    //   width: 100%;
+    //   height: 100px; 
+    // }
+
+
+    .login-form {
+
+      border: 10px solid#ffffff;
+
+
+      border-radius: 20px 0 0 20px;
+      background-color: #ffffff;
+      padding: 30px;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+      .register-label>* {
+        width: 100%;
+      }
+
+      .inputBox {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        justify-content: center;
+        align-items: center;
+        text-align: right;
+      }
+
+
+      .register-form-bottom {
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding: 10px;
+
+
+
+        input {
+          color: #F29C50;
+          background: none;
+          border: 2px solid #F29C50;
+          border-radius: 8px;
+          padding: 8px;
+          cursor: pointer;
+          transition: color 0.4s linear;
         }
+
+        input:hover {
+          background-color: #F29C50;
+          color: #fff;
+        }
+
       }
-      & label {
-        position: absolute;
-        top: 50%;
-        left: 0px;
-        padding-left: 8px;
-        padding-right: 8px;
-        transform: translateY(-75%);
+
+
+      button.login-connect {
+
+        background-color: #fff;
+        border: 1px solid map-get($BrandColors, Secondary2);
+        border-radius: 5px;
+        padding: 10px;
+        font-size: $label;
+        color: map-get($GrayColors, Gray4);
+
+      }
+
+      button.login-connect:hover
+      {
+        background-color: map-get($GrayColors, Gray2);
+        color: #fff;
+      }
+
+      button.login-connect i {
         color: #000;
-        font-size: 16px;
-        pointer-events: none;
-        transition: all 0.5s;
       }
+
+
+      .login-test {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        p {
+          color: map-get($BrandColors, Secondary2);
+          font-size: $h3;
+          font-weight: bold;
+          padding: 10px;
+        }
+
+        span {
+          color: map-get($GrayColors, Gray4);
+          font-size: $label;
+          padding: 10px;
+        }
+
+      }
+
+
+      .inputBox {
+
+        input {
+
+          border: 1px solid map-get($BrandColors, Secondary2);
+          border-radius: 5px;
+          padding: 5px;
+          margin: 5px;
+
+        }
+
+
+      }
+
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+
+
+
+        span {
+          color: map-get($GrayColors, Gray4);
+        }
+
+
+        .input-wrap {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          input {
+            min-height: 44px;
+            /* label/text-16-light */
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 125%;
+            padding: 8px 16px;
+            box-sizing: border-box;
+          }
+
+          &.login {
+
+            position: relative;
+            padding: 2px;
+
+            & input {
+
+              border: 1px solid map-get($BrandColors, Secondary2);
+
+              border-radius: 8px;
+              background-color: #fff;
+
+
+
+              &:focus+label,
+              &:valid+label {
+                font-size: 20px;
+                line-height: 20px;
+                transform: translateY(-175%) translateX(8px);
+                color: map-get($BrandColors, Secondary2);
+                background: #fff;
+              }
+            }
+          }
+
+          & label {
+            position: absolute;
+            top: 50%;
+            left: 0px;
+            padding-left: 8px;
+            padding-right: 8px;
+            transform: translateY(-75%);
+            color: #777777;
+            font-size: 16px;
+            border-radius: 4px;
+            pointer-events: none;
+            transition: all 0.5s;
+
+          }
+        }
+
+        .forget-password {
+
+          padding: 10px;
+          color: $linkColor;
+          font-weight: bold;
+          font-size: $label;
+          cursor: pointer;
+
+
+        }
+
+        .actions span {
+          color: #000;
+
+        }
+
+        .login-form-register {
+
+          padding: 10px;
+          background-color: transparent;
+          color: $linkColor;
+          border: none;
+          font-weight: bold;  font-size: $label;
+        }
+
+        .login-form-confirm {
+
+          color: #F29C50;
+          background: none;
+          border: 2px solid #F29C50;
+          border-radius: 8px;
+          padding: 8px;
+          width: 200px;
+          display: block;
+          position: relative;
+          cursor: pointer;
+          transition: color 0.4s linear;
+
+        }
+
+        .login-form-confirm:hover {
+          background-color: #F29C50;
+          color: #fff;
+
+        }
+
+
+
+      }
+
     }
+
+    .login-wrap-pic {
+      background-color: #2c1e34bc;
+      background-size: cover;
+
+
+      width: 300px;
+      height: 450px;
+      border-radius: 0 20px 20px 0;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+    }
+
   }
-  p {
-    margin-bottom: 20px;
+
+  .enter-modify-success,
+  .enter-valid,
+  .enter_modify,
+  .forget_password {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: #fff;
+    padding: 100px;
+    border-radius: 20px;
+
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+    button {
+      background-color: #F29C50;
+      color: #fff;
+      width: 200px;
+      padding: 8px;
+      display: block;
+      border: 1px;
+      border-radius: 8px;
+    }
+
+    .enter-modify-input {
+      display: flex;
+      flex-direction: column;
+
+    }
+
+
+
+
+
+
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      h2 {
+        color: map-get($BrandColors, Secondary2);
+      
+
+      }
+
+      p {
+        color: map-get($BrandColors, Secondary1);
+        font-size: $label;
+
+      }
+
+      .forget-password-enter {
+        font-weight: bold;
+        padding: 15px;
+
+        input {
+          padding: 5px;
+          border-radius: 8px;
+        }
+
+      }
+
+      .enter-valid-submit,
+      .forget-password-submit {
+
+        color: #F29C50;
+        background: none;
+        border: 2px solid #F29C50;
+        border-radius: 8px;
+        padding: 8px;
+        width: 200px;
+        display: block;
+        position: relative;
+        cursor: pointer;
+        transition: color 0.4s linear;
+
+      }
+
+      .enter-valid-submit:hover,
+      .forget-password-submit:hover {
+        background-color: #F29C50;
+        color: #fff;
+        cursor: pointer;
+      }
+
+    }
+
   }
-  
-  input {
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid#a0a0a0;
-    border-radius: 8px;
-  }
-  
-  .google-btn {
-    background-color: #adabab;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 16px;
-    margin-bottom: 20px;
-  }
-  
-  .forgot-password {
-    margin-bottom: 10px;
-  }
-  
-  .actions {}
-  
-  .login-btn {
-    background-color: #F29C50;
-    color: #fff;
-    border: 1px;
-    border-radius: 8px;
-    padding: 8px;
-    width: 200px;
-    display: block;
-    
-  
-  }
-  
-  .register-link {
-    color: #007bff;
-  }
+
+
 }
+
+@include pad() {}

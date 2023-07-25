@@ -140,30 +140,17 @@ const routesUser = [
       import(/* webpackChunkName: "" */ "@/views/LogIn/Index.vue"),
     children: [
       {
-        path: "",
+        path: "/login/LoginView",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/LogIn/LoginView.vue"),
       },
       {
-        path: "/login/link",
+        path: "/login",
         component: () =>
-          import(/* webpackChunkName: "" */ "@/views/LogIn/Link.vue"),
+          import(/* webpackChunkName: "" */ "@/views/LogIn/Log.vue"),
       },
-      {
-        path: "/register",
-        component: () =>
-          import(/* webpackChunkName: "" */ "@/views/LogIn/Register.vue"),
-      },
-      {
-        path: "/login/forgot",
-        component: () =>
-          import(/* webpackChunkName: "" */ "@/views/LogIn/ForgotPassword.vue"),
-      },
-      {
-        path: "/login/mem",
-        component: () =>
-          import(/* webpackChunkName: "" */ "@/views/LogIn/Member.vue"),
-      },
+    
+
     ],
   },
   {

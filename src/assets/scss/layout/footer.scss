@@ -1,19 +1,21 @@
 #mainFooter {
 
-  text-align: center;
+
   background-image: url('/public/images/travel/bg3.png');
   background-size: cover;
   background-position: center;
+  padding: 40px 0 0 0 ;
+
   color: $bodyBgColor;
   font-size: $body;
   font-weight: 400;
   text-align: center;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
 
-  padding: 100PX 0;
+
+
+
 
   // >* {
   //   outline: 1px solid gold;
@@ -26,10 +28,10 @@
 
 
   .social-links {
-    
+
     display: flex;
     justify-content: center;
-    
+
     i {
       margin: 4px;
       padding: 30px;
@@ -129,20 +131,35 @@
 
       }
     }
+  }
 
-    .footer-table {}
+  .footer-table {
 
-    .table-cell {}
 
+    visibility: hidden;
+  }
+
+  .mainFooter-under-wrap p {
+ 
+    font-size: 9px;
+    background-color: rgba(0, 0, 0, 0.399);
+
+    a {
+      text-decoration: none;
+      cursor: pointer;
+      color: map-get($BrandColors, Secondary4);
+
+    }
   }
 
 }
 
 
+
 @include pc {
 
   #mainFooter {
-    flex-direction: row;
+
 
     .left-section-wrap {
       >.image-row {
@@ -155,36 +172,55 @@
     }
 
 
-  ul {
+
+
+    ul {
+
+      display: flex;
+
+      align-items: center;
+      flex-direction: column;
+
+      li {
+        padding: 10px;
+        list-style: none;
+
+
+      }
+
+      i {
+        padding: 10px;
+      }
+
+    }
+
+    .footer-table {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      /* 六欄，每列平均佈局 */
+      grid-template-rows: repeat(4, 50px);
+      /* 四列，每行高度為50px，你可以根據需要調整 */
+      grid-gap: 10px;
+      font-size: $h3;
+
+    }
+
+    .table-cell {
+      color: aliceblue;
+    }
+
+
+    .footer-table {
+      visibility: visible;
+    }
+  }
+
+  .mainFooter-top-wrap {
 
     display: flex;
-
+    justify-content: center;
     align-items: center;
-    flex-direction: column;
-
-    li {
-      padding: 10px;
-      list-style: none;
-
-
-    }
-
-    i {
-      padding: 10px;
-    }
-
   }
 
-  .footer-table {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    /* 六欄，每列平均佈局 */
-    grid-template-rows: repeat(4, 50px);
-    /* 四列，每行高度為50px，你可以根據需要調整 */
-    grid-gap: 10px;
-    font-size: $h3;
-  }
 
-  .table-cell {}
-  }
 }
