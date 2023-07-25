@@ -1,19 +1,24 @@
 <style lang="scss" scoped>
+@import "@/assets/scss/style.scss";
+
 * {
   box-sizing: border-box;
 }
-.container {
-  width: 1200px;
-  margin: auto;
-}
+
+// .container {
+//   width: 1200px;
+//   margin: auto;
+// }
 
 section.title {
   text-align: center;
   padding: 1.5rem 0;
   background-color: white;
+
   h1 {
     font-size: 2rem;
   }
+
   p {
     padding-top: 1rem;
     font-size: 1.25rem;
@@ -24,6 +29,7 @@ section.title {
 swiper-container.mySwiper {
   max-width: 1200px;
   margin: auto;
+
   swiper-slide {
     img {
       margin: 0 auto;
@@ -99,6 +105,7 @@ section.itinerary {
     }
 
     .stage-list {
+      width: 100%;
       .stage-item {
         position: relative;
         border-bottom: 1px solid rgba(146, 137, 137, 0.5);
@@ -169,14 +176,14 @@ section.next-step {
   display: flex;
   justify-content: center;
   margin: 6rem 0 3rem 0;
-
+  
   .btn {
     display: inline-block;
     width: 200px;
     border-radius: 7.5px;
     margin: 0 2rem;
     cursor: pointer;
-
+    
     span {
       line-height: 50px;
       height: 50px;
@@ -189,22 +196,22 @@ section.next-step {
 
 <template>
   <section class="title">
-    <h1>星空探索</h1>
-    <p>在星光的指引下，踏上光芒閃耀的旅程，展開無垠的探索之旅</p>
+    <h1>{{ packageDataItem.title }}</h1>
+    <p>{{ packageDataItem.title2 }}</p>
   </section>
 
   <div class="container">
-    <swiper-container
-      class="mySwiper"
-      navigation="{
+    <swiper-container class="mySwiper" navigation="{
       true
-    }"
-      loop="true"
-      css-mode="true"
-    >
-      <swiper-slide v-for="(item, index) in swiperImg" :key="index">
-        <img :src="item.link" alt="" />
-      </swiper-slide>
+    }" loop="true" css-mode="true">
+      <template v-if="stageList">
+        <swiper-slide v-for="(item, index) in stageList" :key="index">
+          <img :src="item.spotImage" alt="" />
+        </swiper-slide>
+      </template>
+      <template v-else>
+        沒有資料喔~
+      </template>
       <!-- 
     <button class="swiper-button-prev"></button>
     <button class="swiper-button-next"></button> -->
@@ -232,25 +239,25 @@ section.next-step {
           <i class="fa-solid fa-location-dot"></i>
           <i class="fa-solid fa-flag"></i>
         </div>
-        <div class="stage-list">
-          <div
-            class="stage-item"
-            @click="toggleClass(index)"
-            v-for="(item, index) in stageList"
-            :key="index"
-          >
-            <div class="item">
-              {{ item.name }}
-              <div class="symbol" :class="{ minus: item.isActive }">
-                <span></span>
-                <span></span>
+        <template v-if="stageList">
+          <div class="stage-list">
+            <div class="stage-item" @click="toggleClass(index)" v-for="(item, index) in stageList" :key="index">
+              <div class="item">
+                {{ `第${item.sort}站：${item.name}` }}
+                <div class="symbol" :class="{ minus: item.isActive }">
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div class="desc" :class="{ 'slide-down': item.isActive }">
+                {{ item.desc }}
               </div>
             </div>
-            <div class="desc" :class="{ 'slide-down': item.isActive }">
-              {{ item.desc }}
-            </div>
           </div>
-        </div>
+        </template>
+        <template v-else>
+          沒有資料喔~
+        </template>
       </div>
     </section>
 
@@ -263,7 +270,7 @@ section.next-step {
 
       <div class="btn primary">
         <router-link to="/">
-          <span>確認購票</span>
+          <span>下一步</span>
         </router-link>
       </div>
     </section>
@@ -274,23 +281,26 @@ section.next-step {
 export default {
   data() {
     return {
-      swiperImg: [
-        {
-          link: require("@/assets/images/spot/03.jpg"),
-        },
-        {
-          link: require("@/assets/images/spot/13.jpg"),
-        },
-        {
-          link: require("@/assets/images/spot/09.jpg"),
-        },
-        {
-          link: require("@/assets/images/spot/11.jpg"),
-        },
-        {
-          link: require("@/assets/images/spot/12.png"),
-        },
-      ],
+      packageList: [],
+      packageDataItem: [],
+      stageList: [],
+      // swiperImg: [
+      //   {
+      //     link: require("@/assets/images/spot/03.jpg"),
+      //   },
+      //   {
+      //     link: require("@/assets/images/spot/13.jpg"),
+      //   },
+      //   {
+      //     link: require("@/assets/images/spot/09.jpg"),
+      //   },
+      //   {
+      //     link: require("@/assets/images/spot/11.jpg"),
+      //   },
+      //   {
+      //     link: require("@/assets/images/spot/12.png"),
+      //   },
+      // ],
 
       notice: [
         {
@@ -323,35 +333,34 @@ export default {
         {
           text: "在列車行駛期間，請保持座位整潔，避免大聲喧嘩或打擾其他乘客",
         },
-      ],
-
-      stageList: [
-        {
-          name: "第一站：綠野牧場",
-          desc: "綠野牧場是一個讓您放鬆心靈、與自然和諧共處的絕佳地點。來到這裡,您將找到內心的寧靜和平靜,與家人和朋友創造美好的回憶。綠野牧場期待著與您分享這個特別的農場體驗,讓您在這片綠意盎然的土地上感受到原野自然的美好。",
-          isActive: false,
-        },
-        {
-          name: "第二站：景觀公園",
-          desc: "景觀公園是一個令人著迷的地方，充滿著幻想與神奇。這裡的樹林擁有著美麗的秋天景色，萬紅橙黃的楓葉在微風中輕輕飄落。漫步在景觀公園彷彿置身於一個夢幻般的童話故事中。這裡的靜謐與寧靜讓您的心靈得到放鬆和平靜，同時享受著大自然所賦予的美妙。",
-          isActive: false,
-        },
-        {
-          name: "第三站：銀月山脈",
-          desc: "在銀月山脈的脈動中，您將發現一個神秘而令人著迷的地方。這座山脈綿延起伏，山巒疊翠，彷彿置身於一幅宏偉的山水畫中。銀月山脈以其壯麗的景色和原始的自然美景而聞名，而當夜幕降臨時，更有極光的奇景為您帶來驚喜。",
-          isActive: false,
-        },
-        {
-          name: "第四站：高原遺跡",
-          desc: "這是一個充滿歷史色彩的神秘之地。隱藏在高山脊梁上的古老遺址，它見證了遠古時代的文明興衰和人類智慧的薪火相傳。這片遺跡位於雄偉壯麗的高原地帶，被廣闊的草原和壯麗的山脈所環繞。當您踏足在這片土地上時，仿佛回到了古代文明的繁華時期。遺跡中的古建築、石碑、雕像和壁畫，展現出當時人們的智慧和藝術才華。您可以仔細觀察著古老的建築結構，感受著歷史的洪流在這裡流轉。",
-          isActive: false,
-        },
-        {
-          name: "第五站：海底餐廳",
-          desc: "這座根基位於海底的餐廳猶如一座透明的水晶殿堂,四周被璀璨的海底生物和色彩繽紛的珊瑚所環繞。當您坐在餐桌旁,透過透明的落地窗欣賞著游動的熱帶魚群和優雅的海龜,仿佛置身於一個夢幻般的海底世界。來到海底餐廳,讓我們引領您進入一個夢幻般的海洋世界。在這裡,美食與自然交融,讓您的味蕾和心靈同時沉浸在無盡的驚奇和美好中。",
-          isActive: false,
-        },
-      ],
+      ]
+      // stageList: [
+      // {
+      //   name: "第一站：綠野牧場",
+      //   desc: "綠野牧場是一個讓您放鬆心靈、與自然和諧共處的絕佳地點。來到這裡,您將找到內心的寧靜和平靜,與家人和朋友創造美好的回憶。綠野牧場期待著與您分享這個特別的農場體驗,讓您在這片綠意盎然的土地上感受到原野自然的美好。",
+      //   isActive: false,
+      // },
+      // {
+      //   name: "第二站：景觀公園",
+      //   desc: "景觀公園是一個令人著迷的地方，充滿著幻想與神奇。這裡的樹林擁有著美麗的秋天景色，萬紅橙黃的楓葉在微風中輕輕飄落。漫步在景觀公園彷彿置身於一個夢幻般的童話故事中。這裡的靜謐與寧靜讓您的心靈得到放鬆和平靜，同時享受著大自然所賦予的美妙。",
+      //   isActive: false,
+      // },
+      // {
+      //   name: "第三站：銀月山脈",
+      //   desc: "在銀月山脈的脈動中，您將發現一個神秘而令人著迷的地方。這座山脈綿延起伏，山巒疊翠，彷彿置身於一幅宏偉的山水畫中。銀月山脈以其壯麗的景色和原始的自然美景而聞名，而當夜幕降臨時，更有極光的奇景為您帶來驚喜。",
+      //   isActive: false,
+      // },
+      // {
+      //   name: "第四站：高原遺跡",
+      //   desc: "這是一個充滿歷史色彩的神秘之地。隱藏在高山脊梁上的古老遺址，它見證了遠古時代的文明興衰和人類智慧的薪火相傳。這片遺跡位於雄偉壯麗的高原地帶，被廣闊的草原和壯麗的山脈所環繞。當您踏足在這片土地上時，仿佛回到了古代文明的繁華時期。遺跡中的古建築、石碑、雕像和壁畫，展現出當時人們的智慧和藝術才華。您可以仔細觀察著古老的建築結構，感受著歷史的洪流在這裡流轉。",
+      //   isActive: false,
+      // },
+      // {
+      //   name: "第五站：海底餐廳",
+      //   desc: "這座根基位於海底的餐廳猶如一座透明的水晶殿堂,四周被璀璨的海底生物和色彩繽紛的珊瑚所環繞。當您坐在餐桌旁,透過透明的落地窗欣賞著游動的熱帶魚群和優雅的海龜,仿佛置身於一個夢幻般的海底世界。來到海底餐廳,讓我們引領您進入一個夢幻般的海洋世界。在這裡,美食與自然交融,讓您的味蕾和心靈同時沉浸在無盡的驚奇和美好中。",
+      //   isActive: false,
+      // },
+      // ],
     };
   },
 
@@ -359,29 +368,49 @@ export default {
     //Day2隨著前三站的isActive狀態改變，marginTop的值也會跟著改變
     marginTop() {
       let count = 0;
-      for (let i = 0; i < 3; i++) {
-        if (this.stageList[i].isActive) {
-          count++;
+      if (this.stageList && this.stageList.length >= 3) {//先確定資料有接到
+        for (let i = 0; i < 3; i++) {
+          if (this.stageList[i].isActive) {
+            count++;
+          }
         }
+        return count * 150;
       }
-      return count * 150;
     },
-
+    //旗子icon隨著前四站的isActive狀態改變，height值也會跟著改變
     iconMove() {
       let count = 0;
-      for (let i = 0; i < 4; i++) {
-        if (this.stageList[i].isActive) {
-          count++;
+      if (this.stageList && this.stageList.length >= 3) {//先確定資料有接到
+        for (let i = 0; i < 4; i++) {
+          if (this.stageList[i].isActive) {
+            count++;
+          }
         }
+        return count * 150;
       }
-      return count * 150;
     },
   },
-
   methods: {
     toggleClass(index) {
       this.stageList[index].isActive = !this.stageList[index].isActive;
     },
+    initSwiper() {
+      this.swiper = new Swiper('.swiper-container', {
+        // Swiper 配置项，可以根据需要进行自定义配置
+        // 例如：autoplay, loop, pagination, navigation 等
+        // 更多配置项可参考 Swiper 官方文档：https://swiperjs.com/api/
+      });
+    },
+  },
+  created() {
+    // 取得API
+    fetch('/data/packageData.json')
+      .then(res => res.json())
+      .then(json => {
+        this.packageList = json;
+        this.packageDataItem = this.packageList[`${parseFloat(this.$route.params.id) - 1}`];
+        this.stageList = this.packageDataItem.stageList;
+      })
   },
 };
 </script>
