@@ -1,8 +1,11 @@
 <template>
-  <h1>漫遊列車之旅後台頁面</h1>
-  <div class="home">home</div>
+  <div class="logo_title">
+    <div><img src="../../assets/logo.svg" alt="" /></div>
+    <h1>&nbsp;&nbsp;後台管理頁面</h1>
+  </div>
+  <!-- <div class="home">home</div> -->
   <div class="content" style="display: flex">
-    <aside class="col-2  " style="display: inline-block">
+    <aside class="col-2" style="display: inline-block">
       <div class="list-group">
         <div class="list-group">
           <router-link to="/backend" exact>
@@ -103,7 +106,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-a{
+.logo_title {
+  display: flex;
+  align-items: center;
+
+  div {
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  h1 {
+    font-size: 24px;
+    line-height: 60px;
+    color: #7AACBF;
+  }
+}
+
+a {
   text-decoration: none;
 }
 </style>
