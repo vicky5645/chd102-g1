@@ -1,14 +1,16 @@
 <style lang="scss" scoped>
+@import "@/assets/scss/style.scss";
+
 $secondary2: #b3cee2;
 
 * {
   box-sizing: border-box;
 }
 
-.container {
-  width: 1200px;
-  margin: auto;
-}
+// .container {
+//   width: 1200px;
+//   margin: auto;
+// }
 
 section.title {
   text-align: center;
@@ -88,6 +90,7 @@ section.spot-filter {
     padding: 0.5rem 0 0.25rem 0;
     .inner {
       font-size: 1.25rem;
+      line-height: 42px;
       margin: 0 1.5rem 0 3rem;
       font-weight: bold;
     }
@@ -150,6 +153,7 @@ section.package-list {
 
     .price {
       text-align: center;
+      padding: 0.75rem 0;
       flex-grow: 1;
       display: flex;
       flex-direction: column;
@@ -247,7 +251,7 @@ section.package-list {
         <div class="price">
           <del v-if="item.sale">NT${{ item.origin }}</del>
           <p :style="{ 'margin-top': !item.sale ? 'auto' : 'initial' }">
-            <router-link :to="`/booking-info2/${item.id}`">
+            <router-link :to="`/booking-info/${item.id}`">
               <span
                 class="btn primary"
                 @mouseover="change(index)"
