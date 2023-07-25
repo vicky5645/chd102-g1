@@ -69,7 +69,7 @@
           </div>
 
           <div class="add_and_buy">
-            <button class="add">加入購物車</button>
+            <button class="add" @click="addToCart">加入購物車</button>
             <button class="buy">立即購買</button>
           </div>
         </div>
@@ -141,7 +141,9 @@
 </template>
 
 <script>
-import BreadCrumbs from "@/components/BreadCrumbs.vue"
+import BreadCrumbs from "@/components/BreadCrumbs.vue";
+import { ref, reactive } from 'vue';
+import { useStore } from 'vuex';
 export default {
   components: {
     BreadCrumbs
@@ -247,6 +249,9 @@ export default {
       this.bigPic = this.productDataItem.image;
     });
     this.currentProducts = this.allProducts.slice(0, 4); // 初始化 currentProducts
+  },
+  setup() {
+    const store = useStore();
   },
   methods: {
     // 規格按鈕
