@@ -56,6 +56,7 @@ $topBarheight: 44px;
             top: 30;
             z-index: 50;
             width: 100%;
+            padding: 0;
             background-color: #fff;
             border: 1px solid #D1D5DB;
             border-radius: 7px;
@@ -144,6 +145,7 @@ $topBarheight: 44px;
         font-size: 20px;
         color: #777;
         font-weight: 600;
+        width: 100%;
     }
     .card{
         position: relative;
