@@ -42,9 +42,10 @@ export default {
     login() {
       // 登入驗證邏輯
       // 如果驗證成功，導航到登入成功頁面
-      if (this.username === "test" && this.password === "test") {
-        this.$store.commit("setName", this.username);
-        this.$router.push("/member");
+      if (this.username === 'test' && this.password === 'test') {
+        this.$store.commit('setName', this.username);
+        this.$store.commit('setIsLogin', true); // 使用 commit 來改變狀態
+        this.$router.push('/roaming-orbit');
       } else {
         this.username = "";
         this.password = "";

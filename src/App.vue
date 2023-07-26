@@ -21,6 +21,9 @@ export default {
       return isStart || isBackEnd;
     },
   },
+  mounted() {
+    svg_icon('.custom-svg', 'currentColor');
+  },
 }
 </script>
 

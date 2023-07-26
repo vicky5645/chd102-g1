@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import domtoimage from "@/js/dom-to-image.min.js";
+import domtoimage from "@/assets/js/dom-to-image.min.js";
 export default {
   data() {
     return {
@@ -79,13 +79,7 @@ export default {
   // methods: {
   // },
   mounted() {
-    const script1 = document.createElement('script');
-    script1.src = '/js/svgcolor.js';
-    script1.onload = () => {
-      svg_icon('.custom-svg', 'currentColor');
-      console.log('svgcolor.js is loaded!');
-    };
-    document.body.appendChild(script1);
+    svg_icon('.custom-svg', 'currentColor');
     // 以下是客製圖片的內容------------------------------------------
     if (typeof domtoimage !== 'undefined') {
       console.log('domtoimage is loaded!!!!!');

@@ -1,0 +1,78 @@
+//浮窗會員專用
+.userFloat{
+  // width: 360px;
+  position: fixed;
+  top: 60px;
+  right: 60px;
+  // border: 5px solid $color;
+  z-index: 1;
+  .closeMark{
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1;
+      font-size: 32px;
+      cursor: pointer;
+  }
+}
+.hrTop{
+  border-top: 1px solid $color;
+  border-bottom: none;
+}
+.hrBot{
+  border-top: none;
+  border-bottom: 1px dashed $color;
+}
+.back_button {
+  // margin-bottom: 12px;
+  // box-shadow: 0px -1px 0px 0px #f29c50 inset;
+  display: inline-block;
+  font-size: 16px;
+  padding: 4px 0;
+  a {
+    text-decoration: none;
+    color: $linkColor;
+  }
+}
+.userPage{
+  // background-color: $bodyBgColor;
+  // padding-bottom: 30px;
+  h2{
+      font-size: $h2;
+      padding: 16px;
+  }
+  .card-block{
+      padding: 8px;
+      border-bottom: 1px solid #00000020;
+  }
+  .link-list {
+    width: 100%;
+    @include card-shadow;
+    a {
+      color: map-get($BrandColors, Secondary1);
+      text-decoration: none;
+      @include text-18-md;
+      padding: 0 16px;
+      min-height: 44px;
+      display: flex;
+      transition: all 0.5s;
+      &.active{
+        background-color: rgba(#B3CEE2,30%);
+        font-weight: bold;
+      }
+      &:hover,&:active{
+        background-color: rgba(#B3CEE2,30%);
+      }
+      &:hover {
+        color: $linkColor;
+      }
+    }
+    li {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      column-gap: 20px;
+    }
+  }
+}
