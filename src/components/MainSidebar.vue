@@ -18,6 +18,9 @@ export default {
       this.$emit('close')
     }
   },
+  mounted() {
+    svg_icon(".custom-svg", "currentColor");
+  },
 }
 </script>
 

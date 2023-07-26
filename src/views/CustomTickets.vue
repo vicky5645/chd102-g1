@@ -65,7 +65,7 @@ export default {
       setting: {
         color: '#F29C50'
       },
-      patterns: ['/images/pattern/1.svg', '/images/pattern/2.svg', '/images/pattern/3.svg', '/images/pattern/4.svg']
+      patterns: [require('../assets/images/pattern/1.svg'), require('../assets/images/pattern/2.svg'), require('../assets/images/pattern/3.svg'), require('../assets/images/pattern/4.svg')]
     }
   },
   methods: {
