@@ -270,6 +270,10 @@ export default {
         this.quantity--;
       }
     },
+    // 加入購物車
+    addToCart() {
+      this.$store.commit("addToCart",this.productDataItem);
+    },
 
     // 點擊小圖換大圖
     selectButton(button) {

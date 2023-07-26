@@ -37,6 +37,7 @@ export default createStore({
 
       updateStorage(state.cart);
     },
+    //增加數量
     addAmount(state, title) {
       let item = state.cart.find((i) => i.title === title);
       if (item) {
@@ -46,6 +47,7 @@ export default createStore({
       // storage.set("cart", state.cart);
       updateStorage(state.cart);
     },
+    //減少數量
     minusAmount(state, title) {
       let item = state.cart.find((i) => i.title === title);
       if (item && parseInt(item.amount) > 1) {
@@ -53,6 +55,11 @@ export default createStore({
         item.price = (parseInt(item.price) / (item.amount + 1)) * item.amount;
       }
       // storage.set("cart", state.cart);
+      updateStorage(state.cart);
+    },
+    //刪除商品
+    removeFromCart(state, title) {
+      state.cart = state.cart.filter((i) => i.title !== title);
       updateStorage(state.cart);
     },
     setIsLogin(state, value) {

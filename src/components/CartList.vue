@@ -3,7 +3,7 @@
         <div class="cart-card card-block" v-for="item in cartList" :key="item.id" :data-item="item.title">
             <div class="cart-cardPic-group">
                 <div class="drop">
-                    <button class="item-drop" @click="">
+                    <button class="item-drop" @click="removeFromCart">
                         <i class="fa-regular fa-trash-can"></i>
                     </button>
                 </div>
@@ -53,18 +53,20 @@ export default {
     //增加數量
     increment(e) {
       const clickTitle = e.target.parentNode.parentNode.parentNode.dataset.item;
-      console.log(clickTitle);
+      // console.log(clickTitle);
       this.$store.commit("addAmount", clickTitle);
     },
     //減少數量
     decrement(e) {
       const clickTitle = e.target.parentNode.parentNode.parentNode.dataset.item;
-      console.log(clickTitle);
+      // console.log(clickTitle);
       this.$store.commit("minusAmount", clickTitle);
     },
     //刪除商品
     removeFromCart(e) {
-      this.$store.commit("removeFromCart", e.target.parentNode.parentNode.parentNode.parentNode.dataset.title);
+      const clickTitle = e.target.parentNode.parentNode.parentNode.parentNode.dataset.item;
+      this.$store.commit("removeFromCart", clickTitle);
+      console.log(clickTitle);
     },
     
   },
