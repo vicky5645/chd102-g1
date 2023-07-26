@@ -56,7 +56,7 @@
           </form>
         </div>
         <div class="login-wrap-pic">
-          <img src="/images/logo/logoBig.png" alt="Logo" />
+          <Images :imgURL="'images/logo/logoBig.png'" :alt="'Logo'" />
         </div>
       </div>
     </section>

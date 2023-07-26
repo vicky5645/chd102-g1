@@ -10,10 +10,14 @@ import 'view-ui-plus/dist/styles/viewuiplus.css';
 // 全域的scss
 import "@/assets/scss/style.scss";
 
+// 註冊全域組件
+import Images from '@/components/Images.vue'
+
 const app = createApp(App);
 app.use(store);
 app.use(router);
 app.use(ViewUIPlus)
-app.use(register);
-app.mount("#app");
+app.use(register)
+app.component('Images', Images)
+app.mount("#app")
 
