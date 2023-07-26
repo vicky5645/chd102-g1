@@ -40,7 +40,7 @@
           </div>
           <div class="type_and_like">
             <div class="type">選擇購買數量</div>
-            <button class="like">加入收藏</button>
+            <button class="like" @click="clickTest">加入收藏</button>
           </div>
 
           <!-- <div class="type_button_list">
@@ -62,7 +62,7 @@
             <button @click="increment">
               <i class="fa fa-plus" aria-hidden="true"></i>
             </button>
-            <div class="quantity">{{ quantity }}</div>
+            <div class="quantity">{{ productDataItem.amount }}</div>
             <button @click="decrement">
               <i class="fa fa-minus" aria-hidden="true"></i>
             </button>
@@ -70,7 +70,7 @@
 
           <div class="add_and_buy">
             <button class="add" @click="addToCart">加入購物車</button>
-            <button class="buy">立即購買</button>
+            <button class="buy" @click="addAndBuy">立即購買</button>
           </div>
         </div>
       </section>
@@ -143,7 +143,7 @@
 <script>
 import BreadCrumbs from "@/components/BreadCrumbs.vue";
 import { ref, reactive } from 'vue';
-import { useStore } from 'vuex';
+// import { useStore } from 'vuex';
 export default {
   components: {
     BreadCrumbs
@@ -171,7 +171,7 @@ export default {
         },
       ],
       // 數量初始值
-      quantity: 1,
+      // quantity: 1,
 
       // 規格按鈕
       selectedButton: null,
@@ -250,31 +250,48 @@ export default {
     });
     this.currentProducts = this.allProducts.slice(0, 4); // 初始化 currentProducts
   },
-  setup() {
-    const store = useStore();
-  },
+  // setup() {
+  //   const store = useStore();
+  // },
   methods: {
     // 規格按鈕
     increment() {
-      this.quantity++;
-    },
-    increment() {
       // only increment if quantity is less than 10
-      if (this.quantity < 10) {
-        this.quantity++;
+      // if (this.quantity < 10) {
+      //   this.quantity++;
+      // }
+      if (this.productDataItem.amount < 10) {
+        this.productDataItem.amount++;
       }
+      console.log(this.productDataItem.amount);
     },
     decrement() {
       // only decrement if quantity is greater than 1
-      if (this.quantity > 1) {
-        this.quantity--;
+      // if (this.quantity > 1) {
+      //   this.quantity--;
+      // }
+      if (this.productDataItem.amount > 1) {
+        this.productDataItem.amount--;
       }
+      console.log(this.productDataItem.amount);
+    },
+    goCartInfo() {
+      this.$router.push({ path: "/cart" });
     },
     // 加入購物車
+    // addToCart() {
+    //   this.$store.commit("addToCart",this.productDataItem);
+    // },
     addToCart() {
       this.$store.commit("addToCart",this.productDataItem);
     },
-
+    addAndBuy() {
+      this.$store.commit("addToCart",this.productDataItem);
+      this.goCartInfo();
+    },
+    clickTest() {
+      console.log(this.productDataItem.price)
+    },
     // 點擊小圖換大圖
     selectButton(button) {
       this.selectedButton = button;

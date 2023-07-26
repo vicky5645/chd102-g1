@@ -7,7 +7,7 @@
         <hr class="hrTop">
         <CartList/>
         <div class="checkOut">
-                <button class="btn-checkOut" @click="goCartInfo">確認</button>
+                <button class="btn-checkOut" @click="goCartInfo">確認清單</button>
         </div>
     </div>
 </template>

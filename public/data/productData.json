@@ -5,6 +5,7 @@
     "title": "火車懷錶",
     "type": "周邊商品",
     "price": 600,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "超時尚的火車主題懷錶，精緻設計，可隨身攜帶，是時尚愛好者的最佳時尚配件。"
@@ -23,6 +24,7 @@
     "title": "火車叉叉",
     "type": "周邊商品",
     "price": 200,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "精美餐具，與火車造型設計，為用餐增添樂趣，品質優良，適合日常使用。"
@@ -41,6 +43,7 @@
     "title": "車車模型",
     "type": "周邊商品",
     "price": 300,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "細緻車車模型，適合小朋友收藏與遊戲，啟發想像力與探索精神。"
@@ -59,6 +62,7 @@
     "title": "車車吊牌",
     "type": "周邊商品",
     "price": 100,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "可愛吊牌飾品，以車車為主題，掛在包包或鑰匙上，為日常增添俏皮風格。"
@@ -77,6 +81,7 @@
     "title": "超讚大獎章",
     "type": "周邊商品",
     "price": 100,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "獨特設計的大獎章，凸顯特別身份或慶祝時刻，讓你成為焦點。"
@@ -95,6 +100,7 @@
     "title": "車車手帕",
     "type": "周邊商品",
     "price": 80,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "柔軟手帕，印有可愛車車圖案，清新色彩，是時尚配件或禮物的絕佳選擇。"
@@ -113,6 +119,7 @@
     "title": "車車便當",
     "type": "食品",
     "price": 100,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "美味便當，融合車車元素，讓用餐時光更有趣，口感與外觀兼具。"
@@ -131,6 +138,7 @@
     "title": "車車吊飾",
     "type": "周邊商品",
     "price": 150,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "精緻吊飾，可懸掛於車內或房間，為空間增添可愛氛圍。"
@@ -149,6 +157,7 @@
     "title": "漫遊御飯糰",
     "type": "食品",
     "price": 50,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "嚴選食材製成的美味御飯糰，方便攜帶，是上班族或學生的理想選擇。"

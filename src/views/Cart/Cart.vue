@@ -14,13 +14,14 @@
       <hr class="hrBot">
       <div class="totalPrice item-price">
         總計:
-        <span class="h3">123</span>
+        <span class="h3">{{ totalPrice }}</span>
       </div>
       <div class="checkOut">
         <button class="btn-back" @click="goBack">返回</button>
         <router-link to="/checkout">
         <button class="btn-checkOut">前往結帳</button>
         </router-link>
+        <button @click="testbutton">test</button>
       </div>
     </div>
   </main>
@@ -33,13 +34,14 @@ export default {
     return {
       productData: [],
       quantity: 1,
+      // totalPrice: 0,
     }
   },
   components: {
     CartList
   },
   computed: {
-    ...mapGetters(['cartList']),
+    ...mapGetters(['cartList', 'totalPrice']),
   },
   created() {
     // 取得API
@@ -47,26 +49,28 @@ export default {
       .then(res => res.json())
       .then(json => {
         this.productData = json
-      })
+      }),
+      this.$store.commit("calculateSum");
   },
   methods: {
     
     //增加數量
-    increment(e) {
-      const clickTitle = e.target.parentNode.parentNode.parentNode.dataset.item;
-      console.log(clickTitle);
-      this.$store.commit("addAmount", clickTitle);
-    },
+    // increment(e) {
+    //   const clickTitle = e.target.parentNode.parentNode.parentNode.dataset.item;
+    //   console.log(clickTitle);
+    //   this.$store.commit("addAmount", clickTitle);
+    // },
     //減少數量
-    decrement(e) {
-      const clickTitle = e.target.parentNode.parentNode.parentNode.dataset.item;
-      console.log(clickTitle);
-      this.$store.commit("minusAmount", clickTitle);
-    },
+    // decrement(e) {
+    //   const clickTitle = e.target.parentNode.parentNode.parentNode.dataset.item;
+    //   console.log(clickTitle);
+    //   this.$store.commit("minusAmount", clickTitle);
+    // },
     //刪除商品
-    removeFromCart(e) {
-      this.$store.commit("removeFromCart", e.target.dataset.title);
-    },
+    // removeFromCart(e) {
+    //   this.$store.commit("removeFromCart", e.target.dataset.title);
+    // },
+    
     //規格按鈕
     // increment() {
     //   if (this.quantity < 10) {
@@ -78,10 +82,37 @@ export default {
     //     this.quantity--;
     //   }
     // },
+    // calculateSum() {
+    //   this.totalPrice = this.cartList.reduce((accumulator, item) => {
+    //     return accumulator + item.totalPrice;
+    //   }, 0);
+    //   console.log(this.totalPrice);
+    //   return this.totalPrice;
+    // },
+    updateTotalPrice() {
+      this.$store.commit("calculateSum");
+    },
     goBack() {
       // 使用 router.go() 方法導向上一頁
       this.$router.go(-1);
-    }
+    },
+    testbutton() {
+      this.$store.commit("calculateSum");
+      console.log(this.totalPrice);
+    },
   },
+  // setup() {
+  //   const totalPrice = ref(0);
+  //   const calculateSum = () => {
+  //     totalPrice.value = this.cartList.reduce((accumulator, item) => {
+  //       return accumulator + item.totalPrice;
+  //     }, 0);
+  //     return totalPrice;
+  //   }
+  //   return {
+  //     totalPrice,
+  //     calculateSum
+  //   }
+  // },
 }
 </script>

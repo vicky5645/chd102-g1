@@ -16,7 +16,7 @@
                     {{ item.title }}
                 </a>
                 <div class="item-price">
-                    <span>{{ item.price }}</span>
+                    <span>{{ item.totalPrice }}</span>
                 </div>
             </div>
             <div class="btn-group">
@@ -34,7 +34,7 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
-      productData: [],
+      // productData: [],
     }
   },
   computed: {
@@ -43,11 +43,11 @@ export default {
   created() {
     // 取得API
     this.$store.dispatch("initStorage");
-    fetch('/data/productData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.productData = json;
-      })
+    // fetch('/data/productData.json')
+    //   .then(res => res.json())
+    //   .then(json => {
+    //     this.productData = json;
+    //   })
   },
   methods: {
     //增加數量
