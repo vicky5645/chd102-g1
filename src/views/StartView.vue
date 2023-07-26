@@ -11,7 +11,7 @@
     </div>
     <div class="item item_blue">
       <img :src="pic.blue" alt="blue" />
-      <router-link to="/backend" class="txt">後台</router-link>
+      <router-link to="/backend/login" class="txt">後台</router-link>
     </div>
     <div class="starttrain">
       <img :src="pic.train" alt="train" />

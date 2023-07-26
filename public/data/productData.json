@@ -1,14 +1,13 @@
 [
   {
     "id": 1,
+    "amount":1,
     "title": "火車懷錶",
     "type": "周邊商品",
-    "price": 1200,
+    "price": 600,
     "isFavorite": false,
     "description": [
-      "懷錶，這個由過去走進現在的獨特鐘錶，與火車之間有著深厚的歷史聯繫。在鐵路早期，火車司機們都需要一個準確的時間工具來確保列車的準時運行，而懷錶就是這個工具的最佳選擇。",
-      "我們的火車懷錶就是這種歷史情懷的象徵，它巧妙地將古典風格與現代功能結合在一起。錶殼由堅固的不銹鋼製成，既耐用又具有視覺吸引力。白色的錶面上，有著樸實的黑色羅馬數字時間標記，體現出簡約而古典的美感。懷錶內部裝有精密的機械運作系統，保證時間的準確無誤。",
-      "這款火車懷錶不僅是一種時尚配件，也是一種實用的時間工具，更是一種記錄歷史，表達對火車文化熱愛的獨特方式。它將為你的生活增添一份別樣的風情，並在你的火車之旅中扮演著一個不可或缺的角色。"
+      "超時尚的火車主題懷錶，精緻設計，可隨身攜帶，是時尚愛好者的最佳時尚配件。"
     ],
     "category": "men's clothing",
     "image": "/images/img/ProductDetails/p1.png",
@@ -20,11 +19,14 @@
   },
   {
     "id": 2,
+    "amount":1,
     "title": "火車叉叉",
     "type": "周邊商品",
-    "price": 22.3,
+    "price": 200,
     "isFavorite": false,
-    "description": ["Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket."],
+    "description": [
+      "精美餐具，與火車造型設計，為用餐增添樂趣，品質優良，適合日常使用。"
+    ],
     "category": "men's clothing",
     "image": "/images/online-mall/fork.png",
     "rating": {
@@ -35,11 +37,14 @@
   },
   {
     "id": 3,
+    "amount":1,
     "title": "車車模型",
     "type": "周邊商品",
-    "price": 55.99,
+    "price": 300,
     "isFavorite": false,
-    "description": ["great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day."],
+    "description": [
+      "細緻車車模型，適合小朋友收藏與遊戲，啟發想像力與探索精神。"
+    ],
     "category": "men's clothing",
     "image": "/images/online-mall/Train_model.png",
     "rating": {
@@ -50,11 +55,14 @@
   },
   {
     "id": 4,
+    "amount":1,
     "title": "車車吊牌",
     "type": "周邊商品",
-    "price": 15.99,
+    "price": 100,
     "isFavorite": false,
-    "description": ["The color could be slightly different between on the screen and in practice. / Please note that body builds vary by person, therefore, detailed size information should be reviewed below on the product description."],
+    "description": [
+      "可愛吊牌飾品，以車車為主題，掛在包包或鑰匙上，為日常增添俏皮風格。"
+    ],
     "category": "men's clothing",
     "image": "/images/online-mall/Keychain_pendant_B.png",
     "rating": {
@@ -65,11 +73,14 @@
   },
   {
     "id": 5,
+    "amount":1,
     "title": "超讚大獎章",
     "type": "周邊商品",
-    "price": 695,
+    "price": 100,
     "isFavorite": false,
-    "description": ["From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection."],
+    "description": [
+      "獨特設計的大獎章，凸顯特別身份或慶祝時刻，讓你成為焦點。"
+    ],
     "category": "jewelery",
     "image": "/images/online-mall/Badge.png",
     "rating": {
@@ -80,11 +91,14 @@
   },
   {
     "id": 6,
+    "amount":1,
     "title": "車車手帕",
     "type": "周邊商品",
-    "price": 168,
+    "price": 80,
     "isFavorite": false,
-    "description": ["Satisfaction Guaranteed. Return or exchange any order within 30 days.Designed and sold by Hafeez Center in the United States. Satisfaction Guaranteed. Return or exchange any order within 30 days."],
+    "description": [
+      "柔軟手帕，印有可愛車車圖案，清新色彩，是時尚配件或禮物的絕佳選擇。"
+    ],
     "category": "jewelery",
     "image": "/images/online-mall/Towel.png",
     "rating": {
@@ -95,11 +109,14 @@
   },
   {
     "id": 7,
+    "amount":1,
     "title": "車車便當",
     "type": "食品",
-    "price": 9.99,
+    "price": 100,
     "isFavorite": false,
-    "description": ["Classic Created Wedding Engagement Solitaire Diamond Promise Ring for Her. Gifts to spoil your love more for Engagement, Wedding, Anniversary, Valentine's Day..."],
+    "description": [
+      "美味便當，融合車車元素，讓用餐時光更有趣，口感與外觀兼具。"
+    ],
     "category": "jewelery",
     "image": "/images/online-mall/Train_bento_box.png",
     "rating": {
@@ -110,13 +127,34 @@
   },
   {
     "id": 8,
+    "amount":1,
     "title": "車車吊飾",
     "type": "周邊商品",
-    "price": 10.99,
+    "price": 150,
     "isFavorite": false,
-    "description": ["Rose Gold Plated Double Flared Tunnel Plug Earrings. Made of 316L Stainless Steel"],
+    "description": [
+      "精緻吊飾，可懸掛於車內或房間，為空間增添可愛氛圍。"
+    ],
     "category": "jewelery",
     "image": "/images/online-mall/Keychain_pendant_A.png",
+    "rating": {
+      "rate": 1.9,
+      "count": 100
+    },
+    "hot": false
+  },
+  {
+    "id": 9,
+    "amount":1,
+    "title": "漫遊御飯糰",
+    "type": "食品",
+    "price": 50,
+    "isFavorite": false,
+    "description": [
+      "嚴選食材製成的美味御飯糰，方便攜帶，是上班族或學生的理想選擇。"
+    ],
+    "category": "jewelery",
+    "image": "/images/online-mall/onigiri.png",
     "rating": {
       "rate": 1.9,
       "count": 100

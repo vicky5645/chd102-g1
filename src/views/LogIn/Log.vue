@@ -277,8 +277,8 @@ export default {
   name: "login",
   data() {
     return {
-      account: "",
-      memPsw: "",
+      username: "",
+      password: "",
       loginStatus: false,
       isRegistered: false,
       forgetPsw: false,
@@ -327,14 +327,15 @@ export default {
       this.$emit("emit-status");
     },
     checkLogin() {
-      if (this.account === "test" && this.memPsw === "test") {
+      if (this.username === "test" && this.password === "test") {
         window.alert("登入成功");
-        loginStatus = true;
+        // loginStatus = true;
+        this.$store.commit('setIsLogin', true); // 使用 commit 來改變狀態
       } else {
         this.errorMsg = "帳號或密碼輸入錯誤";
       }
-      this.register.account = "";
-      this.register.memPsw = "";
+      this.register.username = "";
+      this.register.password = "";
     },
     reset() {
       this.register.errorMsg = "";

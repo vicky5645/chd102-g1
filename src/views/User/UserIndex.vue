@@ -66,12 +66,7 @@ export default {
     }
   },
   mounted() {
-    const script = document.createElement('script');
-    script.src = '/js/svgcolor.js';
-    script.onload = () => {
-      svg_icon('.custom-svg', 'currentColor');
-    };
-    document.body.appendChild(script);
+    svg_icon('.custom-svg', 'currentColor');
   },
 };
 </script>

@@ -38,6 +38,7 @@ html{
 .row{
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-start;
     margin-left: calc(var(--gs-gap) * -1);
     margin-right: calc(var(--gs-gap) * -1);
 }
