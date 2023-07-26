@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import {GET} from '@/plugin/axios'
 import BreadCrumbs from '@/components/BreadCrumbs.vue'
 export default {
   components: {
@@ -126,12 +127,10 @@ export default {
   },
   created() {
     // 取得API
-    fetch('/data/productData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.productData = json
-        this.updateDisplay()
-      })
+    GET('/data/productData.json').then(res => {
+      this.productData = res
+      this.updateDisplay()
+    })
   },
   mounted() {
     // 監聽視窗大小改變事件
