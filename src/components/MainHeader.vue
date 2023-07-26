@@ -1,6 +1,14 @@
 <template>
-  <CartFloat :cartStatus="cartStatus" @closeCart="cartStatus = false" @goCartInfo="goCartInfo" />
-  <UserFloat :userStatus="userStatus" @closeUser="userStatus = false" @goLoginUser="goLoginUser" />
+  <CartFloat
+    :cartStatus="cartStatus"
+    @closeCart="cartStatus = false"
+    @goCartInfo="goCartInfo"
+  />
+  <UserFloat
+    :userStatus="userStatus"
+    @closeUser="userStatus = false"
+    @goLoginUser="goLoginUser"
+  />
   <header>
     <nav>
       <router-link to="/roaming-orbit">
@@ -10,7 +18,7 @@
         <!-- 漫遊列車之旅 -->
       </router-link>
       <div class="nav_item">
-        <router-link to="/about">小火車介紹</router-link>
+        <router-link to="/about">介紹</router-link>
         <router-link to="/announcements">公告</router-link>
         <router-link to="/forum">論壇</router-link>
         <router-link to="/online-mall">線上商城</router-link>
@@ -38,7 +46,12 @@
         </router-link>
       </template>
       <!-- 自適應側邊攔區塊 -->
-      <div id="menu-switch" class="ham" :class="{ active: openSidebar }" @click="toggleSidebar">
+      <div
+        id="menu-switch"
+        class="ham"
+        :class="{ active: openSidebar }"
+        @click="toggleSidebar"
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -69,21 +82,37 @@
               <router-link to="/user/info">
                 <li>
                   <div class="icon-24">
-                    <img class="custom-svg" src="@/assets/images/icon/basic/member-login.svg" alt="list-icon">
+                    <img
+                      class="custom-svg"
+                      src="@/assets/images/icon/basic/member-login.svg"
+                      alt="list-icon"
+                    />
                   </div>
                   <span>Hello, {{ $store.state.name }}</span>
-                  <img class="custom-svg" src="@/assets/images/icon/basic/settings.svg" alt="settings-icon">
+                  <img
+                    class="custom-svg"
+                    src="@/assets/images/icon/basic/settings.svg"
+                    alt="settings-icon"
+                  />
                 </li>
               </router-link>
               <router-link to="/user/order">
                 <li>
-                  <img class="custom-svg" src="@/assets/images/icon/basic/list.svg" alt="list-icon">
+                  <img
+                    class="custom-svg"
+                    src="@/assets/images/icon/basic/list.svg"
+                    alt="list-icon"
+                  />
                   <span>訂單管理</span>
                 </li>
               </router-link>
               <router-link to="/user/forum">
                 <li>
-                  <img class="custom-svg" src="@/assets/images/icon/basic/message_writing.svg" alt="message_writing">
+                  <img
+                    class="custom-svg"
+                    src="@/assets/images/icon/basic/message_writing.svg"
+                    alt="message_writing"
+                  />
                   <span>論壇訊息</span>
                 </li>
               </router-link>
@@ -104,9 +133,7 @@
                 </li>
               </router-link>
               <router-link to="/login" class="login" @click="signOut">
-                <li>
-                  登出
-                </li>
+                <li>登出</li>
               </router-link>
             </div>
           </template>
@@ -134,7 +161,7 @@ export default {
   components: {
     MainSidebar,
     CartFloat,
-    UserFloat
+    UserFloat,
   },
   data() {
     return {
@@ -145,7 +172,7 @@ export default {
   },
   computed: {
     isLogin() {
-      return this.$store.state.isLogin
+      return this.$store.state.isLogin;
     },
   },
   methods: {
@@ -174,13 +201,13 @@ export default {
     },
     signOut() {
       // 登出
-      this.$store.commit('setName', '登入/註冊');
-      this.$store.commit('setIsLogin', false); // 使用 commit 來改變狀態
-      this.$router.push('/roaming-orbit');
+      this.$store.commit("setName", "登入/註冊");
+      this.$store.commit("setIsLogin", false); // 使用 commit 來改變狀態
+      this.$router.push("/roaming-orbit");
     },
   },
   mounted() {
-    svg_icon('.custom-svg', 'currentColor');
+    svg_icon(".custom-svg", "currentColor");
   },
 };
 </script>

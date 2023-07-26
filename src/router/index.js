@@ -26,7 +26,27 @@ const routesUser = [
     component: () =>
       import(/* webpackChunkName: "about" */ "@/views/AboutView.vue"),
     meta: {
+      title: "介紹",
+    },
+  },
+  {
+    path: "/train-intro",
+    name: "train-intro",
+    // component: AboutView
+    component: () =>
+      import(/* webpackChunkName: "" */ "@/views/TrainIntro.vue"),
+    meta: {
       title: "小火車介紹",
+    },
+  },
+  {
+    path: "/itinerary-intro",
+    name: "itinerary-intro",
+    // component: AboutView
+    component: () =>
+      import(/* webpackChunkName: "" */ "@/views/ItineraryIntro.vue"),
+    meta: {
+      title: "行程介紹",
     },
   },
   {
@@ -92,7 +112,9 @@ const routesUser = [
     path: "/online-booking",
     name: "online-booking",
     component: () =>
-      import(/* webpackChunkName: "online-booking" */ "@/views/Booking/Package.vue"),
+      import(
+        /* webpackChunkName: "online-booking" */ "@/views/Booking/Package.vue"
+      ),
     meta: {
       title: "線上訂票",
     },
@@ -101,7 +123,9 @@ const routesUser = [
     path: "/booking-info/:id",
     name: "booking-info",
     component: () =>
-      import(/* webpackChunkName: "online-booking" */ "@/views/Booking/DetailInfo.vue"),
+      import(
+        /* webpackChunkName: "online-booking" */ "@/views/Booking/DetailInfo.vue"
+      ),
     meta: {
       title: "訂票資訊",
     },
@@ -119,7 +143,9 @@ const routesUser = [
     path: "/custom-tickets",
     name: "custom-tickets",
     component: () =>
-      import(/* webpackChunkName: "online-booking" */ "@/views/CustomTickets.vue"),
+      import(
+        /* webpackChunkName: "online-booking" */ "@/views/CustomTickets.vue"
+      ),
     meta: {
       title: "客制車票",
     },
@@ -138,9 +164,9 @@ const routesUser = [
     name: "checkout",
     component: () =>
       import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/CheckOut.vue"),
-      meta: {
-        title: "結帳資訊",
-      },
+    meta: {
+      title: "結帳資訊",
+    },
   },
   {
     path: "/login",
@@ -152,12 +178,10 @@ const routesUser = [
         path: "/login",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/LogIn/Log.vue"),
-          meta: {
-            title: "會員登入",
-          },
+        meta: {
+          title: "會員登入",
+        },
       },
-    
-
     ],
   },
   {
