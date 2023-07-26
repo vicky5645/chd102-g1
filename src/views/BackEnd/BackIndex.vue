@@ -17,6 +17,27 @@
               後台首頁
             </button>
           </router-link>
+
+          <router-link to="/backend/BackCmsStaff" exact>
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              :class="{ active: $route.name === 'BackCmsStaff' }"
+            >
+              管理員帳號
+            </button>
+          </router-link>
+
+          <router-link to="/backend/BackMember" exact>
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              :class="{ active: $route.name === 'BackMember' }"
+            >
+              會員
+            </button>
+          </router-link>
+
           <router-link to="/backend/package" exact>
             <button
               type="button"
@@ -26,6 +47,7 @@
               行程
             </button>
           </router-link>
+
           <router-link to="/backend/organize" exact>
             <button
               type="button"
@@ -33,6 +55,116 @@
               :class="{ active: $route.name === 'organize' }"
             >
               開團
+            </button>
+          </router-link>
+
+          <router-link to="/backend/BackPackageOrder" exact>
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              :class="{ active: $route.name === 'BackPackageOrder' }"
+            >
+              開團訂單
+            </button>
+          </router-link>
+
+          <router-link to="/backend/BackPattern" exact>
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              :class="{ active: $route.name === 'BackPattern' }"
+            >
+              客製車票圖案
+            </button>
+          </router-link>
+
+          <router-link to="/backend/BackPackageTrace" exact>
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              :class="{ active: $route.name === 'BackPackageTrace' }"
+            >
+              行程收藏
+            </button>
+          </router-link>
+
+          <router-link to="/backend/BackSpot" exact>
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              :class="{ active: $route.name === 'BackSpot' }"
+            >
+              景點
+            </button>
+          </router-link>
+
+          <router-link to="/backend/BackPackagePass" exact>
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              :class="{ active: $route.name === 'BackPackagePass' }"
+            >
+              行程景點
+            </button>
+          </router-link>
+
+          <router-link to="/backend/BackSeat" exact>
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              :class="{ active: $route.name === 'BackSeat' }"
+            >
+              開團座位
+            </button>
+          </router-link>
+
+          <router-link to="/backend/BackTrain" exact>
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              :class="{ active: $route.name === 'BackTrain' }"
+            >
+              列車
+            </button>
+          </router-link>
+
+          <router-link to="/backend/BackProduct" exact>
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              :class="{ active: $route.name === 'BackProduct' }"
+            >
+              商品
+            </button>
+          </router-link>
+
+          <router-link to="/backend/BackOrder" exact>
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              :class="{ active: $route.name === 'BackOrder' }"
+            >
+              商品訂單
+            </button>
+          </router-link>
+
+          <router-link to="/backend/BackOrderItem" exact>
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              :class="{ active: $route.name === 'BackOrderItem' }"
+            >
+              商品訂單項目
+            </button>
+          </router-link>
+
+          <router-link to="/backend/BackProdTrace" exact>
+            <button
+              type="button"
+              class="list-group-item list-group-item-action"
+              :class="{ active: $route.name === 'BackProdTrace' }"
+            >
+              商品收藏
             </button>
           </router-link>
 
@@ -111,7 +243,7 @@ export default {
   h1 {
     font-size: 24px;
     line-height: 60px;
-    color: #7AACBF;
+    color: #7aacbf;
   }
 }
 
