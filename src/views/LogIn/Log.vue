@@ -330,7 +330,9 @@ export default {
       if (this.username === "test" && this.password === "test") {
         window.alert("登入成功");
         // loginStatus = true;
+        this.$store.commit('setName', this.username); 
         this.$store.commit('setIsLogin', true); // 使用 commit 來改變狀態
+        this.$router.push('/roaming-orbit');
       } else {
         this.errorMsg = "帳號或密碼輸入錯誤";
       }
