@@ -45,7 +45,7 @@
         </div>
 
         <div class="item button-pressure">
-          <router-link :to="buttonLinkto">
+          <router-link to="/login">
             <marquee class="scroll" scrollamount="2">
               <span>LOG IN LOG IN LOG IN </span>
             </marquee>
@@ -140,36 +140,36 @@ export default {
         },
       ],
 
-      buttonLinkto: "/login",
+      buttonLinkto: ["/login"],
 
       tableData: [
-        { id: 1, content: "介紹", link: "/link1" },
-        { id: 2, content: "公告", link: "/link2" },
-        { id: 3, content: "論壇", link: "/link3" },
-        { id: 4, content: "商城", link: "/link4" },
-        { id: 5, content: "線上訂票", link: "/link5" },
-        { id: 6, content: "會員專區", link: "/link6" },
+        { id: 1, content: "介紹", link: "/Attractions" },
+        { id: 2, content: "公告", link: "/announcements" },
+        { id: 3, content: "論壇", link: "/forum" },
+        { id: 4, content: "商城", link: "/online-mall" },
+        { id: 5, content: "線上訂票", link: "/online-booking" },
+        { id: 6, content: "會員專區", link: "/login" },
 
         { id: 2 - 1, content: "行程介紹", link: "/link1" },
-        { id: 2 - 2, content: "所有公告", link: "/link2" },
-        { id: 2 - 3, content: "所有論壇", link: "/link3" },
-        { id: 2 - 4, content: "購物商城", link: "/link4" },
-        { id: 2 - 5, content: "", link: "/link5" },
-        { id: 2 - 6, content: "", link: "/link6" },
+        { id: 2 - 2, content: "所有公告", link: "/announcements" },
+        { id: 2 - 3, content: "所有論壇", link: "/forum" },
+        { id: 2 - 4, content: "購物商城", link: "/online-mall" },
+        { id: 2 - 5, content: "立即訂票", link: "/online-booking" },
+        { id: 2 - 6, content: "登入", link: "/login" },
 
-        { id: 3 - 1, content: "景點介紹", link: "/link1" },
+        { id: 3 - 1, content: "景點介紹", link: "/Attractions" },
         { id: 3 - 2, content: "", link: "/link2" },
         { id: 3 - 3, content: "", link: "/link3" },
         { id: 3 - 4, content: "", link: "/link4" },
         { id: 3 - 5, content: "", link: "/link5" },
         { id: 3 - 6, content: "", link: "/link6" },
 
-        { id: 4 - 1, content: "小火車介紹", link: "/link1" },
-        { id: 4 - 2, content: "", link: "/link2" },
-        { id: 4 - 3, content: "", link: "/link3" },
-        { id: 4 - 4, content: "", link: "/link4" },
-        { id: 4 - 5, content: "", link: "/link5" },
-        { id: 4 - 6, content: "", link: "/link6" },
+        { id: 4 - 1, content: "小火車介紹", link: "/about" },
+        { id: 4 - 2, content: "", link: "/about" },
+        { id: 4 - 3, content: "", link: "/about" },
+        { id: 4 - 4, content: "", link: "/about" },
+        { id: 4 - 5, content: "", link: "/about" },
+        { id: 4 - 6, content: "", link: "/about" },
       ],
     };
   },

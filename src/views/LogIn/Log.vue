@@ -5,11 +5,9 @@
       v-if="!isRegistered && !loginStatus && !forgetPsw && step === 0"
     >
       <div class="loin-form-wrap">
-
         <div class="loin-form-img"></div>
 
         <div class="login-form">
-
           <div class="login-test">
             <!-- <img src="~@/assets/logo.svg" alt="logo" /> -->
 
@@ -48,15 +46,17 @@
                 立即註冊！
               </button>
 
-              <button class="login-form-confirm  btn2" @click.prevent="checkLogin">
+              <button
+                class="login-form-confirm btn2"
+                @click.prevent="checkLogin"
+              >
                 確定
               </button>
             </div>
           </form>
         </div>
         <div class="login-wrap-pic">
-          <img src="/images/logo/logoBig.png" alt="Logo">
-        
+          <img src="/images/logo/logoBig.png" alt="Logo" />
         </div>
       </div>
     </section>
@@ -64,101 +64,93 @@
     <section class="login" v-if="isRegistered">
       <form action="">
         <div class="loin-form-wrap">
-
           <div class="login-form">
-
-
             <div class="login-test">
               <p>註冊會員</p>
 
               <span>立即登入，隨時找到獨家優惠</span>
             </div>
             <form action="">
+              <button
+                v-for="btn in btnsRegister"
+                class="login-connect"
+                @click.prevent=""
+              >
+                <i :class="btn.iconClass"></i> {{ btn.text }}
+              </button>
 
-            <button
-              v-for="btn in btnsRegister"
-              class="login-connect"
-              @click.prevent=""
-            >
-              <i :class="btn.iconClass"></i> {{ btn.text }}
-            </button>
-
-            <div class="row register-label">
-              <div class="col">
-                <div class="inputBox">
-                  <span>名字</span>
-                  <input
-                    type="text"
-                    class="payment-name-input"
-                    required="required"
-                    v-model="nameReg"
-                    placeholder=""
-                  />
-                  <div class="payment-name"></div>
-                </div>
-                <div class="inputBox">
-                  <span>信箱</span>
-                  <input
-                    type="email"
-                    class="payment-email-input"
-                    v-model="emailReg"
-                    required="required"
-                  />
-                  <div class="payment-email"></div>
-                </div>
-                <div class="inputBox">
-                  <span>密碼</span>
-                  <input
-                    type="text"
-                    class="payment-address-input"
-                    v-model="pswReg"
-                    required="required"
-                  />
-                  <div class="payment-address"></div>
-                </div>
-                <div class="inputBox">
-                  <span>再次輸入密碼</span>
-                  <input
-                    type="text"
-                    class="payment-nation-input"
-                    required="required"
-                    v-model="pswConfirmReg"
-                  />
-                  <div class="payment-nation"></div>
+              <div class="row register-label">
+                <div class="col">
+                  <div class="inputBox">
+                    <span>名字</span>
+                    <input
+                      type="text"
+                      class="payment-name-input"
+                      required="required"
+                      v-model="nameReg"
+                      placeholder=""
+                    />
+                    <div class="payment-name"></div>
+                  </div>
+                  <div class="inputBox">
+                    <span>信箱</span>
+                    <input
+                      type="email"
+                      class="payment-email-input"
+                      v-model="emailReg"
+                      required="required"
+                    />
+                    <div class="payment-email"></div>
+                  </div>
+                  <div class="inputBox">
+                    <span>密碼</span>
+                    <input
+                      type="text"
+                      class="payment-address-input"
+                      v-model="pswReg"
+                      required="required"
+                    />
+                    <div class="payment-address"></div>
+                  </div>
+                  <div class="inputBox">
+                    <span>再次輸入密碼</span>
+                    <input
+                      type="text"
+                      class="payment-nation-input"
+                      required="required"
+                      v-model="pswConfirmReg"
+                    />
+                    <div class="payment-nation"></div>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="register-form-bottom">
-
-              <div class="register-form-bottom-">
-                
-                <input
-                  type="checkbox"
-                  name="membership"
-                  id="membership"
-                  required="required"
-                />
-                <label for="membership">我已詳閱並同意<a href="" target="_blank">會員條款</a>與
-                  <a  href=""
-                   target="_blank"
-                    >隱私權規定</a>
+              <div class="register-form-bottom">
+                <div class="register-form-bottom-agree">
+                  <input
+                    type="checkbox"
+                    name="membership"
+                    id="membership"
+                    required="required"
+                  />
+                  <label for="membership">
+                    我已詳閱並同意<a href="" target="_blank">會員條款</a>與
+                    <a href="" target="_blank">隱私權規定</a>
                   </label>
-              </div>
+                </div>
 
-              <input
-                class="register-submit"
-                @click="columnCheck"
-                type="submit"
-                value="註冊會員"
-              />
-            </div>
-          </form>
+                <input
+                  class="register-submit"
+                  @click="columnCheck"
+                  type="submit"
+                  value="註冊會員"
+                />
+              </div>
+            </form>
           </div>
           <div class="login-wrap-pic">
-          <img src="/images/logo/logoBig.png" alt="Logo">
-        
-        </div>
+            <img src="/images/logo/logoBig.png" alt="Logo" />
+          </div>
         </div>
       </form>
     </section>
@@ -169,7 +161,6 @@
 
         <p>輸入註冊信箱，傳送驗證碼</p>
         <div class="forget-password-enter">
-
           <input
             type="email"
             placeholder=" 電子郵件地址 "
@@ -187,106 +178,100 @@
     </section>
 
     <section class="enter-valid" v-if="forgetPsw && step === 2">
-
       <form action="">
-      
-      <h2>輸入驗證碼</h2>
-      <p>已發送驗證碼至sm********@gmail.com</p>
-      <div class="enter-valid-input">
-        <input
-          type="text"
-          required="required"
-          v-model="number1"
-          max-length="1"
-        />
-        <input
-          type="text"
-          required="required"
-          v-model="number2"
-          max-length="1"
-        />
-        <input
-          type="text"
-          required="required"
-          v-model="number3"
-          max-length="1"
-        />
-        <input
-          type="text"
-          required="required"
-          v-model="number4"
-          max-length="1"
-        />
-      </div>
-      <div class="enter-valid-re">
-        <p>10 分鐘內若未收到驗證碼</p>
-        <p>請<a href="">按此</a>重新發送</p>
-      </div>
+        <h2>輸入驗證碼</h2>
+        <p>已發送驗證碼至sm********@gmail.com</p>
+        <div class="enter-valid-input">
+          <input
+            type="text"
+            required="required"
+            v-model="number1"
+            max-length="1"
+          />
+          <input
+            type="text"
+            required="required"
+            v-model="number2"
+            max-length="1"
+          />
+          <input
+            type="text"
+            required="required"
+            v-model="number3"
+            max-length="1"
+          />
+          <input
+            type="text"
+            required="required"
+            v-model="number4"
+            max-length="1"
+          />
+        </div>
 
-      <input
-        @click="validCheck"
-        type="submit"
-        value="送出"
-        class="enter-valid-submit"
-      />
+        <div class="enter-valid-re">
+          <p>10 分鐘內若未收到驗證碼</p>
+          <p>請<a href="">按此</a>重新發送</p>
+        </div>
 
-    </form>
+        <input
+          @click="validCheck"
+          type="submit"
+          value="送出"
+          class="enter-valid-submit"
+        />
+      </form>
     </section>
 
-    <section class="enter_modify" v-if="forgetPsw && step === 3">
+    <section class="enter-modify" v-if="forgetPsw && step === 3">
       <form action="">
-    
-      <h2>修改密碼</h2>
-      <p>請輸入 6 -12 位包含英文及數字的密碼</p>
-      <div class="enter-modify-input">
-        <label for="modifyPsw">新密碼</label>
-        <input
-          type="text"
-          required="required"
-          v-model="modify.psw"
-          maxlength="12"
-          minlength="6"
-          id="modifyPsw"
-        />
-        <label for="modifyNewPsw">再次輸入新密碼</label>
-        <input
-          type="text"
-          required="required"
-          v-model="modify.newPsw"
-          maxlength="12"
-          minlength="6"
-          id="modifyNewPsw"
-        />
-      </div>
-      <input
-        @click="modifyCheck"
-        type="submit"
-        value="送出"
-        class="enter-modify-submit"
-      />
+        <h2>修改密碼</h2>
+        <p>請輸入 6 -12 位包含英文及數字的密碼</p>
 
-    </form>
+        <div class="enter-modify-input">
+          <label for="modifyPsw">新密碼</label>
+          <input
+            type="text"
+            required="required"
+            v-model="modify.psw"
+            maxlength="12"
+            minlength="6"
+            id="modifyPsw"
+          />
+          <label for="modifyNewPsw">再次輸入新密碼</label>
+
+          <input
+            type="text"
+            required="required"
+            v-model="modify.newPsw"
+            maxlength="12"
+            minlength="6"
+            id="modifyNewPsw"
+          />
+
+          <input
+            @click="modifyCheck"
+            type="submit"
+            value="送出"
+            class="enter-modify-submit"
+          />
+        </div>
+      </form>
     </section>
 
     <section class="enter-modify-success" v-if="forgetPsw && step === 4">
-
       <p>修改完成！</p>
       <p>請重新登入</p>
       <button @click="modifySuccess">返回會員登入</button>
     </section>
 
     <section class="enter-modify-success" v-if="step === 5">
-   
-      <p>註冊完成！</p>
-      <p>請重新登入</p>
+      <p>🚀 註冊完成 🎉</p>
+      <p>🚂 請重新登入 ↩️</p>
       <button @click="registerSuccess">返回會員登入</button>
-
     </section>
   </div>
 </template>
-<style>
-
-</style>
+<style></style>
 <script>
 export default {
   name: "login",

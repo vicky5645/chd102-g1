@@ -18,9 +18,9 @@
         <router-link to="/forum">論壇</router-link>
         <router-link to="/online-mall">線上商城</router-link>
         <router-link to="/online-booking">線上訂票</router-link>
-        <router-link to="/Attractions">景點介紹</router-link>
+        <!-- <router-link to="/Attractions">景點介紹</router-link>
         <router-link to="/custom-tickets">客制車票</router-link>
-        <router-link to="/select-info">一般訂票</router-link>
+        <router-link to="/select-info">一般訂票</router-link> -->
         <!-- <router-link to="/user">
           <div class="icon-24">
             <img
@@ -31,8 +31,8 @@
           </div>
           <span>會員專區</span>
         </router-link> -->
-        <router-link to="/">開始</router-link>
-        <router-link to="/backend">後台</router-link>
+        <!-- <router-link to="/">開始</router-link>
+        <router-link to="/backend">後台</router-link> -->
       </div>
       <div class="chrt" @click="toggleCart">
         <i class="fa fa-shopping-cart" aria-hidden="true"></i>

@@ -7,17 +7,11 @@
   align-items: center;
   padding: 20px;
 
-
   .row {
     background-color: #fff;
   }
 
-
-
-
   .loin-form-wrap {
-
-
 
     display: flex;
 
@@ -27,12 +21,9 @@
     //   height: 100px; 
     // }
 
-
     .login-form {
 
       border: 10px solid#ffffff;
-
-
       border-radius: 20px 0 0 20px;
       background-color: #ffffff;
       padding: 30px;
@@ -44,19 +35,24 @@
 
       .inputBox {
         display: grid;
-        grid-template-columns: 100px 1fr;
+        grid-template-columns: 1fr 200px;
         justify-content: center;
         align-items: center;
         text-align: right;
+      ;
       }
 
 
       .register-form-bottom {
 
+
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-        padding: 10px;
+
+        .register-form-bottom-agree {
+          padding: 10px;
+        }
 
 
 
@@ -89,8 +85,7 @@
 
       }
 
-      button.login-connect:hover
-      {
+      button.login-connect:hover {
         background-color: map-get($GrayColors, Gray2);
         color: #fff;
       }
@@ -227,7 +222,8 @@
           background-color: transparent;
           color: $linkColor;
           border: none;
-          font-weight: bold;  font-size: $label;
+          font-weight: bold;
+          font-size: $label;
         }
 
         .login-form-confirm {
@@ -248,10 +244,7 @@
         .login-form-confirm:hover {
           background-color: #F29C50;
           color: #fff;
-
         }
-
-
 
       }
 
@@ -263,7 +256,7 @@
 
 
       width: 300px;
-      height: 450px;
+      height: 500px;
       border-radius: 0 20px 20px 0;
 
       display: flex;
@@ -276,38 +269,67 @@
 
   .enter-modify-success,
   .enter-valid,
-  .enter_modify,
+  .enter-modify,
   .forget_password {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
     background-color: #fff;
-    padding: 100px;
+    padding: 60px;
     border-radius: 20px;
-
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 
+    .enter-modify-submit,
     button {
+
+      color: #F29C50;
+      background: none;
+      border: 2px solid #F29C50;
+      border-radius: 8px;
+      padding: 8px;
+      width: 200px;
+      display: block;
+      position: relative;
+      cursor: pointer;
+      transition: color 0.4s linear;
+    }
+
+    .enter-modify-submit:hover,
+    button:hover {
       background-color: #F29C50;
       color: #fff;
-      width: 200px;
-      padding: 8px;
-      display: block;
-      border: 1px;
-      border-radius: 8px;
+
     }
 
     .enter-modify-input {
       display: flex;
       flex-direction: column;
+      margin: 10px;
+
+      label {
+        margin: 5px;
+
+      }
+
+      input {
+        margin: 5px;
+        padding: 6px;
+        border-radius: 8px;
+
+      }
 
     }
 
+    .enter-valid-input{
 
+      input{
+        border-radius: 4px;
+        width: 40px;
+      }
 
-
+    }
+    
 
 
     form {
@@ -318,7 +340,7 @@
 
       h2 {
         color: map-get($BrandColors, Secondary2);
-      
+
 
       }
 
@@ -369,4 +391,34 @@
 
 }
 
-@include pad() {}
+@media screen and (max-width:768px) {
+
+  .login-wrap {
+
+    .loin-form-wrap {
+
+
+      .login-form {
+
+        border: 10px solid#ffffff;
+        border-radius: 20px;
+        background-color: #ffffff;
+        padding: 30px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+      }
+
+      .login-wrap-pic {
+        display: none;
+
+      }
+
+
+    
+
+    }
+
+
+
+  }
+}

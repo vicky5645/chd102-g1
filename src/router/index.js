@@ -149,14 +149,12 @@ const routesUser = [
       import(/* webpackChunkName: "" */ "@/views/LogIn/Index.vue"),
     children: [
       {
-        path: "/login/LoginView",
-        component: () =>
-          import(/* webpackChunkName: "" */ "@/views/LogIn/LoginView.vue"),
-      },
-      {
         path: "/login",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/LogIn/Log.vue"),
+          meta: {
+            title: "會員登入",
+          },
       },
     
 

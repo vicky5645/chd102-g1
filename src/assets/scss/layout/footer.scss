@@ -4,7 +4,7 @@
   background-image: url('/public/images/travel/bg3.png');
   background-size: cover;
   background-position: center;
-  padding: 40px 0 0 0 ;
+  padding: 40px 0 0 0;
 
   color: $bodyBgColor;
   font-size: $body;
@@ -101,6 +101,7 @@
     position: relative;
     transition: 0.2s ease-in-out;
     letter-spacing: 2px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   }
 
   .SHARE {
@@ -128,21 +129,23 @@
         overflow: hidden;
         background-size: cover;
         background-position: center;
-
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
       }
     }
   }
 
   .footer-table {
 
-
     visibility: hidden;
   }
 
   .mainFooter-under-wrap p {
- 
-    font-size: 9px;
+
+    padding: 10px;
     background-color: rgba(0, 0, 0, 0.399);
+    color: map-get($GrayColors, Gray5);
+    line-height: 20px;
+    font-size: 9px;
 
     a {
       text-decoration: none;
@@ -206,7 +209,8 @@
     }
 
     .table-cell {
-      color: aliceblue;
+      color:#FFFFFF;
+      font-weight: 600;
     }
 
 
