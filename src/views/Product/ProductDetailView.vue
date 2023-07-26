@@ -3,12 +3,6 @@
   <main class="product_page">
     <BreadCrumbs v-if="productDataItem.title" :detailName="productDataItem.title" />
     <div v-if="productData">
-      <!-- <ol class="bread_crumbs">
-        <i class="fa-solid fa-house"></i>
-        <li v-for="item in [...breadCrumbs]" :key="item.index">
-          <a :href="item.link" :style="item.color"> {{item.index}}</a>
-        </li>
-      </ol> -->
       <div class="back_button">
         <router-link to="/online-mall">
           <i class="fa fa-angle-left" aria-hidden="true"></i> 返回商城
@@ -42,20 +36,6 @@
             <div class="type">選擇購買數量</div>
             <button class="like">加入收藏</button>
           </div>
-
-          <!-- <div class="type_button_list">
-            <button
-              v-for="button in buttons"
-              :key="button"
-              class="type_button_item"
-              :class="{ selected: selectedButton === button }"
-              @click="selectButton(button)"
-            >
-              {{ button }}
-            </button>
-          </div> -->
-
-        <!-- <div class="quantity_txt">購買數量</div> -->
 
           <!-- 加減按鈕 -->
           <div class="quantity_button">
@@ -141,6 +121,7 @@
 </template>
 
 <script>
+import {GET} from '@/plugin/axios'
 import BreadCrumbs from "@/components/BreadCrumbs.vue";
 import { ref, reactive } from 'vue';
 import { useStore } from 'vuex';
@@ -241,13 +222,12 @@ export default {
   },
   // 推薦商品
   created() {
-    fetch(`/data/productData.json`)
-    .then(res=>res.json())
-    .then(json=>{
-      this.productData = json;
+    // 取得API
+    GET('/data/productData.json').then(res => {
+      this.productData = res
       this.productDataItem = this.productData[`${parseFloat(this.$route.params.id)-1}`];
       this.bigPic = this.productDataItem.image;
-    });
+    })
     this.currentProducts = this.allProducts.slice(0, 4); // 初始化 currentProducts
   },
   setup() {

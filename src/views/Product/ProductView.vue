@@ -1,13 +1,6 @@
 <template>
   <main>
     <BreadCrumbs detailName="商城" />
-    <!-- <ol class="breadCrumbs">
-        <i class="fa-solid fa-house"></i> -->
-    <!-- <li v-for="item in [...breadCrumbs]" :key="item.index">
-            <a :href="item.link" :style="item.color">
-                {{item.index}}</a>
-        </li> -->
-    <!-- </ol> -->
     <div class="container productIndex">
       <div class="category">
         <h3>商品分類</h3>

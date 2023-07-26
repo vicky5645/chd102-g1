@@ -278,6 +278,7 @@ section.next-step {
 </template>
 
 <script>
+import {GET} from '@/plugin/axios'
 export default {
   data() {
     return {
@@ -403,14 +404,12 @@ export default {
     },
   },
   created() {
-    // 取得API
-    fetch('/data/packageData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.packageList = json;
-        this.packageDataItem = this.packageList[`${parseFloat(this.$route.params.id) - 1}`];
+      // 取得API
+    GET('/data/packageData.json').then(res => {
+      this.packageList = res;
+      this.packageDataItem = this.packageList[`${parseFloat(this.$route.params.id) - 1}`];
         this.stageList = this.packageDataItem.stageList;
-      })
-  },
+    })
+  }
 };
 </script>

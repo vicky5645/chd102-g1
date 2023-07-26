@@ -7,11 +7,6 @@ $secondary2: #b3cee2;
   box-sizing: border-box;
 }
 
-// .container {
-//   width: 1200px;
-//   margin: auto;
-// }
-
 section.title {
   text-align: center;
   background-color: white;
@@ -270,6 +265,7 @@ section.package-list {
 </template>
 
 <script>
+import {GET} from '@/plugin/axios'
 export default {
   data() {
     return {
@@ -481,12 +477,10 @@ export default {
     },
   },
   created() {
-    // 取得API
-    fetch('/data/packageData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.packageList = json;
-      })
+      // 取得API
+    GET('/data/packageData.json').then(res => {
+      this.packageList = res
+    })
   },
 };
 </script>

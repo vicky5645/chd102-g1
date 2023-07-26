@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import {GET} from '@/plugin/axios'
 export default {
   data() {
     return {
@@ -108,17 +109,12 @@ export default {
       );
     },
   },
-  // created() {
-  //   this.filteredArticles = this.airticles;
-  // },
   created() {
-    // 取得API
-    fetch('/data/airticlesData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.airticles = json;
-        this.filteredArticles = this.airticles;
-      })
+      // 取得API
+    GET('/data/airticlesData.json').then(res => {
+      this.airticles = res;
+      this.filteredArticles = this.airticles;
+    })
   },
 };
 </script>
