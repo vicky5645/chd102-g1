@@ -72,16 +72,6 @@
               公告
             </button>
           </router-link>
-
-          <router-link to="/backend/bootstrap" exact>
-            <button
-              type="button"
-              class="list-group-item list-group-item-action"
-              :class="{ active: $route.name === 'bootstrap' }"
-            >
-              test bootstrap
-            </button>
-          </router-link>
         </div>
       </div>
     </aside>

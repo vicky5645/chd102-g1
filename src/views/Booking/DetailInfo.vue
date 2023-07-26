@@ -269,7 +269,7 @@ section.next-step {
       </div>
 
       <div class="btn primary">
-        <router-link to="/">
+        <router-link to="/select-info">
           <span>下一步</span>
         </router-link>
       </div>

@@ -2,9 +2,6 @@
   <h1>{{ $route.meta.title }}</h1>
 
   後台行程
-  <div class="home">
-    home
-  </div>
   
 </template>
 

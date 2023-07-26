@@ -366,7 +366,7 @@ export default {
       </div>
 
       <div class="btn primary" @click="confirm">
-        <router-link to="">
+        <router-link to="/custom-tickets">
           <span>確認購票</span>
         </router-link>
       </div>

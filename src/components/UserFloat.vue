@@ -1,8 +1,8 @@
 <template>
     <div class="userPage userFloat" v-show="userStatus">
-        <!-- <div class="closeMark" @click="closeUser">
+        <div class="closeMark" @click="closeUser">
             <i class="fa-solid fa-xmark"></i>
-        </div> -->
+        </div>
         <div class="link-list">
             <router-link to="/user/info">
                 <li>
@@ -33,7 +33,7 @@
                     <span>我的收藏</span>
                 </li>
             </router-link>
-            <router-link to="/login" class="login" @click="signOut">
+            <router-link to="/login" class="login" @click="handleLogout">
                 <li>
                     登出
                 </li>
@@ -52,9 +52,7 @@ import { useRouter } from 'vue-router';
 const props = defineProps(['userStatus']);
 const emit = defineEmits(['closeUser', 'goLoginUser']);
 
-// const productData = ref([]);
-// let quantity = ref(1);
-// const router = useRouter();
+const store = useStore();
 const productData = ref([]);
 let quantity = ref(1);
 const router = useRouter();
@@ -68,6 +66,13 @@ onMounted(() => {
         });
 });
 
+const signOut = function () {
+    // 登出
+    store.commit('setName', '登入/註冊');
+    store.commit('setIsLogin', false); // 使用 commit 來改變狀態
+    router.push('/roaming-orbit');
+}
+
 // 關閉視窗按鈕
 const closeUser = () => {
     emit('closeUser')
@@ -75,6 +80,12 @@ const closeUser = () => {
 // 前往購物車清單
 const goLoginUser = () => {
     emit('goLoginUser')
+}
+
+// 登出並且隱藏選單
+const handleLogout = () => {
+    signOut(); // 執行 signOut 方法
+    closeUser(); // 關閉會員選單
 }
 
 </script>

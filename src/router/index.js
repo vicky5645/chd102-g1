@@ -207,6 +207,15 @@ const routesUser = [
     ],
   },
   {
+    path: "/backend/login",
+    name: "backendlogin",
+    component: () =>
+      import(/* webpackChunkName: "cart" */ "@/views/BackEnd/BackLogin.vue"),
+    meta: {
+      title: "後臺登入",
+    },
+  },
+  {
     path: "/backend",
     name: "backend",
     // component: AboutView
@@ -229,16 +238,6 @@ const routesUser = [
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/BackEnd/BackOrganize.vue"),
         meta: { title: "開團管理" },
-      },
-      {
-        path: "/backend/bootstrap",
-        component: () =>
-          import(
-            /* webpackChunkName: "cart" */ "@/views/BackEnd/Bootstrap.vue"
-          ),
-        meta: {
-          title: "bootstrap test",
-        },
       },
       {
         path: "/backend/BackForum",

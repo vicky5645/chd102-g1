@@ -18,7 +18,8 @@ export default {
     hasStartView() {
       const isStart = this.$route.matched.some(route => route.name === 'start');
       const isBackEnd = this.$route.matched.some(route => route.name === 'backend');
-      return isStart || isBackEnd;
+      const isBackLogin = this.$route.matched.some(route => route.name === 'backendlogin');
+      return isStart || isBackEnd || isBackLogin;
     },
   },
   mounted() {
