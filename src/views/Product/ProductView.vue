@@ -32,7 +32,7 @@
               <button class="cardFavorite" @click="toggleFavorite(index)">
                 <i :class="favoriteIcon(index)"></i>
               </button>
-              <button class="cardCart">
+              <button class="cardCart" @click="addToCart(index)">
                 <i :class="goodsBtn.cart.i"></i>
               </button>
               <router-link :to="`/productDetail/${item.id}`">
@@ -179,7 +179,11 @@ export default {
       } else {
         this.isShow = false;
       }
-    }
+    },
+    addToCart(index) {
+      this.$store.commit("addToCart",this.productData[index]);
+      console.log(this.productData[index])
+    },
   },
   beforeUnmount() {
     // 移除事件聆聽器
