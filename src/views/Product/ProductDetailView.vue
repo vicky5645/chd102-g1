@@ -9,6 +9,13 @@
         </router-link>
       </div>
       <section class="product_data">
+        <div class="icon-container" :class="{ showing: addSuccess && index === currentIndex }">
+                <svg class="icon" viewBox="0 0 100 100" width="80" height="80">
+                        <circle class="circle" cx="50" cy="50" r="48"></circle>
+                        <polyline class="check" points="28,53 42,66 74,34"></polyline>
+                    </svg>
+                    <p>成功加入購物車</p>
+              </div>
         <!-- 點擊小圖換大圖 -->
         <div class="product_data_left">
 
@@ -51,7 +58,7 @@
           </div>
 
           <div class="add_and_buy">
-            <button class="add" @click="addToCart">加入購物車</button>
+            <button class="add" @click="addToCart" :disabled="isButtonDisabled" :class="{ clickDisabled: isButtonDisabled }">加入購物車</button>
             <button class="buy" @click="addAndBuy">立即購買</button>
           </div>
         </div>
@@ -136,6 +143,8 @@ export default {
     return {
       productData: null,
       productDataItem: [],
+      addSuccess: false,
+      isButtonDisabled: false,
       // 麵包屑
       breadCrumbs: [
         {
@@ -267,6 +276,12 @@ export default {
     // },
     addToCart() {
       this.$store.commit("addToCart",this.productDataItem);
+      this.addSuccess = true;
+      this.isButtonDisabled = true;
+      setTimeout(() => {
+                this.addSuccess = false;
+                this.isButtonDisabled = false;
+            }, 800);
     },
     addAndBuy() {
       this.$store.commit("addToCart",this.productDataItem);
