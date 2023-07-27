@@ -4,19 +4,49 @@ main:has(.cartPage){
 }
 //浮窗購物車專用
 .cartFloat{
-    width: 360px;
+    width: 400px;
     position: fixed;
     top: 60px;
     right: 60px;
-    border: 5px solid $color;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, .3);
+    border: 1px solid rgba(0, 0, 0, .01);
+    border-radius: 8px;
     z-index: 1;
+    background-color: #ffffffe6 !important;
+    padding-bottom: 0 !important;
+    // max-height: 600px;
+    // overflow-y: overlay;
+    // &::-webkit-scrollbar {
+    //     width: 8px;
+    // }
+    // &::-webkit-scrollbar-thumb {
+    //     border-radius: 4px;
+    //     background-color: rgba(0, 0, 0, 0.4);
+    //     border: 1px solid slategrey;
+    // }
     .closeMark{
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 16px;
+        right: 16px;
         z-index: 1;
         font-size: 32px;
         cursor: pointer;
+    }
+    .cartList{
+        padding: 8px;
+        max-height: 360px;
+        overflow-y: overlay;
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid slategrey;
+        }
+    }
+    .checkOut {
+        padding: 8px;
     }
 }
 
@@ -63,6 +93,7 @@ main:has(.cartPage){
             align-items: center;
             justify-content: space-between;
             .item-drop{
+                color: map-get($GrayColors, Gray5);
                 background-color: unset;
                 border: none;
             }
@@ -96,9 +127,12 @@ main:has(.cartPage){
                 align-items: center;
                 button{
                     // border: 1px solid #777;
-                    border: none;
                     background-color: $linkColor;
-                    box-shadow: 1px 1px 3px #00000080;
+                    color: $btnTextColor;
+                    // border: none;
+                    // box-shadow: 1px 1px 3px #00000080;
+                    border: 1px solid rgba(0, 0, 0, .01);
+                    box-shadow: 1px 1px rgba(0, 0, 0, .3);
                     display: flex;
                     justify-content: center;
                     align-items: center;

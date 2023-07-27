@@ -17,7 +17,7 @@
                     {{ item.title }}
                 </a>
                 <div class="item-price">
-                    <span>{{ item.price }}</span>
+                    <span>{{ item.totalPrice }}</span>
                 </div>
             </div>
             <div class="btn-group">
@@ -31,7 +31,6 @@
     </div>
 </template>
 <script>
-import {GET} from '@/plugin/axios'
 import { mapGetters } from 'vuex';
 export default {
   data() {
@@ -44,10 +43,6 @@ export default {
   },
   created() {
     this.$store.dispatch("initStorage");
-    // 取得API
-    GET('/data/productData.json').then(res => {
-      this.productData = res
-    })
   },
   methods: {
     //增加數量
