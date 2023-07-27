@@ -1,4 +1,4 @@
-<!-- 公告管理 -->
+<!-- 列車管理 -->
 <template>
   <!-- select bar -->
   <div class="search_new">
@@ -10,9 +10,6 @@
         placeholder="輸入文字查詢"
         aria-label="Search"
       />
-      <!-- <button class="btn btn-outline-primary" type="button" id="button-addon2">
-        搜尋
-      </button> -->
     </div>
     <button
       class="btn btn-outline-primary b_new"
