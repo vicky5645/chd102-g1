@@ -37,11 +37,8 @@
     <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">
         <th scope="row">{{ item.id }}</th>
-        <td class="ellipsis">{{ item.title }}</td>
-        <td class="ellipsis">{{ item.type }}</td>
-        <td class="ellipsis">{{ item.content }}</td>
-        <td class="ellipsis">{{ item.date }}</td>
-        <td class="ellipsis">{{ item.image }}</td>
+        <td class="ellipsis">{{ item.name }}</td>
+        <td class="ellipsis">{{ item.qty }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -72,7 +69,7 @@
     <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="itemModalLabel">修改公告</h5>
+          <h5 class="modal-title" id="itemModalLabel">修改列車</h5>
           <button
             type="button"
             class="btn-close"
@@ -89,7 +86,7 @@
         >
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
-              >公告編號</span
+              >列車編號</span
             >
             <input
               v-model="currentItem.id"
@@ -101,10 +98,10 @@
           </div>
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
-              >公告標題</span
+              >列車名稱</span
             >
             <input
-              v-model="currentItem.title"
+              v-model="currentItem.name"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -112,56 +109,13 @@
             />
           </div>
           <div class="input-group input-group-lg">
-            <span class="input-group-text" id="inputGroup-sizing-lg"
-              >公告類型</span
-            >
+            <span class="input-group-text" id="inputGroup-sizing-lg">座位</span>
             <input
-              v-model="currentItem.type"
+              v-model="currentItem.qty"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
-            />
-          </div>
-          <div class="input-group input-group-lg">
-            <span class="input-group-text" id="inputGroup-sizing-lg"
-              >公告內容</span
-            >
-            <textarea
-              v-model="currentItem.content"
-              class="form-control"
-              aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-lg"
-            ></textarea>
-          </div>
-          <div class="input-group input-group-lg">
-            <span class="input-group-text" id="inputGroup-sizing-lg"
-              >公告時間</span
-            >
-            <input
-              v-model="currentItem.date"
-              type="text"
-              class="form-control"
-              aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-lg"
-            />
-          </div>
-          <div class="input-group input-group-lg">
-            <span class="input-group-text" id="inputGroup-sizing-lg"
-              >公告圖片</span
-            >
-            <input
-              type="file"
-              class="form-control"
-              id="inputGroupFile02"
-              @change="handleFileUpload"
-            />
-          </div>
-          <div class="model_body_pic">
-            <img
-              v-if="currentItem.image"
-              :src="currentItem.image"
-              alt="Image preview"
             />
           </div>
         </div>
@@ -199,7 +153,7 @@
     <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 name="header">新增公告</h5>
+          <h5 name="header">新增列車</h5>
         </div>
 
         <div class="modal-body">
@@ -210,7 +164,7 @@
             >
               <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
-                  >公告編號</span
+                  >列車編號</span
                 >
                 <input
                   v-model="newAnnouncement.id"
@@ -222,10 +176,10 @@
               </div>
               <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
-                  >公告標題</span
+                  >列車名稱</span
                 >
                 <input
-                  v-model="newAnnouncement.title"
+                  v-model="newAnnouncement.name"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -234,55 +188,14 @@
               </div>
               <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
-                  >公告類型</span
+                  >座位</span
                 >
                 <input
-                  v-model="newAnnouncement.type"
+                  v-model="newAnnouncement.qty"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
-                />
-              </div>
-              <div class="input-group input-group-lg">
-                <span class="input-group-text" id="inputGroup-sizing-lg"
-                  >公告內容</span
-                >
-                <textarea
-                  v-model="newAnnouncement.content"
-                  class="form-control"
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-lg"
-                ></textarea>
-              </div>
-              <div class="input-group input-group-lg">
-                <span class="input-group-text" id="inputGroup-sizing-lg"
-                  >公告時間</span
-                >
-                <input
-                  v-model="newAnnouncement.date"
-                  type="text"
-                  class="form-control"
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-lg"
-                />
-              </div>
-              <div class="input-group input-group-lg">
-                <span class="input-group-text" id="inputGroup-sizing-lg"
-                  >公告圖片</span
-                >
-                <input
-                  type="file"
-                  class="form-control"
-                  id="inputGroupFile02"
-                  @change="handleFileUpload"
-                />
-              </div>
-              <div class="model_body_pic">
-                <img
-                  v-if="newAnnouncement.image"
-                  :src="newAnnouncement.image"
-                  alt="Image preview"
                 />
               </div>
             </div>
@@ -317,12 +230,8 @@ export default {
       items: [
         {
           id: 1,
-          title: "全新的蒸汽火車旅程上線",
-          type: "重要",
-          content:
-            "我們非常榮幸地宣布，“湖光山色”全新蒸汽火車之旅現已開放預訂！這個行程將帶領您從城市的喧囂中抽身，進入壯麗的大自然，穿越秀美的山脈，欣賞湖光山色的美景。在這次旅程中，您將有機會體驗古老的蒸汽火車，聆聽其叮叮噹噹的旋律，感受時光倒流的魔力。不要錯過這次與大自然親近的絕佳機會，現在就開始預訂吧！",
-          date: "2023/7/5",
-          image: require("../../assets/images/img/Announcements/a1.png"),
+          name: "綠野號",
+          qty: 40,
         },
       ],
       // search
@@ -335,11 +244,8 @@ export default {
       // new model
       newAnnouncement: {
         id: "", // 確保 id 屬性存在
-        title: "",
-        type: "",
-        content: "",
-        date: "",
-        image: null,
+        name: "",
+        qty: "",
       },
     };
   },
@@ -403,10 +309,8 @@ export default {
     submitAnnouncement() {
       if (
         !this.newAnnouncement.id ||
-        !this.newAnnouncement.title ||
-        !this.newAnnouncement.type ||
-        !this.newAnnouncement.content ||
-        !this.newAnnouncement.date
+        !this.newAnnouncement.name ||
+        !this.newAnnouncement.qty
       ) {
         alert("所有欄位都必須填寫！");
         return;
@@ -416,11 +320,8 @@ export default {
       this.clearAnnouncement();
       this.newAnnouncement = {
         id: "",
-        title: "",
-        type: "",
-        content: "",
-        date: "",
-        image: null,
+        name: "",
+        qty: "",
       };
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
@@ -430,11 +331,8 @@ export default {
     clearAnnouncement() {
       this.newAnnouncement = {
         id: "",
-        title: "",
-        type: "",
-        content: "",
-        date: "",
-        image: null,
+        name: "",
+        qty: "",
       };
     },
 
