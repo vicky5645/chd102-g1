@@ -55,44 +55,34 @@
     <div class="container">
       <div class="introWrapper">
         <div class="attractionsSwitch">
-          <div
-            class="attractionsTag"
-            @click="changeBackground(require('@/assets/images/about/ac01.png'))"
-          >
+          <div class="attractionsTag" @click="changeBackground(require('@/assets/images/about/ac01.png'))">
             <h3>銀月山脈</h3>
             <p>
               「在銀色的月光下，銀月山脈的山峰如同夢境一般美麗，帶您走進如詩如畫的世界。」
             </p>
           </div>
-          <div
-            class="attractionsTag"
-            @click="changeBackground(require('@/assets/images/about/ac02.png'))"
-          >
+          <div class="attractionsTag" @click="changeBackground(require('@/assets/images/about/ac02.png'))">
             <h3>幽谷湖泊</h3>
             <p>
               「幽谷湖泊的寧靜美麗如同鏡子般反映著天空，讓您在其中找到心靈的寧靜與安慰。」
             </p>
           </div>
-          <div
-            class="attractionsTag"
-            @click="changeBackground(require('@/assets/images/about/ac03.png'))"
-          >
+          <div class="attractionsTag" @click="changeBackground(require('@/assets/images/about/ac03.png'))">
             <h3>綠野牧場</h3>
             <p>
               「在綠野牧場上，感受自然的和諧與寧靜，享受陽光下的悠閒時光。」
             </p>
           </div>
-          <div
-            class="attractionsTag"
-            @click="changeBackground(require('@/assets/images/about/ac04.png'))"
-          >
+          <div class="attractionsTag" @click="changeBackground(require('@/assets/images/about/ac04.png'))">
             <h3>翠嶺溫泉鄉</h3>
             <p>
               「翠嶺溫泉鄉的熱泉如同大自然的禮物，帶給您身心的舒適與放鬆。」
             </p>
           </div>
           <div class="moreAttractioins">
-            <a href="#">查看更多景點</a>
+          <router-link to="/Attractions">
+              查看更多景點
+          </router-link>
           </div>
         </div>
       </div>
@@ -136,16 +126,19 @@ export default {
   margin: 0;
   padding: 0;
 }
+
 .container {
   max-width: 1200px;
   margin-right: auto;
   margin-left: auto;
   position: relative;
+
   &:has(.trainTag) {
     height: 100%;
   }
 }
-.row > * {
+
+.row>* {
   // max-width: 1200px;
 }
 
@@ -158,6 +151,7 @@ export default {
   background-position: center;
   background-size: cover;
   position: relative;
+
   .introTag {
     background-color: white;
     opacity: 0.8;
@@ -167,34 +161,41 @@ export default {
     position: absolute;
     right: 0;
     top: 40px;
+
     h2 {
       font-size: 48px;
       padding: 8px 16px;
     }
+
     p {
       font-size: 24px;
       padding: 8px 16px;
     }
   }
+
   .introTxt {
     height: 100vh;
     display: flex;
     justify-content: space-between;
     color: white;
     font-weight: bold;
+
     .introCard {
       margin-top: auto;
       width: 33.333333%;
       padding-bottom: 40px;
+
       h3 {
         font-size: 28px;
         padding: 8px 16px;
       }
+
       p {
         font-size: 18px;
         padding: 8px 16px;
         line-height: 2rem;
       }
+
       .moreInfo {
         a {
           display: block;
@@ -233,10 +234,12 @@ export default {
     position: absolute;
     right: 0;
     top: 40px;
+
     h2 {
       font-size: 48px;
       padding: 8px 16px;
     }
+
     p {
       font-size: 24px;
       padding: 8px 16px;
@@ -254,16 +257,19 @@ export default {
       padding: 40px 0px;
       border-bottom: 1px solid;
       cursor: pointer;
+
       h3 {
         font-size: 28px;
         padding: 8px 16px;
       }
+
       p {
         font-size: 18px;
         padding: 8px 16px;
         line-height: 2rem;
       }
     }
+
     .moreAttractioins {
       a {
         display: block;
@@ -285,6 +291,7 @@ export default {
   background-size: cover;
   position: relative;
   height: 100vh;
+
   .introTag {
     background-color: white;
     opacity: 0.8;
@@ -300,15 +307,18 @@ export default {
     position: absolute;
     right: 0;
     top: 40px;
+
     h2 {
       font-size: 48px;
       padding: 8px 16px;
     }
+
     p {
       font-size: 24px;
       padding: 8px 16px;
     }
   }
+
   .trainTag {
     position: absolute;
     left: 0;
@@ -316,16 +326,19 @@ export default {
     background-color: #fff;
     opacity: 0.8;
     width: 65%;
+
     h3 {
       margin-top: 8px;
       font-size: 28px;
       padding: 8px 16px;
     }
+
     p {
       font-size: 18px;
       padding: 8px 16px;
       line-height: 2rem;
     }
+
     a {
       display: block;
       text-align: right;
@@ -338,5 +351,4 @@ export default {
       margin-bottom: 8px;
     }
   }
-}
-</style>
+}</style>

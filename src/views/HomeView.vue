@@ -173,11 +173,11 @@
                   <div class="fallen_leaves">
                     <img src="@\assets\images\img\index_pic\index_leaves.png">
                   </div>
-                  <a>
+                  <router-link to="/Attractions">
                     <div>
                       更多介紹 >
                     </div>
-                  </a>
+                  </router-link>
                 </div>
               </div>
 
