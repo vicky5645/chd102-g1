@@ -1,8 +1,5 @@
 <template>
-    <div class="userPage userFloat" v-show="userStatus">
-        <div class="closeMark" @click="closeUser">
-            <i class="fa-solid fa-xmark"></i>
-        </div>
+    <div class="userPage cartFloat" v-show="userStatus">
         <div class="link-list">
             <router-link to="/user">
                 <li>
@@ -40,6 +37,7 @@
             </router-link>
         </div>
     </div>
+    <div class="userPageMask" v-show="userStatus" @click="closeUser"></div>
 </template>
 
 <script setup>
@@ -65,10 +63,6 @@ const signOut = function () {
 const closeUser = () => {
     emit('closeUser')
 }
-// 前往購物車清單
-const goLoginUser = () => {
-    emit('goLoginUser')
-}
 
 // 登出並且隱藏選單
 const handleLogout = () => {
@@ -77,3 +71,14 @@ const handleLogout = () => {
 }
 
 </script>
+
+<style lang="scss" scoped>
+.userPageMask {
+    background-color: transparent;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+</style>

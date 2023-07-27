@@ -16,8 +16,6 @@
         <router-link to="/online-mall">線上商城</router-link>
         <router-link to="/online-booking">線上訂票</router-link>
         <!-- <router-link to="/Attractions">景點介紹</router-link> -->
-        <!-- <router-link to="/custom-tickets">客制車票</router-link> -->
-        <!-- <router-link to="/select-info">一般訂票</router-link> -->
       </div>
       <!-- 購物車 -->
       <div class="chrt" @click="toggleCart">
