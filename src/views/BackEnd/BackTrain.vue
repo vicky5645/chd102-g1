@@ -124,7 +124,7 @@
             data-bs-dismiss="modal"
             @click="deleteAnnouncement"
           >
-            刪除公告
+            刪除
           </button>
           <button
             type="button"
