@@ -13,9 +13,11 @@
                 </div>
             </div>
             <div class="item-info">
-                <a class="item-name" href="#">
+              <!-- <router-link :to="`/productDetail/${item.id}`"> -->
+                <a class="item-name" :href="'/productDetail/' + item.id">
                     {{ item.title }}
                 </a>
+              <!-- </router-link> -->
                 <div class="item-price">
                     <span>{{ item.totalPrice }}</span>
                 </div>
@@ -63,7 +65,10 @@ export default {
       this.$store.commit("removeFromCart", clickTitle);
       console.log(clickTitle);
     },
-    
+    // goDetail(item) {
+    //   // 使用 router.go() 方法導向上一頁
+    //   this.$router.push({ name: "productDetail", params: { id: item.id } });
+    // },
   },
 }
 </script>
