@@ -16,8 +16,7 @@
           <div class="tbody" v-for="item, index in userData.forum" :key="item.id">
             <router-link :to="`/forum`">
               <div class="cradPic">
-                <!-- <Images :imgURL="`${item.image}`" :alt="`${item.title}`" /> -->
-                <img :src="item.image" :alt="item.title">
+                <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
               </div>
             </router-link>
             <div class="des">

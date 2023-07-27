@@ -102,7 +102,7 @@
   </div>
 </template>
 <script>
-import {GET} from '@/plugin/axios'
+import { GET } from '@/plugin/axios'
 export default {
   data() {
     return {
@@ -124,7 +124,7 @@ export default {
     }
   },
   created() {
-      // 取得API
+    // 取得API
     GET('/data/userData.json').then(res => {
       this.userData = res
       this.updateDisplay()

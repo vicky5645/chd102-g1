@@ -49,21 +49,10 @@
     height: 100%;
     object-fit: cover;
   }
-  input,select {
-    margin-bottom: 10px;
-    border: 1px solid#a0a0a0;
-    border-radius: 8px;
-    min-height: 44px;
-    /* label/text-16-light */
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 125%;
-    padding: 8px 16px;
-    box-sizing: border-box;
-  }
   .categoryBtn {
     display: flex;
     justify-content: space-between;
+    width: 100%;
   }
   .categoryItem {
     list-style-type: none;
@@ -163,56 +152,9 @@
       flex-wrap: wrap;
       row-gap: 16px;
       .top-space {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      & .input-wrap {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        @include pad {
-          flex: 1;
-          &.long {
-            grid-column: span 2;
-          }
-        }
-        .btn {
-          background-color: map-get($BrandColors, Primary);
-          position: absolute;
-          top: 0%;
-          right: 0px;
-          height: 44px;
-
-          color: #fff;
-          border-radius: 0 8px 8px 0;
-          overflow: hidden;
-        }
-        &.login{ 
-          position: relative;
-          & input{
-            &:focus + label,
-            &:valid + label {
-              font-size: $caption;
-              line-height: 20px;
-              transform: translateY(-175%) translateX(8px);
-              color: map-get($BrandColors, Secondary2);
-              background-color: #fff;
-            }
-          }
-          & label {
-            position: absolute;
-            top: 50%;
-            left: 0px;
-            padding-left: 8px;
-            padding-right: 8px;
-            transform: translateY(-75%);
-            color: #000;
-            font-size: 16px;
-            pointer-events: none;
-            transition: all 0.5s;
-          }
-        }
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 16px;
       }
       .left {
         display: flex;
@@ -222,10 +164,13 @@
         justify-content: flex-end;
       }
       .user-control-content {
+        display: flex;
+        flex-direction: column;
+        // flex-wrap: wrap;
+        gap: 16px;
         @include pad {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 16px;
         }
         & .cradPic{
           height: 100%;
@@ -234,14 +179,7 @@
           aspect-ratio: 2/1;
           @include pad {
             aspect-ratio: 1/1;
-            border-radius: 0px;
           }
-        }
-        & .clamp-2 {
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 2;
-          overflow: hidden;
         }
         & .card-out{ grid-column: span 3; }
         & .card{
@@ -250,7 +188,7 @@
           gap: 16px;
           width: 100%;
           overflow: hidden;
-          @include card-shadow;
+          // @include card-shadow;
           @include pad {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -268,7 +206,7 @@
               flex-grow: 1;
             }
             & .card-bottom {
-              // background-color: gold;
+              flex-shrink: 1;
             }
             & .des  {
               padding-top: 0px;

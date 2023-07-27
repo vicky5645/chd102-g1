@@ -12,7 +12,7 @@
         <label>密碼</label>
       </div>
       <div class="actions">
-        <button class="login-btn" @click="login">確定</button>
+        <button class="login-btn btn primary radius" @click="login">確定</button>
       </div>
     </div>
     <div class="login-wrap-pic"></div>
