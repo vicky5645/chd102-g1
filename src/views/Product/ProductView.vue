@@ -123,6 +123,7 @@ export default {
       categoryItem: [
         { type: "所有商品" },
         { type: "熱銷商品" },
+        { type: "周邊" },
         { type: "食品" },
         { type: "玩具" },
         { type: "圖書" }
