@@ -18,9 +18,9 @@
       </div>
       <div class="checkOut">
         <button class="btn-back" @click="goBack">返回</button>
-        <router-link to="/checkout">
-        <button class="btn-checkOut">前往結帳</button>
-        </router-link>
+        <!-- <router-link to="/checkout"> -->
+        <button class="btn-checkOut" @click="checkPrice">前往結帳</button>
+        <!-- </router-link> -->
       </div>
     </div>
   </main>
@@ -46,6 +46,12 @@ export default {
       // 使用 router.go() 方法導向上一頁
       this.$router.go(-1);
     },
+    checkPrice() {
+      if (this.totalPrice <= 0 ) {
+        return alert("您尚未選購任何商品！");
+      }
+      this.$router.push('/checkout');
+    }
   },
 }
 </script>

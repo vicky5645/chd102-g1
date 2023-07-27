@@ -16,6 +16,7 @@ main.product_page {
   }
 
   .product_data {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -460,3 +461,21 @@ main.product_page {
     }
   }
 }
+
+
+//成功加入購物車動畫(商品頁面專用)
+.product_data{
+  .icon-container{
+    width: 240px;
+    height: 240px;
+    top: 50%;
+    left: 50%;
+    border-radius: 8px;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, .9);
+  }
+}
+//禁止點擊時按鈕換色
+.clickDisabled{
+  background-color: map-get($GrayColors , Gray5) !important;
+}  
