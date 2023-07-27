@@ -144,8 +144,10 @@ $ani-bg: ani-namecard;
       overflow-y: auto;
       scrollbar-gutter: stable;
       border-radius: 5px;
-      margin-left: 20px;
       position: sticky;
+      &:has(svg){
+        margin-left: 20px;
+      }
       #block-img{
         // position: absolute;
         top: 0;
@@ -159,7 +161,7 @@ $ani-bg: ani-namecard;
         border: 1px solid #000;
       }
     }
-    .bottom-btn{
+    .bottom-btn > *{
       display: flex;
       flex-direction: column;
       margin-bottom: 80px;
