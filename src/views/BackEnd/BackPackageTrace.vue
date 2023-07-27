@@ -80,7 +80,7 @@
     <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="itemModalLabel">查看論壇文章留言</h5>
+          <h5 class="modal-title" id="itemModalLabel">查看行程收藏</h5>
           <button
             type="button"
             class="btn-close"
