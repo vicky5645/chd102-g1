@@ -311,9 +311,8 @@ export default {
       // new model
       newAnnouncement: {
         id: "", // 確保 id 屬性存在
-        title: "",
-        type: "",
-        content: "",
+        name: "",
+        desc: "",
         date: "",
         image: null,
       },
@@ -379,9 +378,8 @@ export default {
     submitAnnouncement() {
       if (
         !this.newAnnouncement.id ||
-        !this.newAnnouncement.title ||
-        !this.newAnnouncement.type ||
-        !this.newAnnouncement.content ||
+        !this.newAnnouncement.name ||
+        !this.newAnnouncement.desc ||
         !this.newAnnouncement.date
       ) {
         alert("所有欄位都必須填寫！");
@@ -392,9 +390,8 @@ export default {
       this.clearAnnouncement();
       this.newAnnouncement = {
         id: "",
-        title: "",
-        type: "",
-        content: "",
+        name: "",
+        desc: "",
         date: "",
         image: null,
       };
@@ -406,9 +403,8 @@ export default {
     clearAnnouncement() {
       this.newAnnouncement = {
         id: "",
-        title: "",
-        type: "",
-        content: "",
+        name: "",
+        desc: "",
         date: "",
         image: null,
       };
