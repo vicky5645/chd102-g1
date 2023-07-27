@@ -38,13 +38,6 @@
       </tr>
     </tbody>
 
-    <!-- page -->
-    <!-- <div>
-      <button @click="prevPage">Previous</button>
-      <span>Page {{ currentPage }}</span>
-      <button @click="nextPage">Next</button>
-    </div> -->
-
     <p v-if="filteredItems.length === 0" class="text-danger">
       * 沒有找到符合搜尋條件的結果
     </p>
