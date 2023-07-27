@@ -283,7 +283,7 @@ export default {
           <button class="minus" @click="reduce">
             <i class="fa-solid fa-minus"></i>
           </button>
-          <input type="tel" v-model="count" readonly />
+          <input class="num" type="tel" v-model="count" readonly />
           <button class="plus" @click="add">
             <i class="fa-solid fa-plus"></i>
           </button>
@@ -351,7 +351,7 @@ export default {
 
     <section class="next-step">
       <div class="btn secondary">
-        <router-link to="">
+        <router-link to="/">
           <span>返回</span>
         </router-link>
       </div>
@@ -441,7 +441,7 @@ section.choose {
 
         font-size: 1.1rem;
         font-weight: bold;
-        // line-height: 40px;
+
         border-radius: 5px;
         outline-style: none;
         option {
@@ -456,6 +456,7 @@ section.choose {
       font-size: 1.25rem;
       font-weight: bold;
       align-items: center;
+
       .minus {
         width: 30px;
         height: 30px;
@@ -473,11 +474,12 @@ section.choose {
         background-color: #fff;
       }
 
-      input {
+      input.num {
         width: 100px;
-        height: 30px;
+        min-height: 30px;
         text-align: center;
         outline-style: none;
+        margin: 0;
       }
     }
   }

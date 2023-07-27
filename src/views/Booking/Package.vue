@@ -6,6 +6,9 @@ $secondary2: #b3cee2;
 * {
   box-sizing: border-box;
 }
+.container {
+  @include layout(1200);
+}
 
 section.title {
   text-align: center;
@@ -99,6 +102,9 @@ section.spot-filter {
         background-color: transparent;
         border: none;
         margin: 0 3rem;
+        i {
+          margin-left: 0.25rem;
+        }
       }
     }
   }
@@ -140,10 +146,6 @@ section.package-list {
         padding: 0.1rem 0;
         font-size: 1.25rem;
       }
-
-      // p {
-      //   padding: 0.25rem 0;
-      // }
     }
 
     .price {
@@ -157,14 +159,16 @@ section.package-list {
         font-size: 1.25rem;
         margin: auto 0 1rem 0;
       }
-
-      span {
-        background-color: #fbc756;
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #012840;
-        border-radius: 10px;
-        border: 1px solid #012840;
+      p {
+        span {
+          background-color: #fbc756;
+          padding: 0.5rem 0.75rem;
+          font-size: 1.5rem;
+          font-weight: bold;
+          color: #012840;
+          border-radius: 10px;
+          border: 1px solid #012840;
+        }
       }
     }
 
@@ -186,6 +190,46 @@ section.package-list {
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  section.package-list {
+    .package-item {
+      flex-wrap: wrap;
+      .img {
+        width: 100%;
+      }
+      .info {
+        width: 100%;
+        padding: 0.25rem;
+        display: flex;
+        flex-direction: column;
+        h3 {
+          width: 100%;
+          font-size: 1.5rem;
+        }
+        .wrap {
+          display: flex;
+          justify-content: space-between;
+          p {
+            width: 75%;
+          }
+        }
+      }
+      .price {
+        position: absolute;
+        right: 0;
+        bottom: 107.5px;
+        flex-direction: row;
+        del {
+          margin: 0.5rem;
+        }
+      }
+    }
+  }
+}
 </style>
 
 <template>
@@ -195,7 +239,7 @@ section.package-list {
   <div class="container">
     <section class="spot-filter">
       <div class="spot-tag">
-        <span>景點篩選</span>
+        <span>景點</span>
         <div class="triangle"></div>
       </div>
       <div class="spot-list">
@@ -203,6 +247,7 @@ section.package-list {
           class="spot-item col-2"
           v-for="(item, index) in spotList"
           :key="index"
+          @click="spot(index)"
         >
           <div class="spot-img">
             <img :src="item.link" alt="" />
@@ -215,10 +260,30 @@ section.package-list {
         <div class="btn-wrap">
           <button
             class="filter"
-            v-for="(item, index) in filterList"
-            :key="index"
+            @click="
+              sortPrice();
+              toggleArrowPrice();
+            "
           >
-            {{ item.name }}
+            行程價格<i :class="arrowTypePrice"></i>
+          </button>
+          <button
+            class="filter"
+            @click="
+              sortTime();
+              toggleArrowTime();
+            "
+          >
+            出發日期<i :class="arrowTypeTime"></i>
+          </button>
+          <button
+            class="filter"
+            @click="
+              sortRemain();
+              toggleArrowRemain();
+            "
+          >
+            剩餘名額<i :class="arrowTypeRemain"></i>
           </button>
         </div>
       </div>
@@ -235,14 +300,18 @@ section.package-list {
           <!-- <img :src="item.link" alt="" /> -->
         </div>
         <div class="info">
-          <h3>{{ item.title }}<br />{{ item.title2 }}</h3>
-          <div class="seat">
-            <Icon type="md-contact" />剩餘<b>{{ item.seat }}</b
-            >個名額
+          <h3 v-html="item.title"></h3>
+          <div class="wrap">
+            <div class="spec">
+              <div class="seat">
+                <Icon type="md-contact" />剩餘<b>{{ item.seat }}</b
+                >個名額
+              </div>
+              <div class="date"><Icon type="md-calendar" />{{ item.date }}</div>
+              <div class="train"><Icon type="md-train" />{{ item.train }}</div>
+            </div>
+            <p>{{ item.info }}</p>
           </div>
-          <div class="date"><Icon type="md-calendar" />{{ item.date }}</div>
-          <div class="train"><Icon type="md-train" />{{ item.train }}</div>
-          <p>{{ item.info }}</p>
         </div>
         <div class="price">
           <del v-if="item.sale">NT${{ item.origin }}</del>
@@ -255,9 +324,13 @@ section.package-list {
                 >{{ item.inner }}</span
               >
             </router-link>
-            </p>
-          </div>
-        <Icon :type="item.iconType" class="heart" @click="toggleHeart(index)" />
+          </p>
+        </div>
+        <Icon
+          :type="item.heartType"
+          class="heart"
+          @click="toggleHeart(index)"
+        />
 
         <div class="sale" v-show="item.sale == true">早鳥優惠中</div>
       </div>
@@ -266,10 +339,15 @@ section.package-list {
 </template>
 
 <script>
-import {GET} from '@/plugin/axios'
+import { GET } from "@/plugin/axios";
 export default {
   data() {
     return {
+      ascending: true,
+      filterResult: [],
+      arrowTypePrice: "fa-solid fa-caret-up",
+      arrowTypeTime: "fa-solid fa-caret-up",
+      arrowTypeRemain: "fa-solid fa-caret-up",
       spotList: [
         {
           name: "高原遺跡",
@@ -319,7 +397,7 @@ export default {
           name: "早鳥優惠",
         },
       ],
-      packageList: []
+      packageList: [],
       // packageList: [
       //   {
       //     title: "探尋島嶼之美，搭乘耀眼的七星豪華列車",
@@ -471,17 +549,106 @@ export default {
     // ---------------------------
     //愛心切換
     toggleHeart(index) {
-      this.packageList[index].iconType =
-        this.packageList[index].iconType === "md-heart-outline"
+      this.packageList[index].heartType =
+        this.packageList[index].heartType === "md-heart-outline"
           ? "md-heart"
           : "md-heart-outline";
     },
+    //升降冪切換arrow
+    toggleArrowPrice() {
+      this.arrowTypePrice =
+        this.arrowTypePrice === "fa-solid fa-caret-up"
+          ? "fa-solid fa-caret-down"
+          : "fa-solid fa-caret-up";
+    },
+    toggleArrowTime() {
+      this.arrowTypeTime =
+        this.arrowTypeTime === "fa-solid fa-caret-up"
+          ? "fa-solid fa-caret-down"
+          : "fa-solid fa-caret-up";
+    },
+    toggleArrowRemain() {
+      this.arrowTypeRemain =
+        this.arrowTypeRemain === "fa-solid fa-caret-up"
+          ? "fa-solid fa-caret-down"
+          : "fa-solid fa-caret-up";
+    },
+    // 出發時間排序
+    sortTime() {
+      this.packageList.sort((a, b) => {
+        if (this.ascending) {
+          return new Date(a.date) - new Date(b.date);
+        } else {
+          return new Date(b.date) - new Date(a.date);
+        }
+      });
+      // 將ascending的值取反，以便下一次調用時改變排序順序
+      this.ascending = !this.ascending;
+      if (this.ascending) {
+        this.arrowTypeTime = "fa-solid fa-caret-up";
+      } else {
+        this.arrowTypeTime = "fa-solid fa-caret-down";
+      }
+    },
+    //原始價格排序
+    sortPrice() {
+      this.packageList.sort((a, b) => {
+        if (this.ascending) {
+          return a.origin - b.origin;
+        } else {
+          return b.origin - a.origin;
+        }
+      });
+      //將ascending的值取反，以便下一次調用時改變排序順序
+      this.ascending = !this.ascending;
+      if (this.ascending) {
+        this.arrowTypePrice = "fa-solid fa-caret-up";
+      } else {
+        this.arrowTypePrice = "fa-solid fa-caret-down";
+      }
+    },
+    //剩餘名額排序
+    sortRemain() {
+      this.packageList.sort((a, b) => {
+        if (this.ascending) {
+          return a.seat - b.seat;
+        } else {
+          return b.seat - a.seat;
+        }
+      });
+      //將ascending的值取反，以便下一次調用時改變排序順序
+      this.ascending = !this.ascending;
+      if (this.ascending) {
+        this.arrowTypeRemain = "fa-solid fa-caret-up";
+      } else {
+        this.arrowTypeRemain = "fa-solid fa-caret-down";
+      }
+    },
+    //還無法作用
+    spot(index) {
+      if (index === 0) {
+        // do something for the first button
+        this.filterResult = this.packageList.map((item) =>
+          item.pass.filter((item) => item.name.includes("高原"))
+        );
+      } else if (index === 1) {
+        // do something for the second button
+      } else if (index === 2) {
+        // do something for the third button
+      } else if (index === 3) {
+        // do something for the fourth button
+      } else if (index === 4) {
+        // do something for the fifth button
+      } else if (index === 5) {
+        // do something for the sixth button
+      }
+    },
   },
   created() {
-      // 取得API
-    GET('/data/packageData.json').then(res => {
-      this.packageList = res
-    })
+    // 取得API
+    GET("/data/packageData.json").then((res) => {
+      this.packageList = res;
+    });
   },
 };
 </script>
