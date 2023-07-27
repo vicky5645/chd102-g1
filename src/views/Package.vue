@@ -8,8 +8,7 @@ $secondary2: #b3cee2;
 }
 
 .container {
-  width: 1200px;
-  margin: auto;
+  @include layout(1200);
 }
 
 section.title {
@@ -104,6 +103,9 @@ section.spot-filter {
         background-color: transparent;
         border: none;
         margin: 0 3rem;
+        i {
+          margin-left: 0.25rem;
+        }
       }
     }
   }
@@ -145,10 +147,6 @@ section.package-list {
         padding: 0.1rem 0;
         font-size: 1.25rem;
       }
-
-      // p {
-      //   padding: 0.25rem 0;
-      // }
     }
 
     .price {
@@ -163,13 +161,16 @@ section.package-list {
         margin: auto 0 1rem 0;
       }
 
-      span {
-        background-color: #fbc756;
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #012840;
-        border-radius: 10px;
-        border: 1px solid #012840;
+      p {
+        span {
+          background-color: #fbc756;
+          padding: 0.5rem 0.75rem;
+          font-size: 1.5rem;
+          font-weight: bold;
+          color: #012840;
+          border-radius: 10px;
+          border: 1px solid #012840;
+        }
       }
     }
 
@@ -191,6 +192,52 @@ section.package-list {
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  section.package-list {
+    .package-item {
+      flex-wrap: wrap;
+      .img {
+        width: 100%;
+      }
+
+      .info {
+        width: 100%;
+        padding: 0.25rem;
+        display: flex;
+        flex-direction: column;
+
+        h3 {
+          width: 100%;
+          font-size: 1.5rem;
+        }
+        .wrap {
+          display: flex;
+          justify-content: space-between;
+
+          p {
+            width: 75%;
+          }
+        }
+      }
+
+      .price {
+        position: absolute;
+        right: 0;
+        bottom: 107.5px;
+
+        flex-direction: row;
+        del {
+          margin: 0.5rem;
+        }
+      }
+    }
+  }
+}
 </style>
 
 <template>
@@ -200,7 +247,7 @@ section.package-list {
   <div class="container">
     <section class="spot-filter">
       <div class="spot-tag">
-        <span>景點篩選</span>
+        <span>景點</span>
         <div class="triangle"></div>
       </div>
       <div class="spot-list">
@@ -208,6 +255,7 @@ section.package-list {
           class="spot-item col-2"
           v-for="(item, index) in spotList"
           :key="index"
+          @click="spot(index)"
         >
           <div class="spot-img">
             <img :src="item.link" alt="" />
@@ -220,10 +268,30 @@ section.package-list {
         <div class="btn-wrap">
           <button
             class="filter"
-            v-for="(item, index) in filterList"
-            :key="index"
+            @click="
+              sortPrice();
+              toggleArrowPrice();
+            "
           >
-            {{ item.name }}
+            行程價格<i :class="arrowTypePrice"></i>
+          </button>
+          <button
+            class="filter"
+            @click="
+              sortTime();
+              toggleArrowTime();
+            "
+          >
+            出發日期<i :class="arrowTypeTime"></i>
+          </button>
+          <button
+            class="filter"
+            @click="
+              sortRemain();
+              toggleArrowRemain();
+            "
+          >
+            剩餘名額<i :class="arrowTypeRemain"></i>
           </button>
         </div>
       </div>
@@ -239,14 +307,18 @@ section.package-list {
           <img :src="item.link" alt="" />
         </div>
         <div class="info">
-          <h3>{{ item.title }}<br />{{ item.title2 }}</h3>
-          <div class="seat">
-            <Icon type="md-contact" />剩餘<b>{{ item.seat }}</b
-            >個名額
+          <h3 v-html="item.title"></h3>
+          <div class="wrap">
+            <div class="spec">
+              <div class="seat">
+                <Icon type="md-contact" />剩餘<b>{{ item.seat }}</b
+                >個名額
+              </div>
+              <div class="date"><Icon type="md-calendar" />{{ item.date }}</div>
+              <div class="train"><Icon type="md-train" />{{ item.train }}</div>
+            </div>
+            <p>{{ item.info }}</p>
           </div>
-          <div class="date"><Icon type="md-calendar" />{{ item.date }}</div>
-          <div class="train"><Icon type="md-train" />{{ item.train }}</div>
-          <p>{{ item.info }}</p>
         </div>
         <div class="price">
           <del v-if="item.sale">NT${{ item.origin }}</del>
@@ -259,7 +331,11 @@ section.package-list {
             >
           </p>
         </div>
-        <Icon :type="item.iconType" class="heart" @click="toggleHeart(index)" />
+        <Icon
+          :type="item.heartType"
+          class="heart"
+          @click="toggleHeart(index)"
+        />
 
         <div class="sale" v-show="item.sale == true">早鳥優惠中</div>
       </div>
@@ -271,6 +347,14 @@ section.package-list {
 export default {
   data() {
     return {
+      ascending: true,
+
+      filterResult: [],
+
+      arrowTypePrice: "fa-solid fa-caret-up",
+      arrowTypeTime: "fa-solid fa-caret-up",
+      arrowTypeRemain: "fa-solid fa-caret-up",
+
       spotList: [
         {
           name: "高原遺跡",
@@ -303,39 +387,21 @@ export default {
         },
       ],
 
-      filterList: [
-        {
-          name: "行程價格",
-        },
-
-        {
-          name: "出發日期",
-        },
-
-        {
-          name: "剩餘名額",
-        },
-
-        {
-          name: "早鳥優惠",
-        },
-      ],
-
       packageList: [
         {
-          title: "探尋島嶼之美，搭乘耀眼的七星豪華列車",
-          title2: "—————「SEVEN STARS ROAMING」",
+          title:
+            "探尋星空之美，搭乘耀眼的七星豪華列車<br>二日遊——「SEVEN STARS EXPRESS」",
+
           link: require("@/assets/images/spot/07.jpg"),
-          seat: 20,
+          seat: 10,
           date: "2025-03-18",
           train: "seven stars",
           sale: false,
-          origin: 36888,
-          price: "NT$36888",
-          inner: "NT$36888",
-
+          origin: 41888,
+          price: "NT$41888",
+          inner: "NT$41888",
           hover: "立即購票",
-          iconType: "md-heart-outline",
+          heartType: "md-heart-outline",
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
           pass: [
             { name: "高原遺跡" },
@@ -346,19 +412,20 @@ export default {
           ],
         },
         {
-          title: "探尋島嶼之美，搭乘尊爵的ROYAL豪華列車",
-          title2: "——————————「ROYAL EXPRESS」",
+          title:
+            "島嶼探索之旅，搭乘尊爵的ROYAL豪華列車<br>二日遊——————「ROYAL EXPRESS」",
+
           link: require("@/assets/images/spot/09.jpg"),
           seat: 20,
           date: "2025-04-18",
           train: "royal",
           sale: false,
-          origin: 41888,
+          origin: 36888,
           price: "NT$36888",
           inner: "NT$36888",
 
           hover: "立即購票",
-          iconType: "md-heart-outline",
+          heartType: "md-heart-outline",
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
           pass: [
             { name: "忘卻之湖" },
@@ -369,19 +436,19 @@ export default {
           ],
         },
         {
-          title: "探尋島嶼之美，搭乘閃耀的GOLDEN豪華列車",
-          title2: "—————————「GOLDEN EXPRESS」",
+          title:
+            "搭乘閃耀的GOLDEN豪華列車放鬆身心一日遊<br>—————————「GOLDEN EXPRESS」",
           link: require("@/assets/images/spot/10.webp"),
-          seat: 20,
+          seat: 35,
           date: "2025-05-18",
           train: "golden",
           sale: true,
           origin: 31888,
           price: "NT$26888",
           inner: "NT$26888",
-
           hover: "立即購票",
-          iconType: "md-heart-outline",
+
+          heartType: "md-heart-outline",
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
           pass: [
             { name: "海底餐廳" },
@@ -390,10 +457,10 @@ export default {
           ],
         },
         {
-          title: "探尋島嶼之美，搭乘閃耀的GOLDEN豪華列車",
-          title2: "—————————「GOLDEN EXPRESS」",
+          title:
+            "搭乘閃耀的GOLDEN豪華列車放鬆身心一日遊<br>—————————「GOLDEN EXPRESS」",
           link: require("@/assets/images/spot/06.webp"),
-          seat: 20,
+          seat: 33,
           date: "2025-06-08",
           train: "golden",
           sale: true,
@@ -402,7 +469,7 @@ export default {
           inner: "NT$26888",
 
           hover: "立即購票",
-          iconType: "md-heart-outline",
+          heartType: "md-heart-outline",
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
           pass: [
             { name: "綠野牧場" },
@@ -411,10 +478,10 @@ export default {
           ],
         },
         {
-          title: "探尋島嶼之美，搭乘耀眼的七星豪華列車",
-          title2: "—————「SEVEN STARS ROAMING」",
+          title:
+            "探尋星空之美，搭乘耀眼的七星豪華列車<br>二日遊——「SEVEN STARS EXPRESS」",
           link: require("@/assets/images/spot/07.jpg"),
-          seat: 20,
+          seat: 35,
           date: "2025-06-18",
           train: "seven stars",
           sale: true,
@@ -423,7 +490,7 @@ export default {
           inner: "NT$31888",
 
           hover: "立即購票",
-          iconType: "md-heart-outline",
+          heartType: "md-heart-outline",
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
           pass: [
             { name: "高原遺跡" },
@@ -434,10 +501,10 @@ export default {
           ],
         },
         {
-          title: "探尋島嶼之美，搭乘尊爵的ROYAL豪華列車",
-          title2: "——————————「ROYAL EXPRESS」",
+          title:
+            "島嶼探索之旅，搭乘尊爵的ROYAL豪華列車<br>二日遊——————「ROYAL EXPRESS」",
           link: require("@/assets/images/spot/09.jpg"),
-          seat: 20,
+          seat: 40,
           date: "2025-07-18",
           train: "royal",
           sale: true,
@@ -446,7 +513,7 @@ export default {
           inner: "NT$31888",
 
           hover: "立即購票",
-          iconType: "md-heart-outline",
+          heartType: "md-heart-outline",
           info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
           pass: [
             { name: "忘卻之湖" },
@@ -469,13 +536,109 @@ export default {
     reset(index) {
       this.packageList[index].inner = this.packageList[index].price;
     },
-    // ---------------------------
+
     //愛心切換
     toggleHeart(index) {
-      this.packageList[index].iconType =
-        this.packageList[index].iconType === "md-heart-outline"
+      this.packageList[index].heartType =
+        this.packageList[index].heartType === "md-heart-outline"
           ? "md-heart"
           : "md-heart-outline";
+    },
+
+    //升降冪切換arrow
+    toggleArrowPrice() {
+      this.arrowTypePrice =
+        this.arrowTypePrice === "fa-solid fa-caret-up"
+          ? "fa-solid fa-caret-down"
+          : "fa-solid fa-caret-up";
+    },
+    toggleArrowTime() {
+      this.arrowTypeTime =
+        this.arrowTypeTime === "fa-solid fa-caret-up"
+          ? "fa-solid fa-caret-down"
+          : "fa-solid fa-caret-up";
+    },
+    toggleArrowRemain() {
+      this.arrowTypeRemain =
+        this.arrowTypeRemain === "fa-solid fa-caret-up"
+          ? "fa-solid fa-caret-down"
+          : "fa-solid fa-caret-up";
+    },
+
+    // 出發時間排序
+    sortTime() {
+      this.packageList.sort((a, b) => {
+        if (this.ascending) {
+          return new Date(a.date) - new Date(b.date);
+        } else {
+          return new Date(b.date) - new Date(a.date);
+        }
+      });
+      // 將ascending的值取反，以便下一次調用時改變排序順序
+      this.ascending = !this.ascending;
+
+      if (this.ascending) {
+        this.arrowTypeTime = "fa-solid fa-caret-up";
+      } else {
+        this.arrowTypeTime = "fa-solid fa-caret-down";
+      }
+    },
+
+    //原始價格排序
+    sortPrice() {
+      this.packageList.sort((a, b) => {
+        if (this.ascending) {
+          return a.origin - b.origin;
+        } else {
+          return b.origin - a.origin;
+        }
+      });
+      //將ascending的值取反，以便下一次調用時改變排序順序
+      this.ascending = !this.ascending;
+
+      if (this.ascending) {
+        this.arrowTypePrice = "fa-solid fa-caret-up";
+      } else {
+        this.arrowTypePrice = "fa-solid fa-caret-down";
+      }
+    },
+    //剩餘名額排序
+    sortRemain() {
+      this.packageList.sort((a, b) => {
+        if (this.ascending) {
+          return a.seat - b.seat;
+        } else {
+          return b.seat - a.seat;
+        }
+      });
+      //將ascending的值取反，以便下一次調用時改變排序順序
+      this.ascending = !this.ascending;
+
+      if (this.ascending) {
+        this.arrowTypeRemain = "fa-solid fa-caret-up";
+      } else {
+        this.arrowTypeRemain = "fa-solid fa-caret-down";
+      }
+    },
+
+    //還無法作用
+    spot(index) {
+      if (index === 0) {
+        // do something for the first button
+        this.filterResult = this.packageList.map((item) =>
+          item.pass.filter((item) => item.name.includes("高原"))
+        );
+      } else if (index === 1) {
+        // do something for the second button
+      } else if (index === 2) {
+        // do something for the third button
+      } else if (index === 3) {
+        // do something for the fourth button
+      } else if (index === 4) {
+        // do something for the fifth button
+      } else if (index === 5) {
+        // do something for the sixth button
+      }
     },
   },
 };

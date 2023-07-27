@@ -2,14 +2,14 @@
 export default {
   data() {
     return {
-      name: "星空探索",
+      name: "探尋星空之美，搭乘耀眼的七星豪華列車二日遊",
       departure: "2025/03/18 9:00",
       back: "2025/03/19 21:00",
       departureSite: "有夠站",
       backSite: "SUPER站",
       startSale: "2025-01-18 12:00",
       count: 1,
-      maxCount: 5,
+      maxCount: 6,
       price: 36888,
       pass: [
         {
@@ -52,7 +52,7 @@ export default {
               number: "3",
               id: "A3",
               isSelected: false,
-              status: "unbooked",
+              status: "booked",
             },
             {
               number: "4",
@@ -130,26 +130,12 @@ export default {
         {
           seat: [
             {
-              id: "A3",
+              id: "B3",
               isSelected: false,
-              status: "unbooked",
+              status: "booked",
             },
             {
-              id: "A4",
-              isSelected: false,
-              status: "unbooked",
-            },
-          ],
-        },
-        {
-          seat: [
-            {
-              id: "A5",
-              isSelected: false,
-              status: "unbooked",
-            },
-            {
-              id: "A6",
+              id: "B4",
               isSelected: false,
               status: "unbooked",
             },
@@ -158,12 +144,26 @@ export default {
         {
           seat: [
             {
-              id: "A7",
+              id: "B5",
               isSelected: false,
               status: "unbooked",
             },
             {
-              id: "A8",
+              id: "B6",
+              isSelected: false,
+              status: "unbooked",
+            },
+          ],
+        },
+        {
+          seat: [
+            {
+              id: "B7",
+              isSelected: false,
+              status: "unbooked",
+            },
+            {
+              id: "B8",
               isSelected: false,
               status: "unbooked",
             },
@@ -199,16 +199,14 @@ export default {
       if (this.count === this.maxCount) return;
       this.count += 1;
     },
-
-    // selected(item) {
-    //   item.isSelected = !item.isSelected;
-    // },
-
-    //選擇的座位變色，能夠選擇的座位數量要和count相同
+    //座位已經被預訂（即 status 為 "booked"），則用戶不應該能夠選擇它
+    //再來判斷能夠選擇的座位數量要和count相同
     selected(item) {
-      const selectedSeats = this.getSelectedSeats();
-      if (selectedSeats.length < this.count || item.isSelected) {
-        item.isSelected = !item.isSelected;
+      if (item.status !== "booked") {
+        const selectedSeats = this.getSelectedSeats();
+        if (selectedSeats.length < this.count || item.isSelected) {
+          item.isSelected = !item.isSelected;
+        }
       }
     },
     getSelectedSeats() {
@@ -219,23 +217,16 @@ export default {
       }, []);
     },
     //-----------------------------------
-
-    //座位已經被預訂（即 status 為 "booked"），則用戶不應該能夠選擇它
-    selected(item) {
-      if (item.status !== "booked") {
-        item.isSelected = !item.isSelected;
-      }
-    },
-    //-----------------------------------
-
     //驗證人數與座位數是否相符
-    validateSelection() {
+    validate() {
       const selectedSeats = this.getSelectedSeats();
-      return selectedSeats.length <= this.count;
+      if (selectedSeats.length === this.count) {
+        return (selectedSeats.length = this.count);
+      }
     },
 
     confirm() {
-      if (this.validateSelection()) {
+      if (this.validate()) {
         // 選擇有效，繼續購票流程
         alert("前往付款頁面");
       } else {
@@ -258,8 +249,8 @@ export default {
       <div class="info-list">
         <p>出發時間：{{ departure }}</p>
         <p>回程時間：{{ back }}</p>
-        <p>起程站：{{ departureSite }}</p>
-        <p>終點站：{{ backSite }}</p>
+        <!-- <p>起程站：{{ departureSite }}</p> -->
+        <!-- <p>終點站：{{ backSite }}</p> -->
         <div class="pass">
           <h3>途經景點:</h3>
           <div class="wrap">
@@ -381,8 +372,7 @@ export default {
   box-sizing: border-box;
 }
 .container {
-  width: 1200px;
-  margin: auto;
+  @include layout(1200);
 }
 
 section.title {
@@ -407,7 +397,9 @@ section.info {
   }
 
   .info-list {
+    padding: 1.25rem 0;
     .pass {
+      margin-top: 1.75rem;
       h3 {
         font-size: 1.25rem;
       }
@@ -443,20 +435,27 @@ section.choose {
       }
 
       select {
-        // font-family: $fontFamily;
         width: 160px;
         height: 40px;
-        line-height: 40px;
+        font-family: $fontFamily;
+
+        font-size: 1.1rem;
+        font-weight: bold;
+        // line-height: 40px;
         border-radius: 5px;
         outline-style: none;
-        font-size: 1.25rem;
+        option {
+          font-family: $fontFamily;
+          font-weight: bold;
+          font-size: 1.1rem;
+        }
       }
     }
     .count {
       display: flex;
       font-size: 1.25rem;
       font-weight: bold;
-
+      align-items: center;
       .minus {
         width: 30px;
         height: 30px;
@@ -511,15 +510,10 @@ section.seat-pic {
         justify-content: center;
         .seat {
           position: relative;
-          // background-color: #fff;
+          cursor: pointer;
           width: 50px;
           height: 65px;
           margin: 0.5rem;
-
-          &:hover {
-            cursor: pointer;
-            background-color: $hoverColor;
-          }
 
           &.booked {
             background-color: #4b5563;
@@ -546,15 +540,10 @@ section.seat-pic {
         justify-content: center;
         align-items: flex-end;
         .seat {
-          // background-color: #fff;
+          cursor: pointer;
           width: 50px;
           height: 65px;
           margin: 0.5rem;
-
-          &:hover {
-            cursor: pointer;
-            background-color: $hoverColor;
-          }
 
           &.booked {
             background-color: #4b5563;
@@ -653,6 +642,56 @@ section.next-step {
       font-size: 1.5rem;
       color: #fff;
     }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  section.choose {
+    .choose-option {
+      padding: 1.5rem;
+      display: flex;
+      justify-content: flex-start;
+    }
+  }
+
+  section.seat-pic {
+    margin: 0.5rem 0;
+
+    height: 1225px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    // position: relative;
+    // aspect-ratio: 3/1;
+    .whole {
+      transform-origin: top left;
+      transform: rotate(90deg) translateY(-450px);
+      width: 1100px;
+      // position: absolute;
+      // top: 0;
+      // left: 0;
+      .seat-area {
+        .num {
+          transform: rotate(-90deg);
+        }
+        .A {
+          transform: rotate(-90deg);
+        }
+
+        .B {
+          transform: rotate(-90deg);
+        }
+      }
+    }
+  }
+
+  section.next-step {
+    margin: 3rem 0;
   }
 }
 </style>

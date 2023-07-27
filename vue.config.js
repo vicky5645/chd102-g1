@@ -15,7 +15,7 @@ module.exports = defineConfig({
         ...options,
         compilerOptions: {
           // 將所有帶 swiper- 的標籤名都視為自定義元素
-          isCustomElement: (tag) => tag.startsWith("swiper-"),
+          // isCustomElement: (tag) => tag.startsWith("swiper-"),
         },
       }));
   },

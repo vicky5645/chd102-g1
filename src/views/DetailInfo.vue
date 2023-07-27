@@ -5,8 +5,7 @@
   box-sizing: border-box;
 }
 .container {
-  width: 1200px;
-  margin: auto;
+  @include layout(1200);
 }
 
 section.title {
@@ -22,18 +21,33 @@ section.title {
     font-weight: bold;
   }
 }
-
-swiper-container.mySwiper {
-  max-width: 1200px;
-  margin: auto;
+.swiper {
+  width: 90%;
+  margin: 0 auto;
+  // height: 90vh;
+  aspect-ratio: 6/5;
+  z-index: 0;
+  border-radius: 10px;
   swiper-slide {
+    // width: 100%;
+    // height: 100%;
     img {
-      margin: 0 auto;
+      // width: 100%;
+      // height: 100%;
       display: block;
-      width: 992px;
-      aspect-ratio: 992/740;
-      object-fit: cover;
+      // object-fit: cover;
     }
+  }
+}
+
+button.swiper-button-prev,
+button.swiper-button-next {
+  img {
+    width: 50px;
+    height: 50px;
+  }
+  &::after {
+    content: "";
   }
 }
 
@@ -187,6 +201,45 @@ section.next-step {
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .swiper {
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+    aspect-ratio: 1/1;
+    z-index: 0;
+    border-radius: 10px;
+    swiper-slide {
+      // width: 100%;
+      // height: 100%;
+      img {
+        // width: 100%;
+        // height: 100%;
+        display: block;
+        // object-fit: cover;
+      }
+    }
+  }
+
+  section.notice {
+    ul {
+      padding: 0.5rem 0;
+
+      li {
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  section.next-step {
+    margin: 3rem 0;
+  }
+}
 </style>
 
 <template>
@@ -196,21 +249,26 @@ section.next-step {
   </section>
 
   <div class="container">
-    <swiper-container
+    <swiper
+      :navigation="{
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }"
+      :loop="true"
+      :modules="modules"
       class="mySwiper"
-      navigation="{
-      true
-    }"
-      loop="true"
-      css-mode="true"
     >
       <swiper-slide v-for="(item, index) in swiperImg" :key="index">
         <img :src="item.link" alt="" />
       </swiper-slide>
-      <!-- 
-    <button class="swiper-button-prev"></button>
-    <button class="swiper-button-next"></button> -->
-    </swiper-container>
+
+      <button class="swiper-button-prev">
+        <img :src="prev" alt="" />
+      </button>
+      <button class="swiper-button-next">
+        <img :src="next" alt="" />
+      </button>
+    </swiper>
 
     <div class="dash"></div>
 
@@ -273,24 +331,44 @@ section.next-step {
 </template>
 
 <script>
+import { Navigation } from "swiper/modules";
+
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from "swiper/vue";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+
 export default {
+  // Import Swiper styles
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
+
   data() {
     return {
+      modules: [Navigation],
+
+      prev: require("@/assets/images/icon/previous.png"),
+      next: require("@/assets/images/icon/next.png"),
+
       swiperImg: [
         {
-          link: require("@/assets/images/spot/03.jpg"),
+          link: require("@/assets/images/detail/detail01.jpg"),
         },
         {
-          link: require("@/assets/images/spot/13.jpg"),
+          link: require("@/assets/images/detail/detail02.jpg"),
         },
         {
-          link: require("@/assets/images/spot/09.jpg"),
+          link: require("@/assets/images/detail/detail03.jpg"),
         },
         {
-          link: require("@/assets/images/spot/11.jpg"),
+          link: require("@/assets/images/detail/detail04.jpg"),
         },
         {
-          link: require("@/assets/images/spot/12.png"),
+          link: require("@/assets/images/detail/detail05.jpg"),
         },
       ],
 
@@ -345,7 +423,7 @@ export default {
         },
         {
           name: "第四站：高原遺跡",
-          desc: "這是一個充滿歷史色彩的神秘之地。隱藏在高山脊梁上的古老遺址，它見證了遠古時代的文明興衰和人類智慧的薪火相傳。這片遺跡位於雄偉壯麗的高原地帶，被廣闊的草原和壯麗的山脈所環繞。當您踏足在這片土地上時，仿佛回到了古代文明的繁華時期。遺跡中的古建築、石碑、雕像和壁畫，展現出當時人們的智慧和藝術才華。您可以仔細觀察著古老的建築結構，感受著歷史的洪流在這裡流轉。",
+          desc: "這是一個充滿歷史色彩的神秘之地。隱藏在高山脊梁上的古老遺址，它見證了遠古時代的文明興衰和人類智慧的薪火相傳。這片遺跡位於雄偉壯麗的高原地帶，被廣闊的草原和壯麗的山脈所環繞。當您踏足在這片土地上時，仿佛回到了古代文明的繁華時期。遺跡中的古建築、石碑、雕像和壁畫，展現出當時人們的智慧和歷史的洪流這流轉。",
           isActive: false,
         },
         {
