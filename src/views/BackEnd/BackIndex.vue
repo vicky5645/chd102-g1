@@ -10,7 +10,7 @@
         class="list-group rounded-1 border border-secondary-subtle"
         style="overflow: hidden"
       >
-        <router-link to="/backend" exact>
+        <!-- <router-link to="/backend" exact>
           <button
             type="button"
             class="list-group-item list-group-item-action"
@@ -18,9 +18,8 @@
           >
             後台首頁
           </button>
-        </router-link>
+        </router-link> -->
 
-        <!-- test -->
         <div class="accordion accordion-flush" id="accordionFlushExample">
           <router-link to="/backend/BackCmsStaff" exact>
             <button
