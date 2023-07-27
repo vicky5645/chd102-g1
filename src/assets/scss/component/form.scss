@@ -1,17 +1,16 @@
-input,select {
-  margin-bottom: 10px;
-  border: 1px solid#a0a0a0;
-  border-radius: 8px;
-  min-height: 44px;
-  /* label/text-16-light */
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 125%;
-  padding: 8px 16px;
-  box-sizing: border-box;
-}
-
 .input-wrap {
+  input,select {
+    margin-bottom: 10px;
+    border: 1px solid#a0a0a0;
+    border-radius: 8px;
+    min-height: 44px;
+    /* label/text-16-light */
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 125%;
+    padding: 8px 16px;
+    box-sizing: border-box;
+  }
   display: flex;
   flex-direction: column;
   gap: 8px;

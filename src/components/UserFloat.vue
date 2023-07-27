@@ -56,7 +56,7 @@ const signOut = function () {
     // 登出
     store.commit('setName', '登入/註冊');
     store.commit('setIsLogin', false); // 使用 commit 來改變狀態
-    router.push('/roaming-orbit');
+    router.push('/about');
 }
 
 // 關閉視窗按鈕

@@ -49,8 +49,10 @@
         </div>
       </div>
       <div class="row bottom-btn">
-        <button type="submit" class="btn primary radius big">確認樣式</button>
-        <span>（送出後不可更改）</span>
+        <router-link to="/user/order">
+          <button type="submit" class="btn primary radius big">確認樣式</button>
+          <span>（送出後不可更改）</span>
+        </router-link>
       </div>
     </div>
   </section>

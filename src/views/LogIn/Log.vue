@@ -332,7 +332,7 @@ export default {
         // loginStatus = true;
         this.$store.commit('setName', this.username); 
         this.$store.commit('setIsLogin', true); // 使用 commit 來改變狀態
-        this.$router.push('/roaming-orbit');
+        this.$router.push('/about');
       } else {
         this.errorMsg = "帳號或密碼輸入錯誤";
       }
