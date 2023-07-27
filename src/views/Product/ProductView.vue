@@ -29,6 +29,13 @@
           <div class="empty" v-show="empty">目前未上架相關商品或已售完</div>
           <div v-for="item, index in productDisplay" :key="item.id" class="col">
             <div class="card">
+              <div class="icon-container" :class="{ showing: addSuccess && index === currentIndex }">
+                <svg class="icon" viewBox="0 0 100 100" width="80" height="80">
+                        <circle class="circle" cx="50" cy="50" r="48"></circle>
+                        <polyline class="check" points="28,53 42,66 74,34"></polyline>
+                    </svg>
+                    <p>成功加入購物車</p>
+              </div>
               <button class="cardFavorite" @click="toggleFavorite(index)">
                 <i :class="favoriteIcon(index)"></i>
               </button>
@@ -65,6 +72,8 @@ export default {
   },
   data() {
     return {
+      addSuccess: false,
+      currentIndex: null,
       //顯示未有相關商品上架的提示
       empty: false,
       //判斷視窗寬度是否大於768px用
@@ -183,7 +192,12 @@ export default {
     },
     addToCart(index) {
       this.$store.commit("addToCart",this.productData[index]);
-      console.log(this.productData[index])
+      console.log(this.productData[index]);
+      this.currentIndex = index;
+      this.addSuccess = true;
+      setTimeout(() => {
+                this.addSuccess = false;
+            }, 800);
     },
   },
   beforeUnmount() {

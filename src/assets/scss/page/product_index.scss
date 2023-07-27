@@ -278,3 +278,59 @@ $topBarheight: 44px;
         }
     }
 }
+
+//成功加入動畫
+.icon-container {
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    padding: 30px 20px;
+    color: $linkColor;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    background: rgba(255, 255, 255, .8);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+
+    .circle,
+    .check {
+        fill: none;
+        stroke: $linkColor;
+        stroke-width: 3;
+    }
+
+    .check {
+        stroke-dasharray: 80 100;
+        stroke-dashoffset: 80;
+    }
+
+    &.showing {
+        opacity: 1;
+        pointer-events: auto;
+
+        .check {
+            animation: check .3s cubic-bezier(0.5, 0, 0.6, 1) forwards .2s;
+        }
+    }
+}
+
+@keyframes check {
+    from { stroke-dashoffset: 80; }
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes circle {
+    from { stroke-dashoffset: -300; }
+    to { stroke-dashoffset: 0; }
+}
