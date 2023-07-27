@@ -57,7 +57,7 @@
         <div class="attractionsSwitch">
           <div
             class="attractionsTag"
-            @click="changeBackground('../assets/images/about/ac01.png')"
+            @click="changeBackground(require('@/assets/images/about/ac01.png'))"
           >
             <h3>銀月山脈</h3>
             <p>
@@ -66,7 +66,7 @@
           </div>
           <div
             class="attractionsTag"
-            @click="changeBackground('../assets/images/about/ac02.png')"
+            @click="changeBackground(require('@/assets/images/about/ac02.png'))"
           >
             <h3>幽谷湖泊</h3>
             <p>
@@ -75,7 +75,7 @@
           </div>
           <div
             class="attractionsTag"
-            @click="changeBackground('../assets/images/about/ac03.png')"
+            @click="changeBackground(require('@/assets/images/about/ac03.png'))"
           >
             <h3>綠野牧場</h3>
             <p>
@@ -84,7 +84,7 @@
           </div>
           <div
             class="attractionsTag"
-            @click="changeBackground('../assets/images/about/ac04.png')"
+            @click="changeBackground(require('@/assets/images/about/ac04.png'))"
           >
             <h3>翠嶺溫泉鄉</h3>
             <p>

@@ -7,7 +7,7 @@
   "mem_addr": "台北市中正區",
   "mem_acc": "wangxm",
   "mem_pwd": "password1",
-  "pattern_file": "/images/avatar1.jpg",
+  "pattern_file": "images/avatar1.jpg",
   "orders": [
     {
       "order_no": 1001,
@@ -61,7 +61,7 @@
       "title": "火車懷錶",
       "price": 1200,
       "isFavorite": true,
-      "image": "/images/img/ProductDetails/p1.png"
+      "image": "images/img/ProductDetails/p1.png"
     },
     {
       "mem_no": 101,
@@ -69,7 +69,7 @@
       "title": "火車叉叉",
       "price": 22.3,
       "isFavorite": true,
-      "image": "/images/online-mall/fork.png"
+      "image": "images/online-mall/fork.png"
     },
     {
       "mem_no": 102,
@@ -77,7 +77,7 @@
       "title": "車車模型",
       "price": 180,
       "isFavorite": true,
-      "image": "/images/online-mall/Train_model.png"
+      "image": "images/online-mall/Train_model.png"
     }
   ],
   "favorite_orders": [
@@ -88,7 +88,7 @@
       "order_status": 1,
       "title": "探尋島嶼之美，搭乘耀眼的七星豪華列車",
       "title2": "—————「SEVEN STARS ROAMING」",
-      "image": "/images/spot/07.jpg",
+      "image": "images/spot/07.jpg",
       "seat": 20,
       "date": "2025-03-18",
       "train": "星光漫遊列車"
@@ -100,7 +100,7 @@
       "order_status": 1,
       "title": "探尋島嶼之美，搭乘尊爵的ROYAL豪華列車",
       "title2": "——————————「ROYAL EXPRESS」",
-      "image": "/images/spot/09.jpg",
+      "image": "images/spot/09.jpg",
       "seat": 20,
       "date": "2025-03-18",
       "train": "none"

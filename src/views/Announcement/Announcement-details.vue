@@ -13,7 +13,10 @@
       </p>
       <h3>{{ airticlesItem.title }}</h3>
 
-      <div class="pic"><img :src="airticlesItem.image" alt="Article Image" /></div>
+      <div class="pic">
+        <Images :imgURL="`${airticlesItem.image}`" :alt="`Article Image`" />
+        <!-- <img :src="airticlesItem.image" alt="Article Image" /> -->
+      </div>
       <p>{{ airticlesItem.content }}</p>
     </div>
   </main>

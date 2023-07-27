@@ -231,7 +231,8 @@ section.package-list {
         :key="index"
       >
         <div class="img">
-          <img :src="item.link" alt="" />
+          <Images :imgURL="`${item.link}`" :alt="``" />
+          <!-- <img :src="item.link" alt="" /> -->
         </div>
         <div class="info">
           <h3>{{ item.title }}<br />{{ item.title2 }}</h3>

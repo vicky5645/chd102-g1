@@ -4,7 +4,7 @@
             <i class="fa-solid fa-xmark"></i>
         </div>
         <div class="link-list">
-            <router-link to="/user/info">
+            <router-link to="/user">
                 <li>
                     <div class="icon-24">
                         <img class="custom-svg" src="@/assets/images/icon/basic/member-login.svg" alt="list-icon">
@@ -43,8 +43,7 @@
 </template>
 
 <script setup>
-
-import { ref, onMounted, defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 
@@ -53,18 +52,7 @@ const props = defineProps(['userStatus']);
 const emit = defineEmits(['closeUser', 'goLoginUser']);
 
 const store = useStore();
-const productData = ref([]);
-let quantity = ref(1);
 const router = useRouter();
-
-// 取得API
-onMounted(() => {
-    fetch('/data/productData.json')
-        .then(res => res.json())
-        .then(json => {
-            productData.value = json;
-        });
-});
 
 const signOut = function () {
     // 登出

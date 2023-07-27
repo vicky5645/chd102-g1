@@ -16,6 +16,7 @@
           <div class="tbody" v-for="item, index in userData.forum" :key="item.id">
             <router-link :to="`/forum`">
               <div class="cradPic">
+                <!-- <Images :imgURL="`${item.image}`" :alt="`${item.title}`" /> -->
                 <img :src="item.image" :alt="item.title">
               </div>
             </router-link>
@@ -38,6 +39,7 @@
             <div class="card">
               <div class="cradPic">
                 <router-link :to="`/forum`">
+                  <!-- <Images :imgURL="`${item.image}`" :alt="`${item.title}`" /> -->
                   <img :src="item.image" :alt="item.title">
                 </router-link>
               </div>
@@ -76,6 +78,7 @@
 </template>
 
 <script>
+import {GET} from '@/plugin/axios'
 export default {
   data() {
     return {
@@ -99,15 +102,11 @@ export default {
     }
   },
   created() {
-    // 頁面剛載入時，將 userData 賦值給 productDisplay，展示初始商品資料
-    // this.productDisplay = this.userData;
-    // 取得API
-    fetch('/data/userData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.userData = json
-        this.updateDisplay()
-      })
+      // 取得API
+    GET('/data/userData.json').then(res => {
+      this.userData = res
+      this.updateDisplay()
+    })
   },
   mounted() {
     // 監聽視窗大小改變事件

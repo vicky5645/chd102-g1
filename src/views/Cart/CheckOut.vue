@@ -51,7 +51,8 @@
                     <div class="orderDetails" v-if="productData.length > 0" v-show="isShow">
                         <div class="orderItem">
                             <div class="orderPic">
-                                <img :src="productData[0].image" alt="">
+                                <Images :imgURL="`${productData[0].image}`" :alt="``" />
+                                <!-- <img :src="productData[0].image" alt=""> -->
                             </div>
                             <div class="orderInfo">
                                 <div>{{ productData[0].title }}</div>
@@ -63,7 +64,8 @@
                         </div>
                         <div class="orderItem">
                             <div class="orderPic">
-                                <img :src="productData[0].image" alt="">
+                                <Images :imgURL="`${productData[0].image}`" :alt="``" />
+                                <!-- <img :src="productData[0].image" alt=""> -->
                             </div>
                             <div class="orderInfo">
                                 <div>{{ productData[0].title }}</div>
@@ -75,7 +77,8 @@
                         </div>
                         <div class="orderItem">
                             <div class="orderPic">
-                                <img :src="productData[0].image" alt="">
+                                <Images :imgURL="`${productData[0].image}`" :alt="``" />
+                                <!-- <img :src="productData[0].image" alt=""> -->
                             </div>
                             <div class="orderInfo">
                                 <div>{{ productData[0].title }}</div>

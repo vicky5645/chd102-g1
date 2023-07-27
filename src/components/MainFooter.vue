@@ -5,7 +5,7 @@
         <div class="left-section">
           <router-link to="/roaming-orbit">
             <div class="logo">
-              <img src="/images/logo/logoBig.png" alt="logo" />
+              <Images :imgURL="'images/logo/logoBig.png'" :alt="'logo'" />
             </div>
           </router-link>
         </div>
@@ -16,7 +16,7 @@
             :to="image.link"
             :key="image.id"
           >
-            <img :src="image.src" :alt="image.alt" />
+          <Images :imgURL="`${image.src}`" :alt="`${image.alt}`" />
           </router-link>
         </div>
 
@@ -83,37 +83,37 @@ export default {
       trvelImages: [
         {
           id: 1,
-          src: "/images/travel/star/star1.jpg",
+          src: "images/travel/star/star1.jpg",
           alt: "star1",
           link: "/online-booking",
         },
         {
           id: 2,
-          src: "/images/travel/lake/lake5.jpg",
+          src: "images/travel/lake/lake5.jpg",
           alt: "lake2",
           link: "/online-booking",
         },
         {
           id: 3,
-          src: "/images/travel/mountain/mountain2.jpg",
+          src: "images/travel/mountain/mountain2.jpg",
           alt: "mountain2",
           link: "/online-booking",
         },
         {
           id: 4,
-          src: "/images/travel/spa/spa8.jpg",
+          src: "images/travel/spa/spa8.jpg",
           alt: "spa8",
           link: "/online-booking",
         },
         {
           id: 5,
-          src: "/images/travel/history/history11.jpg",
+          src: "images/travel/history/history11.jpg",
           alt: "history11",
           link: "/online-booking",
         },
         {
           id: 6,
-          src: "/images/travel/park/park2.jpg",
+          src: "images/travel/park/park2.jpg",
           alt: "park2",
           link: "/online-booking",
         },

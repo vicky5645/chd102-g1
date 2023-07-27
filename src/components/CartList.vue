@@ -8,7 +8,8 @@
                     </button>
                 </div>
                 <div class="item-pic">
-                    <img :src="item.image" alt="">
+                  <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
+                  <!-- <img :src="item.image" :alt="item.title"> -->
                 </div>
             </div>
             <div class="item-info">
@@ -30,6 +31,7 @@
     </div>
 </template>
 <script>
+import {GET} from '@/plugin/axios'
 import { mapGetters } from 'vuex';
 export default {
   data() {
@@ -41,13 +43,11 @@ export default {
     ...mapGetters(['cartList']),
   },
   created() {
-    // 取得API
     this.$store.dispatch("initStorage");
-    fetch('/data/productData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.productData = json;
-      })
+    // 取得API
+    GET('/data/productData.json').then(res => {
+      this.productData = res
+    })
   },
   methods: {
     //增加數量

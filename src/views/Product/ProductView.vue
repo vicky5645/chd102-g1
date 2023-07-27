@@ -37,7 +37,8 @@
               </button>
               <router-link :to="`/productDetail/${item.id}`">
                 <div class="cradPic">
-                  <img :src="item.image" :alt="item.title">
+                  <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
+                  <!-- <img :src="item.image" :alt="item.title"> -->
                 </div>
               </router-link>
               <router-link :to="`/productDetail/${item.id}`">

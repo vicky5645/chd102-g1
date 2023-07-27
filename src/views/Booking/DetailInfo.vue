@@ -206,7 +206,8 @@ section.next-step {
     }" loop="true" css-mode="true">
       <template v-if="stageList">
         <swiper-slide v-for="(item, index) in stageList" :key="index">
-          <img :src="item.spotImage" alt="" />
+          <Images :imgURL="`${item.spotImage}`" :alt="``" />
+          <!-- <img :src="item.spotImage" alt="" /> -->
         </swiper-slide>
       </template>
       <template v-else>

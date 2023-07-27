@@ -13,7 +13,8 @@
         <div class="product_data_left">
 
         <div class="big_pic">
-          <img :src="bigPic" :alt="productDataItem.title">
+          <Images :imgURL="`${bigPic}`" :alt="`${productDataItem.title}`" />
+          <!-- <img :src="bigPic" :alt="productDataItem.title"> -->
         </div>
         <div class="small_pic_list">
           <div
@@ -22,7 +23,8 @@
             class="small_pic"
             @click="changeBigPic(pic)"
           >
-            <img :src="pic" alt="clock" />
+          <Images :imgURL="`${pic}`" :alt="`clock`" />
+            <!-- <img :src="pic" alt="clock" /> -->
           </div>
         </div>
 
@@ -104,7 +106,8 @@
             >
             <div class="product">
               <div class="product_pic">
-                <img :src="product.image" :alt="product.name" />
+                <Images :imgURL="`${product.image}`" :alt="`${product.name}`" />
+                <!-- <img :src="product.image" :alt="product.name" /> -->
               </div>
               <p>{{ product.name }}</p>
             </div>
@@ -161,9 +164,9 @@ export default {
       // 點擊小圖換大圖
       bigPic: "",
       smallPics: [
-        "/images/img/ProductDetails/p2.png",
-        "/images/img/ProductDetails/p3.png",
-        "/images/img/ProductDetails/p4.png"
+        "images/img/ProductDetails/p2.png",
+        "images/img/ProductDetails/p3.png",
+        "images/img/ProductDetails/p4.png"
       ],
 
       // content 區塊切換
@@ -184,35 +187,35 @@ export default {
       allProducts: [
         {
           name: "小黃復古拍立得",
-          image: "/images/img/project/1.jpg",
+          image: "images/img/project/1.jpg",
         },
         {
           name: "泥漿去角質霜",
-          image: "/images/img/project/2.jpg",
+          image: "images/img/project/2.jpg",
         },
         {
           name: "真的皮的復古皮鞋",
-          image: "/images/img/project/3.jpg",
+          image: "images/img/project/3.jpg",
         },
         {
           name: "大地色包包",
-          image: "/images/img/project/4.jpg",
+          image: "images/img/project/4.jpg",
         },
         {
           name: "可站立復古拍立得(黑)",
-          image: "/images/img/project/5.jpg",
+          image: "images/img/project/5.jpg",
         },
         {
           name: "森林系後背包",
-          image: "/images/img/project/6.jpg",
+          image: "images/img/project/6.jpg",
         },
         {
           name: "可站立復古拍立得(白)",
-          image: "/images/img/project/7.jpg",
+          image: "images/img/project/7.jpg",
         },
         {
           name: "青春活力勾勾籃球鞋",
-          image: "/images/img/project/8.jpg",
+          image: "images/img/project/8.jpg",
         },
       ],
       currentProducts: [],

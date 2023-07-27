@@ -66,7 +66,7 @@
         <template v-slot:slotfooter>
           <div class="link-list">
             <template v-if="isLogin">
-              <router-link to="/user/info">
+              <router-link to="/user">
                 <li>
                   <div class="icon-24">
                     <img class="custom-svg" src="@/assets/images/icon/basic/member-login.svg" alt="list-icon" />

@@ -26,7 +26,10 @@
 
     <template v-if="filteredArticles.length">
       <div v-for="article in filteredArticles" :key="article.id" class="article_card">
-        <div class="pic"><img :src="article.image" alt="Article Image" /></div>
+        <div class="pic">
+          <Images :imgURL="`${article.image}`" :alt="`Article Image`" />
+          <!-- <img :src="article.image" alt="Article Image" /> -->
+        </div>
         <div class="article_card_txt">
           <p class="type" :class="article.type === '重要' ? 'important' : 'normal'">
             {{ article.type }} <span>{{ article.date }}</span>

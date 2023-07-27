@@ -24,7 +24,8 @@
           <div class="card">
             <router-link :to="`/productDetail/${item.id}`">
               <div class="cradPic">
-                <img :src="item.image" :alt="item.title">
+                <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
+                <!-- <img :src="item.image" :alt="item.title"> -->
               </div>
             </router-link>
             <div class="content">
@@ -58,7 +59,8 @@
           <div class="card">
             <router-link :to="`/booking-info2/${item.id}`">
               <div class="cradPic">
-                <img :src="item.image" :alt="item.title">
+                <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
+                <!-- <img :src="item.image" :alt="item.title"> -->
               </div>
             </router-link>
             <div class="content">
@@ -100,6 +102,7 @@
   </div>
 </template>
 <script>
+import {GET} from '@/plugin/axios'
 export default {
   data() {
     return {
@@ -121,15 +124,11 @@ export default {
     }
   },
   created() {
-    // 頁面剛載入時，將 userData 賦值給 productDisplay，展示初始商品資料
-    // this.productDisplay = this.userData;
-    // 取得API
-    fetch('/data/userData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.userData = json
-        this.updateDisplay()
-      })
+      // 取得API
+    GET('/data/userData.json').then(res => {
+      this.userData = res
+      this.updateDisplay()
+    })
   },
   mounted() {
     // 監聽視窗大小改變事件
