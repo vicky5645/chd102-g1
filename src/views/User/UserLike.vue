@@ -57,7 +57,7 @@
         </template>
         <template v-else-if="checkedItem == '行程'">
           <div class="card">
-            <router-link :to="`/booking-info2/${item.id}`">
+            <router-link :to="`/booking-info/${item.id}`">
               <div class="cradPic">
                 <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
                 <!-- <img :src="item.image" :alt="item.title"> -->
