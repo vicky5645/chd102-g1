@@ -55,25 +55,37 @@
     <div class="container">
       <div class="introWrapper">
         <div class="attractionsSwitch">
-          <div class="attractionsTag" @click="changeBackground(require('@/assets/images/about/ac01.png'))">
+          <div
+            class="attractionsTag"
+            @click="changeBackground(require('@/assets/images/about/ac01.png'))"
+          >
             <h3>銀月山脈</h3>
             <p>
               「在銀色的月光下，銀月山脈的山峰如同夢境一般美麗，帶您走進如詩如畫的世界。」
             </p>
           </div>
-          <div class="attractionsTag" @click="changeBackground(require('@/assets/images/about/ac02.png'))">
+          <div
+            class="attractionsTag"
+            @click="changeBackground(require('@/assets/images/about/ac02.png'))"
+          >
             <h3>幽谷湖泊</h3>
             <p>
               「幽谷湖泊的寧靜美麗如同鏡子般反映著天空，讓您在其中找到心靈的寧靜與安慰。」
             </p>
           </div>
-          <div class="attractionsTag" @click="changeBackground(require('@/assets/images/about/ac03.png'))">
+          <div
+            class="attractionsTag"
+            @click="changeBackground(require('@/assets/images/about/ac03.png'))"
+          >
             <h3>綠野牧場</h3>
             <p>
               「在綠野牧場上，感受自然的和諧與寧靜，享受陽光下的悠閒時光。」
             </p>
           </div>
-          <div class="attractionsTag" @click="changeBackground(require('@/assets/images/about/ac04.png'))">
+          <div
+            class="attractionsTag"
+            @click="changeBackground(require('@/assets/images/about/ac04.png'))"
+          >
             <h3>翠嶺溫泉鄉</h3>
             <p>
               「翠嶺溫泉鄉的熱泉如同大自然的禮物，帶給您身心的舒適與放鬆。」
@@ -136,10 +148,6 @@ export default {
   &:has(.trainTag) {
     height: 100%;
   }
-}
-
-.row>* {
-  // max-width: 1200px;
 }
 
 /* intro */
@@ -351,4 +359,5 @@ export default {
       margin-bottom: 8px;
     }
   }
-}</style>
+}
+</style>
