@@ -1,6 +1,14 @@
 <template>
-  <CartFloat :cartStatus="cartStatus" @closeCart="cartStatus = false" @goCartInfo="goCartInfo" />
-  <UserFloat :userStatus="userStatus" @closeUser="userStatus = false" @goLoginUser="goLoginUser" />
+  <CartFloat
+    :cartStatus="cartStatus"
+    @closeCart="cartStatus = false"
+    @goCartInfo="goCartInfo"
+  />
+  <UserFloat
+    :userStatus="userStatus"
+    @closeUser="userStatus = false"
+    @goLoginUser="goLoginUser"
+  />
   <header>
     <nav>
       <router-link to="/roaming-orbit">
@@ -36,7 +44,12 @@
         </router-link>
       </template>
       <!-- 自適應側邊攔區塊 -->
-      <div id="menu-switch" class="ham" :class="{ active: openSidebar }" @click="toggleSidebar">
+      <div
+        id="menu-switch"
+        class="ham"
+        :class="{ active: openSidebar }"
+        @click="toggleSidebar"
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -67,21 +80,37 @@
               <router-link to="/user">
                 <li>
                   <div class="icon-24">
-                    <img class="custom-svg" src="@/assets/images/icon/basic/member-login.svg" alt="list-icon" />
+                    <img
+                      class="custom-svg"
+                      src="@/assets/images/icon/basic/member-login.svg"
+                      alt="list-icon"
+                    />
                   </div>
                   <span>Hello, {{ $store.state.name }}</span>
-                  <img class="custom-svg" src="@/assets/images/icon/basic/settings.svg" alt="settings-icon" />
+                  <img
+                    class="custom-svg"
+                    src="@/assets/images/icon/basic/settings.svg"
+                    alt="settings-icon"
+                  />
                 </li>
               </router-link>
               <router-link to="/user/order">
                 <li>
-                  <img class="custom-svg" src="@/assets/images/icon/basic/list.svg" alt="list-icon" />
+                  <img
+                    class="custom-svg"
+                    src="@/assets/images/icon/basic/list.svg"
+                    alt="list-icon"
+                  />
                   <span>訂單管理</span>
                 </li>
               </router-link>
               <router-link to="/user/forum">
                 <li>
-                  <img class="custom-svg" src="@/assets/images/icon/basic/message_writing.svg" alt="message_writing" />
+                  <img
+                    class="custom-svg"
+                    src="@/assets/images/icon/basic/message_writing.svg"
+                    alt="message_writing"
+                  />
                   <span>論壇訊息</span>
                 </li>
               </router-link>
