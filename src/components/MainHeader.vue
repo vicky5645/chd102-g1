@@ -41,7 +41,7 @@
         <span></span>
         <span></span>
       </div>
-      <MainSidebar :sidebarOpen="openSidebar" @close="menuclose">
+      <MainSidebar :sidebarOpen="openSidebar">
         <template v-slot:slotheader>
           <div class="link-list">
             <router-link to="/about">
@@ -161,10 +161,10 @@ export default {
     toggleSidebar() {
       this.openSidebar = !this.openSidebar;
     },
-    menuclose() {
-      console.log("父層close");
-      this.openSidebar = false;
-    },
+    // menuclose() {
+    //   console.log("父層close");
+    //   this.openSidebar = false;
+    // },
     // 購物車選單
     toggleCart() {
       this.cartStatus = !this.cartStatus;

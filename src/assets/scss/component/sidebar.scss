@@ -12,11 +12,11 @@
   height: 100vh;
   overflow-y: auto;
   right: 0;
-  transform: translateX(15rem);
+  transform: translateX(0);
   top: 0;
   z-index: 1;
   background-color: #fff;
-  transition: all 1s ease-in-out;
+  transition: all .5s ease-in-out;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -24,11 +24,11 @@
   background-color: map-get($BrandColors, Primary);
   @include pad {
     display: none;
-    transform: translateX(15rem);
+    // transform: translateX(15rem);
   }
   &.active {
     padding-top: 60px;
-    transform: translateX(0);
+    // transform: translateX(0);
   }
 
 
