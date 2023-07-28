@@ -13,10 +13,10 @@
               在銀光閃爍的月夜中，我們將帶您從綠野牧場出發，經過景觀公園，最終到達神秘的銀月山脈，讓您在浪漫之旅中享受自然的獨特魅力。
             </p>
             <div class="moreInfo">
-              <a href="#">查看更多</a>
-              <a href="#">
+              <router-link to="/itinerary-intro">查看更多</router-link>
+              <router-link to="/itinerary-intro">
                 <img src="#" alt="" />
-              </a>
+              </router-link>
             </div>
           </div>
           <div class="introCard">
@@ -25,10 +25,10 @@
               從幽谷湖泊出發，穿越壯觀的亞瑟山口，最後抵達紅葉村，我們將帶您體驗湖光山色中的奇幻之旅，感受大自然的絢爛多彩。
             </p>
             <div class="moreInfo">
-              <a href="#">查看更多</a>
-              <a href="#">
+              <router-link to="/itinerary-intro">查看更多</router-link>
+              <router-link to="/itinerary-intro">
                 <img src="#" alt="" />
-              </a>
+              </router-link>
             </div>
           </div>
           <div class="introCard">
@@ -37,10 +37,10 @@
               從生機勃勃的景觀公園出發，經過翠嶺溫泉鄉，到達神秘的海底餐廳，帶您進行一場驚險刺激的冒險之旅，讓您深入探索自然之美。
             </p>
             <div class="moreInfo">
-              <a href="#">查看更多</a>
-              <a href="#">
+              <router-link to="/itinerary-intro">查看更多</router-link>
+              <router-link to="/itinerary-intro">
                 <img src="#" alt="" />
-              </a>
+              </router-link>
             </div>
           </div>
         </div>
@@ -80,9 +80,13 @@
             </p>
           </div>
           <div class="moreAttractioins">
+<<<<<<< HEAD
           <router-link to="/Attractions">
               查看更多景點
           </router-link>
+=======
+            <router-link to="/Attractions">查看更多景點</router-link>
+>>>>>>> MattDev
           </div>
         </div>
       </div>
