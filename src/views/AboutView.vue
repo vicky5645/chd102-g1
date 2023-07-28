@@ -148,10 +148,6 @@ export default {
   }
 }
 
-.row > * {
-  // max-width: 1200px;
-}
-
 /* intro */
 
 .intorBanner {

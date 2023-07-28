@@ -533,8 +533,7 @@ export default {
 
   .ItineraryDetail2 {
     margin-top: 40px;
-    .ItineraryTxt {
-    }
+
     .ItineraryMix {
       margin-top: 40px;
 
