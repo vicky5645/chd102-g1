@@ -37,11 +37,11 @@
             <div class="card">
               <!-- 手機版卡片，訂單編號顯示位置 -->
               <template v-if="!isShow">
-                <div class="label">
+                <div class="label show-mobile">
                   訂單編號:
                   <span>{{ item.order_no }}</span>
                 </div>
-                <div class="label">
+                <div class="label show-mobile">
                   訂購日期:
                   <span>{{ item.order_date }}</span>
                 </div>
@@ -57,11 +57,11 @@
                     <div class="des-text">
                       <!-- 桌機版卡片，訂單編號顯示位置 -->
                       <template v-if="isShow">
-                        <div class="label">
+                        <div class="label hidden-mobile">
                           訂單編號:
                           <span>{{ item.order_no }}</span>
                         </div>
-                        <div class="label">
+                        <div class="label hidden-mobile">
                           訂購日期:
                           <span>{{ item.order_date }}</span>
                         </div>

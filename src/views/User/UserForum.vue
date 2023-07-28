@@ -38,8 +38,7 @@
             <div class="card">
               <div class="cradPic">
                 <router-link :to="`/forum`">
-                  <!-- <Images :imgURL="`${item.image}`" :alt="`${item.title}`" /> -->
-                  <img :src="item.image" :alt="item.title">
+                  <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
                 </router-link>
               </div>
               <div class="content">
