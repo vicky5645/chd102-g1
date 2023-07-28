@@ -80,13 +80,9 @@
             </p>
           </div>
           <div class="moreAttractioins">
-<<<<<<< HEAD
           <router-link to="/Attractions">
               查看更多景點
           </router-link>
-=======
-            <router-link to="/Attractions">查看更多景點</router-link>
->>>>>>> MattDev
           </div>
         </div>
       </div>
