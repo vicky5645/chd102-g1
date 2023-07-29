@@ -42,6 +42,9 @@
               <button class="cardCart" @click="addToCart(index)">
                 <i :class="goodsBtn.cart.i"></i>
               </button>
+              <div class="hot-tag" v-if="item.hot">
+                <span>HOT</span>
+              </div>
               <router-link :to="`/productDetail/${item.id}`">
                 <div class="cradPic">
                   <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
