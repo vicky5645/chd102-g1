@@ -150,7 +150,7 @@ export default {
         { id: 5, content: "線上訂票", link: "/online-booking" },
         { id: 6, content: "會員專區", link: "/login" },
 
-        { id: 2 - 1, content: "行程介紹", link: "/link1" },
+        { id: 2 - 1, content: "行程介紹", link: "/Attractions" },
         { id: 2 - 2, content: "所有公告", link: "/announcements" },
         { id: 2 - 3, content: "所有論壇", link: "/forum" },
         { id: 2 - 4, content: "購物商城", link: "/online-mall" },
@@ -158,11 +158,11 @@ export default {
         { id: 2 - 6, content: "登入", link: "/login" },
 
         { id: 3 - 1, content: "景點介紹", link: "/Attractions" },
-        { id: 3 - 2, content: "", link: "/link2" },
-        { id: 3 - 3, content: "", link: "/link3" },
-        { id: 3 - 4, content: "", link: "/link4" },
-        { id: 3 - 5, content: "", link: "/link5" },
-        { id: 3 - 6, content: "", link: "/link6" },
+        { id: 3 - 2, content: "", link: "/Attractions" },
+        { id: 3 - 3, content: "", link: "/Attractions" },
+        { id: 3 - 4, content: "", link: "/Attractions" },
+        { id: 3 - 5, content: "", link: "/Attractions" },
+        { id: 3 - 6, content: "", link: "/Attractions" },
 
         { id: 4 - 1, content: "小火車介紹", link: "/about" },
         { id: 4 - 2, content: "", link: "/about" },
