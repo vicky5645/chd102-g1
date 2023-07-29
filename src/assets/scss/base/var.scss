@@ -1,7 +1,8 @@
 //變數
 $color : #333; //color 
 $margin : 10px 20px; // list
-// $padding : null; // null
+//預設基礎
+$space: 8px;
 
 .box_default {
    @if $color {
