@@ -204,8 +204,13 @@
         </h1>
         <div class="pie_chart">
           <div class="chart_pic">
-            <lottie-player autoplay loop mode="normal" src="/data/travel_cus.json" style="width: 320px">
-            </lottie-player>
+            <template v-if="!travelData">
+              沒有撈到資料喔!
+            </template>
+            <template v-else>
+              <lottie-player autoplay loop mode="normal" :src="travelData" style="width: 320px">
+              </lottie-player>
+            </template>
 
           </div>
           <div class="return_rate">
@@ -253,6 +258,7 @@
 </template>
 <script>
 
+
 import Weather from '@/components/HomeWeather.vue';
 
 import "@lottiefiles/lottie-player";
@@ -272,6 +278,7 @@ export default {
   },
   data() {
     return {
+      travelData: "./data/travel_cus.json",
       about_device_switch: true,
       pic_settime_name: null,
       type_settime_name: null,

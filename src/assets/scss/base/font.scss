@@ -7,7 +7,79 @@ $h1 : 48px;
 $h2 : 32px;
 $h3 : 24px;
 $h4 : 20px;
-$label : 16px;
-$caption : 13px;
 $body : 18px;
+$label : 16px;
 $sm-font : 14px;
+$caption : 13px;
+
+.h1, .h2, .h3, .h4 {
+  color: map-get($GrayColors, Secondary1)
+}
+
+.text {
+  /* body/text-18-regular */
+  font-size: $body;
+  font-weight: 400;
+  line-height: 34px; /* 188.889% */
+  letter-spacing: -0.18px;
+  &.bold {
+    /* body/text-18-md */
+    font-weight: 500;
+  }
+}
+
+.h1 {
+  font-size: $h1;
+  line-height: 56px;
+}
+.h2 {
+  /* Header/<h2>-md */
+  font-size: $h2; /* $h2 : 32px; */
+  font-weight: 500;
+  line-height: 36px; /* 112.5% */
+}
+.h3 {
+  /* Header/<h3>-md */
+  font-size: $h3; /* $h3 : 24px; */
+  font-weight: 400;
+  line-height: 28px; /* 116.667% */
+  letter-spacing: -0.48px;
+}
+.h4 {
+  /* table/text-16-regular */
+  font-size: $h4; /* $h4 : 20px; */
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  letter-spacing: -0.16px;
+}
+.label {
+  /* label/text-16-light */
+  font-size: $label; /* $label : 16px; */
+  font-weight: 300;
+  line-height: 20px; /* 125% */
+  &.regular {
+    /* label/text-16-regular */
+    font-weight: 400;
+  }
+  &.bold {
+    /* label/text-16-md */
+    font-weight: 500;
+  }
+}
+.caption {
+  /* caption/regular */
+  font-size: $caption;
+  font-weight: 400;
+  line-height: 20px; /* 153.846% */
+  &.bold {
+    /* caption/bold */
+    font-weight: 500;
+  }
+}
+
+.clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
