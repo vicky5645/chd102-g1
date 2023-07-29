@@ -41,7 +41,6 @@
 
               </div>
               <div class="card-bottom">
-                <hr>
                 <div class="btn-space">
                   <button type="submit" class="btn primary radius">
                     <span>立即訂購</span>
@@ -83,7 +82,6 @@
 
               </div>
               <div class="card-bottom">
-                <hr>
                 <div class="btn-space">
                   <button type="submit" class="btn primary radius">
                     <span>立即訂購</span>

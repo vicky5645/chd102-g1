@@ -76,7 +76,6 @@
                   </div>
                 </div>
                 <div class="card-bottom">
-                  <hr>
                   <div class="btn-space">
                     <router-link :to="`/productDetail/${item.id}`">
                       <button type="submit" class="btn other radius">詳細</button>
@@ -122,7 +121,6 @@
 
                 </div>
                 <div class="card-bottom">
-                  <hr>
                   <div class="btn-space">
                     <button type="submit" class="btn other radius">詳細</button>
                     <button type="submit" class="btn primary radius">聯絡客服</button>

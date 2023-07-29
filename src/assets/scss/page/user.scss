@@ -27,6 +27,9 @@
   line-height: 24px;
   letter-spacing: -0.16px;
 }
+@mixin hr ($top, $width: 1px) {
+  border-#{$top}: $width solid map-get($BrandColors, Secondary2);
+}
 
 .icon-24 {
   @include size(24px);
@@ -52,6 +55,7 @@
   .categoryBtn {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
   }
   .categoryItem {
@@ -60,8 +64,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 16px;
-      min-height: 44px;
+      padding: 0 $space * 2;
+      min-height: $space * 5;
     }
   }
   >aside{
@@ -172,6 +176,7 @@
           display: grid;
           flex-direction: column;
           gap: $space * 2;
+          width: 100%;
           overflow: hidden;
           @include pad {
             display: grid;
@@ -201,6 +206,7 @@
               height: 100%;
               flex-direction: column;
               height: fit-content;
+              @include hr (bottom);
               @include pad {
                 flex-direction: row;
                 height: 100%;
@@ -224,7 +230,7 @@
                   justify-content: flex-end;
                   color: map-get($BrandColors, Primary);
                   white-space: nowrap;
-                  border-top: 2px solid map-get($BrandColors, Secondary2);
+                  border-top: 1px solid map-get($BrandColors, Secondary2);
                   padding-top: $space;
                   @include pad {
                     border-top: 0;
@@ -282,7 +288,7 @@
           }
           .tbody {
             min-height: 44px;
-            border-bottom: 2px solid  map-get($BrandColors, Secondary2);
+            @include hr(bottom, 2px);
             > span , .btn-space{
               display: flex;
               align-items: center;
@@ -315,7 +321,8 @@
     }
     hr {
       width: 100%;
-      border: 1px solid map-get($BrandColors, Secondary2);
+      @include hr (top);
+      @include hr (bottom);
     }
   }
   /* 定義過渡效果 */

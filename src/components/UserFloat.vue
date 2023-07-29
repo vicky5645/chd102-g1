@@ -77,8 +77,9 @@ const handleLogout = () => {
     background-color: transparent;
     width: 100vw;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
-    left: 0;
+    left: 10;
+    z-index: 9;
 }
 </style>
