@@ -99,24 +99,24 @@ export default {
           i: "fa-solid fa-cart-shopping"
         }
       },
-      breadCrumbs: [
-        {
-          index: "Goods",
-          link: "index.html",
-          color: "color:#9CA3AF;"
-        },
-        {
-          index: "Detail",
-          link: "detail.html",
-          color: "color:#9CA3AF;"
-        },
-        {
-          index: "Pricing",
-          link: "pricing.html",
-          color: "color:#F29C50;"
-        }
-      ],
-      tabActive: 1,
+      // breadCrumbs: [
+      //   {
+      //     index: "Goods",
+      //     link: "index.html",
+      //     color: "color:#9CA3AF;"
+      //   },
+      //   {
+      //     index: "Detail",
+      //     link: "detail.html",
+      //     color: "color:#9CA3AF;"
+      //   },
+      //   {
+      //     index: "Pricing",
+      //     link: "pricing.html",
+      //     color: "color:#F29C50;"
+      //   }
+      // ],
+      // tabActive: 1,
       // categoryItem: {
       //   1: "所有商品",
       //   2: "熱銷商品",
@@ -166,7 +166,7 @@ export default {
         console.log(typeof this.productDisplay)
         return this.productDisplay;
       } else if (this.categoryItem[index].type === '熱銷商品') {
-        this.productDisplay = this.productData.filter(item => item.hot === true)
+        this.productDisplay = this.productData.filter(item => item.hot).concat(this.productData.filter(item => !item.hot));
         return this.productDisplay;
       }
       this.productDisplay = this.productData.filter(item => item.type === this.categoryItem[index].type);
