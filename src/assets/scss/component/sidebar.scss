@@ -21,11 +21,11 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
-  background-color: map-get($BrandColors, Primary);
-  @include pad {
-    display: none;
-    // transform: translateX(15rem);
-  }
+  // background-color: map-get($BrandColors, Primary);
+  // @include pad {
+  //   display: none;
+  //   // transform: translateX(15rem);
+  // }
   &.active {
     padding-top: 60px;
     // transform: translateX(0);
@@ -49,11 +49,8 @@
 
       &:hover,
       &:active {
-        background-color: map-get($BrandColors, Secondary1);;
-      }
-
-      &:hover {
-        color: #fff;
+        // background-color: map-get($BrandColors, Secondary1);
+        color: $hoverColor;
       }
     }
 

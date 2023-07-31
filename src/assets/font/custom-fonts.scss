@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "kiwi";
+  src: url("@/assets/font/KiwiMaru-Regular.ttf"); /* 字体文件的路径，根据实际情况更改 */
+  font-weight: 400; /* 定义此字体为普通字重 */
+}
+
+@font-face {
+  font-family: "kiwi";
+  src: url("@/assets/font/KiwiMaru-Medium.ttf");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "kiwi";
+  src: url("@/assets/font/KiwiMaru-Light.ttf");
+  font-weight: 300;
+}

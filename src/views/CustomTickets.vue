@@ -120,13 +120,13 @@ export default {
       this.position.x = Math.min(Math.max(iconX, - iconWidth / 2), containerWidth - iconWidth / 2);
       this.position.y = Math.min(Math.max(iconY, -iconHeight / 2), containerHeight - iconHeight / 2);
 
-      console.log('滑鼠事件: X , Y', this.position.x, this.position.y,);
-      console.log(`pagex : ${pagex}, pagey : ${pagey}`)
-      console.log(`iconX : ${iconX}, iconY : ${iconY}`)
-      console.log(`offsetX ${event.offsetX}`)
-      console.log(`offsetY ${event.offsetY}`)
-      console.log(`iconWidth ${iconWidth}`)
-      console.log(`iconHeight ${iconHeight}`)
+      // console.log('滑鼠事件: X , Y', this.position.x, this.position.y,);
+      // console.log(`pagex : ${pagex}, pagey : ${pagey}`)
+      // console.log(`iconX : ${iconX}, iconY : ${iconY}`)
+      // console.log(`offsetX ${event.offsetX}`)
+      // console.log(`offsetY ${event.offsetY}`)
+      // console.log(`iconWidth ${iconWidth}`)
+      // console.log(`iconHeight ${iconHeight}`)
 
     },
   },

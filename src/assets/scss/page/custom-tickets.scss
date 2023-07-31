@@ -120,7 +120,7 @@ $ani-bg: ani-namecard;
     }
     .post-box {
       overflow: hidden;
-      @include size(620px, 400px);
+      @include size(620px, auto);
       aspect-ratio: 620 / 400;
       border-radius: 10px;
       background-color: #fff;

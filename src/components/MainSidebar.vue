@@ -5,6 +5,7 @@
     <slot name="slotheader"></slot>
     <slot name="slotfooter"></slot>
   </div>
+  <!-- <div class="userPageMask" v-show="userStatus" @click="closeUser"></div> -->
 </transition>
 </template>
 

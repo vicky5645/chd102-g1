@@ -8,26 +8,28 @@ button {
   font-size: $sm-font;
   line-height: 20px; /* 142.857% */
   letter-spacing: -0.14px;
+  max-height: 48px;
 }
 @mixin nl-btn {
   /* label/text-16-md */
   font-size: $label;
   line-height: 20px; /* 125% */
+  padding: $space * 2 $space * 3;
+  max-height: 52px;
 }
 @mixin md-btn {
   /* body/text-18-md */
   font-size: $body;
   line-height: 34px; /* 188.889% */
   letter-spacing: -0.18px;
+  max-height: 70px;
 }
 
 .btn {
   border: 0;
-  padding: 0.6em 1.4em;
+  padding: 1em 1.5em;
   text-align: center;
   user-select: none;
-  // font-family: $fontFamily;
-  // font-size: $fontSize;
   @include sm-btn;
   cursor: pointer;
   @include pad {
@@ -38,8 +40,6 @@ button {
   }
   &.big {
     @include md-btn;
-    width: 185px;
-    height: 70px;
   }
   &.primary {
     background-color: map-get($BrandColors, Primary);

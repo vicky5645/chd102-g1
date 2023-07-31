@@ -10,6 +10,9 @@ import "view-ui-plus/dist/styles/viewuiplus.css";
 // 全域的scss
 import "@/assets/scss/style.scss";
 
+// 字體檔案
+import "@/assets/font/custom-fonts.scss";
+
 // 註冊全域組件
 import Images from "@/components/Images.vue";
 
