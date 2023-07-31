@@ -1,17 +1,48 @@
+/* ChiuKongGothic Heavy */
 @font-face {
-  font-family: "kiwi";
-  src: url("@/assets/font/KiwiMaru-Regular.ttf"); /* 字体文件的路径，根据实际情况更改 */
-  font-weight: 400; /* 定义此字体为普通字重 */
+  font-family: 'ChiuKongGothic';
+  src: url('@/assets/font/ChiuKongGothic-M-Heavy.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
 }
 
+/* ChiuKongGothic Bold */
 @font-face {
-  font-family: "kiwi";
-  src: url("@/assets/font/KiwiMaru-Medium.ttf");
+  font-family: 'ChiuKongGothic';
+  src: url('@/assets/font/ChiuKongGothic-M-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* ChiuKongGothic Medium */
+@font-face {
+  font-family: 'ChiuKongGothic';
+  src: url('@/assets/font/ChiuKongGothic-M-Medium.otf') format('opentype');
   font-weight: 500;
+  font-style: normal;
 }
 
+/* ChiuKongGothic Regular */
 @font-face {
-  font-family: "kiwi";
-  src: url("@/assets/font/KiwiMaru-Light.ttf");
-  font-weight: 300;
+  font-family: 'ChiuKongGothic';
+  src: url('@/assets/font/ChiuKongGothic-M-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
 }
+
+/* ChiuKongGothic Light */
+@font-face {
+  font-family: 'ChiuKongGothic';
+  src: url('@/assets/font/ChiuKongGothic-M-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+/* ChiuKongGothic ExtraLight */
+@font-face {
+  font-family: 'ChiuKongGothic';
+  src: url('@/assets/font/ChiuKongGothic-M-ExtraLight.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+}
+
