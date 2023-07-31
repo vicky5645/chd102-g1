@@ -28,6 +28,8 @@
         max-width: $w + px;
         margin: auto;
         @content;
+
+        
     }
 }
 

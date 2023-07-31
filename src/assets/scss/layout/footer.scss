@@ -1,96 +1,64 @@
+* {
+  // border: 1px solid gold;
+}
+
 #mainFooter {
+  border: 1px solid gold;
 
+  background-color: #012840;
 
-  background-image: url('/public/images/travel/bg3.png');
-  background-size: cover;
-  background-position: center;
-  padding: 40px 0 0 0;
+ 
 
-  color: $bodyBgColor;
-  font-size: $body;
-  font-weight: 400;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-
-
-
-
-
-  // >* {
-  //   outline: 1px solid gold;
-
-  //   &::after {
-  //     content: attr(class);
-  //   }
-  // }
-
-
-
-  .social-links {
+  .left-section-wrap {
 
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
-    i {
-      margin: 4px;
-      padding: 30px;
-      border: 1px dashed map-get($BrandColors, Secondary2);
-      border-radius: 50%;
-      color: map-get($BrandColors, Secondary2);
+    .logo {
 
-      &:hover {
-        transform: scale(1.07);
-        filter: brightness(110%);
-        background-color: #476b7a73;
-
+      img {
+        width: 100px;
       }
+
     }
+
+
+    .logo-lg {
+      display: block;
+    }
+
+    .logo-sm {
+      display: none;
+    }
+
 
   }
 
 
 
-  & img {
+  
 
-    &:hover {
-      transform: scale(1.07);
-      filter: brightness(110%);
-
-    }
-
-  }
-
-
-  .logo {
-
-    img {
-      width: 200px;
-    }
-
-  }
-
-  .contact-info {
+  .left-section-share-wrap{
+    
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    flex-wrap: wrap;
-
-    li {
-      display: flex;
-      padding: 10px;
-    }
-
-    i {
-      padding: 10px;
-    }
-
+    padding: 40px 0px ;
+    
+    
   }
+
+
+  
 
 
   .scroll {
+
     width: 300px;
     padding: 0.8rem 2rem;
-    margin: 20px;
+    margin: 20px 0px;
     background: map-get($BrandColors, Secondary2);
     color: $bodyBgColor;
     font: 24px "Margarine", sans-serif;
@@ -102,50 +70,49 @@
     transition: 0.2s ease-in-out;
     letter-spacing: 2px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
   }
 
-  .SHARE {
-    font-size: $h2;
-    color: map-get($BrandColors, Secondary2);
-  }
 
-  .left-section-wrap {
+  .right-section-wrap {
 
+    img {
 
-
-
-    >.image-row {
-
-      margin: 100px 0;
-      display: grid;
-      grid-template-columns: repeat(2, 2fr);
-      grid-gap: 10px;
-
-      img {
-
-        width: 100px;
-        height: 95px;
-        border-radius: 50%;
-        overflow: hidden;
-        background-size: cover;
-        background-position: center;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-      }
+      width: 100px;
+      height: 95px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     }
-  }
 
-  .footer-table {
 
-    visibility: hidden;
+    & img {
+
+      &:hover {
+        transform: scale(1.07);
+        filter: brightness(110%);
+      }
+
+    }
+
+    .footer-table-head,
+    .footer-table {
+      visibility: hidden;
+    }
+
+
   }
 
   .mainFooter-under-wrap p {
 
+    width: 100%;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.399);
     color: map-get($GrayColors, Gray5);
     line-height: 20px;
-    font-size: 9px;
+    font-size: 12px;
 
     a {
       text-decoration: none;
@@ -154,7 +121,6 @@
 
     }
   }
-
 }
 
 
@@ -163,68 +129,54 @@
 
   #mainFooter {
 
-
-    .left-section-wrap {
-      >.image-row {
-
-        grid-template-columns: repeat(6, 2fr);
-        grid-gap: 10px;
-
-      }
-
-    }
-
-
-
-
-    ul {
+    .mainFooter-top-wrap {
 
       display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
 
-      align-items: center;
-      flex-direction: column;
 
-      li {
-        padding: 10px;
-        list-style: none;
+    .left-section-wrap {
 
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0px 40px 0px 0px;
+
+
+      img.logo-sm {
+
+        width: 220px;
+        padding: 30px 0px;
+
+
+        img.logo-sm::before {
+
+          width: 280px;
+
+        }
 
       }
 
-      i {
-        padding: 10px;
+      .logo-lg {
+        display: none;
       }
 
-    }
+      .logo-sm {
+        display: block;
 
-    .footer-table {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      /* 六欄，每列平均佈局 */
-      grid-template-rows: repeat(4, 50px);
-      /* 四列，每行高度為50px，你可以根據需要調整 */
-      grid-gap: 10px;
-      font-size: $h3;
+      }
+
+
+
+
 
     }
 
-    .table-cell {
-      color:#FFFFFF;
-      font-weight: 600;
-    }
-
-
-    .footer-table {
-      visibility: visible;
-    }
   }
 
-  .mainFooter-top-wrap {
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 
 
 }
