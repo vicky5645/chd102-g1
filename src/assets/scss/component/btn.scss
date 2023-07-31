@@ -33,6 +33,9 @@ button {
   @include pad {
     @include nl-btn;
   }
+  &.small {
+    @include sm-btn;
+  }
   &.big {
     @include md-btn;
     width: 185px;
