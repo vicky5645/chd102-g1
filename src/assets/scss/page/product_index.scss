@@ -168,7 +168,7 @@ $topBarheight: 44px;
             color: #F29C50;
             border: 1px solid #F29C50;;
             border-radius: 7px;
-            left: 15px;
+            right: 15px;
             top: 15px;
             display: flex;
             justify-content: center;
@@ -180,6 +180,29 @@ $topBarheight: 44px;
         .cardCart{
             top: calc($btnSize + 20px);
 
+        }
+        .hot-tag{
+            position: absolute;
+            background-color: $hotColor;
+            border-radius: 0 4px 4px 0;
+            padding: 4px 8px;
+            left: -8px;
+            top: 16px;
+            user-select: none;
+            span{
+                display: block;
+                color: #fff;
+            }
+            &::after{
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                transform: translateY(100%);
+                border-style: solid;
+                border-width: 0 8px 8px 0;
+                border-color: transparent $hotDarkColor transparent transparent;
+            }
         }
         .cradPic{
             border-radius: 7px;
