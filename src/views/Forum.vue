@@ -220,6 +220,14 @@
 
         <div class="modal">
           <div class="modal_title">您確定要檢舉此文章嗎？</div>
+          <input
+            v-model="reportReason"
+            type="text"
+            placeholder="請描述檢舉原因"
+            maxlength="100"
+          />
+          <div v-if="reportError" class="error">{{ reportError }}</div>
+
           <div class="modal_button_list">
             <button @click="confirmReport" class="b_sure">確定</button>
             <button @click="cancelReport">取消</button>
@@ -329,6 +337,9 @@ export default {
       showMenu: false,
       showDeleteModal: false,
       showReportModal: false,
+      // 檢舉文字框
+      reportReason: "",
+      reportError: "",
     };
   },
 
@@ -408,8 +419,13 @@ export default {
       this.showDeleteModal = false;
     },
     confirmReport() {
-      // 在此處實現檢舉文章的邏輯
-      this.showReportModal = false;
+      if (this.reportReason.length === 0) {
+        this.reportError = "* 請輸入檢舉原因";
+      } else if (this.reportError === "") {
+        console.log(this.reportReason);
+        this.showReportModal = false;
+        this.reportReason = "";
+      }
     },
     cancelReport() {
       this.showReportModal = false;
@@ -423,6 +439,19 @@ export default {
     // 檢舉選單
     document.addEventListener("click", this.handleClickOutside);
   },
+
+  watch: {
+    reportReason(newValue) {
+      if (newValue.length === 0) {
+        this.reportError = "* 請輸入檢舉原因";
+      } else if (newValue.length < 10) {
+        this.reportError = "* 您的描述至少需要10個字";
+      } else {
+        this.reportError = "";
+      }
+    },
+  },
+
   beforeDestroy() {
     // 檢舉選單
     document.removeEventListener("click", this.handleClickOutside);

@@ -4,40 +4,50 @@
 * {
   box-sizing: border-box;
 }
-
-// .container {
-//   width: 1200px;
-//   margin: auto;
-// }
+.container {
+  @include layout(1200);
+}
 
 section.title {
   text-align: center;
   padding: 1.5rem 0;
   background-color: white;
-
   h1 {
     font-size: 2rem;
   }
-
   p {
     padding-top: 1rem;
     font-size: 1.25rem;
     font-weight: bold;
   }
 }
-
-swiper-container.mySwiper {
-  max-width: 1200px;
-  margin: auto;
-
+.swiper {
+  width: 90%;
+  margin: 0 auto;
+  // height: 90vh;
+  aspect-ratio: 6/5;
+  z-index: 0;
+  border-radius: 10px;
   swiper-slide {
+    // width: 100%;
+    // height: 100%;
     img {
-      margin: 0 auto;
+      // width: 100%;
+      // height: 100%;
       display: block;
-      width: 992px;
-      aspect-ratio: 992/740;
-      object-fit: cover;
+      // object-fit: cover;
     }
+  }
+}
+
+button.swiper-button-prev,
+button.swiper-button-next {
+  img {
+    width: 50px;
+    height: 50px;
+  }
+  &::after {
+    content: "";
   }
 }
 
@@ -176,14 +186,14 @@ section.next-step {
   display: flex;
   justify-content: center;
   margin: 6rem 0 3rem 0;
-  
+
   .btn {
     display: inline-block;
     width: 200px;
     border-radius: 7.5px;
     margin: 0 2rem;
     cursor: pointer;
-    
+
     span {
       line-height: 50px;
       height: 50px;
@@ -192,30 +202,79 @@ section.next-step {
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .swiper {
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+    aspect-ratio: 1/1;
+    z-index: 0;
+    border-radius: 10px;
+    swiper-slide {
+      // width: 100%;
+      // height: 100%;
+      img {
+        // width: 100%;
+        // height: 100%;
+        display: block;
+        // object-fit: cover;
+      }
+    }
+  }
+
+  section.notice {
+    ul {
+      padding: 0.5rem 0;
+
+      li {
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  section.next-step {
+    margin: 3rem 0;
+  }
+}
 </style>
 
 <template>
   <section class="title">
-    <h1>{{ packageDataItem.title }}</h1>
-    <p>{{ packageDataItem.title2 }}</p>
+    <h1 v-html="packageDataItem.title"></h1>
   </section>
 
   <div class="container">
-    <swiper-container class="mySwiper" navigation="{
-      true
-    }" loop="true" css-mode="true">
-      <template v-if="stageList">
-        <swiper-slide v-for="(item, index) in stageList" :key="index">
-          <img :src="item.spotImage" alt="" />
+    <swiper
+      :navigation="{
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }"
+      :loop="true"
+      :modules="modules"
+      class="mySwiper"
+    >
+      <template v-if="!stageList"> 沒有資料喔~ </template>
+      <template v-else>
+        <swiper-slide v-for="(item, index) in swiperImg" :key="index">
+          <img :src="item.link" alt="" />
+
+          <!-- <Images :imgURL="`${item.spotImage}`" :alt="``" /> -->
+          <!-- <img :src="item.spotImage" alt="" /> -->
         </swiper-slide>
       </template>
-      <template v-else>
-        沒有資料喔~
-      </template>
-      <!-- 
-    <button class="swiper-button-prev"></button>
-    <button class="swiper-button-next"></button> -->
-    </swiper-container>
+
+      <button class="swiper-button-prev">
+        <img :src="prev" alt="" />
+      </button>
+      <button class="swiper-button-next">
+        <img :src="next" alt="" />
+      </button>
+    </swiper>
 
     <div class="dash"></div>
 
@@ -239,9 +298,15 @@ section.next-step {
           <i class="fa-solid fa-location-dot"></i>
           <i class="fa-solid fa-flag"></i>
         </div>
-        <template v-if="stageList">
+        <template v-if="!stageList"> 沒有資料喔~ </template>
+        <template v-else>
           <div class="stage-list">
-            <div class="stage-item" @click="toggleClass(index)" v-for="(item, index) in stageList" :key="index">
+            <div
+              class="stage-item"
+              @click="toggleClass(index)"
+              v-for="(item, index) in stageList"
+              :key="index"
+            >
               <div class="item">
                 {{ `第${item.sort}站：${item.name}` }}
                 <div class="symbol" :class="{ minus: item.isActive }">
@@ -254,9 +319,6 @@ section.next-step {
               </div>
             </div>
           </div>
-        </template>
-        <template v-else>
-          沒有資料喔~
         </template>
       </div>
     </section>
@@ -278,29 +340,50 @@ section.next-step {
 </template>
 
 <script>
+import { GET } from "@/plugin/axios";
+import { Navigation } from "swiper/modules";
+
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from "swiper/vue";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+
 export default {
+  // Import Swiper styles
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
+
   data() {
     return {
+      modules: [Navigation],
+
+      prev: require("@/assets/images/icon/previous.png"),
+      next: require("@/assets/images/icon/next.png"),
+
       packageList: [],
       packageDataItem: [],
       stageList: [],
-      // swiperImg: [
-      //   {
-      //     link: require("@/assets/images/spot/03.jpg"),
-      //   },
-      //   {
-      //     link: require("@/assets/images/spot/13.jpg"),
-      //   },
-      //   {
-      //     link: require("@/assets/images/spot/09.jpg"),
-      //   },
-      //   {
-      //     link: require("@/assets/images/spot/11.jpg"),
-      //   },
-      //   {
-      //     link: require("@/assets/images/spot/12.png"),
-      //   },
-      // ],
+      swiperImg: [
+        {
+          link: require("@/assets/images/detail/detail01.jpg"),
+        },
+        {
+          link: require("@/assets/images/detail/detail02.jpg"),
+        },
+        {
+          link: require("@/assets/images/detail/detail03.jpg"),
+        },
+        {
+          link: require("@/assets/images/detail/detail04.jpg"),
+        },
+        {
+          link: require("@/assets/images/detail/detail05.jpg"),
+        },
+      ],
 
       notice: [
         {
@@ -333,7 +416,7 @@ export default {
         {
           text: "在列車行駛期間，請保持座位整潔，避免大聲喧嘩或打擾其他乘客",
         },
-      ]
+      ],
       // stageList: [
       // {
       //   name: "第一站：綠野牧場",
@@ -368,7 +451,8 @@ export default {
     //Day2隨著前三站的isActive狀態改變，marginTop的值也會跟著改變
     marginTop() {
       let count = 0;
-      if (this.stageList && this.stageList.length >= 3) {//先確定資料有接到
+      if (this.stageList && this.stageList.length >= 3) {
+        //先確定資料有接到
         for (let i = 0; i < 3; i++) {
           if (this.stageList[i].isActive) {
             count++;
@@ -380,7 +464,8 @@ export default {
     //旗子icon隨著前四站的isActive狀態改變，height值也會跟著改變
     iconMove() {
       let count = 0;
-      if (this.stageList && this.stageList.length >= 3) {//先確定資料有接到
+      if (this.stageList && this.stageList.length >= 3) {
+        //先確定資料有接到
         for (let i = 0; i < 4; i++) {
           if (this.stageList[i].isActive) {
             count++;
@@ -395,7 +480,7 @@ export default {
       this.stageList[index].isActive = !this.stageList[index].isActive;
     },
     initSwiper() {
-      this.swiper = new Swiper('.swiper-container', {
+      this.swiper = new Swiper(".swiper-container", {
         // Swiper 配置项，可以根据需要进行自定义配置
         // 例如：autoplay, loop, pagination, navigation 等
         // 更多配置项可参考 Swiper 官方文档：https://swiperjs.com/api/
@@ -404,13 +489,12 @@ export default {
   },
   created() {
     // 取得API
-    fetch('/data/packageData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.packageList = json;
-        this.packageDataItem = this.packageList[`${parseFloat(this.$route.params.id) - 1}`];
-        this.stageList = this.packageDataItem.stageList;
-      })
+    GET("/data/packageData.json").then((res) => {
+      this.packageList = res;
+      this.packageDataItem =
+        this.packageList[`${parseFloat(this.$route.params.id) - 1}`];
+      this.stageList = this.packageDataItem.stageList;
+    });
   },
 };
 </script>

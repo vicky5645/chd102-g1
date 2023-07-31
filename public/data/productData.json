@@ -3,14 +3,15 @@
     "id": 1,
     "amount":1,
     "title": "火車懷錶",
-    "type": "周邊商品",
+    "type": "周邊",
     "price": 600,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "超時尚的火車主題懷錶，精緻設計，可隨身攜帶，是時尚愛好者的最佳時尚配件。"
     ],
     "category": "men's clothing",
-    "image": "/images/img/ProductDetails/p1.png",
+    "image": "images/img/ProductDetails/p1.png",
     "rating": {
       "rate": 3.9,
       "count": 120
@@ -21,14 +22,15 @@
     "id": 2,
     "amount":1,
     "title": "火車叉叉",
-    "type": "周邊商品",
+    "type": "周邊",
     "price": 200,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "精美餐具，與火車造型設計，為用餐增添樂趣，品質優良，適合日常使用。"
     ],
     "category": "men's clothing",
-    "image": "/images/online-mall/fork.png",
+    "image": "images/online-mall/fork.png",
     "rating": {
       "rate": 4.1,
       "count": 259
@@ -39,14 +41,15 @@
     "id": 3,
     "amount":1,
     "title": "車車模型",
-    "type": "周邊商品",
+    "type": "玩具",
     "price": 300,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "細緻車車模型，適合小朋友收藏與遊戲，啟發想像力與探索精神。"
     ],
     "category": "men's clothing",
-    "image": "/images/online-mall/Train_model.png",
+    "image": "images/online-mall/Train_model.png",
     "rating": {
       "rate": 4.7,
       "count": 500
@@ -57,14 +60,15 @@
     "id": 4,
     "amount":1,
     "title": "車車吊牌",
-    "type": "周邊商品",
+    "type": "周邊",
     "price": 100,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "可愛吊牌飾品，以車車為主題，掛在包包或鑰匙上，為日常增添俏皮風格。"
     ],
     "category": "men's clothing",
-    "image": "/images/online-mall/Keychain_pendant_B.png",
+    "image": "images/online-mall/Keychain_pendant_B.png",
     "rating": {
       "rate": 2.1,
       "count": 430
@@ -75,14 +79,15 @@
     "id": 5,
     "amount":1,
     "title": "超讚大獎章",
-    "type": "周邊商品",
+    "type": "周邊",
     "price": 100,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "獨特設計的大獎章，凸顯特別身份或慶祝時刻，讓你成為焦點。"
     ],
     "category": "jewelery",
-    "image": "/images/online-mall/Badge.png",
+    "image": "images/online-mall/Badge.png",
     "rating": {
       "rate": 4.6,
       "count": 400
@@ -92,15 +97,16 @@
   {
     "id": 6,
     "amount":1,
-    "title": "車車手帕",
-    "type": "周邊商品",
+    "title": "車車毛巾",
+    "type": "周邊",
     "price": 80,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
-      "柔軟手帕，印有可愛車車圖案，清新色彩，是時尚配件或禮物的絕佳選擇。"
+      "超柔軟毛巾，以可愛車車圖案設計，是您日常生活中的必備品，讓您感受舒適與溫暖。"
     ],
     "category": "jewelery",
-    "image": "/images/online-mall/Towel.png",
+    "image": "images/online-mall/Towel.png",
     "rating": {
       "rate": 3.9,
       "count": 70
@@ -113,12 +119,13 @@
     "title": "車車便當",
     "type": "食品",
     "price": 100,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "美味便當，融合車車元素，讓用餐時光更有趣，口感與外觀兼具。"
     ],
     "category": "jewelery",
-    "image": "/images/online-mall/Train_bento_box.png",
+    "image": "images/online-mall/Train_bento_box.png",
     "rating": {
       "rate": 3,
       "count": 400
@@ -129,14 +136,15 @@
     "id": 8,
     "amount":1,
     "title": "車車吊飾",
-    "type": "周邊商品",
+    "type": "周邊",
     "price": 150,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "精緻吊飾，可懸掛於車內或房間，為空間增添可愛氛圍。"
     ],
     "category": "jewelery",
-    "image": "/images/online-mall/Keychain_pendant_A.png",
+    "image": "images/online-mall/Keychain_pendant_A.png",
     "rating": {
       "rate": 1.9,
       "count": 100
@@ -149,12 +157,13 @@
     "title": "漫遊御飯糰",
     "type": "食品",
     "price": 50,
+    "totalPrice": 0,
     "isFavorite": false,
     "description": [
       "嚴選食材製成的美味御飯糰，方便攜帶，是上班族或學生的理想選擇。"
     ],
     "category": "jewelery",
-    "image": "/images/online-mall/onigiri.png",
+    "image": "images/online-mall/onigiri.png",
     "rating": {
       "rate": 1.9,
       "count": 100

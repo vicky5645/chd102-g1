@@ -3,23 +3,25 @@
   <main class="product_page">
     <BreadCrumbs v-if="productDataItem.title" :detailName="productDataItem.title" />
     <div v-if="productData">
-      <!-- <ol class="bread_crumbs">
-        <i class="fa-solid fa-house"></i>
-        <li v-for="item in [...breadCrumbs]" :key="item.index">
-          <a :href="item.link" :style="item.color"> {{item.index}}</a>
-        </li>
-      </ol> -->
       <div class="back_button">
         <router-link to="/online-mall">
           <i class="fa fa-angle-left" aria-hidden="true"></i> 返回商城
         </router-link>
       </div>
       <section class="product_data">
+        <div class="icon-container" :class="{ showing: addSuccess && index === currentIndex }">
+                <svg class="icon" viewBox="0 0 100 100" width="80" height="80">
+                        <circle class="circle" cx="50" cy="50" r="48"></circle>
+                        <polyline class="check" points="28,53 42,66 74,34"></polyline>
+                    </svg>
+                    <p>成功加入購物車</p>
+              </div>
         <!-- 點擊小圖換大圖 -->
         <div class="product_data_left">
 
         <div class="big_pic">
-          <img :src="bigPic" :alt="productDataItem.title">
+          <Images :imgURL="`${bigPic}`" :alt="`${productDataItem.title}`" />
+          <!-- <img :src="bigPic" :alt="productDataItem.title"> -->
         </div>
         <div class="small_pic_list">
           <div
@@ -28,7 +30,8 @@
             class="small_pic"
             @click="changeBigPic(pic)"
           >
-            <img :src="pic" alt="clock" />
+          <Images :imgURL="`${pic}`" :alt="`clock`" />
+            <!-- <img :src="pic" alt="clock" /> -->
           </div>
         </div>
 
@@ -40,37 +43,23 @@
           </div>
           <div class="type_and_like">
             <div class="type">選擇購買數量</div>
-            <button class="like">加入收藏</button>
+            <button class="like" @click="clickTest">加入收藏</button>
           </div>
-
-          <!-- <div class="type_button_list">
-            <button
-              v-for="button in buttons"
-              :key="button"
-              class="type_button_item"
-              :class="{ selected: selectedButton === button }"
-              @click="selectButton(button)"
-            >
-              {{ button }}
-            </button>
-          </div> -->
-
-        <!-- <div class="quantity_txt">購買數量</div> -->
 
           <!-- 加減按鈕 -->
           <div class="quantity_button">
             <button @click="increment">
               <i class="fa fa-plus" aria-hidden="true"></i>
             </button>
-            <div class="quantity">{{ quantity }}</div>
+            <div class="quantity">{{ productDataItem.amount }}</div>
             <button @click="decrement">
               <i class="fa fa-minus" aria-hidden="true"></i>
             </button>
           </div>
 
           <div class="add_and_buy">
-            <button class="add" @click="addToCart">加入購物車</button>
-            <button class="buy">立即購買</button>
+            <button class="add" @click="addToCart" :disabled="isButtonDisabled" :class="{ clickDisabled: isButtonDisabled }">加入購物車</button>
+            <button class="buy" @click="addAndBuy">立即購買</button>
           </div>
         </div>
       </section>
@@ -124,7 +113,8 @@
             >
             <div class="product">
               <div class="product_pic">
-                <img :src="product.image" :alt="product.name" />
+                <Images :imgURL="`${product.image}`" :alt="`${product.name}`" />
+                <!-- <img :src="product.image" :alt="product.name" /> -->
               </div>
               <p>{{ product.name }}</p>
             </div>
@@ -141,9 +131,10 @@
 </template>
 
 <script>
+import {GET} from '@/plugin/axios'
 import BreadCrumbs from "@/components/BreadCrumbs.vue";
 import { ref, reactive } from 'vue';
-import { useStore } from 'vuex';
+// import { useStore } from 'vuex';
 export default {
   components: {
     BreadCrumbs
@@ -152,6 +143,8 @@ export default {
     return {
       productData: null,
       productDataItem: [],
+      addSuccess: false,
+      isButtonDisabled: false,
       // 麵包屑
       breadCrumbs: [
         {
@@ -171,7 +164,7 @@ export default {
         },
       ],
       // 數量初始值
-      quantity: 1,
+      // quantity: 1,
 
       // 規格按鈕
       selectedButton: null,
@@ -180,9 +173,9 @@ export default {
       // 點擊小圖換大圖
       bigPic: "",
       smallPics: [
-        "/images/img/ProductDetails/p2.png",
-        "/images/img/ProductDetails/p3.png",
-        "/images/img/ProductDetails/p4.png"
+        "images/img/ProductDetails/p2.png",
+        "images/img/ProductDetails/p3.png",
+        "images/img/ProductDetails/p4.png"
       ],
 
       // content 區塊切換
@@ -203,35 +196,35 @@ export default {
       allProducts: [
         {
           name: "小黃復古拍立得",
-          image: "/images/img/project/1.jpg",
+          image: "images/img/project/1.jpg",
         },
         {
           name: "泥漿去角質霜",
-          image: "/images/img/project/2.jpg",
+          image: "images/img/project/2.jpg",
         },
         {
           name: "真的皮的復古皮鞋",
-          image: "/images/img/project/3.jpg",
+          image: "images/img/project/3.jpg",
         },
         {
           name: "大地色包包",
-          image: "/images/img/project/4.jpg",
+          image: "images/img/project/4.jpg",
         },
         {
           name: "可站立復古拍立得(黑)",
-          image: "/images/img/project/5.jpg",
+          image: "images/img/project/5.jpg",
         },
         {
           name: "森林系後背包",
-          image: "/images/img/project/6.jpg",
+          image: "images/img/project/6.jpg",
         },
         {
           name: "可站立復古拍立得(白)",
-          image: "/images/img/project/7.jpg",
+          image: "images/img/project/7.jpg",
         },
         {
           name: "青春活力勾勾籃球鞋",
-          image: "/images/img/project/8.jpg",
+          image: "images/img/project/8.jpg",
         },
       ],
       currentProducts: [],
@@ -241,40 +234,62 @@ export default {
   },
   // 推薦商品
   created() {
-    fetch(`/data/productData.json`)
-    .then(res=>res.json())
-    .then(json=>{
-      this.productData = json;
+    // 取得API
+    GET('/data/productData.json').then(res => {
+      this.productData = res
       this.productDataItem = this.productData[`${parseFloat(this.$route.params.id)-1}`];
       this.bigPic = this.productDataItem.image;
-    });
+    })
     this.currentProducts = this.allProducts.slice(0, 4); // 初始化 currentProducts
   },
-  setup() {
-    const store = useStore();
-  },
+  // setup() {
+  //   const store = useStore();
+  // },
   methods: {
     // 規格按鈕
     increment() {
-      this.quantity++;
-    },
-    increment() {
       // only increment if quantity is less than 10
-      if (this.quantity < 10) {
-        this.quantity++;
+      // if (this.quantity < 10) {
+      //   this.quantity++;
+      // }
+      if (this.productDataItem.amount < 10) {
+        this.productDataItem.amount++;
       }
+      console.log(this.productDataItem.amount);
     },
     decrement() {
       // only decrement if quantity is greater than 1
-      if (this.quantity > 1) {
-        this.quantity--;
+      // if (this.quantity > 1) {
+      //   this.quantity--;
+      // }
+      if (this.productDataItem.amount > 1) {
+        this.productDataItem.amount--;
       }
+      console.log(this.productDataItem.amount);
+    },
+    goCartInfo() {
+      this.$router.push({ path: "/cart" });
     },
     // 加入購物車
+    // addToCart() {
+    //   this.$store.commit("addToCart",this.productDataItem);
+    // },
     addToCart() {
       this.$store.commit("addToCart",this.productDataItem);
+      this.addSuccess = true;
+      this.isButtonDisabled = true;
+      setTimeout(() => {
+                this.addSuccess = false;
+                this.isButtonDisabled = false;
+            }, 800);
     },
-
+    addAndBuy() {
+      this.$store.commit("addToCart",this.productDataItem);
+      this.goCartInfo();
+    },
+    clickTest() {
+      console.log(this.productDataItem.price)
+    },
     // 點擊小圖換大圖
     selectButton(button) {
       this.selectedButton = button;

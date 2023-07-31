@@ -19,6 +19,7 @@ const routesUser = [
       title: "登入頁面",
     },
   },
+
   {
     path: "/about",
     name: "about",
@@ -26,7 +27,27 @@ const routesUser = [
     component: () =>
       import(/* webpackChunkName: "about" */ "@/views/AboutView.vue"),
     meta: {
+      title: "介紹",
+    },
+  },
+  {
+    path: "/train-intro",
+    name: "train-intro",
+    // component: AboutView
+    component: () =>
+      import(/* webpackChunkName: "" */ "@/views/TrainIntro.vue"),
+    meta: {
       title: "小火車介紹",
+    },
+  },
+  {
+    path: "/itinerary-intro",
+    name: "itinerary-intro",
+    // component: AboutView
+    component: () =>
+      import(/* webpackChunkName: "" */ "@/views/ItineraryIntro.vue"),
+    meta: {
+      title: "行程介紹",
     },
   },
   {
@@ -92,7 +113,9 @@ const routesUser = [
     path: "/online-booking",
     name: "online-booking",
     component: () =>
-      import(/* webpackChunkName: "online-booking" */ "@/views/Booking/Package.vue"),
+      import(
+        /* webpackChunkName: "online-booking" */ "@/views/Booking/Package.vue"
+      ),
     meta: {
       title: "線上訂票",
     },
@@ -101,7 +124,9 @@ const routesUser = [
     path: "/booking-info/:id",
     name: "booking-info",
     component: () =>
-      import(/* webpackChunkName: "online-booking" */ "@/views/Booking/DetailInfo.vue"),
+      import(
+        /* webpackChunkName: "online-booking" */ "@/views/Booking/DetailInfo.vue"
+      ),
     meta: {
       title: "訂票資訊",
     },
@@ -119,7 +144,9 @@ const routesUser = [
     path: "/custom-tickets",
     name: "custom-tickets",
     component: () =>
-      import(/* webpackChunkName: "online-booking" */ "@/views/CustomTickets.vue"),
+      import(
+        /* webpackChunkName: "online-booking" */ "@/views/CustomTickets.vue"
+      ),
     meta: {
       title: "客制車票",
     },
@@ -138,9 +165,18 @@ const routesUser = [
     name: "checkout",
     component: () =>
       import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/CheckOut.vue"),
-      meta: {
-        title: "結帳資訊",
-      },
+    meta: {
+      title: "結帳資訊",
+    },
+  },
+  {
+    path: "/payment",
+    name: "payment",
+    component: () =>
+      import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/Payment.vue"),
+    meta: {
+      title: "信用卡付款畫面",
+    },
   },
   {
     path: "/login",
@@ -152,12 +188,10 @@ const routesUser = [
         path: "/login",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/LogIn/Log.vue"),
-          meta: {
-            title: "會員登入",
-          },
+        meta: {
+          title: "會員登入",
+        },
       },
-    
-
     ],
   },
   {
@@ -266,6 +300,145 @@ const routesUser = [
         name: "BackAnnouncements",
         meta: {
           title: "公告",
+        },
+      },
+      {
+        path: "/backend/BackCmsStaff",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackCmsStaff.vue"
+          ),
+        name: "BackCmsStaff",
+        meta: {
+          title: "管理員帳號",
+        },
+      },
+      {
+        path: "/backend/BackMember",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackMember.vue"
+          ),
+        name: "BackMember",
+        meta: {
+          title: "會員",
+        },
+      },
+      {
+        path: "/backend/BackPackageOrder",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackPackageOrder.vue"
+          ),
+        name: "BackPackageOrder",
+        meta: {
+          title: "開團訂單",
+        },
+      },
+      {
+        path: "/backend/BackPattern",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackPattern.vue"
+          ),
+        name: "BackPattern",
+        meta: {
+          title: "客製車票圖案",
+        },
+      },
+      {
+        path: "/backend/BackPackageTrace",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackPackageTrace.vue"
+          ),
+        name: "BackPackageTrace",
+        meta: {
+          title: "行程收藏",
+        },
+      },
+      {
+        path: "/backend/BackSpot",
+        component: () =>
+          import(/* webpackChunkName: "cart" */ "@/views/BackEnd/BackSpot.vue"),
+        name: "BackSpot",
+        meta: {
+          title: "景點",
+        },
+      },
+      {
+        path: "/backend/BackPackagePass",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackPackagePass.vue"
+          ),
+        name: "BackPackagePass",
+        meta: {
+          title: "行程景點",
+        },
+      },
+      {
+        path: "/backend/BackSeat",
+        component: () =>
+          import(/* webpackChunkName: "cart" */ "@/views/BackEnd/BackSeat.vue"),
+        name: "BackSeat",
+        meta: {
+          title: "開團座位",
+        },
+      },
+      {
+        path: "/backend/BackTrain",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackTrain.vue"
+          ),
+        name: "BackTrain",
+        meta: {
+          title: "列車",
+        },
+      },
+      {
+        path: "/backend/BackProduct",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackProduct.vue"
+          ),
+        name: "BackProduct",
+        meta: {
+          title: "商品",
+        },
+      },
+      {
+        path: "/backend/BackOrder",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackOrder.vue"
+          ),
+        name: "BackOrder",
+        meta: {
+          title: "商品訂單",
+        },
+      },
+      {
+        path: "/backend/BackOrderItem",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackOrderItem.vue"
+          ),
+        name: "BackOrderItem",
+        meta: {
+          title: "商品訂單項目",
+        },
+      },
+      {
+        path: "/backend/BackProdTrace",
+        component: () =>
+          import(
+            /* webpackChunkName: "cart" */ "@/views/BackEnd/BackProdTrace.vue"
+          ),
+        name: "BackProdTrace",
+        meta: {
+          title: "商品收藏",
         },
       },
     ],

@@ -26,7 +26,10 @@
 
     <template v-if="filteredArticles.length">
       <div v-for="article in filteredArticles" :key="article.id" class="article_card">
-        <div class="pic"><img :src="article.image" alt="Article Image" /></div>
+        <div class="pic">
+          <Images :imgURL="`${article.image}`" :alt="`Article Image`" />
+          <!-- <img :src="article.image" alt="Article Image" /> -->
+        </div>
         <div class="article_card_txt">
           <p class="type" :class="article.type === '重要' ? 'important' : 'normal'">
             {{ article.type }} <span>{{ article.date }}</span>
@@ -44,6 +47,7 @@
 </template>
 
 <script>
+import {GET} from '@/plugin/axios'
 export default {
   data() {
     return {
@@ -108,17 +112,12 @@ export default {
       );
     },
   },
-  // created() {
-  //   this.filteredArticles = this.airticles;
-  // },
   created() {
-    // 取得API
-    fetch('/data/airticlesData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.airticles = json;
-        this.filteredArticles = this.airticles;
-      })
+      // 取得API
+    GET('/data/airticlesData.json').then(res => {
+      this.airticles = res;
+      this.filteredArticles = this.airticles;
+    })
   },
 };
 </script>

@@ -1,0 +1,175 @@
+.weather {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+
+
+    .weather_title {
+        font-size: 60px;
+        color: white;
+    }
+
+    .rain {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+    .today_time_date_loca_wrap {
+        padding: 72px;
+        color: #fff;
+
+
+        .today_time_date_loca {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .today_time {
+            font-weight: 100;
+
+            .now_time {
+                font-size: 72px;
+            }
+
+            #am_pm {
+                font-size: 32px;
+                margin-left: 24px;
+            }
+
+            .now_date {
+                font-size: 32px;
+            }
+
+            .more_info {
+                display: flex;
+                flex-direction: column;
+                background: rgba(24, 24, 27, 0.6);
+                padding: 20px;
+                border-radius: 10px;
+                margin: 10px 0;
+                border: 1px solid #eee;
+
+                .more_info_detail {
+                    display: flex;
+                    justify-content: space-between;
+                }
+
+            }
+
+        }
+
+        .location_city {
+            .time_zone {
+                font-size: 32px;
+                font-weight: 100;
+            }
+
+            .country {
+                font-size: 16px;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .week_weather {
+        background: rgba(24, 24, 27, 0.6);
+        padding: 48px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        display: flex;
+        color: white;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+
+        .today_weather_card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 15px;
+            padding-right: 40px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.2);
+
+            .day {
+                padding: 5px 15px;
+                background: #3c3c44;
+                border-radius: 50px;
+                text-align: center;
+
+            }
+
+            .temp,
+            .humidity {
+                font-size: 18px;
+                padding-top: 15px;
+            }
+
+        }
+
+
+
+
+        .week_weather_forecast {
+            display: flex;
+
+            .week_weather_forecast_card {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin: 0 10px;
+                border: 1px solid #eee;
+                padding: 15px;
+                border-radius: 10px;
+                background: rgba(0, 0, 0, 0.2);
+
+                .day {
+                    padding: 5px 15px;
+                    background: #3C3C44;
+                    border-radius: 50px;
+                    text-align: center;
+                }
+
+                .temp,
+                .humidity {
+                    font-weight: 100;
+                    font-size: 12px;
+                }
+            }
+        }
+
+    }
+
+
+
+
+}
+
+@media screen and (max-width:768px) {
+    .weather {
+        .week_weather {
+            display: none;
+        }
+
+        .weather_title {
+            display: none;
+        }
+    }
+
+    .today_time_date_loca_wrap {
+        .today_time {
+            #am_pm {
+                margin-left: 5px !important;
+            }
+        }
+
+    }
+}

@@ -28,6 +28,12 @@
 html{
     --gs-gap: 5px;
 }
+main {
+    &.product_page , &.productIndex {
+        padding-left: $space * 5;
+        padding-right: $space * 5;
+    }
+}
 .container {
     max-width: $layoutWidth;
     margin: auto;
@@ -39,6 +45,7 @@ html{
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
+    align-content: flex-start;
     margin-left: calc(var(--gs-gap) * -1);
     margin-right: calc(var(--gs-gap) * -1);
 }

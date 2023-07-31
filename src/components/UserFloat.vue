@@ -1,10 +1,7 @@
 <template>
-    <div class="userPage userFloat" v-show="userStatus">
-        <div class="closeMark" @click="closeUser">
-            <i class="fa-solid fa-xmark"></i>
-        </div>
+    <div class="userPage cartFloat" v-show="userStatus">
         <div class="link-list">
-            <router-link to="/user/info">
+            <router-link to="/user">
                 <li>
                     <div class="icon-24">
                         <img class="custom-svg" src="@/assets/images/icon/basic/member-login.svg" alt="list-icon">
@@ -40,11 +37,11 @@
             </router-link>
         </div>
     </div>
+    <div class="userPageMask" v-show="userStatus" @click="closeUser"></div>
 </template>
 
 <script setup>
-
-import { ref, onMounted, defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 
@@ -53,33 +50,18 @@ const props = defineProps(['userStatus']);
 const emit = defineEmits(['closeUser', 'goLoginUser']);
 
 const store = useStore();
-const productData = ref([]);
-let quantity = ref(1);
 const router = useRouter();
-
-// 取得API
-onMounted(() => {
-    fetch('/data/productData.json')
-        .then(res => res.json())
-        .then(json => {
-            productData.value = json;
-        });
-});
 
 const signOut = function () {
     // 登出
     store.commit('setName', '登入/註冊');
     store.commit('setIsLogin', false); // 使用 commit 來改變狀態
-    router.push('/roaming-orbit');
+    router.push('/about');
 }
 
 // 關閉視窗按鈕
 const closeUser = () => {
     emit('closeUser')
-}
-// 前往購物車清單
-const goLoginUser = () => {
-    emit('goLoginUser')
 }
 
 // 登出並且隱藏選單
@@ -89,3 +71,15 @@ const handleLogout = () => {
 }
 
 </script>
+
+<style lang="scss" scoped>
+.userPageMask {
+    background-color: transparent;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 10;
+    z-index: 9;
+}
+</style>

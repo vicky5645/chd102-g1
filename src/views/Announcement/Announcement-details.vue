@@ -13,13 +13,17 @@
       </p>
       <h3>{{ airticlesItem.title }}</h3>
 
-      <div class="pic"><img :src="airticlesItem.image" alt="Article Image" /></div>
+      <div class="pic">
+        <Images :imgURL="`${airticlesItem.image}`" :alt="`Article Image`" />
+        <!-- <img :src="airticlesItem.image" alt="Article Image" /> -->
+      </div>
       <p>{{ airticlesItem.content }}</p>
     </div>
   </main>
 </template>
 
 <script>
+import {GET} from '@/plugin/axios'
 export default {
   data() {
     return {
@@ -53,12 +57,11 @@ export default {
     },
   },
   created() {
-    fetch(`/data/airticlesData.json`)
-      .then(res => res.json())
-      .then(json => {
-        this.airticles = json;
-        this.airticlesItem = this.airticles[`${parseFloat(this.$route.params.id) - 1}`];
-      });
+      // 取得API
+    GET('/data/airticlesData.json').then(res => {
+      this.airticles = res;
+      this.airticlesItem = this.airticles[`${parseFloat(this.$route.params.id) - 1}`];
+    })
   },
 };
 </script>

@@ -21,7 +21,6 @@
         </transition>
       </div>
       <div class="input-wrap login">
-        {{ searchText }}
         <input v-model="searchText" type="text" placeholder="" required>
         <label>搜尋</label>
         <button class="btn" @click="updateDisplay"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -29,29 +28,75 @@
     </div>
     <hr>
     <div class="user-control-content">
-      <div class="card-out" v-for="item, index in productDisplay" :key="item.id">
-        <template v-if="checkedItem == '商品'">
-          <div class="card">
-            <div class="show-mobile">
-              <div class="label">
-                訂單編號:
-                <span>1234567</span>
-              </div>
-              <div class="label">
-                訂購日期:
-                <span>2018 / 10 / 10</span>
+      <template v-if="listDisplay.length === 0">
+        沒有搜尋到東西喔~
+      </template>
+      <template v-else>
+        <div class="card-out" v-for="item, index in listDisplay" :key="item.id">
+          <template v-if="checkedItem == '商品'">
+            <div class="card">
+              <!-- 手機版卡片，訂單編號顯示位置 -->
+              <template v-if="!isShow">
+                <div class="label show-mobile">
+                  訂單編號:
+                  <span>{{ item.order_no }}</span>
+                </div>
+                <div class="label show-mobile">
+                  訂購日期:
+                  <span>{{ item.order_date }}</span>
+                </div>
+              </template>
+              <router-link :to="`/productDetail/${item.id}`">
+                <div class="cradPic">
+                  <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
+                </div>
+              </router-link>
+              <div class="content">
+                <div class="card-top">
+                  <div class="des">
+                    <div class="des-text">
+                      <!-- 桌機版卡片，訂單編號顯示位置 -->
+                      <template v-if="isShow">
+                        <div class="label hidden-mobile">
+                          訂單編號:
+                          <span>{{ item.order_no }}</span>
+                        </div>
+                        <div class="label hidden-mobile">
+                          訂購日期:
+                          <span>{{ item.order_date }}</span>
+                        </div>
+                      </template>
+                      <h3 class="h3">{{ item.title }}</h3>
+                    </div>
+                    <div class="des-right">
+                      <div class="price h2">
+                        $ {{ item.price }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-bottom">
+                  <div class="btn-space">
+                    <router-link :to="`/productDetail/${item.id}`">
+                      <button type="submit" class="btn other radius">詳細</button>
+                    </router-link>
+                    <button type="submit" class="btn primary radius">聯絡客服</button>
+                  </div>
+                </div>
               </div>
             </div>
-            <router-link :to="`/productDetail/${item.id}`">
-              <div class="cradPic">
-                <img :src="item.image" :alt="item.title">
-              </div>
-            </router-link>
-            <div class="content">
-              <div class="card-top">
-                <div class="des">
-                  <div class="des-text">
-                    <div class="hidden-mobile">
+          </template>
+          <template v-else-if="checkedItem == '行程'">
+            <div class="card">
+              <router-link :to="`/booking-info/${item.id}`">
+                <div class="cradPic">
+                  <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
+                </div>
+              </router-link>
+              <div class="content">
+                <div class="card-top">
+                  <div class="des">
+                    <div class="des-text">
                       <div class="label">
                         訂單編號:
                         <span>1234567</span>
@@ -60,76 +105,38 @@
                         訂購日期:
                         <span>2018 / 10 / 10</span>
                       </div>
+                      <h3 class="h3 clamp-2">{{ item.title }}{{ item.title2 }}</h3>
+                      <div class="more">
+                        <p class="bold">剩餘座位 {{ item.seat }} </p>
+                        <p class="label"><i class="fa-solid fa-train"></i> {{ item.train }}</p>
+                        <p class="label"><i class="fa-solid fa-calendar-days"></i> 行程日期: {{ item.order_date }}</p>
+                      </div>
                     </div>
-                    <h3 class="h3">{{ item.title }}</h3>
-                  </div>
-                  <div class="des-right">
-                    <div class="price h2">
-                      $ {{ item.price }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-bottom">
-                <hr>
-                <div class="btn-space">
-                  <button type="submit" class="btn other radius">詳細</button>
-                  <button type="submit" class="btn primary radius">聯絡客服</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-        <template v-else-if="checkedItem == '行程'">
-          <div class="card">
-            <router-link :to="`/booking-info2/${item.id}`">
-              <div class="cradPic">
-                <img :src="item.image" :alt="item.title">
-              </div>
-            </router-link>
-            <div class="content">
-              <div class="card-top">
-                <div class="des">
-                  <div class="des-text">
-                    <div class="label">
-                      訂單編號:
-                      <span>1234567</span>
-                    </div>
-                    <div class="label">
-                      訂購日期:
-                      <span>2018 / 10 / 10</span>
-                    </div>
-                    <h3 class="h3 clamp-2">{{ item.title }}{{ item.title2 }}</h3>
-                    <div class="more">
-                      <p class="bold">剩餘座位 {{ item.seat }} </p>
-                      <p class="label"><i class="fa-solid fa-train"></i> {{ item.train }}</p>
-                      <p class="label"><i class="fa-solid fa-calendar-days"></i> 行程日期: {{ item.order_date }}</p>
+                    <div class="des-right">
+                      <div class="price h2">
+                        $ {{ item.price }}
+                      </div>
                     </div>
                   </div>
-                  <div class="des-right">
-                    <div class="price h2">
-                      $ {{ item.price }}
-                    </div>
-                  </div>
-                </div>
 
-              </div>
-              <div class="card-bottom">
-                <hr>
-                <div class="btn-space">
-                  <button type="submit" class="btn other radius">詳細</button>
-                  <button type="submit" class="btn primary radius">聯絡客服</button>
+                </div>
+                <div class="card-bottom">
+                  <div class="btn-space">
+                    <button type="submit" class="btn other radius">詳細</button>
+                    <button type="submit" class="btn primary radius">聯絡客服</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </template>
-      </div>
+          </template>
+        </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
+import { GET } from '@/plugin/axios'
 export default {
   data() {
     return {
@@ -143,7 +150,7 @@ export default {
       // 會員的資料(僅在進入畫面時去取一次資料)
       userData: [],
       // 呈現的商品資料(針對userData來搜尋篩選)
-      productDisplay: [],
+      listDisplay: [],
       tabActive: 1,
       checkedItem: '商品',
       categoryItem: [
@@ -153,15 +160,11 @@ export default {
     }
   },
   created() {
-    // 頁面剛載入時，將 userData 賦值給 productDisplay，展示初始商品資料
-    // this.productDisplay = this.userData;
     // 取得API
-    fetch('/data/userData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.userData = json
-        this.updateDisplay()
-      })
+    GET('/data/userData.json').then(res => {
+      this.userData = res
+      this.updateDisplay()
+    })
   },
   mounted() {
     // 監聽視窗大小改變事件
@@ -176,32 +179,31 @@ export default {
     updateDisplay() {
       this.empty = false;
       if (this.searchText === '') {
-        this.productDisplay = this.userData.favorite_products
+        this.listDisplay = this.userData.orders
       } else {
-        this.productDisplay = this.userData.filter(item => item.title.includes(this.searchText));
+        let nowData;
+        this.checkedItem == '商品' ? nowData = this.userData.orders : nowData = this.userData.package_orders;
+        this.listDisplay = nowData.filter(item => item.title.includes(this.searchText));
         this.isEmpty()
       }
     },
     updateTab(index) {
       this.empty = false;
       if (this.categoryItem[index].type === '商品') {
-        this.productDisplay = this.userData.favorite_products;
-        // console.log(typeof this.productDisplay)
-        return this.productDisplay;
+        this.listDisplay = this.userData.orders;
+        return this.listDisplay;
       } else if (this.categoryItem[index].type === '行程') {
-        this.productDisplay = this.userData.favorite_orders;
-        // this.productDisplay = this.userData.filter(item => item.hot === true)
-        return this.productDisplay;
+        this.listDisplay = this.userData.package_orders;
+        return this.listDisplay;
       }
-      this.productDisplay = this.userData.filter(item => item.type === this.categoryItem[index].type);
       this.isEmpty();
     },
     isEmpty() {
-      if (this.productDisplay.length === 0) {
+      if (this.listDisplay.length === 0) {
         this.empty = true;
         return this.empty;
       }
-      return this.productDisplay;
+      return this.listDisplay;
     },
     handleResize() {
       // 判定視窗寬度是否大於等於 768px

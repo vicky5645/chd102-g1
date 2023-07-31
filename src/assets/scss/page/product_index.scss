@@ -168,7 +168,7 @@ $topBarheight: 44px;
             color: #F29C50;
             border: 1px solid #F29C50;;
             border-radius: 7px;
-            left: 15px;
+            right: 15px;
             top: 15px;
             display: flex;
             justify-content: center;
@@ -180,6 +180,29 @@ $topBarheight: 44px;
         .cardCart{
             top: calc($btnSize + 20px);
 
+        }
+        .hot-tag{
+            position: absolute;
+            background-color: $hotColor;
+            border-radius: 0 4px 4px 0;
+            padding: 4px 8px;
+            left: -8px;
+            top: 16px;
+            user-select: none;
+            span{
+                display: block;
+                color: #fff;
+            }
+            &::after{
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                transform: translateY(100%);
+                border-style: solid;
+                border-width: 0 8px 8px 0;
+                border-color: transparent $hotDarkColor transparent transparent;
+            }
         }
         .cradPic{
             border-radius: 7px;
@@ -277,4 +300,60 @@ $topBarheight: 44px;
             }  
         }
     }
+}
+
+//成功加入購物車動畫
+.icon-container {
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    padding: 30px 20px;
+    color: $linkColor;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    background: rgba(255, 255, 255, .8);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+
+    .circle,
+    .check {
+        fill: none;
+        stroke: $linkColor;
+        stroke-width: 3;
+    }
+
+    .check {
+        stroke-dasharray: 80 100;
+        stroke-dashoffset: 80;
+    }
+
+    &.showing {
+        opacity: 1;
+        pointer-events: auto;
+
+        .check {
+            animation: check .3s cubic-bezier(0.5, 0, 0.6, 1) forwards .2s;
+        }
+    }
+}
+
+@keyframes check {
+    from { stroke-dashoffset: 80; }
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes circle {
+    from { stroke-dashoffset: -300; }
+    to { stroke-dashoffset: 0; }
 }

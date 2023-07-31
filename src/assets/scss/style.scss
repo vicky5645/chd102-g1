@@ -16,11 +16,12 @@
 @import "component/grid";
 @import "component/sidebar";
 @import "component/form";
+@import "component/card";
+@import "component/weather.scss";
 
 // layout
 @import "layout/footer";
 @import "layout/header";
-@import "layout/title";
 @import "layout/body";
 
 // page
@@ -39,3 +40,4 @@
 @import "page/Attractions.scss";
 @import "page/custom-tickets.scss";
 @import 'page/user-float.scss';
+@import "page/payment.scss";

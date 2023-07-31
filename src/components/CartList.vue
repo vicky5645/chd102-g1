@@ -8,15 +8,18 @@
                     </button>
                 </div>
                 <div class="item-pic">
-                    <img :src="item.image" alt="">
+                  <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
+                  <!-- <img :src="item.image" :alt="item.title"> -->
                 </div>
             </div>
             <div class="item-info">
-                <a class="item-name" href="#">
+              <!-- <router-link :to="`/productDetail/${item.id}`"> -->
+                <a class="item-name" :href="'/productDetail/' + item.id">
                     {{ item.title }}
                 </a>
+              <!-- </router-link> -->
                 <div class="item-price">
-                    <span>{{ item.price }}</span>
+                    <span>{{ item.totalPrice }}</span>
                 </div>
             </div>
             <div class="btn-group">
@@ -41,13 +44,7 @@ export default {
     ...mapGetters(['cartList']),
   },
   created() {
-    // 取得API
     this.$store.dispatch("initStorage");
-    fetch('/data/productData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.productData = json;
-      })
   },
   methods: {
     //增加數量
@@ -68,7 +65,10 @@ export default {
       this.$store.commit("removeFromCart", clickTitle);
       console.log(clickTitle);
     },
-    
+    // goDetail(item) {
+    //   // 使用 router.go() 方法導向上一頁
+    //   this.$router.push({ name: "productDetail", params: { id: item.id } });
+    // },
   },
 }
 </script>

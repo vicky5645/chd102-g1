@@ -44,68 +44,40 @@
                     </form>
                 </div>
                 <div class="detailsInfo">
-                    <div class="orderList" @click="isShow = !isShow">
+                    <div class="orderList" @click="toggleCheckList">
                         <h4>商品訂單明細</h4>
-                        <i class="fa-solid fa-angle-right" :style="{ transform: isShow ? 'rotate(90deg)' : 'rotate(0deg)' }"></i>
+                        <i class="fa-solid fa-angle-right" :style="{ transform: showCheckList ? 'rotate(90deg)' : 'rotate(0deg)' }"></i>
                     </div>
-                    <div class="orderDetails" v-if="productData.length > 0" v-show="isShow">
-                        <div class="orderItem">
-                            <div class="orderPic">
-                                <img :src="productData[0].image" alt="">
-                            </div>
-                            <div class="orderInfo">
-                                <div>{{ productData[0].title }}</div>
-                                <div class="item-price">{{ productData[0].price }}</div>
-                                <div class="orderPrice">
-                                    數量 <span class="qty">3</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="orderItem">
-                            <div class="orderPic">
-                                <img :src="productData[0].image" alt="">
-                            </div>
-                            <div class="orderInfo">
-                                <div>{{ productData[0].title }}</div>
-                                <div class="item-price">{{ productData[0].price }}</div>
-                                <div class="orderPrice">
-                                    數量 <span class="qty">3</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="orderItem">
-                            <div class="orderPic">
-                                <img :src="productData[0].image" alt="">
-                            </div>
-                            <div class="orderInfo">
-                                <div>{{ productData[0].title }}</div>
-                                <div class="item-price">{{ productData[0].price }}</div>
-                                <div class="orderPrice">
-                                    數量 <span class="qty">3</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <CheckOutList v-if="showCheckList"/>
                     <hr class="hrBot">
                     <div class="totalPrice item-price">
                         總計:
-                        <span class="h3">123</span>
+                        <span class="h3">{{ totalPrice }}</span>
                     </div>
                 </div>
             </div>
             <div class="checkOut">
-                <button class="btn-checkOut">前往結帳</button>
+                <button class="btn-checkOut" @click="goPayment">前往結帳</button>
             </div>
         </div>
     </main>
 </template>
 <script>
+import CheckOutList from "@/components/CheckOutList.vue";
+import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
             isShow: true,
             productData: [],
+            showCheckList: true,
         }
+    },
+    components: {
+        CheckOutList
+    },
+    computed: {
+    ...mapGetters(['totalPrice']),
     },
     created() {
         // 取得API
@@ -115,7 +87,17 @@ export default {
                 this.productData = json
             })
     },
+    created() {
+        this.$store.commit("calculateSum");
+    },
     methods: {
+        toggleCheckList() {
+        this.showCheckList = !this.showCheckList; // 點擊時切換顯示和隱藏的狀態
+    },
+        goPayment() {
+            alert("即將跳轉信用卡付款頁面！");
+            this.$router.push('/online-mall');
+        }
     }
 }
 </script>

@@ -24,7 +24,8 @@
           <div class="card">
             <router-link :to="`/productDetail/${item.id}`">
               <div class="cradPic">
-                <img :src="item.image" :alt="item.title">
+                <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
+                <!-- <img :src="item.image" :alt="item.title"> -->
               </div>
             </router-link>
             <div class="content">
@@ -40,7 +41,6 @@
 
               </div>
               <div class="card-bottom">
-                <hr>
                 <div class="btn-space">
                   <button type="submit" class="btn primary radius">
                     <span>立即訂購</span>
@@ -56,9 +56,10 @@
         </template>
         <template v-else-if="checkedItem == '行程'">
           <div class="card">
-            <router-link :to="`/booking-info2/${item.id}`">
+            <router-link :to="`/booking-info/${item.id}`">
               <div class="cradPic">
-                <img :src="item.image" :alt="item.title">
+                <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
+                <!-- <img :src="item.image" :alt="item.title"> -->
               </div>
             </router-link>
             <div class="content">
@@ -81,7 +82,6 @@
 
               </div>
               <div class="card-bottom">
-                <hr>
                 <div class="btn-space">
                   <button type="submit" class="btn primary radius">
                     <span>立即訂購</span>
@@ -100,6 +100,7 @@
   </div>
 </template>
 <script>
+import { GET } from '@/plugin/axios'
 export default {
   data() {
     return {
@@ -121,15 +122,11 @@ export default {
     }
   },
   created() {
-    // 頁面剛載入時，將 userData 賦值給 productDisplay，展示初始商品資料
-    // this.productDisplay = this.userData;
     // 取得API
-    fetch('/data/userData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.userData = json
-        this.updateDisplay()
-      })
+    GET('/data/userData.json').then(res => {
+      this.userData = res
+      this.updateDisplay()
+    })
   },
   mounted() {
     // 監聽視窗大小改變事件

@@ -3,11 +3,11 @@
   height: $h;
 }
 @mixin card-shadow(){
-  border-radius: 13px;
-  border: 1px solid map-get($GrayColors, Gray5);
-  background: map-get($GrayColors, white);
-  /* 淡陰影 */
-  box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.20);
+  border-radius: $space * 2;
+  border: 1px solid map-get($GrayColors, Gray6);
+  box-sizing: border-box;
+  background: map-get($GrayColors, White);
+  box-shadow: 2px 2px 10px #00000033;
 }
 @mixin flexCenter(){
   display: flex;
@@ -26,6 +26,9 @@
   font-size: $h4;
   line-height: 24px;
   letter-spacing: -0.16px;
+}
+@mixin hr ($top, $width: 1px) {
+  border-#{$top}: $width solid map-get($BrandColors, Secondary2);
 }
 
 .icon-24 {
@@ -49,21 +52,11 @@
     height: 100%;
     object-fit: cover;
   }
-  input,select {
-    margin-bottom: 10px;
-    border: 1px solid#a0a0a0;
-    border-radius: 8px;
-    min-height: 44px;
-    /* label/text-16-light */
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 125%;
-    padding: 8px 16px;
-    box-sizing: border-box;
-  }
   .categoryBtn {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    width: 100%;
   }
   .categoryItem {
     list-style-type: none;
@@ -71,19 +64,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 16px;
-      min-height: 44px;
-    }
-  }
-  .show-mobile{
-    @include pad {
-      display: none;
-    }
-  }
-  .hidden-mobile{
-    display: none;
-    @include pad {
-      display: block;
+      padding: 0 $space * 2;
+      min-height: $space * 5;
     }
   }
   >aside{
@@ -95,7 +77,7 @@
         display: flex;
         align-items: flex-start;
         flex-direction: column;
-        row-gap: 20px;
+        row-gap: $space * 2;
         .profile-top {
           width: 100%;
           height: 220px;
@@ -106,7 +88,7 @@
           padding: 16px 0;
           .avatar {
             @include size(120px);
-            margin: 16px;
+            margin: $space * 2;
             img {
               border-radius: (120px / 2);
             }
@@ -147,72 +129,22 @@
   >main{
     padding:16px;
     height: 100%;
-    border: 1px solid map-get($GrayColors, Gray5);
-    background: map-get($GrayColors, White);
-    /* 淡陰影 */
-    box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.20);
+    @include card-shadow();
     @include pad {
-      border-radius: 13px;
+      border-radius: $space;
     }
     display: flex;
-    row-gap: 16px;
+    row-gap: $space * 2;
     .settings {
       width: 100%;
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-      row-gap: 16px;
+      row-gap: $space * 2;
       .top-space {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      & .input-wrap {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        @include pad {
-          flex: 1;
-          &.long {
-            grid-column: span 2;
-          }
-        }
-        .btn {
-          background-color: map-get($BrandColors, Primary);
-          position: absolute;
-          top: 0%;
-          right: 0px;
-          height: 44px;
-
-          color: #fff;
-          border-radius: 0 8px 8px 0;
-          overflow: hidden;
-        }
-        &.login{ 
-          position: relative;
-          & input{
-            &:focus + label,
-            &:valid + label {
-              font-size: $caption;
-              line-height: 20px;
-              transform: translateY(-175%) translateX(8px);
-              color: map-get($BrandColors, Secondary2);
-              background-color: #fff;
-            }
-          }
-          & label {
-            position: absolute;
-            top: 50%;
-            left: 0px;
-            padding-left: 8px;
-            padding-right: 8px;
-            transform: translateY(-75%);
-            color: #000;
-            font-size: 16px;
-            pointer-events: none;
-            transition: all 0.5s;
-          }
-        }
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: $space * 2;
       }
       .left {
         display: flex;
@@ -222,39 +154,34 @@
         justify-content: flex-end;
       }
       .user-control-content {
+        display: flex;
+        flex-direction: column;
+        // flex-wrap: wrap;
+        gap: $space * 2;
         @include pad {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 16px;
         }
         & .cradPic{
           height: 100%;
           overflow: hidden;
-          border-radius: 9px;
+          border-radius: $space;
           aspect-ratio: 2/1;
           @include pad {
             aspect-ratio: 1/1;
-            border-radius: 0px;
           }
-        }
-        & .clamp-2 {
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 2;
-          overflow: hidden;
         }
         & .card-out{ grid-column: span 3; }
         & .card{
           display: grid;
           flex-direction: column;
-          gap: 16px;
+          gap: $space * 2;
           width: 100%;
           overflow: hidden;
-          @include card-shadow;
           @include pad {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            gap: $space * 2;
           }
           & .content {
             flex-grow: 1;
@@ -268,17 +195,18 @@
               flex-grow: 1;
             }
             & .card-bottom {
-              // background-color: gold;
+              flex-shrink: 1;
             }
             & .des  {
               padding-top: 0px;
               padding-right: 0px;
-              padding-bottom: 16px;
+              padding-bottom: $space * 2;
               display: flex;
-              gap: 8px;
+              gap: $space;
               height: 100%;
               flex-direction: column;
               height: fit-content;
+              @include hr (bottom);
               @include pad {
                 flex-direction: row;
                 height: 100%;
@@ -302,8 +230,8 @@
                   justify-content: flex-end;
                   color: map-get($BrandColors, Primary);
                   white-space: nowrap;
-                  border-top: 2px solid map-get($BrandColors, Secondary2);
-                  padding-top: 8px;
+                  border-top: 1px solid map-get($BrandColors, Secondary2);
+                  padding-top: $space;
                   @include pad {
                     border-top: 0;
                     border-left: 1px solid map-get($BrandColors, Secondary2);
@@ -317,12 +245,12 @@
             .btn-space {
               display: grid;
               grid-template-columns: repeat(2, 1fr);
-              margin-top: 8px;
-              gap: 8px;
+              margin-top: $space;
+              gap: $space;
               @include pad {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 8px;
+                margin-bottom: $space;
               }
               .btn {
                 display: flex;
@@ -336,7 +264,7 @@
           grid-column: span 3;
           & .thead , & .tbody { 
             display: flex;
-            gap:8px;
+            gap: $space;
             > *:nth-child(2){
               width: 200%;
             }
@@ -354,13 +282,13 @@
             @include pad {
               display: flex;
               justify-content: space-between;
-              margin-bottom: 8px;
-              border-radius: 10px;
+              margin-bottom: $space;
+              border-radius: $space;
             }
           }
           .tbody {
             min-height: 44px;
-            border-bottom: 2px solid  map-get($BrandColors, Secondary2);
+            @include hr(bottom, 2px);
             > span , .btn-space{
               display: flex;
               align-items: center;
@@ -379,13 +307,13 @@
             }
             .des-title {
               @include text-18-md;
-              margin-bottom: 8px;
+              margin-bottom: $space;
             }
             @include pad {
               display: flex;
               justify-content: space-between;
-              margin-bottom: 8px;
-              border-radius: 10px;
+              margin-bottom: $space;
+              border-radius: $space;
             }
           }
         }
@@ -393,7 +321,8 @@
     }
     hr {
       width: 100%;
-      border: 1px solid map-get($BrandColors, Secondary2);
+      @include hr (top);
+      @include hr (bottom);
     }
   }
   /* 定義過渡效果 */

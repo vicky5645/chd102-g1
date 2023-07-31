@@ -1,7 +1,8 @@
 //變數
 $color : #333; //color 
 $margin : 10px 20px; // list
-// $padding : null; // null
+//預設基礎
+$space: 8px;
 
 .box_default {
    @if $color {
@@ -44,27 +45,6 @@ $layoutWidth :1200px ;
 @mixin space($num){
       margin-top: $num * 3px;
 }
-
-
-.card {
-   padding: 10px;
-   // border: 1px solid #333;
-   border-radius: 8px;
-   width: 100%;
-   // .img {
-   //    width: 100%;
-   //    height: 300px;
-   //    margin: 0 auto;
-   // } 
-   // h2 {
-   //    @include space(2) 
-   // }
-   // .content{
-   //    @include space(1)
-   // }
-
-}
-
 
 
 

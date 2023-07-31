@@ -1,13 +1,6 @@
 <template>
   <main>
     <BreadCrumbs detailName="商城" />
-    <!-- <ol class="breadCrumbs">
-        <i class="fa-solid fa-house"></i> -->
-    <!-- <li v-for="item in [...breadCrumbs]" :key="item.index">
-            <a :href="item.link" :style="item.color">
-                {{item.index}}</a>
-        </li> -->
-    <!-- </ol> -->
     <div class="container productIndex">
       <div class="category">
         <h3>商品分類</h3>
@@ -36,15 +29,26 @@
           <div class="empty" v-show="empty">目前未上架相關商品或已售完</div>
           <div v-for="item, index in productDisplay" :key="item.id" class="col">
             <div class="card">
+              <div class="icon-container" :class="{ showing: addSuccess && index === currentIndex }">
+                <svg class="icon" viewBox="0 0 100 100" width="80" height="80">
+                        <circle class="circle" cx="50" cy="50" r="48"></circle>
+                        <polyline class="check" points="28,53 42,66 74,34"></polyline>
+                    </svg>
+                    <p>成功加入購物車</p>
+              </div>
               <button class="cardFavorite" @click="toggleFavorite(index)">
                 <i :class="favoriteIcon(index)"></i>
               </button>
-              <button class="cardCart">
+              <button class="cardCart" @click="addToCart(index)">
                 <i :class="goodsBtn.cart.i"></i>
               </button>
+              <div class="hot-tag" v-if="item.hot">
+                <span>HOT</span>
+              </div>
               <router-link :to="`/productDetail/${item.id}`">
                 <div class="cradPic">
-                  <img :src="item.image" :alt="item.title">
+                  <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
+                  <!-- <img :src="item.image" :alt="item.title"> -->
                 </div>
               </router-link>
               <router-link :to="`/productDetail/${item.id}`">
@@ -63,6 +67,7 @@
 </template>
 
 <script>
+import {GET} from '@/plugin/axios'
 import BreadCrumbs from '@/components/BreadCrumbs.vue'
 export default {
   components: {
@@ -70,6 +75,8 @@ export default {
   },
   data() {
     return {
+      addSuccess: false,
+      currentIndex: null,
       //顯示未有相關商品上架的提示
       empty: false,
       //判斷視窗寬度是否大於768px用
@@ -92,24 +99,24 @@ export default {
           i: "fa-solid fa-cart-shopping"
         }
       },
-      breadCrumbs: [
-        {
-          index: "Goods",
-          link: "index.html",
-          color: "color:#9CA3AF;"
-        },
-        {
-          index: "Detail",
-          link: "detail.html",
-          color: "color:#9CA3AF;"
-        },
-        {
-          index: "Pricing",
-          link: "pricing.html",
-          color: "color:#F29C50;"
-        }
-      ],
-      tabActive: 1,
+      // breadCrumbs: [
+      //   {
+      //     index: "Goods",
+      //     link: "index.html",
+      //     color: "color:#9CA3AF;"
+      //   },
+      //   {
+      //     index: "Detail",
+      //     link: "detail.html",
+      //     color: "color:#9CA3AF;"
+      //   },
+      //   {
+      //     index: "Pricing",
+      //     link: "pricing.html",
+      //     color: "color:#F29C50;"
+      //   }
+      // ],
+      // tabActive: 1,
       // categoryItem: {
       //   1: "所有商品",
       //   2: "熱銷商品",
@@ -119,19 +126,19 @@ export default {
       categoryItem: [
         { type: "所有商品" },
         { type: "熱銷商品" },
+        { type: "周邊" },
         { type: "食品" },
-        { type: "玩具" }
+        { type: "玩具" },
+        { type: "圖書" }
       ]
     }
   },
   created() {
     // 取得API
-    fetch('/data/productData.json')
-      .then(res => res.json())
-      .then(json => {
-        this.productData = json
-        this.updateDisplay()
-      })
+    GET('/data/productData.json').then(res => {
+      this.productData = res
+      this.updateDisplay()
+    })
   },
   mounted() {
     // 監聽視窗大小改變事件
@@ -159,7 +166,7 @@ export default {
         console.log(typeof this.productDisplay)
         return this.productDisplay;
       } else if (this.categoryItem[index].type === '熱銷商品') {
-        this.productDisplay = this.productData.filter(item => item.hot === true)
+        this.productDisplay = this.productData.filter(item => item.hot).concat(this.productData.filter(item => !item.hot));
         return this.productDisplay;
       }
       this.productDisplay = this.productData.filter(item => item.type === this.categoryItem[index].type);
@@ -187,7 +194,16 @@ export default {
       } else {
         this.isShow = false;
       }
-    }
+    },
+    addToCart(index) {
+      this.$store.commit("addToCart",this.productData[index]);
+      console.log(this.productData[index]);
+      this.currentIndex = index;
+      this.addSuccess = true;
+      setTimeout(() => {
+                this.addSuccess = false;
+            }, 800);
+    },
   },
   beforeUnmount() {
     // 移除事件聆聽器

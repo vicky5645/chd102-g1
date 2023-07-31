@@ -7,77 +7,98 @@
   "mem_addr": "台北市中正區",
   "mem_acc": "wangxm",
   "mem_pwd": "password1",
-  "pattern_file": "/images/avatar1.jpg",
+  "pattern_file": "images/avatar1.jpg",
   "orders": [
     {
       "order_no": 1001,
       "order_date": "2023-06-15 10:30:00",
-      "mem_no": 1,
       "order_total": 1599.99,
       "order_status": 1,
       "recipient": "王小明",
       "recipient_tele": "0912345678",
       "recipient_address": "台北市中正區",
-      "payment_method": 1
+      "payment_method": 1,
+      "id": 1,
+      "title": "火車懷錶",
+      "price": 1200,
+      "isFavorite": true,
+      "image": "images/img/ProductDetails/p1.png"
     },
     {
       "order_no": 1002,
       "order_date": "2023-06-16 15:45:00",
-      "mem_no": 2,
       "order_total": 2800.50,
       "order_status": 0,
       "recipient": "李美美",
       "recipient_tele": "0987654321",
       "recipient_address": "新北市板橋區",
-      "payment_method": 2
+      "payment_method": 2,
+      "id": 2,
+      "title": "火車叉叉",
+      "price": 22.3,
+      "isFavorite": true,
+      "image": "images/online-mall/fork.png"
     }
   ],
   "package_orders": [
     {
       "order_no": 2001,
-      "order_date": "2023-06-15 10:30:00",
       "order_total": 2999.99,
-      "mem_no": 101,
       "recipient_tele": "0912345678",
       "recipient_address": "台北市中正區",
       "org_no": 7,
-      "pattern_newfile": "https://example.com/ticket_2001.png"
+      "pattern_newfile": "https://example.com/ticket_2001.png",
+      "id": 1,
+      "order_date": "2023-06-15",
+      "price": 36888,
+      "order_status": 1,
+      "title": "探尋島嶼之美，搭乘耀眼的七星豪華列車",
+      "title2": "—————「SEVEN STARS ROAMING」",
+      "image": "images/spot/07.jpg",
+      "seat": 20,
+      "date": "2025-03-18",
+      "train": "星光漫遊列車"
     },
     {
       "order_no": 2002,
-      "order_date": "2023-06-16 15:45:00",
       "order_total": 2599.50,
-      "mem_no": 102,
       "recipient_tele": "0987654321",
       "recipient_address": "新北市板橋區",
       "org_no": 8,
-      "pattern_newfile": "https://example.com/ticket_2002.png"
+      "pattern_newfile": "https://example.com/ticket_2002.png",
+      "id": 2,
+      "order_date": "2025-04-18",
+      "price": 41888,
+      "order_status": 1,
+      "title": "探尋島嶼之美，搭乘尊爵的ROYAL豪華列車",
+      "title2": "——————————「ROYAL EXPRESS」",
+      "image": "images/spot/09.jpg",
+      "seat": 20,
+      "date": "2025-03-18",
+      "train": "none"
     }
   ],
   "favorite_products": [
     {
-      "mem_no": 101,
       "id": 1,
       "title": "火車懷錶",
       "price": 1200,
       "isFavorite": true,
-      "image": "/images/img/ProductDetails/p1.png"
+      "image": "images/img/ProductDetails/p1.png"
     },
     {
-      "mem_no": 101,
       "id": 2,
       "title": "火車叉叉",
       "price": 22.3,
       "isFavorite": true,
-      "image": "/images/online-mall/fork.png"
+      "image": "images/online-mall/fork.png"
     },
     {
-      "mem_no": 102,
       "id": 3,
       "title": "車車模型",
       "price": 180,
       "isFavorite": true,
-      "image": "/images/online-mall/Train_model.png"
+      "image": "images/online-mall/Train_model.png"
     }
   ],
   "favorite_orders": [
@@ -88,7 +109,7 @@
       "order_status": 1,
       "title": "探尋島嶼之美，搭乘耀眼的七星豪華列車",
       "title2": "—————「SEVEN STARS ROAMING」",
-      "image": "/images/spot/07.jpg",
+      "image": "images/spot/07.jpg",
       "seat": 20,
       "date": "2025-03-18",
       "train": "星光漫遊列車"
@@ -100,7 +121,7 @@
       "order_status": 1,
       "title": "探尋島嶼之美，搭乘尊爵的ROYAL豪華列車",
       "title2": "——————————「ROYAL EXPRESS」",
-      "image": "/images/spot/09.jpg",
+      "image": "images/spot/09.jpg",
       "seat": 20,
       "date": "2025-03-18",
       "train": "none"
@@ -111,23 +132,21 @@
       "id": 1,
       "title": "火車旅行趣事",
       "content": "我最近搭乘火車去旅行，遇到了一些有趣的事情。首先，車廂內的風景非常美麗，我坐在窗邊欣賞著風景飄過，感覺很放鬆。",
-      "mem_no": 101,
       "date": "2023-06-15 10:30:00",
       "likes": 1020,
       "mes": 50,
       "platform_online": 1,
-      "image": "https://source.unsplash.com/featured/?train,sky"
+      "image": "images/travel/park/park2.jpg"
     },
     {
       "id": 2,
       "title": "火車旅行小貼士",
       "content": "我喜歡搭乘火車旅行，這裡有一些小貼士，希望對大家有幫助。首先，提前預訂車票是必須的，這樣可以確保有座位。其次，帶上一些零食和飲料，火車上的餐車選擇有限。",
-      "mem_no": 102,
       "date": "2023-06-16 15:45:00",
       "likes": 800,
       "mes": 40,
       "platform_online": 1,
-      "image": "https://source.unsplash.com/featured/?train"
+      "image": "images/travel/farm/farm9.jpg"
     }
   ]
 }

@@ -8,7 +8,6 @@ button {
   font-size: $sm-font;
   line-height: 20px; /* 142.857% */
   letter-spacing: -0.14px;
-  
 }
 @mixin nl-btn {
   /* label/text-16-md */
@@ -23,60 +22,61 @@ button {
 }
 
 .btn {
-    border:0;
-    padding: .6em 1.4em;
-    text-align: center;
-    // font-family: $fontFamily;
-    // font-size: $fontSize;
+  border: 0;
+  padding: 0.6em 1.4em;
+  text-align: center;
+  user-select: none;
+  // font-family: $fontFamily;
+  // font-size: $fontSize;
+  @include sm-btn;
+  cursor: pointer;
+  @include pad {
+    @include nl-btn;
+  }
+  &.small {
     @include sm-btn;
-    cursor: pointer;
-    @include pad {
-      @include nl-btn;
+  }
+  &.big {
+    @include md-btn;
+    width: 185px;
+    height: 70px;
+  }
+  &.primary {
+    background-color: map-get($BrandColors, Primary);
+    color: $btnTextColor;
+    transition: cubic-bezier(0.39, 0.575, 0.565, 1);
+    &:hover {
+      background-color: darken(map-get($BrandColors, Primary), 20);
     }
-    &.big{
-      @include md-btn;
-      width: 185px;
-      height: 70px;
+  }
+  &.secondary {
+    background-color: map-get($BrandColors, Secondary1);
+    &:hover {
+      background-color: darken(map-get($BrandColors, Secondary1), 20);
     }
-    &.primary {
-        background-color: map-get($BrandColors, Primary);
-        color : $btnTextColor;
-        transition: cubic-bezier(0.39, 0.575, 0.565, 1);
-        &:hover {
-          background-color: darken(map-get($BrandColors, Primary), 20);
-        }
+  }
+  &.other {
+    background-color: map-get($GrayColors, Gray4);
+    color: $btnTextColor;
+    &:hover {
+      background-color: darken(map-get($GrayColors, Gray4), 20);
     }
-    &.secondary {
-        background-color: map-get($BrandColors, Secondary1);
-        &:hover {
-          background-color: darken(map-get($BrandColors, Secondary1), 20);
-        }
+  }
+  &.error {
+    background-color: map-get($StateColors, Error);
+    color: $btnTextColor;
+    &:hover {
+      background-color: darken(map-get($StateColors, Error), 20);
     }
-    &.other {
-      background-color: map-get($GrayColors, Gray4);
-      color : $btnTextColor;
-      &:hover {
-        background-color: darken(map-get($GrayColors, Gray4), 20);
-        }
-      }
-    &.error {
-      background-color: map-get($StateColors, Error);
-      color : $btnTextColor;
-      &:hover {
-        background-color: darken(map-get($StateColors, Error), 20);
-      }
-    }
-    &.disable {
-      background-color: map-get($GrayColors, Gray5);
-      color : $btnTextColor;
-    }
-    &.radius {
-      border-radius: 8px;
-    }
-    &.round {
-      border-radius: 30px;  
-    }
+  }
+  &.disable {
+    background-color: map-get($GrayColors, Gray5);
+    color: $btnTextColor;
+  }
+  &.radius {
+    border-radius: 8px;
+  }
+  &.round {
+    border-radius: 30px;
+  }
 }
-
-
-

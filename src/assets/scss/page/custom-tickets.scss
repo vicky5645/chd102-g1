@@ -1,13 +1,6 @@
 $colorWhite: #eee;
 $colorGray: rgba(black, 0.3);
 $colorBlack: rgba(black, 0.8);
-@mixin card-shadow(){
-  border-radius: 13px;
-  border: 1px solid map-get($GrayColors, Gray5);
-  background: map-get($GrayColors, white);
-  /* 淡陰影 */
-  box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.20);
-}
 
 @mixin size($w, $h: $w) {
   width: $w;
@@ -22,7 +15,7 @@ $colorBlack: rgba(black, 0.8);
 }
 
 @mixin xyzdeg($Xdeg: 0, $Ydeg: 0, $Zdeg: 0) {
-  transform: rotateX(#{$Xdeg}deg) rotateY(#{$Ydeg}deg) rotateZ(#{$Zdeg}deg);
+  // transform: rotateX(#{$Xdeg}deg) rotateY(#{$Ydeg}deg) rotateZ(#{$Zdeg}deg);
 }
 
 $times: infinite;
@@ -46,7 +39,7 @@ $ani-bg: ani-namecard;
 
 .custom-tickets {
   .perspective {
-    perspective: 200px; /*值越小，內層物件就會像衝出螢幕一樣，表示觀看距離近*/
+    // perspective: 200px; /*值越小，內層物件就會像衝出螢幕一樣，表示觀看距離近*/
   }
   .row:not(:has(.footer)) {
     display: flex;
@@ -109,17 +102,16 @@ $ani-bg: ani-namecard;
       }
     }
     .ticket-bg {
-      padding: 40px 16px;
+      padding: $space * 2 $space * 2;
       width: 100%;
       margin: 40px auto;
-      letter-spacing: 1px;
-      font-weight: 100;
       background-color: map-get($BrandColors, Primary);
       .h2 {
         color: rgba(0, 0, 0, 0.5);
       }
       #selected_icons{
-        @include poA(45%, 50%);
+        @include poA(calc(50%), calc(60%));
+        transform-origin: 45px 45px;
         animation: #{$ani-bg} 4s 1s ease #{$times} both;
         &:hover, &:active {
           animation-play-state: paused; //停止動畫
@@ -128,7 +120,6 @@ $ani-bg: ani-namecard;
     }
     .post-box {
       overflow: hidden;
-      @include card-shadow;
       @include size(620px, 400px);
       aspect-ratio: 620 / 400;
       border-radius: 10px;
@@ -144,12 +135,11 @@ $ani-bg: ani-namecard;
       overflow-y: auto;
       scrollbar-gutter: stable;
       border-radius: 5px;
-      margin-left: 20px;
       position: sticky;
+      &:has(svg){
+        margin-left: 20px;
+      }
       #block-img{
-        // position: absolute;
-        top: 0;
-        left: 0;
         display: flex;
         justify-content: center;
         flex-direction: column;
@@ -159,7 +149,7 @@ $ani-bg: ani-namecard;
         border: 1px solid #000;
       }
     }
-    .bottom-btn{
+    .bottom-btn > *{
       display: flex;
       flex-direction: column;
       margin-bottom: 80px;

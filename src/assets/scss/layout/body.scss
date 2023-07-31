@@ -2,7 +2,7 @@ body {
   padding: null; // null 屬性被刪出
   color: $color;
   font-family: $fontFamily;
-  background-color: $bodyBgColor;
+  background-color: $bodyBgColor !important;
   position: relative;
   overflow-x: hidden;
   //一般內文
@@ -14,6 +14,7 @@ body {
     font-weight: 500;
     font-weight: bold;
   }
+  a {text-decoration: none;}
 }
 
 // .wrapper {

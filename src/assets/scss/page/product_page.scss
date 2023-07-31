@@ -16,6 +16,7 @@ main.product_page {
   }
 
   .product_data {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -28,6 +29,7 @@ main.product_page {
         height: 250px;
         overflow: hidden;
         margin-bottom: 12px;
+        box-shadow: 3px 3px 5px rgba(0, 0, 0, .3);
         img {
           width: 100%;
           vertical-align: top;
@@ -41,7 +43,7 @@ main.product_page {
         grid-template-columns: 1fr 1fr 1fr;
         gap: 12px;
         .small_pic {
-          border: 1px solid;
+          border: 1px solid rgba(0, 0, 0, .3);
           overflow: hidden;
           height: 80px;
           cursor: pointer;
@@ -95,7 +97,9 @@ main.product_page {
           align-items: center;
           background-color: map-get($BrandColors, Primary);
           border-radius: 8px;
-          border: none;
+          // border: none;
+          box-shadow: 1px 1px rgba(0, 0, 0, .3);
+          border: 1px solid rgba(0, 0, 0, .01);
         }
       }
 
@@ -133,9 +137,10 @@ main.product_page {
         flex-direction: row-reverse;
         align-items: center;
         width: 145px;
-        height: 40px;
+        // height: 40px;
         border-radius: 10px;
-        border: 1px solid #000;
+        // border: 1px solid #000;
+        border: 1px solid rgba(0, 0, 0, .3);
         justify-content: space-between;
         margin-top: 12px;
         margin-bottom: 24px;
@@ -145,6 +150,8 @@ main.product_page {
           border-radius: 8px;
           border: 1px solid map-get($BrandColors, Secondary1);
           background: map-get($BrandColors, Primary);
+          box-shadow: 1px 1px rgba(0, 0, 0, .3);
+          border: 1px solid rgba(0, 0, 0, .01);
 
           i {
             font-size: 20px;
@@ -165,7 +172,9 @@ main.product_page {
           padding: 12px 20px;
           background-color: map-get($BrandColors, Primary);
           border-radius: 8px;
-          border: none;
+          // border: none;
+          box-shadow: 1px 1px rgba(0, 0, 0, .3);
+          border: 1px solid rgba(0, 0, 0, .01);
           color: #fff;
           font-weight: 500;
           font-size: 18px;
@@ -186,20 +195,28 @@ main.product_page {
       line-height: 36px;
       padding: 4px 16px;
       background-color: #ededed;
-      border: 0.5px solid map-get($BrandColors, Secondary1);
-      border-bottom: #fff;
-      translate: 0 1px;
+      // border: 0.5px solid map-get($BrandColors, Secondary1);   
+      // border-bottom: #fff;
+      // translate: (0, 1px);
+      transform: translateY(1px);
       color: map-get($BrandColors, Secondary1);
+      border: 1px solid rgba(0, 0, 0, .3);
+      border-bottom-color: #ededed;
     }
-
+    .tab1{
+      border-right-width: 0;
+    }
     .unselected {
       background-color: #d9d9d9;
-      border-bottom: 0.5px solid map-get($BrandColors, Secondary1);
+      border-bottom: 1px;
+      // border-bottom: 0.5px solid map-get($BrandColors, Secondary1);
     }
 
     .txt_block {
-      border: 0.5px solid map-get($BrandColors, Secondary1);
+      // border: 0.5px solid map-get($BrandColors, Secondary1);
+      border: 1px solid rgba(0, 0, 0, .3);
       padding: 8px 16px;
+      box-sizing: border-box;
 
       p {
         font-size: 16px;
@@ -303,17 +320,27 @@ main.product_page {
         .type_and_like {
           .like {
             padding: 12px 24px;
+            &:active{
+              background-color: $activeColor;
+              box-shadow: none;
+            }
           }
         }
 
         .quantity_button {
           width: 304px;
-          height: 45px;
+          // height: 45px;
           margin-top: 20px;
           margin-bottom: 0;
 
           button {
             padding: 10px 14px;
+            box-shadow: 1px 1px rgba(0, 0, 0, .3);
+            border: 1px solid rgba(0, 0, 0, .01);
+            &:active{
+              background-color: $activeColor;
+              box-shadow: none;
+            }
 
             i {
               font-size: 24px;
@@ -328,6 +355,10 @@ main.product_page {
             padding: 18px 27px;
             font-size: 18px;
             // width: 272px;
+            &:active{
+              background-color: $activeColor;
+              box-shadow: none;
+            }
           }
         }
       }
@@ -363,7 +394,13 @@ main.product_page {
         position: absolute;
         top: 32%;
         z-index: 1;
-        border: none;
+        // border: none;
+        box-shadow: 1px 1px rgba(0, 0, 0, .3);
+        border: 1px solid rgba(0, 0, 0, .01);
+        &:active{
+          background-color: $activeColor;
+          box-shadow: none;
+        }
 
         i {
           font-size: 24px;
@@ -372,11 +409,11 @@ main.product_page {
       }
 
       button.right {
-        right: 0;
+        right: 1px;
       }
 
       button.left {
-        left: 0;
+        left: 1px;
       }
 
       // 過渡動畫
@@ -424,3 +461,21 @@ main.product_page {
     }
   }
 }
+
+
+//成功加入購物車動畫(商品頁面專用)
+.product_data{
+  .icon-container{
+    width: 240px;
+    height: 240px;
+    top: 50%;
+    left: 50%;
+    border-radius: 8px;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, .9);
+  }
+}
+//禁止點擊時按鈕換色
+.clickDisabled{
+  background-color: map-get($GrayColors , Gray5) !important;
+}  

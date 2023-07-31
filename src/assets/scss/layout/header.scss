@@ -48,24 +48,33 @@ header {
             }
          }
       .chrt, .login {
-         color: #7aacbf;
          // font-size: 16px;
          // font-weight: 400;
          // line-height: 110%;
          @include h4; 
          text-decoration: none;
+         color: #7aacbf;
          display: none;
+         cursor: pointer;
          &:hover{
             color: map-get($BrandColors, Primary);
          }
          @include pad {
             display: inline-flex;
+            gap: 5px;
             align-items: center;
          }
       }
       .chrt {
          margin-right: 24px;
-         cursor: pointer;
+      }
+      .sidebar:has(.chrt){
+         .chrt, .login {
+            margin-right: 0;
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+         }
       }
       .ham{
          // width: 50px;
