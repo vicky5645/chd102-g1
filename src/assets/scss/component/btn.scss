@@ -31,8 +31,13 @@ button {
   text-align: center;
   user-select: none;
   color: $btnTextColor;
+  box-shadow: 1px 1px rgba(0, 0, 0, .3);
   @include sm-btn;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $space; 
   @include pad {
     @include nl-btn;
   }
@@ -45,14 +50,16 @@ button {
   &.primary {
     background-color: map-get($BrandColors, Primary);
     transition: cubic-bezier(0.39, 0.575, 0.565, 1);
-    &:hover {
-      background-color: darken(map-get($BrandColors, Primary), 20);
+    &:hover, &:active {
+      background-color: $activeColor;
+      box-shadow: none;
     }
   }
   &.secondary {
     background-color: map-get($BrandColors, Secondary1);
-    &:hover {
+    &:hover, &:active {
       background-color: darken(map-get($BrandColors, Secondary1), 20);
+      box-shadow: none;
     }
   }
   &.other {

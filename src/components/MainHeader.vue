@@ -67,8 +67,8 @@
           <div class="link-list">
           </div>
         </template>
-        <div class="pageMask"></div>
       </MainSidebar>
+      <div class="pageMask" @click="menuclose" :class="{ active: openSidebar }"></div>
     </nav>
   </header>
 </template>
@@ -106,10 +106,10 @@ export default {
     toggleSidebar() {
       this.openSidebar = !this.openSidebar;
     },
-    // menuclose() {
-    //   console.log("父層close");
-    //   this.openSidebar = false;
-    // },
+    menuclose() {
+      console.log("父層close");
+      this.openSidebar = false;
+    },
     // 購物車選單
     toggleCart() {
       this.cartStatus = !this.cartStatus;
@@ -144,8 +144,12 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
-  background-color: red;
-  width: 100vw;
-  height: 100vh;
+  transition: background-color .5s;
+  background-color: rgba(black,0);
+  &.active {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(black,.5);
+  }
 }
 </style>

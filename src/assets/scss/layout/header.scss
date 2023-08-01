@@ -49,6 +49,10 @@ header {
       .login {
          justify-self: start;
          margin-left: 0px;
+         margin-right: $space * 3;
+         @include pad {
+            margin-right: 0px;
+         }
       }
       .chrt {
          margin-right: 24px;

@@ -26,10 +26,14 @@
     top: 0%;
     right: 0px;
     height: 44px;
-
+    
     color: #fff;
     border-radius: 0 8px 8px 0;
     overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   &.login{ 
     position: relative;

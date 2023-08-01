@@ -107,7 +107,7 @@
             transition: all 0.5s;
             &.active{
               background-color: rgba(#B3CEE2,30%);
-              font-weight: bold;
+              font-weight: 700;
             }
             &:hover,&:active{
               background-color: rgba(#B3CEE2,30%);
@@ -251,11 +251,6 @@
                 display: flex;
                 justify-content: space-between;
                 margin-bottom: $space;
-              }
-              .btn {
-                display: flex;
-                align-items: center;
-                justify-content: center;
               }
             }
           }
