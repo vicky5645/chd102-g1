@@ -30,16 +30,15 @@
       </div>
       {{ draggable }}
       <div class="row make">
-        <div id="capture" class="post-box t-Ani perspective card-shadow">
+        <div id="capture" class="post-box t-Ani perspective card-shadow" @mouseup="onDragEnd" @mouseleave="onDragEnd" @mousemove="onDrag">
           <div class="ticket-bg t-Ani" id="card">
             <!-- 車票的一些內容 -->
-            <div class="h3">探尋島嶼之美，搭乘耀眼的七星豪華列車</div>
+            <!-- <div class="h3">探尋島嶼之美，搭乘耀眼的七星豪華列車</div> -->
             <!-- 這裡是放置已選取圖像節點的容器 & 拖曳節點的容器 -->
             <div id="selected_icons" :style="{
               color: setting.color || '#F29C50', left: `${position.x}` + 'px',
               top: `${position.y}` + 'px'
-            }" class="preserve-3d" :draggable="draggable" @dragstart="onStart($event)" @dragent="onEnd"
-              @dragover.prevent @drag="onDrag($event)">
+            }" class="preserve-3d" @mousedown="onStart">
             </div>
           </div>
         </div>
@@ -75,11 +74,14 @@ export default {
         x: '',
         y: ''
       },
+      currentX: 0,
+      currentY: 0,
       selectedIcons: [],
       setting: {
         color: '#F29C50'
       },
-      patterns: [require('../assets/images/pattern/1.svg'), require('../assets/images/pattern/2.svg'), require('../assets/images/pattern/3.svg'), require('../assets/images/pattern/4.svg')]
+      patterns: [require('../assets/images/pattern/1.svg'), require('../assets/images/pattern/2.svg'), require('../assets/images/pattern/3.svg'), require('../assets/images/pattern/4.svg')],
+      isDragging: false,
     }
   },
   methods: {
@@ -91,34 +93,46 @@ export default {
       this.selectedIcons = useIcon.innerHTML
       this.draggable = true;
     },
-    onStart(event) {
+    onStart(e) {
       console.log("開始拖曳");
+      this.currentX = e.clientX
+      this.currentY = e.clientY
+      this.isDragging = true;
     },
     onDragEnd() {
       console.log("拖曳停止");
+      this.isDragging = false;
+      this.currentX = this.position.x
+      this.currentY = this.position.y
     },
     onDrag(event) {
+      if (!this.isDragging) return;
       // 加入圖片後，讓容器可以拖曳
       const useIcon = document.getElementById('selected_icons');
       const capture = document.querySelector("#capture");
-      // console.log('滑鼠事件:', event);
+      console.log('滑鼠事件:', event);
       // 計算新的位置
+      // let pagex = event.pageX;
+      // let pagey = event.pageY;
+
       let pagex = event.clientX;
       let pagey = event.clientY;
+      this.position.x = pagex - this.currentX
+      this.position.y = pagey - this.currentY
 
       // 限制圖案不超出容器範圍
-      let containerWidth = capture.offsetWidth;
-      let containerHeight = capture.offsetHeight;
-      let iconWidth = useIcon.offsetWidth;
-      let iconHeight = useIcon.offsetHeight;
+      // let containerWidth = capture.offsetWidth;
+      // let containerHeight = capture.offsetHeight;
+      // let iconWidth = useIcon.offsetWidth;
+      // let iconHeight = useIcon.offsetHeight;
 
       // 計算圖案在容器中的位置，這裡假設圖案的左上角為原點(0, 0)
-      let iconX = pagex - containerWidth / 2 - iconWidth / 2;
-      let iconY = pagey - containerHeight / 2 - iconHeight / 2;
+      // let iconX = pagex - containerWidth / 2 - iconWidth / 2;
+      // let iconY = pagey - containerHeight / 2 - iconHeight / 2;
 
       // 限制圖案不超出容器範圍
-      this.position.x = Math.min(Math.max(iconX, - iconWidth / 2), containerWidth - iconWidth / 2);
-      this.position.y = Math.min(Math.max(iconY, -iconHeight / 2), containerHeight - iconHeight / 2);
+      // this.position.x = Math.min(Math.max(iconX, - iconWidth / 2), containerWidth - iconWidth / 2);
+      // this.position.y = Math.min(Math.max(iconY, -iconHeight / 2), containerHeight - iconHeight / 2);
 
       // console.log('滑鼠事件: X , Y', this.position.x, this.position.y,);
       // console.log(`pagex : ${pagex}, pagey : ${pagey}`)

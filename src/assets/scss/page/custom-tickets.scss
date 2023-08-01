@@ -11,7 +11,7 @@ $colorBlack: rgba(black, 0.8);
   position: absolute;
   left: $L;
   top: $T;
-  transform: translate(-50%, -50%);
+  // transform: translate(-50%, -50%);
 }
 
 @mixin xyzdeg($Xdeg: 0, $Ydeg: 0, $Zdeg: 0) {
@@ -110,7 +110,7 @@ $ani-bg: ani-namecard;
         color: rgba(0, 0, 0, 0.5);
       }
       #selected_icons{
-        @include poA(calc(50%), calc(60%));
+        @include poA(calc(0), calc(0));
         transform-origin: 45px 45px;
         animation: #{$ani-bg} 4s 1s ease #{$times} both;
         &:hover, &:active {
