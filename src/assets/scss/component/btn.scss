@@ -25,6 +25,35 @@ button {
   max-height: 70px;
 }
 
+/*========橘色按鈕樣式========*/
+@mixin default-btn {
+  padding: $space * 1.5 $space *3.5;
+  background-color: $btnColor;
+  border-radius: 8px;
+  box-shadow: 1px 1px rgba(0, 0, 0, .3);
+  border: 1px solid rgba(0, 0, 0, .01);
+  color: #fff;
+  font-weight: 500;
+  font-size: $btn-font;
+  box-sizing: border-box
+}
+.default-btn {
+  @include default-btn;
+}
+@include pad {
+  .default-btn {
+    @include default-btn;
+    &:hover{
+      background-color: $hoverColor;
+    }
+    &:active{
+      background-color: $activeColor;
+      box-shadow: none;
+    }
+  }
+}
+/*========================*/
+
 .btn {
   border: 0;
   padding: 1em 1.5em;
