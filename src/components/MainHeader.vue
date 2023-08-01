@@ -3,7 +3,6 @@
   <UserFloat :userStatus="userStatus" @closeUser="userStatus = false" @goLoginUser="goLoginUser" />
   <header>
     <nav>
-      <h1>kkkk</h1>
       <router-link to="/roaming-orbit">
         <div class="logo">
           <img src="~@/assets/logo.svg" alt="logo" />
@@ -68,6 +67,7 @@
           <div class="link-list">
           </div>
         </template>
+        <div class="pageMask"></div>
       </MainSidebar>
     </nav>
   </header>
@@ -139,4 +139,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.pageMask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: red;
+  width: 100vw;
+  height: 100vh;
+}
+</style>

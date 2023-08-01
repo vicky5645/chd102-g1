@@ -29,7 +29,7 @@ html{
     --gs-gap: 5px;
 }
 main {
-    &.product_page , &.productIndex {
+    &.product_page , &.product {
         padding-left: $space * 5;
         padding-right: $space * 5;
     }

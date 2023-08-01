@@ -22,7 +22,8 @@ header {
          }
          .nav_item {
             margin: auto;
-            display: none;
+            opacity: 0;
+            pointer-events: none;
             a {
                color: #7aacbf; 
                text-decoration: none;
@@ -33,9 +34,8 @@ header {
                }
             }
             @include pad {
-               display: inline-flex;
-               align-items: center;
-               justify-content: center;
+               opacity: 1;
+               pointer-events: auto;
             }
          }
       .chrt, .login {
@@ -48,12 +48,10 @@ header {
       }
       .login {
          justify-self: start;
-         background-color: blueviolet;
          margin-left: 0px;
       }
       .chrt {
          margin-right: 24px;
-         // display: none;
          @include pad {
             display: inline-flex;
             gap: 5px;
@@ -64,8 +62,6 @@ header {
          .chrt, .login {
             margin-right: 0;
             width: 100%;
-            // display: inline-flex;
-            // align-items: center;
          }
       }
       .ham{

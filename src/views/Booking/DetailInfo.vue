@@ -188,9 +188,9 @@ section.next-step {
   margin: 6rem 0 3rem 0;
 
   .btn {
-    display: inline-block;
+    // display: inline-block;
     width: 200px;
-    border-radius: 7.5px;
+    border-radius: $space;
     margin: 0 2rem;
     cursor: pointer;
 
@@ -324,17 +324,18 @@ section.next-step {
     </section>
 
     <section class="next-step">
-      <div class="btn secondary">
-        <router-link to="/online-booking">
-          <span>返回</span>
-        </router-link>
-      </div>
 
-      <div class="btn primary">
-        <router-link to="/select-info">
-          <span>下一步</span>
-        </router-link>
-      </div>
+      <router-link to="/online-booking">
+        <div class="btn secondary">
+          返回
+        </div>
+      </router-link>
+
+      <router-link to="/select-info">
+        <div class="btn primary">
+          下一步
+        </div>
+      </router-link>
     </section>
   </div>
 </template>

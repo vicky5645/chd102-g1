@@ -350,17 +350,17 @@ export default {
     </section>
 
     <section class="next-step">
+      <router-link to="/">
       <div class="btn secondary">
-        <router-link to="/">
-          <span>返回</span>
-        </router-link>
-      </div>
+          返回
+        </div>
+      </router-link>
 
+      <router-link to="/custom-tickets">
       <div class="btn primary" @click="confirm">
-        <router-link to="/custom-tickets">
-          <span>確認購票</span>
-        </router-link>
-      </div>
+          確認購票
+        </div>
+      </router-link>
     </section>
   </div>
 </template>

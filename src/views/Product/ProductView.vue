@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="product">
     <BreadCrumbs detailName="商城" />
     <div class="container productIndex">
       <div class="category">

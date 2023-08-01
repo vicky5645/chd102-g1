@@ -30,6 +30,7 @@ button {
   padding: 1em 1.5em;
   text-align: center;
   user-select: none;
+  color: $btnTextColor;
   @include sm-btn;
   cursor: pointer;
   @include pad {
@@ -43,7 +44,6 @@ button {
   }
   &.primary {
     background-color: map-get($BrandColors, Primary);
-    color: $btnTextColor;
     transition: cubic-bezier(0.39, 0.575, 0.565, 1);
     &:hover {
       background-color: darken(map-get($BrandColors, Primary), 20);
