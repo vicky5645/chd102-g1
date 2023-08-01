@@ -10,20 +10,22 @@ header {
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: space-between;
+      // justify-content: space-between;
       max-width: 1200px;
       width: 100%;
       margin: auto;
       height: 60px;
-      .logo {
+      a {
+         margin-right: auto;
+         .logo {
             img {
             vertical-align: middle;
             }
          }
+      }
          .nav_item {
             margin: auto;
-            opacity: 0;
-            pointer-events: none;
+            display: none;
             a {
                color: #7aacbf; 
                text-decoration: none;
@@ -34,8 +36,7 @@ header {
                }
             }
             @include pad {
-               opacity: 1;
-               pointer-events: auto;
+               display: block;
             }
          }
       .chrt, .login {
