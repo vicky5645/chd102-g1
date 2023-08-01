@@ -10,6 +10,7 @@
                 <button class="btn-checkOut" @click="goCartInfo">確認清單</button>
         </div>
     </div>
+    <div class="pageMask" v-show="cartStatus" @click="closeCart"></div>
 </template>
 
 
@@ -39,3 +40,14 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+.pageMask {
+    background-color: transparent;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 10;
+    z-index: 9;
+}
+</style>

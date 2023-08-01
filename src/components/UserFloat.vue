@@ -37,7 +37,7 @@
             </router-link>
         </div>
     </div>
-    <div class="userPageMask" v-show="userStatus" @click="closeUser"></div>
+    <div class="pageMask" v-show="userStatus" @click="closeUser"></div>
 </template>
 
 <script setup>
@@ -73,7 +73,7 @@ const handleLogout = () => {
 </script>
 
 <style lang="scss" scoped>
-.userPageMask {
+.pageMask {
     background-color: transparent;
     width: 100vw;
     height: 100vh;
