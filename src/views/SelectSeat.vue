@@ -1,4 +1,5 @@
 <script>
+import { GET } from "@/plugin/axios";
 export default {
   data() {
     return {
@@ -11,6 +12,10 @@ export default {
       count: 1,
       maxCount: 6,
       price: 36888,
+
+      packageList: [],
+      packageDataItem: [],
+
       pass: [
         {
           name: "綠野牧場",
@@ -225,10 +230,14 @@ export default {
       }
     },
 
+    toNextPage() {
+      return this.validate() ? "/custom-tickets" : "";
+    },
+
     confirm() {
       if (this.validate()) {
         // 選擇有效，繼續購票流程
-        alert("前往付款頁面");
+        this.$router.push(this.toNextPage());
       } else {
         // 選擇無效，顯示錯誤消息
         alert("人數與選擇的座位數不符合，請重新確認");
@@ -236,15 +245,26 @@ export default {
     },
     //----------------------
   },
+
+  created() {
+    // 取得API
+    GET("/data/packageData.json").then((res) => {
+      this.packageList = res;
+      this.packageDataItem =
+        this.packageList[`${parseFloat(this.$route.params.id) - 1}`];
+      this.stageList = this.packageDataItem.stageList;
+    });
+  },
 };
 </script>
+
 <template>
   <section class="title">
-    <h1>一般訂票</h1>
+    <h1 class="h1">一般訂票</h1>
   </section>
   <div class="container">
     <section class="info">
-      <h2>行程資訊</h2>
+      <h2 class="h2">行程資訊</h2>
 
       <div class="info-list">
         <p>出發時間：{{ departure }}</p>
@@ -267,7 +287,7 @@ export default {
     </section>
 
     <section class="choose">
-      <h2>座位選擇</h2>
+      <h2 class="h2">座位選擇</h2>
 
       <div class="choose-option">
         <div class="select-car">
@@ -350,17 +370,17 @@ export default {
     </section>
 
     <section class="next-step">
-      <router-link to="/">
       <div class="btn secondary">
-          返回
-        </div>
-      </router-link>
+        <router-link :to="`/booking-info/${packageDataItem.id}`">
+          <span>返回</span>
+        </router-link>
+      </div>
 
-      <router-link to="/custom-tickets">
       <div class="btn primary" @click="confirm">
-          確認購票
-        </div>
-      </router-link>
+        <router-link to="toNextPage">
+          <span>確認購票</span>
+        </router-link>
+      </div>
     </section>
   </div>
 </template>
@@ -407,7 +427,7 @@ section.info {
       .wrap {
         display: flex;
         p {
-          padding-right: 1rem;
+          margin-right: 1rem;
         }
       }
     }
@@ -476,10 +496,9 @@ section.choose {
 
       input.num {
         width: 100px;
-        min-height: 30px;
+        height: 30px;
         text-align: center;
         outline-style: none;
-        margin: 0;
       }
     }
   }
@@ -694,6 +713,140 @@ section.next-step {
 
   section.next-step {
     margin: 3rem 0;
+  }
+}
+
+@media screen and (max-width: 415px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  section.info {
+    .info-list {
+      padding: 1.25rem 0;
+      .pass {
+        margin-top: 1.75rem;
+        h3 {
+          font-size: 1.25rem;
+        }
+
+        .wrap {
+          display: flex;
+          flex-wrap: wrap;
+        }
+      }
+    }
+  }
+  section.choose {
+    .choose-option {
+      padding: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+
+      .select-car {
+        margin: 1rem 0;
+
+        select {
+          width: 130px;
+        }
+      }
+    }
+  }
+
+  section.total {
+    text-align: end;
+    font-weight: bold;
+    // padding: 1.25rem 0;
+    P {
+      font-size: 1.5rem;
+    }
+    span {
+      font-size: 1.75rem;
+    }
+  }
+
+  section.seat-pic {
+    margin: 0.5rem 0;
+
+    height: 1225px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    // position: relative;
+    // aspect-ratio: 3/1;
+    .whole {
+      transform-origin: top left;
+      transform: rotate(90deg) translateY(-315px);
+      width: 1100px;
+      // position: absolute;
+      // top: 0;
+      // left: 0;
+      .seat-area {
+        .num {
+          transform: rotate(-90deg);
+        }
+        .A {
+          transform: rotate(-90deg);
+        }
+
+        .B {
+          transform: rotate(-90deg);
+        }
+      }
+    }
+
+    .seat-color {
+      margin: 2.5rem 0;
+      display: flex;
+      justify-content: space-evenly;
+      .item {
+        display: flex;
+        align-items: center;
+        position: relative;
+        .booked {
+          width: 50px;
+          height: 50px;
+          background-color: #4b5563;
+          margin: 0 1.5rem;
+        }
+        .empty {
+          width: 50px;
+          height: 50px;
+          background-color: #fff;
+          border: 1px solid #333;
+          margin: 0 1.5rem;
+        }
+
+        .select {
+          width: 50px;
+          height: 50px;
+          background-color: $hoverColor;
+          margin: 0 1.5rem;
+        }
+
+        .inner {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          font-size: 1rem;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  section.next-step {
+    margin: 3rem 0;
+    .btn {
+      span {
+        font-size: $sm-font;
+        line-height: 20px; /* 142.857% */
+        letter-spacing: -0.14px;
+        color: #fff;
+      }
+    }
   }
 }
 </style>

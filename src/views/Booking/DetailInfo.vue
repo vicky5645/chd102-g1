@@ -21,7 +21,7 @@ section.title {
     font-weight: bold;
   }
 }
-.swiper {
+swiper {
   width: 90%;
   margin: 0 auto;
   // height: 90vh;
@@ -65,14 +65,16 @@ section.notice {
   }
 
   ul {
-    padding: 1.25rem 0 2.5rem 0;
+    width: 94%;
+    margin: auto;
+    padding: 1.25rem 0 2.25rem 0;
 
     li {
       font-size: 1.25rem;
       margin: 1rem 0;
       list-style-type: decimal;
-      position: relative;
-      left: 1.75rem;
+      // position: relative;
+      // left: 1.75rem;
     }
   }
 }
@@ -241,11 +243,91 @@ section.next-step {
     margin: 3rem 0;
   }
 }
+@media screen and (max-width: 415px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .swiper {
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+    aspect-ratio: 1/1;
+    z-index: 0;
+    border-radius: 10px;
+    swiper-slide {
+      // width: 100%;
+      // height: 100%;
+      img {
+        // width: 100%;
+        // height: 100%;
+        display: block;
+        // object-fit: cover;
+      }
+    }
+  }
+
+  section.notice {
+    ul {
+      padding: 0.5rem 0;
+
+      li {
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  section.itinerary {
+    h2 {
+      font-size: 2rem;
+    }
+
+    .stage {
+      display: flex;
+      align-items: first baseline;
+      .stage-left {
+        display: none;
+      }
+
+      .stage-list {
+        width: 100%;
+        .stage-item {
+          position: relative;
+          border-bottom: 1px solid rgba(146, 137, 137, 0.5);
+
+          margin: 1rem 0;
+          padding: 0.5rem 1rem;
+          cursor: pointer;
+          .item {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+          }
+
+          .desc {
+            font-size: 1.25rem;
+          }
+        }
+      }
+    }
+  }
+  section.next-step {
+    margin: 3rem 0;
+    .btn {
+      span {
+        font-size: $sm-font;
+        line-height: 20px; /* 142.857% */
+        letter-spacing: -0.14px;
+        color: #fff;
+      }
+    }
+  }
+}
 </style>
 
 <template>
   <section class="title">
-    <h1 v-html="packageDataItem.title"></h1>
+    <h1 class="h1" v-html="packageDataItem.title"></h1>
   </section>
 
   <div class="container">
@@ -279,7 +361,7 @@ section.next-step {
     <div class="dash"></div>
 
     <section class="notice">
-      <h2>注意事項</h2>
+      <h2 class="h2">注意事項</h2>
       <ul>
         <li v-for="(item, index) in notice" :key="index">{{ item.text }}</li>
       </ul>
@@ -288,7 +370,7 @@ section.next-step {
     <div class="dash"></div>
 
     <section class="itinerary">
-      <h2>行程列表</h2>
+      <h2 class="h2">行程列表</h2>
       <div class="stage">
         <div class="stage-left">
           <div class="day1">DAY1</div>
@@ -324,18 +406,11 @@ section.next-step {
     </section>
 
     <section class="next-step">
-
-      <router-link to="/online-booking">
-        <div class="btn secondary">
-          返回
-        </div>
-      </router-link>
-
-      <router-link to="/select-info">
-        <div class="btn primary">
-          下一步
-        </div>
-      </router-link>
+      <div class="btn primary">
+        <router-link :to="`/select-info/${packageDataItem.id}`">
+          <span>下一步</span>
+        </router-link>
+      </div>
     </section>
   </div>
 </template>

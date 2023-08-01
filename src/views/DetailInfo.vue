@@ -341,7 +341,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 export default {
-  // Import Swiper styles
   components: {
     Swiper,
     SwiperSlide,

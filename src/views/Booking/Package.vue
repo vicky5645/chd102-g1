@@ -22,6 +22,7 @@ section.title {
 section.spot-filter {
   background-color: white;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  // box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.2);
   border-radius: 15px;
   padding: 0.5rem 0;
   margin-top: 1rem;
@@ -75,7 +76,7 @@ section.spot-filter {
         }
 
         &:hover {
-          box-shadow: 0 0 30px #f29c50;
+          box-shadow: 0 0 22.5px #f29c50;
         }
       }
     }
@@ -118,7 +119,7 @@ section.package-list {
     position: relative;
     margin: 1.25rem 0;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-
+    // box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.2);
     .img {
       width: 42.5%;
       img {
@@ -130,28 +131,35 @@ section.package-list {
 
     .info {
       width: 42.5%;
-      padding: 0.25rem;
+      padding: 0 1rem;
       display: flex;
       flex-direction: column;
+      flex-grow: 1;
 
       h3 {
-        font-size: 1.5rem;
+        // font-size: 1.5rem;
+        padding: 1rem 0;
       }
-      .seat {
-        margin-top: auto;
-      }
-      .seat,
-      .date,
-      .train {
-        padding: 0.1rem 0;
-        font-size: 1.25rem;
+
+      .wrap {
+        display: flex;
+        flex-direction: column;
+        margin: auto 0;
+        .spec {
+          .seat,
+          .date,
+          .train {
+            padding: 0.1rem 0;
+            font-size: 1.25rem;
+          }
+        }
       }
     }
 
     .price {
       text-align: center;
-      padding: 0.75rem 0;
-      flex-grow: 1;
+      padding: 0.75rem 0.5rem;
+      // flex-grow: 1;
       display: flex;
       flex-direction: column;
       del {
@@ -159,8 +167,11 @@ section.package-list {
         font-size: 1.25rem;
         margin: auto 0 1rem 0;
       }
-      p {
+      .purchase {
         span {
+          display: block;
+          width: 144px;
+          margin: 0 auto;
           background-color: #fbc756;
           padding: 0.5rem 0.75rem;
           font-size: 1.5rem;
@@ -184,47 +195,111 @@ section.package-list {
       position: absolute;
       background-color: #fbc756;
       top: 1rem;
+      left: -0.5rem;
       padding: 0.5rem;
-      border-radius: 5px;
+      border-radius: 0 5px 5px 0;
       font-weight: bold;
+      .triangle {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 8px 8px 0;
+        border-color: transparent #d4a133 transparent transparent;
+      }
     }
   }
 }
 
 @media screen and (max-width: 768px) {
-  .container {
-    padding: 0 1rem;
-  }
   section.package-list {
     .package-item {
       flex-wrap: wrap;
       .img {
         width: 100%;
+        img {
+          object-fit: cover;
+          border-radius: 15px;
+        }
       }
       .info {
         width: 100%;
-        padding: 0.25rem;
+        padding: 0.75rem 0.5rem;
         display: flex;
         flex-direction: column;
+        flex-grow: 0;
         h3 {
+          text-align: center;
           width: 100%;
           font-size: 1.5rem;
         }
         .wrap {
-          display: flex;
-          justify-content: space-between;
+          .spec {
+            padding: 0.5rem 0;
+          }
+
           p {
-            width: 75%;
+            width: 100%;
           }
         }
       }
+
       .price {
-        position: absolute;
-        right: 0;
-        bottom: 107.5px;
+        // width: 100%;
+        display: flex;
         flex-direction: row;
+        flex-grow: 1;
+
         del {
-          margin: 0.5rem;
+          display: block;
+          margin: 0 1rem 0 auto;
+        }
+
+        .purchase {
+          margin-left: auto;
+        }
+      }
+
+      i.heart {
+        top: 0.5rem;
+        right: 0.25rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 415px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  section.spot-filter {
+    .spot-list {
+      display: flex;
+      flex-wrap: wrap;
+      .spot-item {
+        &.col-2 {
+          width: 50%;
+        }
+      }
+    }
+
+    .filter {
+      display: flex;
+      flex-wrap: wrap;
+
+      .inner {
+        display: none;
+        font-size: 1.25rem;
+      }
+
+      .btn-wrap {
+        display: flex;
+        margin: auto;
+        button {
+          margin: 0 0.5rem;
         }
       }
     }
@@ -234,7 +309,7 @@ section.package-list {
 
 <template>
   <section class="title">
-    <h1>行程選擇</h1>
+    <h1 class="h1">行程選擇</h1>
   </section>
   <div class="container">
     <section class="spot-filter">
@@ -300,7 +375,7 @@ section.package-list {
           <!-- <img :src="item.link" alt="" /> -->
         </div>
         <div class="info">
-          <h3 v-html="item.title"></h3>
+          <h3 class="h3" v-html="item.title"></h3>
           <div class="wrap">
             <div class="spec">
               <div class="seat">
@@ -310,12 +385,15 @@ section.package-list {
               <div class="date"><Icon type="md-calendar" />{{ item.date }}</div>
               <div class="train"><Icon type="md-train" />{{ item.train }}</div>
             </div>
-            <p>{{ item.info }}</p>
+            <p class="clamp-2">{{ item.info }}</p>
           </div>
         </div>
         <div class="price">
           <del v-if="item.sale">NT${{ item.origin }}</del>
-          <p :style="{ 'margin-top': !item.sale ? 'auto' : 'initial' }">
+          <div
+            class="purchase"
+            :style="{ 'margin-top': !item.sale ? 'auto' : 'initial' }"
+          >
             <router-link :to="`/booking-info/${item.id}`">
               <span
                 class="btn primary"
@@ -324,7 +402,7 @@ section.package-list {
                 >{{ item.inner }}</span
               >
             </router-link>
-          </p>
+          </div>
         </div>
         <Icon
           :type="item.heartType"
@@ -332,7 +410,10 @@ section.package-list {
           @click="toggleHeart(index)"
         />
 
-        <div class="sale" v-show="item.sale == true">早鳥優惠中</div>
+        <div class="sale" v-show="item.sale == true">
+          早鳥優惠中
+          <div class="triangle"></div>
+        </div>
       </div>
     </section>
   </div>
@@ -624,25 +705,25 @@ export default {
         this.arrowTypeRemain = "fa-solid fa-caret-down";
       }
     },
-    //還無法作用
-    spot(index) {
-      if (index === 0) {
-        // do something for the first button
-        this.filterResult = this.packageList.map((item) =>
-          item.pass.filter((item) => item.name.includes("高原"))
-        );
-      } else if (index === 1) {
-        // do something for the second button
-      } else if (index === 2) {
-        // do something for the third button
-      } else if (index === 3) {
-        // do something for the fourth button
-      } else if (index === 4) {
-        // do something for the fifth button
-      } else if (index === 5) {
-        // do something for the sixth button
-      }
-    },
+    // 還無法作用
+    // spot(index) {
+    //   if (index === 0) {
+    //     // do something for the first button
+    //     this.filterResult = this.packageList.map((item,index) =>
+    //       item.stageList.filter((item,index) => item.name.includes("高原"))
+    //     );
+    //   } else if (index === 1) {
+    //     // do something for the second button
+    //   } else if (index === 2) {
+    //     // do something for the third button
+    //   } else if (index === 3) {
+    //     // do something for the fourth button
+    //   } else if (index === 4) {
+    //     // do something for the fifth button
+    //   } else if (index === 5) {
+    //     // do something for the sixth button
+    //   }
+    // },
   },
   created() {
     // 取得API
