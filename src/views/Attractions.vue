@@ -1,3 +1,10 @@
+<style lang="scss" scoped>
+button {
+  width: 100px;
+  height: 50px;
+  // background-color:;
+}
+</style>
 <!-- 景點介紹 -->
 <template>
   <main class="Attractions">
@@ -64,21 +71,23 @@
       </div>
 
       <!-- <button :class='item.name' v-for="(item, index) in view_button" :key="index">
-        <img :src="item.icon" alt="">
-      </button> -->
+      <img :src="item.icon" alt="">
+    </button> -->
     </div>
   </main>
+
+  <Modal v-if="showModal"></Modal>
 </template>
 
 <script>
 import { gsap } from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-import Modal from "@/components/Modal.vue";
 
 export default {
-  components: {},
   data() {
     return {
+      showModal: false,
+
       main_pic: {
         map: require("../assets/images/img/Attractions/map.png"),
         train: require("../assets/images/img/Attractions/train.svg"),

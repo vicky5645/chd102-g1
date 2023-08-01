@@ -132,7 +132,7 @@ const routesUser = [
     },
   },
   {
-    path: "/select-info",
+    path: "/select-info/:id",
     name: "select-info",
     component: () =>
       import(/* webpackChunkName: "online-booking" */ "@/views/SelectSeat.vue"),
