@@ -36,12 +36,12 @@ section.spot-filter {
       color: #012840;
       background-color: $secondary2;
       border-radius: 0 5px 5px 0;
-      padding: 0.5rem 0.75rem;
+      padding: 0.25rem 0.5rem;
     }
 
     .triangle {
       position: absolute;
-      top: 105%;
+      top: 102%;
       left: 0;
       width: 0;
       height: 0;

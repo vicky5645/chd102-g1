@@ -658,7 +658,6 @@ section.next-step {
     cursor: pointer;
 
     span {
-      line-height: 50px;
       height: 50px;
       font-size: 1.5rem;
       color: #fff;

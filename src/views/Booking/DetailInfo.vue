@@ -406,6 +406,11 @@ section.next-step {
     </section>
 
     <section class="next-step">
+      <div class="btn secondary">
+        <router-link to="/online-booking">
+          <span>返回</span>
+        </router-link>
+      </div>
       <div class="btn primary">
         <router-link :to="`/select-info/${packageDataItem.id}`">
           <span>下一步</span>
