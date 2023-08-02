@@ -4,22 +4,32 @@ const updateStorage = (cart) => {
 }
 
 export default createStore({
+
   state: {
     name: '登入/註冊',
-    cart:[],
+    cart: [],
     isLogin: false,
-    totalPrice: 0
+    totalPrice: 0,
+    //景點
+    attraction: {
+      attr_id: 1,
+      attr_name: ''
+    }
   },
   getters: {
-    cartList(state){
+    cartList(state) {
       return state.cart;
     },
-    totalPrice(state){
+    totalPrice(state) {
       return state.totalPrice;
     }
   },
   mutations: {
-    setName (state, payload) {
+    //傳景點id給元件
+    throw_attr_id(state, parent_attr_id) {
+      state.attraction.attr_id = parent_attr_id
+    },
+    setName(state, payload) {
       state.name = payload
     },
     updateCart(state, newData) {
@@ -92,10 +102,10 @@ export default createStore({
     setIsLogin(state, value) {
       state.isLogin = value;
     },
-    calculateSum( state ) {
+    calculateSum(state) {
       state.totalPrice = state.cart.reduce((accumulator, item) => {
-          return accumulator + item.totalPrice;
-        }, 0);
+        return accumulator + item.totalPrice;
+      }, 0);
     },
   },
   actions: {
