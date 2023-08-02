@@ -293,7 +293,7 @@ export default {
         <div class="select-car">
           <label for="">車廂選擇：</label>
           <select class="select" name="car">
-            <option value="">--請選擇車廂--</option>
+            <option value="">---請選擇車廂---</option>
             <option value="car1">第一車廂</option>
             <option value="car2">第二車廂</option>
           </select>
