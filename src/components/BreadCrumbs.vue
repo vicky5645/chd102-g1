@@ -39,6 +39,7 @@ export default {
       getBreadcrumbs()
     })
     onMounted(() => {
+      console.log('getBreadcrumbs')
       getBreadcrumbs()
     })
     return { breadcrumbList, getBreadcrumbs }

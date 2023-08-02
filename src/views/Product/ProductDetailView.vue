@@ -1,7 +1,7 @@
 <template>
   <!-- {{ $route.params.id }} -->
   <main class="product_page">
-    <BreadCrumbs v-if="productDataItem.title" :detailName="productDataItem.title" />
+    <BreadCrumbs :key="$route.params.id" v-if="productDataItem.title" :detailName="productDataItem.title" />
     <div v-if="productData">
       <div class="back_button">
         <router-link to="/online-mall">
@@ -146,23 +146,23 @@ export default {
       addSuccess: false,
       isButtonDisabled: false,
       // 麵包屑
-      breadCrumbs: [
-        {
-          index: "商城",
-          link: "index.html",
-          color: "color:#9CA3AF;",
-        },
-        {
-          index: "物品",
-          link: "detail.html",
-          color: "color:#9CA3AF;",
-        },
-        {
-          index: "火車懷錶",
-          link: "#",
-          color: "color:#F29C50;",
-        },
-      ],
+      // breadCrumbs: [
+      //   {
+      //     index: "商城",
+      //     link: "index.html",
+      //     color: "color:#9CA3AF;",
+      //   },
+      //   {
+      //     index: "物品",
+      //     link: "detail.html",
+      //     color: "color:#9CA3AF;",
+      //   },
+      //   {
+      //     index: "火車懷錶",
+      //     link: "#",
+      //     color: "color:#F29C50;",
+      //   },
+      // ],
       // 數量初始值
       // quantity: 1,
 
@@ -231,6 +231,12 @@ export default {
       productsKey: 0,
       slideDirection: "slide-right",
     }
+  },
+  watch: {
+    "$route.params.id"(id) {
+      this.productDataItem = this.productData[`${parseFloat(id)-1}`];
+      this.bigPic = this.productDataItem.image;
+    },
   },
   // 推薦商品
   created() {

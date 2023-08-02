@@ -14,9 +14,12 @@
             </div>
             <div class="item-info">
               <!-- <router-link :to="`/productDetail/${item.id}`"> -->
-                <a class="item-name" :href="'/productDetail/' + item.id">
+                <!-- <a class="item-name" :href="'/productDetail/' + item.id">
                     {{ item.title }}
-                </a>
+                </a> -->
+                <router-link :to="`/productDetail/${item.id}`">
+                  {{ item.title }}
+                </router-link>
               <!-- </router-link> -->
                 <div class="item-price">
                     <span>{{ item.totalPrice }}</span>
@@ -44,6 +47,7 @@ export default {
     ...mapGetters(['cartList']),
   },
   created() {
+    this.productDataItem = this.productData[`${parseFloat(this.$route.params.id)-1}`];
     this.$store.dispatch("initStorage");
   },
   methods: {
