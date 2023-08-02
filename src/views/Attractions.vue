@@ -8,6 +8,32 @@ button {
 <!-- 景點介紹 -->
 <template>
   <main class="Attractions">
+    <div class="middle"></div>
+    <!-- 搜尋 -->
+    <!-- <div class="surch_wrap">
+      <div class="surch_attr_block"><input type="surch" v-model="surch_attr_data" placeholder="景點名稱"><button
+          @click="attr_filter">搜尋</button>
+      </div>
+      <div class="attr_name_list">
+        <ol>
+          <li v-for="item  in attr_name">{{ item.name }}</li>
+        </ol>
+      </div>
+    </div> -->
+
+    <div class="drop_down_menu">
+      <div class="attr_triangle" @click="attr_name_toggle">
+        <span>選取景點</span>
+        <i class="fa-solid fa-caret-up"></i>
+      </div>
+      <ul>
+        <li v-for="(item, index) in  attr_name" :key="index" @click="light_box(item.class,index)">{{ item.name }}</li>
+      </ul>
+    </div>
+
+
+
+
     <div class="Attr_wrap">
       <div class="map">
         <img :src="main_pic.map" alt="map" />
@@ -61,19 +87,23 @@ button {
             />
           </svg>
         </div>
-        <div
-          :class="key_name"
-          v-for="(item, key_name, index) in pic"
-          :key="index"
-        >
-          <img :src="item" :alt="key_name" />
+
+        <div @click="light_box(key_name,index)" :class="key_name" class="same" v-for="(item, key_name, index) in pic"
+          :key="index">
+          <img :src="item" :alt="key_name">
         </div>
       </div>
 
-      <!-- <button :class='item.name' v-for="(item, index) in view_button" :key="index">
-      <img :src="item.icon" alt="">
-    </button> -->
+
+      <button @click="rwd_button(item.direction)" :class='item.name' v-for="(item, index) in view_button" :key="index"
+        :disabled="left_right_toggle">
+        <img :src="item.icon" alt="">
+      </button>
+
+
+
     </div>
+    <attr_light_box v-show="light_box_component"></attr_light_box>
   </main>
 
   <Modal v-if="showModal"></Modal>
@@ -82,12 +112,17 @@ button {
 <script>
 import { gsap } from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-
+import attr_light_box from "@/components/Modal.vue";
 export default {
+  components: {
+    attr_light_box
+  },
   data() {
     return {
-      showModal: false,
-
+      attr_name: [{ id: 1, name: '忘卻之湖', class: 'lake' }, { id: 2, name: '景觀公園', class: 'mapleleaf' }, { id: 3, name: '銀月山脈', class: 'mountain' }, { id: 4, name: '綠野牧場', class: 'pasture' }, { id: 5, name: '高原遺跡', class: 'remains' }, { id: 6, name: '海底餐廳', class: 'restaurant' }],
+      surch_attr_data: '',
+      surch_attr_result: '',
+      light_box_component: false,
       main_pic: {
         map: require("../assets/images/img/Attractions/map.png"),
         train: require("../assets/images/img/Attractions/train.svg"),
@@ -101,19 +136,99 @@ export default {
         remains: require("../assets/images/img/Attractions/remains.png"),
         restaurant: require("../assets/images/img/Attractions/restaurant.png"),
       },
-      view_button: [
-        {
-          name: "right_button",
-          icon: require("@/assets/images/img/Attractions/attr_right_icon.png"),
-        },
-        {
-          name: "left_button",
-          icon: require("@/assets/images/img/Attractions/attr_left_icon.png"),
-        },
-      ],
+      temp: ''
+      ,
+      transform_speed: 200
+      ,
+      left_right_toggle: false
+      ,
+      view_button:
+        [
+          {
+            name: 'right_button'
+            , icon: require('@/assets/images/img/Attractions/attr_right_icon.png'),
+            direction: -1
+          },
+          {
+            name: 'left_button',
+            icon: require('@/assets/images/img/Attractions/attr_left_icon.png'),
+            direction: 1
+          },
+        ],
     };
   },
   methods: {
+    attr_name_toggle() {
+      document.querySelector('.drop_down_menu').classList.toggle('toggle_select');
+      document.querySelector('.attr_triangle i').classList.toggle('toggle_select_triangle');
+    },
+
+
+    rwd_button(item) {
+      const middle_number = (document.querySelector('.Attr_wrap').getBoundingClientRect().left + document.querySelector('.Attr_wrap').getBoundingClientRect().right) / 2
+      if ((middle_number - this.transform_speed) < document.querySelector('.map').getBoundingClientRect().left) {
+        document.querySelector('.left_button').disabled = true
+      } else {
+        document.querySelector('.left_button').disabled = false
+      }
+      if ((middle_number - this.transform_speed) > document.querySelector('.map').getBoundingClientRect().right) {
+        document.querySelector('.right_button').disabled = true
+      } else {
+        document.querySelector('.right_button').disabled = false
+      }
+      this.transform_speed += item * 200;
+      const map = document.querySelector('.map');
+      map.style.transform = `translate3d(${-960 + this.transform_speed}px ,0px ,0px)`;
+
+      // console.log(document.querySelector('.map').getBoundingClientRect().right)
+      // console.log((middle_number - this.transform_speed))
+
+      // console.log((document.querySelector('.map').getBoundingClientRect().right))
+    },
+    close_light_box() {
+      if (this.temp) {
+        const map = document.querySelector('.map')
+        const remove_item = document.querySelector(`.${this.temp}`)
+        map.style.transform = `translate3d(${-1 * map.offsetWidth / 2}px  ,0px ,0px)`
+        remove_item.classList.remove('toggle_close');
+        this.transform_speed = 0;
+        this.left_right_toggle = false;
+      }
+    },
+
+
+    light_box(item,attr_id) {
+      this.$store.commit('throw_attr_id',attr_id)
+      const middle = document.querySelector('.middle')
+      const attr = document.querySelector(`.${item}`)
+      const map = document.querySelector('.map')
+      const header_nav = document.querySelector('header')
+      const movw_w = ((middle.getBoundingClientRect().left + middle.getBoundingClientRect().right) / 2 - (attr.getBoundingClientRect().left + attr.getBoundingClientRect().right) / 2)
+      const movw_h = ((middle.getBoundingClientRect().top + middle.getBoundingClientRect().bottom) / 2 - (attr.getBoundingClientRect().top + attr.getBoundingClientRect().bottom) / 2)
+      const now_tranform_value_y = ((map.getBoundingClientRect().top + map.getBoundingClientRect().bottom) / 2 - header_nav.offsetHeight - map.offsetHeight / 2)
+      const now_tranform_value_x = (map.getBoundingClientRect().left / 2 + map.getBoundingClientRect().right / 2 - map.offsetWidth / 2 - (middle.getBoundingClientRect().left + middle.getBoundingClientRect().right) / 2)
+      const next_tranform_width_value = movw_w + now_tranform_value_x
+      const next_tranform_height_value = movw_h + now_tranform_value_y + window.scrollY
+      const total_tranform_value = `translate3d( ${next_tranform_width_value}px  ,${next_tranform_height_value}px ,800px)`
+      map.style.transform = total_tranform_value
+      this.left_right_toggle = true
+      attr.classList.add('toggle_close')
+      this.temp = item
+      setTimeout(() => {
+        this.light_box_component = true;
+      }, 2550)
+    },
+
+    // attr_filter() {
+    //   if (this.surch_attr_data) {
+    //     this.surch_attr_result = this.attr_name.filter((item, index, arr) => {
+    //       return item.name.includes(this.surch_attr_data)
+    //     })
+    //     this.light_box(this.surch_attr_result[0].class)
+    //   }
+    // },
+
+
     train_move_ani() {
       gsap.to(".train", {
         duration: 25,
@@ -131,9 +246,30 @@ export default {
       });
     },
   },
+
+
   mounted() {
     gsap.registerPlugin(MotionPathPlugin);
     this.train_move_ani();
-  },
-};
+  
+    //元件
+    // document.querySelector('.modal').addEventListener('click', (e) => {
+    //   if (e.eventPhase === 2) {
+    //     this.light_box_component = false;
+    //     // document.querySelector('.modal').style.display = 'none';
+    //     const map = document.querySelector('.map')
+    //     map.style.transform = `translate3d(${-1 * map.offsetWidth / 2}px  ,0px ,0px)`
+    //   }
+    // })
+
+    // document.querySelector('.close_x').addEventListener('click', () => {
+    //   this.light_box_component = false
+    //   this.close_light_box();
+    // })
+    document.querySelector('.background_close').addEventListener('click', () => {
+      this.light_box_component = false
+      this.close_light_box();
+    })
+  }
+}
 </script>
