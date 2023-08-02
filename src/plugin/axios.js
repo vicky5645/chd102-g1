@@ -1,10 +1,10 @@
 import axios from 'axios'
-export const publicPath = process.env.NODE_ENV === "production" 
-? "/chd102/g1/" 
-: "/"
+// export const publicPath = process.env.NODE_ENV === "production" 
+// ? "/chd102/g1/" 
+// : "/"
 
 const axiosInstance = axios.create({
-    baseURL: publicPath
+    // baseURL: publicPath
 })
 
 const GET = (url, params) => {
