@@ -89,7 +89,7 @@ section.spot-filter {
     padding: 0.5rem 0 0.25rem 0;
     .inner {
       font-size: 1.25rem;
-      line-height: 42px;
+      line-height: 40px;
       margin: 0 1.5rem 0 3rem;
       font-weight: bold;
     }
@@ -99,7 +99,7 @@ section.spot-filter {
       button {
         display: inline-block;
         font-size: 1.25rem;
-        font-weight: bold;
+        // font-weight: bold;
         background-color: transparent;
         border: none;
         margin: 0 3rem;
@@ -153,13 +153,17 @@ section.package-list {
             font-size: 1.25rem;
           }
         }
+
+        p {
+          margin-top: 2rem;
+        }
       }
     }
 
     .price {
       text-align: center;
       padding: 0.75rem 0.5rem;
-      // flex-grow: 1;
+      position: relative;
       display: flex;
       flex-direction: column;
       del {
@@ -181,6 +185,17 @@ section.package-list {
           border: 1px solid #012840;
         }
       }
+
+      &::before {
+        position: absolute;
+        content: "";
+        width: 310px;
+        height: 1px;
+        background-color: #9ca3af;
+        transform: rotate(-90deg);
+        top: 50%;
+        right: 10px;
+      }
     }
 
     i.heart {
@@ -189,7 +204,7 @@ section.package-list {
       top: 0;
       right: 1.5rem;
       font-size: 2.5rem;
-      color: red;
+      color: map-get($BrandColors, Primary);
     }
     .sale {
       position: absolute;
@@ -260,6 +275,10 @@ section.package-list {
         .purchase {
           margin-left: auto;
         }
+
+        &::before {
+          display: none;
+        }
       }
 
       i.heart {
@@ -322,7 +341,7 @@ section.package-list {
           class="spot-item col-2"
           v-for="(item, index) in spotList"
           :key="index"
-          @click="spot(index)"
+          @click="selectSpot(index)"
         >
           <div class="spot-img">
             <img :src="item.link" alt="" />
@@ -388,6 +407,7 @@ section.package-list {
             <p class="clamp-2">{{ item.info }}</p>
           </div>
         </div>
+
         <div class="price">
           <del v-if="item.sale">NT${{ item.origin }}</del>
           <div
@@ -425,7 +445,9 @@ export default {
   data() {
     return {
       ascending: true,
-      filterResult: [],
+
+      select: "",
+
       arrowTypePrice: "fa-solid fa-caret-up",
       arrowTypeTime: "fa-solid fa-caret-up",
       arrowTypeRemain: "fa-solid fa-caret-up",
@@ -479,146 +501,23 @@ export default {
         },
       ],
       packageList: [],
-      // packageList: [
-      //   {
-      //     title: "探尋島嶼之美，搭乘耀眼的七星豪華列車",
-      //     title2: "—————「SEVEN STARS ROAMING」",
-      //     link: require("@/assets/images/spot/07.jpg"),
-      //     seat: 20,
-      //     date: "2025-03-18",
-      //     train: "seven stars",
-      //     sale: false,
-      //     origin: 36888,
-      //     price: "NT$36888",
-      //     inner: "NT$36888",
-
-      //     hover: "立即購票",
-      //     iconType: "md-heart-outline",
-      //     info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
-      //     pass: [
-      //       { name: "高原遺跡" },
-      //       { name: "銀月山脈" },
-      //       { name: "綠野牧場" },
-      //       { name: "海底餐廳" },
-      //       { name: "景觀公園" },
-      //     ],
-      //   },
-      //   {
-      //     title: "探尋島嶼之美，搭乘尊爵的ROYAL豪華列車",
-      //     title2: "——————————「ROYAL EXPRESS」",
-      //     link: require("@/assets/images/spot/09.jpg"),
-      //     seat: 20,
-      //     date: "2025-04-18",
-      //     train: "royal",
-      //     sale: false,
-      //     origin: 41888,
-      //     price: "NT$36888",
-      //     inner: "NT$36888",
-
-      //     hover: "立即購票",
-      //     iconType: "md-heart-outline",
-      //     info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
-      //     pass: [
-      //       { name: "忘卻之湖" },
-      //       { name: "銀月山脈" },
-      //       { name: "綠野牧場" },
-      //       { name: "海底餐廳" },
-      //       { name: "景觀公園" },
-      //     ],
-      //   },
-      //   {
-      //     title: "探尋島嶼之美，搭乘閃耀的GOLDEN豪華列車",
-      //     title2: "—————————「GOLDEN EXPRESS」",
-      //     link: require("@/assets/images/spot/10.webp"),
-      //     seat: 20,
-      //     date: "2025-05-18",
-      //     train: "golden",
-      //     sale: true,
-      //     origin: 31888,
-      //     price: "NT$26888",
-      //     inner: "NT$26888",
-
-      //     hover: "立即購票",
-      //     iconType: "md-heart-outline",
-      //     info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
-      //     pass: [
-      //       { name: "海底餐廳" },
-      //       { name: "忘卻之湖" },
-      //       { name: "景觀公園" },
-      //     ],
-      //   },
-      //   {
-      //     title: "探尋島嶼之美，搭乘閃耀的GOLDEN豪華列車",
-      //     title2: "—————————「GOLDEN EXPRESS」",
-      //     link: require("@/assets/images/spot/06.webp"),
-      //     seat: 20,
-      //     date: "2025-06-08",
-      //     train: "golden",
-      //     sale: true,
-      //     origin: 31888,
-      //     price: "NT$26888",
-      //     inner: "NT$26888",
-
-      //     hover: "立即購票",
-      //     iconType: "md-heart-outline",
-      //     info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
-      //     pass: [
-      //       { name: "綠野牧場" },
-      //       { name: "忘卻之湖" },
-      //       { name: "景觀公園" },
-      //     ],
-      //   },
-      //   {
-      //     title: "探尋島嶼之美，搭乘耀眼的七星豪華列車",
-      //     title2: "—————「SEVEN STARS ROAMING」",
-      //     link: require("@/assets/images/spot/07.jpg"),
-      //     seat: 20,
-      //     date: "2025-06-18",
-      //     train: "seven stars",
-      //     sale: true,
-      //     origin: 36888,
-      //     price: "NT$31888",
-      //     inner: "NT$31888",
-
-      //     hover: "立即購票",
-      //     iconType: "md-heart-outline",
-      //     info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
-      //     pass: [
-      //       { name: "高原遺跡" },
-      //       { name: "銀月山脈" },
-      //       { name: "綠野牧場" },
-      //       { name: "海底餐廳" },
-      //       { name: "景觀公園" },
-      //     ],
-      //   },
-      //   {
-      //     title: "探尋島嶼之美，搭乘尊爵的ROYAL豪華列車",
-      //     title2: "——————————「ROYAL EXPRESS」",
-      //     link: require("@/assets/images/spot/09.jpg"),
-      //     seat: 20,
-      //     date: "2025-07-18",
-      //     train: "royal",
-      //     sale: true,
-      //     origin: 36888,
-      //     price: "NT$31888",
-      //     inner: "NT$31888",
-
-      //     hover: "立即購票",
-      //     iconType: "md-heart-outline",
-      //     info: "體驗一趟令人難以忘懷的列車旅程！從綠野牧場到壯麗的景觀公園，再到絢爛極光的銀月山脈，此趟旅行將帶您穿越自然奇觀和歷史遺跡，而旅程的最後則是建於海底的獨特餐廳，讓您同時品味美食和...",
-      //     pass: [
-      //       { name: "忘卻之湖" },
-      //       { name: "銀月山脈" },
-      //       { name: "綠野牧場" },
-      //       { name: "海底餐廳" },
-      //       { name: "景觀公園" },
-      //     ],
-      //   },
-      // ],
     };
   },
 
   methods: {
+    // selectSpot(index) {
+    //   if (index === 0) {
+    //     return (this.select = this.packageList.filter((item) =>
+    //       item.stageList.some((stage) => stage.name.includes("高原遺跡"))
+    //     ));
+    //   } else if (index === 1) {
+    //   } else if (index === 2) {
+    //   } else if (index === 3) {
+    //   } else if (index === 4) {
+    //   } else if (index === 5) {
+    //   }
+    // },
+
     //價錢切換成立即購買
     change(index) {
       this.packageList[index].inner = this.packageList[index].hover;
@@ -705,25 +604,6 @@ export default {
         this.arrowTypeRemain = "fa-solid fa-caret-down";
       }
     },
-    // 還無法作用
-    // spot(index) {
-    //   if (index === 0) {
-    //     // do something for the first button
-    //     this.filterResult = this.packageList.map((item,index) =>
-    //       item.stageList.filter((item,index) => item.name.includes("高原"))
-    //     );
-    //   } else if (index === 1) {
-    //     // do something for the second button
-    //   } else if (index === 2) {
-    //     // do something for the third button
-    //   } else if (index === 3) {
-    //     // do something for the fourth button
-    //   } else if (index === 4) {
-    //     // do something for the fifth button
-    //   } else if (index === 5) {
-    //     // do something for the sixth button
-    //   }
-    // },
   },
   created() {
     // 取得API

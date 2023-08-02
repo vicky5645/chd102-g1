@@ -11,6 +11,7 @@
 section.title {
   text-align: center;
   padding: 1.5rem 0;
+  margin-bottom: 1rem;
   background-color: white;
   h1 {
     font-size: 2rem;
@@ -21,27 +22,26 @@ section.title {
     font-weight: bold;
   }
 }
-swiper {
-  width: 90%;
-  margin: 0 auto;
-  // height: 90vh;
-  aspect-ratio: 6/5;
+.swiper {
+  width: 100%;
+  margin: auto;
+
+  aspect-ratio: 16/9;
   z-index: 0;
-  border-radius: 10px;
-  swiper-slide {
-    // width: 100%;
-    // height: 100%;
+  border-radius: 15px;
+  .swiper-slide {
     img {
-      // width: 100%;
-      // height: 100%;
-      display: block;
-      // object-fit: cover;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 }
 
 button.swiper-button-prev,
 button.swiper-button-next {
+  background-color: transparent;
+  border: none;
   img {
     width: 50px;
     height: 50px;
@@ -49,6 +49,10 @@ button.swiper-button-next {
   &::after {
     content: "";
   }
+}
+
+button.swiper-button-next {
+  transform: rotate(180deg);
 }
 
 .dash {
@@ -71,10 +75,8 @@ section.notice {
 
     li {
       font-size: 1.25rem;
-      margin: 1rem 0;
+      margin: 1.25rem 0;
       list-style-type: decimal;
-      // position: relative;
-      // left: 1.75rem;
     }
   }
 }
@@ -210,22 +212,11 @@ section.next-step {
     padding: 0 1rem;
   }
 
-  .swiper {
-    width: 100%;
-    margin: 0 auto;
-    height: auto;
-    aspect-ratio: 1/1;
-    z-index: 0;
-    border-radius: 10px;
-    swiper-slide {
-      // width: 100%;
-      // height: 100%;
-      img {
-        // width: 100%;
-        // height: 100%;
-        display: block;
-        // object-fit: cover;
-      }
+  button.swiper-button-prev,
+  button.swiper-button-next {
+    img {
+      width: 40px;
+      height: 40px;
     }
   }
 
@@ -249,21 +240,14 @@ section.next-step {
   }
 
   .swiper {
-    width: 100%;
-    margin: 0 auto;
-    height: auto;
-    aspect-ratio: 1/1;
-    z-index: 0;
-    border-radius: 10px;
-    swiper-slide {
-      // width: 100%;
-      // height: 100%;
-      img {
-        // width: 100%;
-        // height: 100%;
-        display: block;
-        // object-fit: cover;
-      }
+    aspect-ratio: 4/3;
+  }
+
+  button.swiper-button-prev,
+  button.swiper-button-next {
+    img {
+      width: 30px;
+      height: 30px;
     }
   }
 
@@ -337,6 +321,9 @@ section.next-step {
         prevEl: '.swiper-button-prev',
       }"
       :loop="true"
+      :freeMode="false"
+      :centeredSlides="true"
+      :spaceBetween="30"
       :modules="modules"
       class="mySwiper"
     >
@@ -422,17 +409,17 @@ section.next-step {
 
 <script>
 import { GET } from "@/plugin/axios";
-import { Navigation } from "swiper/modules";
+import { Navigation, FreeMode } from "swiper/modules";
 
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
+import "swiper/scss";
+import "swiper/scss/navigation";
+import "swiper/scss/free-mode";
 
 export default {
-  // Import Swiper styles
   components: {
     Swiper,
     SwiperSlide,
@@ -440,29 +427,29 @@ export default {
 
   data() {
     return {
-      modules: [Navigation],
+      modules: [Navigation, FreeMode],
 
-      prev: require("@/assets/images/icon/previous.png"),
-      next: require("@/assets/images/icon/next.png"),
+      prev: require("@/assets/images/icon/blue-arrow.svg"),
+      next: require("@/assets/images/icon/blue-arrow.svg"),
 
       packageList: [],
       packageDataItem: [],
       stageList: [],
       swiperImg: [
         {
-          link: require("@/assets/images/detail/detail01.jpg"),
+          link: "/images/spot/09.jpg",
         },
         {
-          link: require("@/assets/images/detail/detail02.jpg"),
+          link: "/images/spot/01.jpg",
         },
         {
-          link: require("@/assets/images/detail/detail03.jpg"),
+          link: "/images/spot/03.jpg",
         },
         {
-          link: require("@/assets/images/detail/detail04.jpg"),
+          link: "/images/spot/13.jpg",
         },
         {
-          link: require("@/assets/images/detail/detail05.jpg"),
+          link: "/images/spot/12.png",
         },
       ],
 
@@ -559,13 +546,6 @@ export default {
   methods: {
     toggleClass(index) {
       this.stageList[index].isActive = !this.stageList[index].isActive;
-    },
-    initSwiper() {
-      this.swiper = new Swiper(".swiper-container", {
-        // Swiper 配置项，可以根据需要进行自定义配置
-        // 例如：autoplay, loop, pagination, navigation 等
-        // 更多配置项可参考 Swiper 官方文档：https://swiperjs.com/api/
-      });
     },
   },
   created() {
