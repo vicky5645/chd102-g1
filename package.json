@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "firebase": "NODE_ENV=firebase && npm run build && firebase deploy"
+    "firebase": "npm run build && firebase deploy"
   },
   "dependencies": {
     "@lottiefiles/lottie-player": "^2.0.2",
