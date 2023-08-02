@@ -22,3 +22,8 @@ package-lock.json
 *.njsproj
 *.sln
 *.sw?
+
+# firebase
+firebase.json
+.firebase
+.firebasec
