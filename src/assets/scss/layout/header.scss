@@ -11,10 +11,16 @@ header {
       flex-direction: row;
       align-items: center;
       // justify-content: space-between;
-      max-width: 1200px;
+      // max-width: 1200px;
       width: 100%;
       margin: auto;
       height: 60px;
+      > [href]:first-of-type {
+         margin-right: auto;
+         @include pad {
+            margin: 0;
+         }
+      }
       a {
          margin-right: auto;
          .logo {
