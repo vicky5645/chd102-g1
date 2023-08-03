@@ -1,3 +1,12 @@
+@mixin text-18-md(){
+  /* body/text-18-md */
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 34px; /* 188.889% */
+  letter-spacing: -0.18px;
+}
+
 //浮窗會員調整樣式
 .userPage.cartFloat{
   position: fixed;

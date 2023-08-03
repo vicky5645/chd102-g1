@@ -4,7 +4,7 @@
     <hr>
     <div class="user-control-content">
       <template v-if="isShow">
-        <div class="table-wrapper">
+        <div class="table-wrapper hidden-mobile">
           <div class="thead">
             <span>文章圖片</span>
             <span>文章標題</span>
@@ -33,8 +33,8 @@
         </div>
       </template>
       <template v-else>
-        <div class="card-out" v-for="item, index in userData.forum" :key="item.id">
-          <template v-if="checkedItem == '商品'">
+        <div class="card-out show-mobile" v-for="item, index in userData.forum" :key="item.id">
+          <template v-if="checkedItem == ''">
             <div class="card">
               <div class="cradPic">
                 <router-link :to="`/forum`">
@@ -63,7 +63,7 @@
                 <div class="card-bottom">
                   <hr>
                   <div class="btn-space">
-                    <button type="submit" class="btn error radius">刪除文章</button>
+                    <button type="submit" class="btn error radius" @click="showDetail('deleteArticle')">刪除文章</button>
                   </div>
                 </div>
               </div>
@@ -73,6 +73,25 @@
       </template>
     </div>
   </div>
+  <div class="detail-modal" v-show="isVisible['deleteArticle']">
+    <div class="content">
+      <h4 class="h4">確定刪除論壇文章</h4>
+      <div class="subtext label">
+        <p>您已選擇刪除論壇文章，此操作將永久刪除該文章並無法恢復。請確保您的決定是確定的，並謹慎考慮是否刪除該文章。</p>
+        <p>如果您確定刪除，請點擊確認按鈕。如有任何疑問或需要協助，請隨時與我們聯繫。謝謝您的配合！</p>
+        <p class="caption error">注意：一旦刪除，文章將從論壇中移除且無法恢復，請謹慎操作。</p>
+      </div>
+      <div class="icon-24 error" @click="hideDetail('deleteArticle')">
+        <img class="custom-svg" src="@/assets/images/icon/menu/close_big.svg" alt="close_big-icon">
+      </div>
+      <div class="btn-space">
+        <button type="submit" class="btn other radius"
+          @click="hideDetail('deleteArticle')">取消</button>
+        <button type="submit" class="btn error radius" @click="hideDetail('deleteArticle')">確認刪除</button>
+      </div>
+    </div>
+    <div class="pageMask" v-show="isVisible['deleteArticle']" @click="hideDetail('deleteArticle')"></div>
+  </div>
 </template>
 
 <script>
@@ -80,30 +99,24 @@ import {GET} from '@/plugin/axios'
 export default {
   data() {
     return {
-      //顯示未有相關商品上架的提示
-      empty: false,
       //判斷視窗寬度是否大於768px用
       isLargeScreen: false,
-      //商品分類列是否顯示
-      isShow: true,
-      searchText: '',
       // 會員的資料(僅在進入畫面時去取一次資料)
       userData: [],
-      // 呈現的商品資料(針對userData來搜尋篩選)
-      productDisplay: [],
-      tabActive: 1,
-      checkedItem: '商品',
-      categoryItem: [
-        { type: "商品" },
-        { type: "行程" }
-      ]
+      checkedItem: '',
+      isVisible: {
+        deleteArticle: false
+      },
+      //判斷視窗寬度是否大於768px用
+      isLargeScreen: false,
+      // 會員的資料(僅在進入畫面時去取一次資料)
+      userData: [],
     }
   },
   created() {
       // 取得API
     GET('/data/userData.json').then(res => {
       this.userData = res
-      this.updateDisplay()
     })
   },
   mounted() {
@@ -111,41 +124,12 @@ export default {
     window.addEventListener('resize', this.handleResize);
     // 初始判定視窗大小
     this.handleResize();
+    svg_icon('.custom-svg', 'currentColor');
   },
   computed: {
 
   },
   methods: {
-    updateDisplay() {
-      this.empty = false;
-      if (this.searchText === '') {
-        this.productDisplay = this.userData.favorite_products
-      } else {
-        this.productDisplay = this.userData.filter(item => item.title.includes(this.searchText));
-        this.isEmpty()
-      }
-    },
-    updateTab(index) {
-      this.empty = false;
-      if (this.categoryItem[index].type === '商品') {
-        this.productDisplay = this.userData.favorite_products;
-        // console.log(typeof this.productDisplay)
-        return this.productDisplay;
-      } else if (this.categoryItem[index].type === '行程') {
-        this.productDisplay = this.userData.favorite_orders;
-        // this.productDisplay = this.userData.filter(item => item.hot === true)
-        return this.productDisplay;
-      }
-      this.productDisplay = this.userData.filter(item => item.type === this.categoryItem[index].type);
-      this.isEmpty();
-    },
-    isEmpty() {
-      if (this.productDisplay.length === 0) {
-        this.empty = true;
-        return this.empty;
-      }
-      return this.productDisplay;
-    },
     handleResize() {
       // 判定視窗寬度是否大於等於 768px
       this.isLargeScreen = window.innerWidth >= 768;
@@ -155,6 +139,12 @@ export default {
       } else {
         this.isShow = false;
       }
+    },
+    showDetail(itemOrder) {
+      this.isVisible[itemOrder] = true;
+    },
+    hideDetail(itemOrder) {
+      this.isVisible[itemOrder] = false;
     }
   },
   beforeUnmount() {
@@ -163,3 +153,25 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+/* 定義彈出視窗 */
+.detail-modal > .content {
+  // background-color: #fff;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+
+.pageMask {
+  background-color: rgba(black, .3);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+</style>

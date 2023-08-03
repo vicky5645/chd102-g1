@@ -1,0 +1,31 @@
+.modal-content {
+  border-radius: $space;
+  padding: $space * 3;
+  background: rgba(white, .8);
+  backdrop-filter: blur(10px);
+
+  overflow: hidden;
+  width: calc(100vw - $space * 4);
+  max-width: 600px;
+  > .col:has(img){
+    // padding: $space * 2;
+    aspect-ratio: 2/1;
+    margin: 0;
+    @include pad {
+      max-width: 600px;
+      aspect-ratio: 1/1;
+    }
+  }
+  // & .cradPic{
+  //   height: 100%;
+  //   overflow: hidden;
+  //   border-radius: $space;
+  //   aspect-ratio: 2/1;
+  //   @include pad {
+  //     aspect-ratio: 1/1;
+  //   }
+  // }
+  @include pad {
+
+  }
+}

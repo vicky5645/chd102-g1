@@ -76,6 +76,11 @@ $caption : 13px;
     /* caption/bold */
     font-weight: 500;
   }
+  &.error {
+    // 區域變數，控制顏色
+    $useColor: map-get($StateColors, Error);
+    color: $useColor!important;
+  }
 }
 
 .clamp-2 {

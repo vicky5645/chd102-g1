@@ -23,6 +23,10 @@
 @import "layout/footer";
 @import "layout/header";
 @import "layout/body";
+@import 'layout/user-float';
+@import 'layout/cart.scss';
+@import 'layout/OrderDetailModal';
+@import 'layout/detail-modal';
 
 // page
 @import "page/index";
@@ -33,11 +37,9 @@
 @import "page/Announcement-details";
 @import 'page/product_index';
 @import 'page/user.scss';
-@import 'page/cart.scss';
 @import 'page/check_out.scss';
 @import 'page/login.scss';
 @import "page/product_index";
 @import "page/Attractions.scss";
 @import "page/custom-tickets.scss";
-@import 'page/user-float.scss';
 @import "page/payment.scss";

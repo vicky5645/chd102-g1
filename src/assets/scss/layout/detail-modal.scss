@@ -1,0 +1,32 @@
+.detail-modal{
+  .subtext {
+    text-align-last: left;
+  }
+  .content {
+    border-radius: $space;
+    padding: $space * 3;
+    background-color: #fff;
+    max-width: 500px;
+    width: calc(100% - $space * 2);
+    background: rgba(white, .8);
+    backdrop-filter: blur(10px);
+    /* 淡陰影 */
+    box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.20);
+
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    text-align: center;
+    row-gap: $space * 2;
+
+    .btn-space {
+      display: flex;
+      column-gap: $space;
+    }
+
+    > .icon-24.error{
+      position: absolute;
+      right: $space;
+      top: $space;
+    }
+  }
+}

@@ -28,7 +28,6 @@
           </div>
         </div>
       </div>
-      {{ draggable }}
       <div class="row make">
         <div 
           id="capture"

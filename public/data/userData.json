@@ -22,7 +22,10 @@
       "title": "火車懷錶",
       "price": 1200,
       "isFavorite": true,
-      "image": "images/img/ProductDetails/p1.png"
+      "image": "images/img/ProductDetails/p1.png",
+      "description": [
+        "超時尚的火車主題懷錶，精緻設計，可隨身攜帶，是時尚愛好者的最佳時尚配件。"
+      ]
     },
     {
       "order_no": 1002,
@@ -37,7 +40,10 @@
       "title": "火車叉叉",
       "price": 22.3,
       "isFavorite": true,
-      "image": "images/online-mall/fork.png"
+      "image": "images/online-mall/fork.png",
+      "description": [
+        "超時尚的火車主題懷錶，精緻設計，可隨身攜帶，是時尚愛好者的最佳時尚配件。"
+      ]
     }
   ],
   "package_orders": [
@@ -51,7 +57,7 @@
       "id": 1,
       "order_date": "2023-06-15",
       "price": 36888,
-      "order_status": 1,
+      "order_status": 0,
       "title": "探尋島嶼之美，搭乘耀眼的七星豪華列車",
       "title2": "—————「SEVEN STARS ROAMING」",
       "image": "images/spot/07.jpg",
@@ -76,6 +82,24 @@
       "seat": 20,
       "date": "2025-03-18",
       "train": "none"
+    },
+    {
+      "order_no": 2001,
+      "order_total": 2999.99,
+      "recipient_tele": "0912345678",
+      "recipient_address": "台北市中正區",
+      "org_no": 7,
+      "pattern_newfile": "https://example.com/ticket_2001.png",
+      "id": 2,
+      "order_date": "2023-06-15",
+      "price": 36888,
+      "order_status": 2,
+      "title": "sss探尋島嶼之美，搭乘耀眼的七星豪華列車",
+      "title2": "—————「SEVEN STARS ROAMING」",
+      "image": "images/spot/07.jpg",
+      "seat": 20,
+      "date": "2025-03-18",
+      "train": "星光漫遊列車"
     }
   ],
   "favorite_products": [
