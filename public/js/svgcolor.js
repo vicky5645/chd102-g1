@@ -8,20 +8,20 @@ function svg_icon(className, colorValue) {
       fetch(imgSrc)
         .then(response => response.text())
         .then(svgText => {
-          // let parser = new DOMParser();
-          // let svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
-          // let paths = svgDoc.querySelectorAll('path');
-          // if (paths.length > 0) {
-          //   paths.forEach((path, index) => {
-          //     // 逐個更改每個路徑的填充顏色
-          //       path.style.fill = colorValue;
-          //   });
-          //   img.parentNode.insertBefore(svgDoc.documentElement, img);
-          //   img.remove();
-          // }
+          let parser = new DOMParser();
+          let svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+          let paths = svgDoc.querySelectorAll('path');
+          if (paths.length > 0) {
+            paths.forEach((path, index) => {
+              // 逐個更改每個路徑的填充顏色
+                path.style.fill = colorValue;
+            });
+            img.parentNode.insertBefore(svgDoc.documentElement, img);
+            img.remove();
+          }
         })
         .catch(error => {
-          console.log('無法獲取 SVG 文件：', error);
+          // console.log('無法獲取 SVG 文件：', error);
         });
     });
   }

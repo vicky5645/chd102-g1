@@ -30,15 +30,24 @@
       </div>
       {{ draggable }}
       <div class="row make">
-        <div id="capture" class="post-box t-Ani perspective card-shadow" @mouseup="onDragEnd" @mouseleave="onDragEnd" @mousemove="onDrag">
+        <div 
+          id="capture"
+          class="post-box t-Ani perspective card-shadow" @mouseup="onDragEnd"
+          @mouseleave="onDragEnd"
+          @mousemove="onDrag($event,'capture')">
           <div class="ticket-bg t-Ani" id="card">
             <!-- 車票的一些內容 -->
-            <!-- <div class="h3">探尋島嶼之美，搭乘耀眼的七星豪華列車</div> -->
+            <div class="h3">探尋島嶼之美，搭乘耀眼的七星豪華列車</div>
             <!-- 這裡是放置已選取圖像節點的容器 & 拖曳節點的容器 -->
-            <div id="selected_icons" :style="{
-              color: setting.color || '#F29C50', left: `${position.x}` + 'px',
-              top: `${position.y}` + 'px'
-            }" class="preserve-3d" @mousedown="onStart">
+            <div
+              id="selected_icons"
+              :style="{
+                color: setting.color || '#F29C50', 
+                left: `calc( ${position.x}px)`,
+                top: `calc( ${position.y}px)`
+                }"
+              class="preserve-3d"
+              @mousedown="onStart">
             </div>
           </div>
         </div>
@@ -68,15 +77,17 @@ import domtoimage from "@/assets/js/dom-to-image.min.js";
 export default {
   data() {
     return {
-      // @include poA(calc(50% - 45px), calc(60% - 45px));
       draggable: false,
       position: {
-        x: '',
-        y: ''
+        x: 0,
+        y: 0
+      },
+      iconMove: {
+        x: 0,
+        y: 0
       },
       currentX: 0,
       currentY: 0,
-      selectedIcons: [],
       setting: {
         color: '#F29C50'
       },
@@ -90,67 +101,52 @@ export default {
       const useIcon = document.getElementById('selected_icons');
       //只出現一個------------------------------
       useIcon.innerHTML = icon.innerHTML
-      this.selectedIcons = useIcon.innerHTML
       this.draggable = true;
     },
     onStart(e) {
-      console.log("開始拖曳");
-      this.currentX = e.clientX
-      this.currentY = e.clientY
+      // console.log("開始拖曳icon");
+      this.currentX = this.position.x
+      this.currentY = this.position.y
       this.isDragging = true;
     },
     onDragEnd() {
-      console.log("拖曳停止");
+      // console.log("拖曳停止");
       this.isDragging = false;
       this.currentX = this.position.x
       this.currentY = this.position.y
     },
-    onDrag(event) {
+    onDrag(e, elementId) {
       if (!this.isDragging) return;
       // 加入圖片後，讓容器可以拖曳
-      const useIcon = document.getElementById('selected_icons');
-      const capture = document.querySelector("#capture");
-      console.log('滑鼠事件:', event);
-      // 計算新的位置
-      // let pagex = event.pageX;
-      // let pagey = event.pageY;
+      const capture = document.getElementById(elementId);
+      const captureRect = capture.getBoundingClientRect();
+      // console.log('滑鼠事件:', e);
+      // console.log('captureRect: X , Y', captureRect);
+      
+      let currentX = e.clientX - captureRect.left;
+      let currentY = e.clientY - captureRect.top;
 
-      let pagex = event.clientX;
-      let pagey = event.clientY;
-      this.position.x = pagex - this.currentX
-      this.position.y = pagey - this.currentY
+      // 計算與上個座標偏移的距離
+      let moveX = currentX - this.currentX;
+      let moveY = currentY - this.currentY;
 
-      // 限制圖案不超出容器範圍
-      // let containerWidth = capture.offsetWidth;
-      // let containerHeight = capture.offsetHeight;
-      // let iconWidth = useIcon.offsetWidth;
-      // let iconHeight = useIcon.offsetHeight;
+      this.iconMove.x = moveX;
+      this.iconMove.y = moveY;
+      
+      this.position.x = currentX;
+      this.position.y = currentY;
 
-      // 計算圖案在容器中的位置，這裡假設圖案的左上角為原點(0, 0)
-      // let iconX = pagex - containerWidth / 2 - iconWidth / 2;
-      // let iconY = pagey - containerHeight / 2 - iconHeight / 2;
-
-      // 限制圖案不超出容器範圍
-      // this.position.x = Math.min(Math.max(iconX, - iconWidth / 2), containerWidth - iconWidth / 2);
-      // this.position.y = Math.min(Math.max(iconY, -iconHeight / 2), containerHeight - iconHeight / 2);
-
-      // console.log('滑鼠事件: X , Y', this.position.x, this.position.y,);
-      // console.log(`pagex : ${pagex}, pagey : ${pagey}`)
-      // console.log(`iconX : ${iconX}, iconY : ${iconY}`)
-      // console.log(`offsetX ${event.offsetX}`)
-      // console.log(`offsetY ${event.offsetY}`)
-      // console.log(`iconWidth ${iconWidth}`)
-      // console.log(`iconHeight ${iconHeight}`)
+      // console.log('綁定的位置: X , Y', this.position.x, this.position.y,);
+      // console.log('let current: X , Y', currentX, currentY,);
+      // console.log('moveX: X , Y', moveX, moveY);
 
     },
   },
-  // methods: {
-  // },
   mounted() {
     svg_icon('.custom-svg', 'currentColor');
     // 以下是客製圖片的內容------------------------------------------
     if (typeof domtoimage !== 'undefined') {
-      console.log('domtoimage is loaded!!!!!');
+      // console.log('domtoimage is loaded!!!!!');
       const block_btn = document.getElementById('block-btn');
       const download_btn = document.getElementById('download-btn');
       // 截圖函數-----------
