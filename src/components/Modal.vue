@@ -40,8 +40,6 @@
     }
   }
 
-
-
   .scenery {
     width: 62.5vw;
     height: 90vh;
@@ -53,7 +51,6 @@
     overflow: auto;
     background-color: map-get($GrayColors, Gray6);
     z-index: 50;
-
 
     h1 {
       font-size: $h1;
@@ -78,6 +75,24 @@
             height: 100%;
           }
         }
+      }
+
+      button.swiper-button-prev,
+      button.swiper-button-next {
+        background-color: transparent;
+        border: none;
+        img {
+          width: 44px;
+          height: 44px;
+        }
+
+        &::after {
+          content: "";
+        }
+      }
+
+      button.swiper-button-next {
+        transform: rotate(180deg);
       }
 
       .content {
@@ -120,13 +135,13 @@
   }
 }
 
-@media screen and (max-width:1081px) {
+@media screen and (max-width: 1081px) {
   .modal .scenery section.wrap .content .pic {
     height: 25.4895vw;
   }
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width: 768px) {
   .content {
     .desc {
       font-size: 16px !important;
@@ -157,18 +172,6 @@
     width: 100%;
   }
 }
-
-button.swiper-button-prev,
-button.swiper-button-next {
-  img {
-    width: 50px;
-    height: 50px;
-  }
-
-  &::after {
-    content: "";
-  }
-}
 </style>
 
 <template>
@@ -177,15 +180,27 @@ button.swiper-button-next {
       <button class="close_x">X</button>
     </div>
     <div class="scenery" v-if="attr_all_data[attraction.attr_id]">
-      <h1>{{ attr_all_data[attraction.attr_id].name}}</h1>
+      <h1>{{ attr_all_data[attraction.attr_id].name }}</h1>
       <section class="wrap">
-        <swiper :navigation="{
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }" :loop="true" :modules="modules" class="mySwiper">
-          <swiper-slide><img :src="attr_all_data[attraction.attr_id].slide1" alt="" /></swiper-slide><swiper-slide><img
-              :src="attr_all_data[attraction.attr_id].slide2" alt="" /></swiper-slide>
-          <swiper-slide><img :src="attr_all_data[attraction.attr_id].slide3" alt="" /></swiper-slide>
+        <swiper
+          :navigation="{
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          }"
+          :loop="true"
+          :modules="modules"
+          class="mySwiper"
+        >
+          <swiper-slide
+            ><img
+              :src="attr_all_data[attraction.attr_id].slide1"
+              alt="" /></swiper-slide
+          ><swiper-slide
+            ><img :src="attr_all_data[attraction.attr_id].slide2" alt=""
+          /></swiper-slide>
+          <swiper-slide
+            ><img :src="attr_all_data[attraction.attr_id].slide3" alt=""
+          /></swiper-slide>
           <button class="swiper-button-prev">
             <img :src="prev" alt="" />
           </button>
@@ -203,7 +218,7 @@ button.swiper-button-next {
           <div class="pic">
             <img :src="attr_all_data[attraction.attr_id].pic2" alt="" />
           </div>
-          <div class="desc">{{attr_all_data[attraction.attr_id].desc2 }}</div>
+          <div class="desc">{{ attr_all_data[attraction.attr_id].desc2 }}</div>
         </div>
       </section>
     </div>
@@ -220,7 +235,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 import { GET } from "@/plugin/axios";
-import { mapGetters, mapActions, mapMutations, mapState } from 'vuex';
+import { mapGetters, mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   components: {
@@ -231,29 +246,22 @@ export default {
   data() {
     return {
       modules: [Navigation],
-      prev: require("@/assets/images/icon/previous.png"),
-      next: require("@/assets/images/icon/next.png"),
+      prev: require("@/assets/images/icon/blue-arrow.svg"),
+      next: require("@/assets/images/icon/blue-arrow.svg"),
       attr_all_data: [],
     };
   },
 
-  methods: {
-
-
-
-
-  },
+  methods: {},
   computed: {
-    ...mapState(['attraction']),
+    ...mapState(["attraction"]),
   },
-  mounted() {
-
-  },
+  mounted() {},
   created() {
-    GET('data/attr_detail_data.json').then(res => {
+    GET("data/attr_detail_data.json").then((res) => {
       this.attr_all_data = res;
       // this.airticlesItem = this.airticles[`${parseFloat(this.$route.params.id) - 1}`];
-    })
-  }
+    });
+  },
 };
 </script>
