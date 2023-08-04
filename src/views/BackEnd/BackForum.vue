@@ -58,6 +58,9 @@
           </button>
         </td>
       </tr>
+      <div v-if="dataFromMySQL">
+        {{ dataFromMySQL }}
+      </div>
     </tbody>
 
     <p v-if="filteredItems.length === 0" class="text-danger">
@@ -233,6 +236,8 @@
 
 <script>
 import { Modal } from "bootstrap";
+// 抓 php 資料
+import axios from "axios";
 
 export default {
   data() {
@@ -270,6 +275,9 @@ export default {
       backupItem: {},
       showModal: false,
       selectedFile: null,
+
+      // 抓 php 資料
+      dataFromMySQL: null,
     };
   },
 
@@ -338,6 +346,21 @@ export default {
         this.showModal = false;
       }
     },
+  },
+
+  // 抓 php 資料
+  mounted() {
+    axios
+      .get("http://localhost:8886/phps/getData.php")
+      .then((response) => {
+        this.dataFromMySQL = response.data[0];
+
+        // 打印取得的資料以確認是否成功
+        console.log("Data retrieved from MySQL:", this.dataFromMySQL);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data:", error);
+      });
   },
 };
 </script>
