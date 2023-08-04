@@ -59,7 +59,6 @@ button {
   padding: 1em 1.5em;
   text-align: center;
   user-select: none;
-  color: $btnTextColor;
   box-shadow: 1px 1px rgba(0, 0, 0, .3);
   @include sm-btn;
   cursor: pointer;
@@ -67,6 +66,7 @@ button {
   justify-content: center;
   align-items: center;
   gap: $space; 
+  transition: .5s;
   @include pad {
     @include nl-btn;
   }
@@ -77,32 +77,64 @@ button {
     @include md-btn;
   }
   &.primary {
-    background-color: map-get($BrandColors, Primary);
+    // 區域變數，控制顏色
+    $useColor: map-get($BrandColors, Primary);
+
+    background-color: $useColor;
     transition: cubic-bezier(0.39, 0.575, 0.565, 1);
+    color: $btnTextColor;
     &:hover, &:active {
       background-color: $activeColor;
       box-shadow: none;
     }
   }
   &.secondary {
-    background-color: map-get($BrandColors, Secondary1);
+    // 區域變數，控制顏色
+    $useColor: map-get($BrandColors, Secondary1);
+
+    background-color: $useColor;
+    color: $btnTextColor;
     &:hover, &:active {
-      background-color: darken(map-get($BrandColors, Secondary1), 20);
+      background-color: darken($useColor, 20);
+      box-shadow: none;
+    }
+  }
+  &.secondary2 {
+    // 區域變數，控制顏色
+    $useColor: map-get($BrandColors, Secondary2);
+
+    background-color: $useColor;
+    color: $btnTextColor;
+    &:hover, &:active {
+      background-color: darken($useColor, 20);
       box-shadow: none;
     }
   }
   &.other {
-    background-color: map-get($GrayColors, Gray4);
+    // 區域變數，控制顏色
+    $useColor: map-get($GrayColors, Gray4);
+
+    background-color: $useColor;
     color: $btnTextColor;
     &:hover {
-      background-color: darken(map-get($GrayColors, Gray4), 20);
+      background-color: darken($useColor, 20);
     }
   }
   &.error {
-    background-color: map-get($StateColors, Error);
+    // 區域變數，控制顏色
+    $useColor: map-get($StateColors, Error);
+
+    background-color: $useColor;
     color: $btnTextColor;
     &:hover {
-      background-color: darken(map-get($StateColors, Error), 20);
+      background-color: darken($useColor, 20);
+    }
+    &.icon-24 {
+      background-color: gold!important;
+      color: $useColor;
+      &:hover {
+        color: darken($useColor, 20);
+      }
     }
   }
   &.disable {
@@ -114,5 +146,24 @@ button {
   }
   &.round {
     border-radius: 30px;
+  }
+}
+
+.icon-24 {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 100%;
+  }
+  &.error {
+    // 區域變數，控制顏色
+    $useColor: map-get($StateColors, Error);
+    color: $useColor;
+    &:hover {
+      color: darken($useColor, 20);
+    }
   }
 }

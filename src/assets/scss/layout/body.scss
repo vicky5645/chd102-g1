@@ -6,9 +6,13 @@ body {
   position: relative;
   overflow-x: hidden;
   //一般內文
-  & p {
+  & p:not(.type) {
     font-size: $body;
     line-height: 34px;
+    color: map-get($GrayColors, Gray4 )!important;
+  }
+  & .introCard p {
+    color: rgba(map-get($GrayColors, White ),.8)!important;
   }
   & .bold {
     font-weight: 500;

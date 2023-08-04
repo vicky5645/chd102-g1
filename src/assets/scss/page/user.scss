@@ -31,13 +31,6 @@
   border-#{$top}: $width solid map-get($BrandColors, Secondary2);
 }
 
-.icon-24 {
-  @include size(24px);
-  @include flexCenter;
-  img {
-    width: 100%;
-  }
-}
 .user{
   margin: 24px auto;
   max-width: 1200px;
@@ -162,6 +155,21 @@
           display: grid;
           grid-template-columns: repeat(3, 1fr);
         }
+        & .tab-btn-out{ 
+          grid-column: span 3; 
+          background-color: red;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          > .tab-btn-package {
+            border-bottom: 2px solid map-get($BrandColors , Secondary2 );
+            background-color: white;
+            &.active {
+              color: #fff!important;
+              background-color: map-get($BrandColors , Secondary2 );
+            }
+          }
+        }
+        // 訂單與收藏卡片樣式
         & .cradPic{
           height: 100%;
           overflow: hidden;
@@ -255,6 +263,7 @@
             }
           }
         }
+        // 論壇卡片樣式
         & .table-wrapper { 
           grid-column: span 3;
           & .thead , & .tbody { 

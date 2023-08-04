@@ -4,4 +4,4 @@
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^(.*)$ /chd102/g1/index.html
-</IfModule>
+</IfModule>npm -g list

@@ -79,7 +79,7 @@ const handleLogout = () => {
     height: 100vh;
     position: fixed;
     top: 0;
-    left: 10;
+    left: 0;
     z-index: 9;
 }
 </style>

@@ -28,12 +28,20 @@
     </div>
     <hr>
     <div class="user-control-content">
+      <template v-if="checkedItem === '購票訂單'">
+        <div class="tab-btn-out">
+          <button v-for="(item, key) in nowStatus" :class="{ 'active': key === tabActive }"
+            class="text tab-btn-package btn" @click="packageTab(key)">
+            {{ item }}
+          </button>
+        </div>
+      </template>
       <template v-if="listDisplay.length === 0">
-        沒有搜尋到東西喔~
+        還沒有買過東西喔~
       </template>
       <template v-else>
-        <div class="card-out" v-for="item, index in listDisplay" :key="item.id">
-          <template v-if="checkedItem == '商品'">
+        <template v-if="checkedItem == '商品訂單'">
+          <div class="card-out" v-for="item, index in listDisplay" :key="item.id">
             <div class="card">
               <!-- 手機版卡片，訂單編號顯示位置 -->
               <template v-if="!isShow">
@@ -77,69 +85,111 @@
                 </div>
                 <div class="card-bottom">
                   <div class="btn-space">
-                    <router-link :to="`/productDetail/${item.id}`">
-                      <button type="submit" class="btn other radius">詳細</button>
-                    </router-link>
+                    <button type="submit" class="btn other radius" @click="showOrderDetail(item)">詳細</button>
                     <button type="submit" class="btn primary radius">聯絡客服</button>
                   </div>
                 </div>
               </div>
             </div>
-          </template>
-          <template v-else-if="checkedItem == '行程'">
-            <div class="card">
-              <router-link :to="`/booking-info/${item.id}`">
-                <div class="cradPic">
-                  <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
-                </div>
-              </router-link>
-              <div class="content">
-                <div class="card-top">
-                  <div class="des">
-                    <div class="des-text">
-                      <div class="label">
-                        訂單編號:
-                        <span>1234567</span>
-                      </div>
-                      <div class="label">
-                        訂購日期:
-                        <span>2018 / 10 / 10</span>
-                      </div>
-                      <h3 class="h3 clamp-2">{{ item.title }}{{ item.title2 }}</h3>
-                      <div class="more">
-                        <p class="bold">剩餘座位 {{ item.seat }} </p>
-                        <p class="label"><i class="fa-solid fa-train"></i> {{ item.train }}</p>
-                        <p class="label"><i class="fa-solid fa-calendar-days"></i> 行程日期: {{ item.order_date }}</p>
-                      </div>
-                    </div>
-                    <div class="des-right">
-                      <div class="price h2">
-                        $ {{ item.price }}
-                      </div>
-                    </div>
+          </div>
+        </template>
+        <template v-else>
+          <template v-for="item, index in listDisplay">
+            <div v-if="checkedItem == '購票訂單' && item.order_status == tabActive" class="card-out" :key="item.id">
+              <div class="card">
+                <router-link :to="`/booking-info/${item.id}`">
+                  <div class="cradPic">
+                    <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
                   </div>
+                </router-link>
+                <div class="content">
+                  <div class="card-top">
+                    <div class="des">
+                      <div class="des-text">
+                        <div class="label">
+                          訂單編號:
+                          <span>{{ item.order_no }}</span>
+                        </div>
+                        <div class="label">
+                          訂購日期:
+                          <span>{{ item.order_date }}</span>
+                        </div>
+                        <h3 class="h3 clamp-2">{{ item.title }}{{ item.title2 }}</h3>
+                        <div class="more">
+                          <p class="bold">剩餘座位 {{ item.seat }} </p>
+                          <p class="label"><i class="fa-solid fa-train"></i> {{ item.train }}</p>
+                          <p class="label"><i class="fa-solid fa-calendar-days"></i> 行程日期: {{ item.order_date }}</p>
+                        </div>
+                      </div>
+                      <div class="des-right">
+                        <div class="price h2">
+                          $ {{ item.price }}
+                        </div>
+                      </div>
+                    </div>
 
-                </div>
-                <div class="card-bottom">
-                  <div class="btn-space">
-                    <button type="submit" class="btn other radius">詳細</button>
-                    <button type="submit" class="btn primary radius">聯絡客服</button>
+                  </div>
+                  <div class="card-bottom">
+                    <div class="btn-space">
+                      <button v-if="tabActive !== 2" type="submit" class="btn secondary2 radius"
+                        @click="showDetail('Certificate')">查看憑證</button>
+                      <button v-if="tabActive === 1" type="submit" class="btn other radius"
+                        @click="showDetail('evaluate')">評價</button>
+                      <button type="submit" class="btn other radius" @click="showOrderDetail(item)">詳細</button>
+                      <button type="submit" class="btn primary radius">聯絡客服</button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </template>
-        </div>
+        </template>
       </template>
     </div>
+  </div>
+
+  <!-- 彈出視窗 -->
+  <order-detail-modal :orderDetail="orderDetail" :isModalVisible="isModalVisible" @close-modal="isModalVisible = false" />
+  <div class="detail-modal" v-show="isVisible['Certificate']">
+    <div class="content">
+      <h4 class="h4">購票憑證</h4>
+      <div class="subtext label">
+        <p>購票方案: 昂坪360纜車票(單程/來)</p>
+        <p>出發時間: 2023/7/5</p>
+        <p>序號: WY00255774</p>
+      </div>
+      <button type="submit" class="btn primary radius" @click="hideDetail('Certificate')">確認</button>
+    </div>
+    <div class="pageMask" v-show="isVisible['Certificate']" @click="hideDetail('Certificate')"></div>
+  </div>
+  <div class="detail-modal" v-show="isVisible['evaluate']">
+    <div class="content">
+      <p class="h4">請填寫本次購票評價</p>
+      <button type="submit" class="btn primary radius" @click="hideDetail('evaluate')">送出評價</button>
+    </div>
+    <div class="pageMask" v-show="isVisible['evaluate']" @click="hideDetail('evaluate')"></div>
   </div>
 </template>
 
 <script>
 import { GET } from '@/plugin/axios'
+import OrderDetailModal from '@/components/OrderDetailModal.vue';
 export default {
+  components: {
+    OrderDetailModal,
+  },
   data() {
     return {
+      isModalVisible: false,
+      isVisible: {
+        deleteArticle:　false
+      },
+      isModalVisible: false,
+      orderDetail: {
+        order_no: 0,
+        order_date: 0,
+        item: ''
+      },
       //顯示未有相關商品上架的提示
       empty: false,
       //判斷視窗寬度是否大於768px用
@@ -151,12 +201,14 @@ export default {
       userData: [],
       // 呈現的商品資料(針對userData來搜尋篩選)
       listDisplay: [],
-      tabActive: 1,
-      checkedItem: '商品',
+      checkedItem: '商品訂單',
       categoryItem: [
-        { type: "商品" },
-        { type: "行程" }
-      ]
+        { type: "商品訂單" },
+        { type: "購票訂單" }
+      ],
+      tabActive: 0,
+      nowStatus: ['即將出發', '已出發', '已取消'],
+      isModalVisible: false,
     }
   },
   created() {
@@ -182,17 +234,21 @@ export default {
         this.listDisplay = this.userData.orders
       } else {
         let nowData;
-        this.checkedItem == '商品' ? nowData = this.userData.orders : nowData = this.userData.package_orders;
+        this.checkedItem == '商品訂單' ? nowData = this.userData.orders : nowData = this.userData.package_orders;
         this.listDisplay = nowData.filter(item => item.title.includes(this.searchText));
         this.isEmpty()
       }
     },
+    // 分類按鈕
+    packageTab(index) {
+      this.tabActive = index;
+    },
     updateTab(index) {
       this.empty = false;
-      if (this.categoryItem[index].type === '商品') {
+      if (this.categoryItem[index].type === '商品訂單') {
         this.listDisplay = this.userData.orders;
         return this.listDisplay;
-      } else if (this.categoryItem[index].type === '行程') {
+      } else if (this.categoryItem[index].type === '購票訂單') {
         this.listDisplay = this.userData.package_orders;
         return this.listDisplay;
       }
@@ -214,11 +270,43 @@ export default {
       } else {
         this.isShow = false;
       }
+    },
+    showOrderDetail(itemOrder) {
+      this.isModalVisible = true;
+      this.orderDetail = itemOrder;
+    },
+    showDetail(itemOrder) {
+      this.isVisible[itemOrder] = true;
+    },
+    hideDetail(itemOrder) {
+      this.isVisible[itemOrder] = false;
     }
   },
   beforeUnmount() {
     // 移除事件聆聽器
     window.removeEventListener('resize', this.handleResize);
-  }
+  },
 }
 </script>
+
+<style lang="scss" scoped>
+/* 定義彈出視窗 */
+.detail-modal > .content {
+  // background-color: #fff;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+
+.pageMask {
+  background-color: rgba(black, .3);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+</style>

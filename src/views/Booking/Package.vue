@@ -85,7 +85,7 @@ section.spot-filter {
   .filter {
     display: flex;
     align-items: center;
-    border-top: 1px solid #333;
+    border-top: 1px solid map-get($GrayColors, Gray6);
     padding: 0.5rem 0 0.25rem 0;
     .inner {
       font-size: 1.25rem;
@@ -105,6 +105,23 @@ section.spot-filter {
         margin: 0 3rem;
         i {
           margin-left: 0.25rem;
+        }
+      }
+    }
+
+    .reset {
+      margin-right: 1rem;
+      button {
+        font-size: 1.25rem;
+        padding: 0.25rem;
+        border: none;
+        background-color: transparent;
+        transition: all 0.3s ease;
+
+        &:hover {
+          border-radius: 5px;
+          color: $color;
+          background-color: map-get($GrayColors, Gray6);
         }
       }
     }
@@ -229,6 +246,26 @@ section.package-list {
 }
 
 @media screen and (max-width: 768px) {
+  section.spot-filter {
+    .filter {
+      .inner {
+        font-size: 1rem;
+      }
+
+      .btn-wrap {
+        button {
+          font-size: 1rem;
+        }
+      }
+
+      .reset {
+        margin-right: 1rem;
+        button {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
   section.package-list {
     .package-item {
       flex-wrap: wrap;
@@ -307,6 +344,7 @@ section.package-list {
 
     .filter {
       display: flex;
+      justify-content: space-around;
       flex-wrap: wrap;
 
       .inner {
@@ -333,7 +371,7 @@ section.package-list {
   <div class="container">
     <section class="spot-filter">
       <div class="spot-tag">
-        <span>景點</span>
+        <span>景點篩選</span>
         <div class="triangle"></div>
       </div>
       <div class="spot-list">
@@ -341,7 +379,7 @@ section.package-list {
           class="spot-item col-2"
           v-for="(item, index) in spotList"
           :key="index"
-          @click="selectSpot(index)"
+          @click="filterIndex(index)"
         >
           <div class="spot-img">
             <img :src="item.link" alt="" />
@@ -353,7 +391,6 @@ section.package-list {
         <div class="inner">排序</div>
         <div class="btn-wrap">
           <button
-            class="filter"
             @click="
               sortPrice();
               toggleArrowPrice();
@@ -362,7 +399,6 @@ section.package-list {
             行程價格<i :class="arrowTypePrice"></i>
           </button>
           <button
-            class="filter"
             @click="
               sortTime();
               toggleArrowTime();
@@ -371,7 +407,6 @@ section.package-list {
             出發日期<i :class="arrowTypeTime"></i>
           </button>
           <button
-            class="filter"
             @click="
               sortRemain();
               toggleArrowRemain();
@@ -380,13 +415,16 @@ section.package-list {
             剩餘名額<i :class="arrowTypeRemain"></i>
           </button>
         </div>
+        <div class="reset">
+          <button @click="resetSpot">重置景點篩選</button>
+        </div>
       </div>
     </section>
 
     <section class="package-list">
       <div
         class="package-item"
-        v-for="(item, index) in packageList"
+        v-for="(item, index) in selectSpot(currentIndex)"
         :key="index"
       >
         <div class="img">
@@ -444,9 +482,11 @@ import { GET } from "@/plugin/axios";
 export default {
   data() {
     return {
-      ascending: true,
+      packageList: [],
 
-      select: "",
+      currentIndex: -1,
+
+      ascending: true,
 
       arrowTypePrice: "fa-solid fa-caret-up",
       arrowTypeTime: "fa-solid fa-caret-up",
@@ -500,23 +540,52 @@ export default {
           name: "早鳥優惠",
         },
       ],
-      packageList: [],
     };
   },
 
   methods: {
-    // selectSpot(index) {
-    //   if (index === 0) {
-    //     return (this.select = this.packageList.filter((item) =>
-    //       item.stageList.some((stage) => stage.name.includes("高原遺跡"))
-    //     ));
-    //   } else if (index === 1) {
-    //   } else if (index === 2) {
-    //   } else if (index === 3) {
-    //   } else if (index === 4) {
-    //   } else if (index === 5) {
-    //   }
-    // },
+    //景點篩選圖對應的index
+    filterIndex(index) {
+      this.currentIndex = index;
+    },
+
+    //讓景點篩選重置，return [...this.packageList]
+    resetSpot() {
+      this.currentIndex = -1;
+    },
+
+    //按景點圖片，會對應有經過此景點的行程
+    selectSpot(currentIndex) {
+      if (currentIndex === -1) {
+        return [...this.packageList];
+      } else {
+        if (currentIndex === 0) {
+          return this.packageList.filter((item) =>
+            item.stageList.some((stage) => stage.name.includes("高原遺跡"))
+          );
+        } else if (currentIndex === 1) {
+          return this.packageList.filter((item) =>
+            item.stageList.some((stage) => stage.name.includes("銀月山脈"))
+          );
+        } else if (currentIndex === 2) {
+          return this.packageList.filter((item) =>
+            item.stageList.some((stage) => stage.name.includes("綠野牧場"))
+          );
+        } else if (currentIndex === 3) {
+          return this.packageList.filter((item) =>
+            item.stageList.some((stage) => stage.name.includes("海底餐廳"))
+          );
+        } else if (currentIndex === 4) {
+          return this.packageList.filter((item) =>
+            item.stageList.some((stage) => stage.name.includes("忘卻之湖"))
+          );
+        } else if (currentIndex === 5) {
+          return this.packageList.filter((item) =>
+            item.stageList.some((stage) => stage.name.includes("景觀公園"))
+          );
+        }
+      }
+    },
 
     //價錢切換成立即購買
     change(index) {
