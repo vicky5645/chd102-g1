@@ -206,19 +206,19 @@ const routesUser = [
           import(/* webpackChunkName: "" */ "@/views/User/UserInfo.vue"),
       },
       {
-        path: "/user/order",
+        path: "order",
         name: "userorder",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/User/UserOrder.vue"),
       },
       {
-        path: "/user/forum",
+        path: "forum",
         name: "userforum",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/User/UserForum.vue"),
       },
       {
-        path: "/user/like",
+        path: "like",
         name: "userlike",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/User/UserLike.vue"),
@@ -245,21 +245,21 @@ const routesUser = [
     },
     children: [
       {
-        path: "/backend/package",
+        path: "package",
         name: "package",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/BackEnd/BackPackage.vue"),
         meta: { title: "行程管理" },
       },
       {
-        path: "/backend/organize",
+        path: "organize",
         name: "organize",
         component: () =>
           import(/* webpackChunkName: "" */ "@/views/BackEnd/BackOrganize.vue"),
         meta: { title: "開團管理" },
       },
       {
-        path: "/backend/BackForum",
+        path: "BackForum",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackForum.vue"
@@ -270,7 +270,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackForumMessage",
+        path: "BackForumMessage",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackForumMessage.vue"
@@ -281,7 +281,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackForumReport",
+        path: "BackForumReport",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackForumReport.vue"
@@ -292,7 +292,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackAnnouncements",
+        path: "BackAnnouncements",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackAnnouncements.vue"
@@ -303,7 +303,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackCmsStaff",
+        path: "BackCmsStaff",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackCmsStaff.vue"
@@ -314,7 +314,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackMember",
+        path: "BackMember",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackMember.vue"
@@ -325,7 +325,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackPackageOrder",
+        path: "BackPackageOrder",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackPackageOrder.vue"
@@ -336,7 +336,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackPattern",
+        path: "BackPattern",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackPattern.vue"
@@ -347,7 +347,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackPackageTrace",
+        path: "BackPackageTrace",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackPackageTrace.vue"
@@ -358,7 +358,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackSpot",
+        path: "BackSpot",
         component: () =>
           import(/* webpackChunkName: "cart" */ "@/views/BackEnd/BackSpot.vue"),
         name: "BackSpot",
@@ -367,7 +367,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackPackagePass",
+        path: "BackPackagePass",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackPackagePass.vue"
@@ -378,7 +378,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackSeat",
+        path: "BackSeat",
         component: () =>
           import(/* webpackChunkName: "cart" */ "@/views/BackEnd/BackSeat.vue"),
         name: "BackSeat",
@@ -387,7 +387,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackTrain",
+        path: "BackTrain",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackTrain.vue"
@@ -398,7 +398,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackProduct",
+        path: "BackProduct",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackProduct.vue"
@@ -409,7 +409,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackOrder",
+        path: "BackOrder",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackOrder.vue"
@@ -420,7 +420,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackOrderItem",
+        path: "BackOrderItem",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackOrderItem.vue"
@@ -431,7 +431,7 @@ const routesUser = [
         },
       },
       {
-        path: "/backend/BackProdTrace",
+        path: "BackProdTrace",
         component: () =>
           import(
             /* webpackChunkName: "cart" */ "@/views/BackEnd/BackProdTrace.vue"
