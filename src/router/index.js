@@ -179,6 +179,15 @@ const routesUser = [
     },
   },
   {
+    path: "/payment2",
+    name: "payment2",
+    component: () =>
+      import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/Payment2.vue"),
+    meta: {
+      title: "信用卡付款畫面",
+    },
+  },
+  {
     path: "/login",
     name: "login",
     component: () =>
