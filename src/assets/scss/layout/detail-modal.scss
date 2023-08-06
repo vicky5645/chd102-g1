@@ -1,6 +1,7 @@
 .detail-modal{
   .subtext {
     text-align-last: left;
+    color: map-get($GrayColors, Gray4 )!important;
   }
   .content {
     border-radius: $space;

@@ -50,18 +50,18 @@ export default {
             })
             this.toggle = false;
             this.final_stars_num = item3
-            alert( this.final_stars_num)
+            // alert( this.final_stars_num)
         },
     },
 }
 </script>
 <style lang="scss" scoped>
 .user_evaluate_box {
-    margin: 200px auto;
+    margin: 16px auto;
     border-radius: 8px;
-    border: 5px solid black;
-    width: 500px;
-    height: 600px;
+    // border: 5px solid black;
+    width: 100%;
+    // height: 600px;
     display: flex;
     justify-content: center;
     align-items: center;
