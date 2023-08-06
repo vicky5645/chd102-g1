@@ -6,7 +6,7 @@ body {
   position: relative;
   overflow-x: hidden;
   //一般內文
-  & p:not(.type) :not(.subtext) {
+  & p:not(.type):not(.subtext > p){
     font-size: $body;
     line-height: 34px;
     color: map-get($GrayColors, Gray4 )!important;
