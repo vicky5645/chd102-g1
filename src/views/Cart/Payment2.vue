@@ -11,23 +11,32 @@
     </div>
 </template> -->
 <template>
-    <div>
-      <label for="cardNumber">信用卡卡號</label>
-      <input v-model="cardNumber" id="cardNumber" type="text" @input="validateCardNumber" />
-      <span v-if="!isCardNumberValid">請輸入有效的VISA或MasterCard卡號</span>
-  
-      <label for="cardHolder">持卡人姓名</label>
-      <input v-model="cardHolder" id="cardHolder" type="text" />
-  
-      <label for="expiryMonth">到期月份</label>
-      <input v-model="expiryMonth" id="expiryMonth" type="text" />
-  
-      <label for="expiryYear">年份(西元)</label>
-      <input v-model="expiryYear" id="expiryYear" type="text" />
-  
-      <label for="cvv">CVV</label>
-      <input v-model="cvv" id="cvv" type="text" />
+  <div class="container payment">
+    <div class="payWrap">
+      <div class="cardInfo">
+        <div class="payTable">
+          <label for="cardNumber">信用卡卡號</label>
+          <input v-model="cardNumber" id="cardNumber" type="number" @input="validateCardNumber" />
+          <span v-if="!isCardNumberValid">請輸入有效的VISA或MasterCard卡號</span>
+        </div>
+        <div class="payTable">
+          <label for="cardHolder">持卡人姓名</label>
+          <input v-model="cardHolder" id="cardHolder" type="text" />
+        </div>
+      </div>
+      <div class="cardSub">
+        <div class="expiryDate">
+        <label for="expiryMonth">卡片有效期限</label>
+        <input v-model="expiryMonth" id="expiryMonth" type="number" placeholder="MM"/>
+        <input v-model="expiryYear" id="expiryYear" type="number" placeholder="YY"/>
+      </div>
+      <div class="payCvv">
+        <label for="cvv">CVV</label>
+        <input v-model="cvv" id="cvv" type="number" />
+      </div>
+      </div>
     </div>
+  </div>
   </template>
   
   <script>
