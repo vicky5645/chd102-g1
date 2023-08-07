@@ -1,63 +1,48 @@
-<template>  
+<template>
   <div class="login-bg">
+    <main class="user-control-content">
+      <router-view></router-view>
+    </main>
 
-
-
-      <main class="user-control-content">
-        <router-view></router-view>
-      </main>
-      <div class="box">
-        <svg
-          version="1.1"
-          id="bg"
-          xmlns="http://www.w3.org/2000/svg"
-          x="0px"
-          y="0px"
-          viewBox="0 0 750 500"
-          style="enable-background: new 0 0 750 500"
-          xml:space="preserve"
+    <div class="box">
+      <svg
+        version="1.1"
+        id="bg"
+        xmlns="http://www.w3.org/2000/svg"
+        x="0px"
+        y="0px"
+        viewBox="0 0 750 500"
+        style="enable-background: new 0 0 750 500;"
+        xml:space="preserve"
+      >
+        <linearGradient
+          id="SVGID_1_"
+          gradientUnits="userSpaceOnUse"
+          x1="749.8101"
+          y1="3.6109"
+          x2="-3.3902"
+          y2="498.7425"
         >
-          <linearGradient
-            id="SVGID_1_"
-            gradientUnits="userSpaceOnUse"
-            x1="749.8101"
-            y1="3.6109"
-            x2="-3.3902"
-            y2="498.7425"
-          >
-            <stop
-              offset="0.3227"
-              :style="{ 'stop-color': gradientColors[0] }"
-            />
-            <stop
-              offset="0.4171"
-              :style="{ 'stop-color': gradientColors[1] }"
-            />
-            <stop
-              offset="0.5707"
-              :style="{ 'stop-color': gradientColors[2] }"
-            />
-            <stop
-              offset="0.7643"
-              :style="{ 'stop-color': gradientColors[3] }"
-            />
-            <stop
-              offset="0.9587"
-              :style="{ 'stop-color': gradientColors[4] }"
-            />
-          </linearGradient>
-          <rect
-            y="0"
-            class="st0"
-            width="750"
-            height="500"
-            fill="url(#SVGID_1_)"
-          />
-          <template v-for="star in stars" :key="star.id">
-            <polygon :class="'star' + star.id" :points="star.points" />
-          </template>
-        </svg>
-      </div>
+          <stop offset="0.3227" :style="{ 'stop-color': gradientColors[0] }" />
+          <stop offset="0.4171" :style="{ 'stop-color': gradientColors[1] }" />
+          <stop offset="0.5707" :style="{ 'stop-color': gradientColors[2] }" />
+          <stop offset="0.7643" :style="{ 'stop-color': gradientColors[3] }" />
+          <stop offset="0.9587" :style="{ 'stop-color': gradientColors[4] }" />
+        </linearGradient>
+        <!-- <rect
+          y="0"
+          class="st0"
+          width="750"
+          height="500"
+          fill="url(#SVGID_1_)"
+        /> -->
+        <template v-for="star in stars" :key="star.id">
+          <polygon :class="'star' + star.id" :points="star.points" />
+        </template>
+      </svg>
+    </div>
+
+    <!-- <div class="login-bg-mountain"></div> -->
   </div>
 </template>
 
@@ -147,6 +132,14 @@ polygon {
 }
 // 登入背景----------------------------------
 
+// * {
+//   outline: 1px solid#d21b1b;
+// }
+#mainFooter{
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+}
 .login-bg {
   margin: 0;
   // padding: 0;
@@ -155,26 +148,47 @@ polygon {
   background-position: center;
   position: relative;
   background-image: url('/public/images/travel/loginBgCut.png');
-  background-position:  center 40px;
+  background-position: center 40px;
   background-repeat: no-repeat;
   background-size: cover;
-  
+  min-height: 87vh;
 
-    main {
-      z-index: 99;
+  main {
+    z-index: 99;
+  }
+  .box {
+    overflow: hidden;
+    // overflow: hidden;
+    background-color: black;
+    min-height: 90vh;
+    width: 100%;
+    // height: 100%;
+    position: fixed;
+    top: 0;
+    z-index: -1;
+
+    #bg {
+      z-index: -1;
     }
-    .box {
-      #bg {
-        z-index: -1;
-      }
-      svg {
-        width: 100%;
-        object-fit: cover;
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-   }
+    svg {
+      min-height: 90vh;
+      width: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      // background-color: black;
+    }
+  }
+
+  .login-bg-mountain {
+  
+    width: 100%; /* 设置宽度为100%以适应父元素 */
+    padding-bottom: 40%; /* 16:9 高宽比的占位，可以根据需要调整 */
+    background-image: url("/public/images/travel/loginBgCut.png");
+    background-size: cover; /* 背景图片覆盖整个元素 */
+    background-position: center center;
+  }
 }
 
 @-webkit-keyframes blink-1 {
