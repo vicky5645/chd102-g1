@@ -365,6 +365,7 @@ section.package-list {
 </style>
 
 <template>
+  {{ packageData }}
   <section class="title">
     <h1 class="h1">行程選擇</h1>
   </section>
@@ -483,7 +484,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      package: [],
+      packageData: [],
 
       packageList: [],
 
@@ -684,15 +685,15 @@ export default {
       this.packageList = res;
     });
 
-    // axios
-    //   .get("http://localhost:80/phps/connectPackage.php")
-    //   .then((res) => {
-    //     this.package = res.data;
-    //     console.log(this.package);
-    //   })
-    //   .catch((err) => {
-    //     console.log("Error happened when fetching the data:", err);
-    //   });
+    axios
+      .get("http://localhost:80/phps/connectPackage.php")
+      .then((res) => {
+        this.packageData = res.data;
+        // console.log(this.package);
+      })
+      .catch((err) => {
+        console.log("Error happened when fetching the data:", err);
+      });
   },
 };
 </script>
