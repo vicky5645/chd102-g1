@@ -24,7 +24,7 @@
         <input type="color" name="color" v-model="setting.color">
         <div id="leftbox" class="img-space">
           <div v-for="icon in patterns" class="cus" :style="{ color: setting.color || '#F29C50' }">
-            <img :src="icon" class="custom-svg img">
+            <Images :imgURL="`${icon}`" :class="['custom-svg','img']" :alt="``" />
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default {
       setting: {
         color: '#F29C50'
       },
-      patterns: [require('../assets/images/pattern/1.svg'), require('../assets/images/pattern/2.svg'), require('../assets/images/pattern/3.svg'), require('../assets/images/pattern/4.svg')],
+      patterns: ['images/pattern/1.svg','images/pattern/2.svg', 'images/pattern/3.svg', 'images/pattern/4.svg'],
       isDragging: false,
     }
   },
