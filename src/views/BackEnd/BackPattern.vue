@@ -3,7 +3,6 @@
 <template>
   <!-- select bar -->
   <!-- {{currentItem}} -->
-  
   <div class="search_new">
     <div class="input-group">
       <input
@@ -61,7 +60,7 @@
     </p>
   </table>
   
-  <!-- modal -->
+  <!-- edit modal -->
   <form
     action="http://localhost:80/phps/editPattern.php" 
     method="post" enctype="multipart/form-data"
@@ -304,6 +303,7 @@
 <script>
 import axios from "axios";
 import { Modal } from "bootstrap";
+import { BASE_URL } from "@/assets/js/common.js";
 
 export default {
   data() {
@@ -485,7 +485,7 @@ export default {
   mounted() {
     const type = 'get'; // 設定要執行的操作，這裡是取得資料
     axios
-      .get(`http://localhost:80/phps/getPattern.php?type=${type}`)
+      .get(`${BASE_URL}/getPattern.php?type=${type}`)
       .then((response) => {
         this.dataFromMySQL = response.data;
 
