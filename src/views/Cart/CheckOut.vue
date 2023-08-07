@@ -95,8 +95,8 @@ export default {
         this.showCheckList = !this.showCheckList; // 點擊時切換顯示和隱藏的狀態
     },
         goPayment() {
-            alert("即將跳轉信用卡付款頁面！");
-            this.$router.push('/online-mall');
+            // alert("即將跳轉信用卡付款頁面！");
+            this.$router.push('/payment');
         }
     }
 }
