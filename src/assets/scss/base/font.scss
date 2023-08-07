@@ -23,9 +23,15 @@ $caption : 13px;
   font-weight: 400;
   line-height: 34px; /* 188.889% */
   letter-spacing: -0.18px;
+  align-self: stretch;
   &.bold {
     /* body/text-18-md */
     font-weight: 500;
+  }
+  &_14 {
+    /* button/text-14-regular */
+    font-size: $sm-font;
+    line-height: 20px; /* 142.857% */
   }
 }
 

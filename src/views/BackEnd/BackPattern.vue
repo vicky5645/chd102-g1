@@ -2,6 +2,8 @@
 
 <template>
   <!-- select bar -->
+  <!-- {{currentItem}} -->
+  
   <div class="search_new">
     <div class="input-group">
       <input
@@ -36,11 +38,11 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">
-        <th scope="row">{{ item.id }}</th>
-        <td class="ellipsis">{{ item.name }}</td>
-        <td class="ellipsis">{{ item.desc }}</td>
-        <td class="ellipsis">{{ item.date }}</td>
-        <td class="ellipsis">{{ item.image }}</td>
+        <th scope="row">{{ item.pattern_no }}</th>
+        <td class="ellipsis">{{ item.pattern_name }}</td>
+        <td class="ellipsis">{{ item.pattern_desc }}</td>
+        <td class="ellipsis">{{ item.creation_date }}</td>
+        <td class="">{{ item.pattern_file }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -58,9 +60,11 @@
       * 沒有找到符合搜尋條件的結果
     </p>
   </table>
-
+  
   <!-- modal -->
-  <div
+  <form
+    action="http://localhost:80/phps/editPattern.php" 
+    method="post" enctype="multipart/form-data"
     v-if="showModal"
     class="modal fade"
     id="itemModal"
@@ -91,7 +95,8 @@
               >客製車票圖案編號</span
             >
             <input
-              v-model="currentItem.id"
+              disabled
+              v-model="currentItem.pattern_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -103,7 +108,8 @@
               >圖案名稱</span
             >
             <input
-              v-model="currentItem.name"
+              v-model="currentItem.pattern_name"
+              name="pattern_name"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -115,7 +121,8 @@
               >圖案描述</span
             >
             <input
-              v-model="currentItem.desc"
+              v-model="currentItem.pattern_desc"
+              name="pattern_desc"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -128,7 +135,8 @@
               >創建日期</span
             >
             <input
-              v-model="currentItem.date"
+              disabled
+              v-model="currentItem.creation_date"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -147,11 +155,10 @@
             />
           </div>
           <div class="model_body_pic">
-            <img
-              v-if="currentItem.image"
-              :src="currentItem.image"
-              alt="Image preview"
-            />
+            <Images 
+              v-if="currentItem.pattern_file"
+              :imgURL="`${currentItem.pattern_file}`" 
+              :alt="`Image preview`" />
           </div>
         </div>
 
@@ -162,7 +169,7 @@
             data-bs-dismiss="modal"
             @click="deleteAnnouncement"
           >
-            刪除公告
+            刪除圖案
           </button>
           <button
             type="button"
@@ -175,10 +182,13 @@
         </div>
       </div>
     </div>
-  </div>
+  </form>
 
   <!-- new modal -->
-  <div
+  <form
+    action="http://localhost:80/phps/postPattern.php" 
+    method="post" 
+    enctype="multipart/form-data"
     class="modal fade"
     id="itemNewModal"
     tabindex="-1"
@@ -190,7 +200,6 @@
         <div class="modal-header">
           <h5 name="header">新增客製車票圖案</h5>
         </div>
-
         <div class="modal-body">
           <slot name="body">
             <div
@@ -202,8 +211,10 @@
                   >客製車票圖案編號</span
                 >
                 <input
-                  v-model="newAnnouncement.id"
+                  disabled
+                  v-model="newAnnouncement.pattern_no"
                   type="text"
+                  name="pattern_no"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -214,7 +225,8 @@
                   >圖案名稱</span
                 >
                 <input
-                  v-model="newAnnouncement.name"
+                  v-model="newAnnouncement.pattern_name"
+                  name="pattern_name"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -226,7 +238,8 @@
                   >圖案描述</span
                 >
                 <input
-                  v-model="newAnnouncement.desc"
+                  v-model="newAnnouncement.pattern_desc"
+                  name="pattern_desc"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -238,7 +251,9 @@
                   >創建日期</span
                 >
                 <input
-                  v-model="newAnnouncement.date"
+                  disabled
+                  v-model="newAnnouncement.creation_date"
+                  name="creation_date"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -252,21 +267,21 @@
                 <input
                   type="file"
                   class="form-control"
-                  id="inputGroupFile02"
+                  name="image"
+                  id="image"
                   @change="handleFileUpload"
                 />
               </div>
               <div class="model_body_pic">
-                <img
-                  v-if="newAnnouncement.image"
-                  :src="newAnnouncement.image"
-                  alt="Image preview"
-                />
+                <img 
+                  v-if="newAnnouncement.pattern_file"
+                  :src="`${newAnnouncement.pattern_file}`" 
+                  :alt="`Image preview`"
+                  :id="`imgPreview`" />
               </div>
             </div>
           </slot>
         </div>
-
         <div class="modal-footer">
           <slot name="footer">
             <button
@@ -283,24 +298,28 @@
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
+import axios from "axios";
 import { Modal } from "bootstrap";
 
 export default {
   data() {
     return {
-      items: [
-        {
-          id: 1,
-          name: "1",
-          desc: "楓葉",
-          date: "2023/7/5",
-          image: require("../../assets/images/pattern/1.svg"),
-        },
-      ],
+      // 抓 php 資料
+      dataFromMySQL: [],
+      pattern_dir: 'images/pattern/',
+      // items: [
+      //   {
+      //     id: 1,
+      //     name: "1",
+      //     desc: "楓葉",
+      //     date: "2023/7/5",
+      //     image: require("../../assets/images/pattern/1.svg"),
+      //   },
+      // ],
       // search
       searchText: "",
       // model
@@ -310,11 +329,11 @@ export default {
       selectedFile: null,
       // new model
       newAnnouncement: {
-        id: "", // 確保 id 屬性存在
-        name: "",
-        desc: "",
-        date: "",
-        image: null,
+        pattern_no: "", // 確保 id 屬性存在
+        pattern_name: "",
+        pattern_desc: "",
+        creation_date: "",
+        pattern_file: null,
       },
     };
   },
@@ -322,13 +341,18 @@ export default {
   computed: {
     // search
     filteredItems() {
-      if (this.searchText === "") {
-        return this.items;
+      if (!this.dataFromMySQL) {
+        alert('沒有資料')
+      } 
+      else {
+        if (this.searchText === "") {
+          return this.dataFromMySQL;
+        }
+  
+        return this.dataFromMySQL.filter((item) =>
+          Object.values(item).some((val) => String(val).includes(this.searchText))
+        );
       }
-
-      return this.items.filter((item) =>
-        Object.values(item).some((val) => String(val).includes(this.searchText))
-      );
     },
   },
 
@@ -366,10 +390,11 @@ export default {
       }
 
       const file = files[0];
+      console.log('file',file)
       const reader = new FileReader();
 
       reader.onload = (e) => {
-        this.currentItem.image = e.target.result;
+        this.newAnnouncement.pattern_file = e.target.result;
       };
       reader.readAsDataURL(file);
     },
@@ -377,24 +402,42 @@ export default {
     // new model
     submitAnnouncement() {
       if (
-        !this.newAnnouncement.id ||
-        !this.newAnnouncement.name ||
-        !this.newAnnouncement.desc ||
-        !this.newAnnouncement.date
+        !this.newAnnouncement.pattern_name ||
+        !this.newAnnouncement.pattern_desc
       ) {
         alert("所有欄位都必須填寫！");
         return;
       }
 
-      console.log(this.newAnnouncement);
-      this.clearAnnouncement();
-      this.newAnnouncement = {
-        id: "",
-        name: "",
-        desc: "",
-        date: "",
-        image: null,
-      };
+      // 準備要傳送的資料，這裡假設要傳送 pattern_name 和 pattern_desc
+      // const data = {
+      //   pattern_name: this.newAnnouncement.pattern_name,
+      //   pattern_desc: this.newAnnouncement.pattern_desc,
+      // };
+
+      // // 使用 Axios 發送 POST 請求
+      // axios.post("http://localhost:80/phps/postPattern.php", data)
+      // .then((response) => {
+      //   // 請求成功後的處理
+      //   console.log(response.data);
+      //   alert("新增成功！");
+      // })
+      // .catch((error) => {
+      //   // 請求失敗後的處理
+      //   console.error(error);
+      //   alert("新增失敗！");
+      // });
+
+
+
+      // this.clearAnnouncement();
+      // this.newAnnouncement = {
+      //   pattern_no: "", // 確保 id 屬性存在
+      //   pattern_name: "",
+      //   pattern_desc: "",
+      //   creation_date: "",
+      //   pattern_file: null,
+      // };
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
       modalInstance.hide();
@@ -402,24 +445,56 @@ export default {
 
     clearAnnouncement() {
       this.newAnnouncement = {
-        id: "",
-        name: "",
-        desc: "",
-        date: "",
-        image: null,
+        pattern_no: "", // 確保 id 屬性存在
+        pattern_name: "",
+        pattern_desc: "",
+        creation_date: "",
+        pattern_file: null,
       };
     },
 
     // delete announcement
     deleteAnnouncement() {
-      const index = this.items.findIndex(
+      const index = this.dataFromMySQL.findIndex(
         (item) => item.id === this.currentItem.id
       );
       if (index !== -1) {
-        this.items.splice(index, 1);
+        this.dataFromMySQL.splice(index, 1);
         this.showModal = false;
       }
     },
+    editArticle() {
+      const apiURL = new URL(`${BASE_URL}/editArticle.php`);
+      // console.log(this.$refs["article-form"]);
+      const formData = new FormData(this.$refs["article-form"]);
+      formData.append("type", "edit");
+      formData.append("news_id", this.edit.news_id);
+      formData.append("news_date", this.edit.news_date);
+      fetch(apiURL, {
+          method: "POST",
+          body: formData,
+      })
+          .then((res) => res.json())
+          .then((status) => {
+              // alert(status.msg);
+              this.confirmModal();
+          });
+    },
+  },
+  // 抓 php 資料
+  mounted() {
+    const type = 'get'; // 設定要執行的操作，這裡是取得資料
+    axios
+      .get(`http://localhost:80/phps/getPattern.php?type=${type}`)
+      .then((response) => {
+        this.dataFromMySQL = response.data;
+
+        // 打印取得的資料以確認是否成功
+        console.log("Data retrieved from MySQL:", this.dataFromMySQL);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data:", error);
+      });
   },
 };
 </script>

@@ -214,6 +214,7 @@ export default {
         }
       }
     },
+
     getSelectedSeats() {
       const allPortions = [...this.portion1, ...this.portion2];
       return allPortions.reduce((selectedSeats, group) => {
@@ -226,7 +227,7 @@ export default {
     validate() {
       const selectedSeats = this.getSelectedSeats();
       if (selectedSeats.length === this.count) {
-        return (selectedSeats.length = this.count);
+        return true;
       }
     },
 
@@ -237,7 +238,7 @@ export default {
     confirm() {
       if (this.validate()) {
         // 選擇有效，繼續購票流程
-        this.$router.push(this.toNextPage());
+        this.$router.replace(this.toNextPage());
       } else {
         // 選擇無效，顯示錯誤消息
         alert("人數與選擇的座位數不符合，請重新確認");
@@ -377,7 +378,7 @@ export default {
       </div>
 
       <div class="btn primary" @click="confirm">
-        <router-link to="toNextPage">
+        <router-link :to="toNextPage">
           <span>確認購票</span>
         </router-link>
       </div>

@@ -7,7 +7,8 @@
   border: 1px solid map-get($GrayColors, Gray6);
   box-sizing: border-box;
   background: map-get($GrayColors, White);
-  box-shadow: 2px 2px 10px #00000033;
+  /* 淡陰影 */
+  box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.20);
 }
 @mixin flexCenter(){
   display: flex;
@@ -122,9 +123,14 @@
   >main{
     padding:16px;
     height: 100%;
-    @include card-shadow();
+    border-radius: 0;
+    border: 1px solid map-get($GrayColors, Gray6);
+    box-sizing: border-box;
+    background: map-get($GrayColors, White);
+    /* 淡陰影 */
+    box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.20);
     @include pad {
-      border-radius: $space;
+      border-radius: $space * 2;
     }
     display: flex;
     row-gap: $space * 2;

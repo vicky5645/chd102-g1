@@ -355,10 +355,10 @@ export default {
       CustomEase.create("first_ani", "M0,0 C0.74,0.86 0.4,0.92 1,1"),
 
         gsap.from('header', {
-          delay: 7.2,
+          // delay: 7.2,
           opacity: 0,
-          y: '-10vh',
-          duration: 1.5,
+          // y: '-10vh',
+          duration: 2.5,
         }),
 
         gsap.from('.type_black', {
@@ -577,7 +577,7 @@ export default {
 
       return (customers_wrap - screenW)
     }
-    console.log(get_cus_distance())
+    // console.log(get_cus_distance())
  
 
     const customers_ani = gsap.to('.customers_wrap', {

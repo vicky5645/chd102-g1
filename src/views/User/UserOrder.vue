@@ -132,7 +132,7 @@
                   <div class="card-bottom">
                     <div class="btn-space">
                       <button v-if="tabActive !== 2" type="submit" class="btn secondary2 radius"
-                        @click="showDetail('Certificate')">查看憑證</button>
+                        @click="showDetail('certificate')">查看憑證</button>
                       <button v-if="tabActive === 1" type="submit" class="btn other radius"
                         @click="showDetail('evaluate')">評價</button>
                       <button type="submit" class="btn other radius" @click="showOrderDetail(item)">詳細</button>
@@ -149,22 +149,23 @@
   </div>
 
   <!-- 彈出視窗 -->
-  <order-detail-modal :orderDetail="orderDetail" :isModalVisible="isModalVisible" @close-modal="isModalVisible = false" />
-  <div class="detail-modal" v-show="isVisible['Certificate']">
+  <OrderDetailModal :orderDetail="orderDetail" :isModalVisible="isModalVisible" @close-modal="isModalVisible = false" />
+  <div class="detail-modal" v-show="isVisible['certificate']">
     <div class="content">
       <h4 class="h4">購票憑證</h4>
-      <div class="subtext label">
+      <div class="subtext text_14">
         <p>購票方案: 昂坪360纜車票(單程/來)</p>
         <p>出發時間: 2023/7/5</p>
         <p>序號: WY00255774</p>
       </div>
-      <button type="submit" class="btn primary radius" @click="hideDetail('Certificate')">確認</button>
+      <button type="submit" class="btn primary radius" @click="hideDetail('certificate')">確認</button>
     </div>
-    <div class="pageMask" v-show="isVisible['Certificate']" @click="hideDetail('Certificate')"></div>
+    <div class="pageMask" v-show="isVisible['certificate']" @click="hideDetail('certificate')"></div>
   </div>
   <div class="detail-modal" v-show="isVisible['evaluate']">
     <div class="content">
       <p class="h4">請填寫本次購票評價</p>
+      <UserEvaluateStars/>
       <button type="submit" class="btn primary radius" @click="hideDetail('evaluate')">送出評價</button>
     </div>
     <div class="pageMask" v-show="isVisible['evaluate']" @click="hideDetail('evaluate')"></div>
@@ -174,15 +175,18 @@
 <script>
 import { GET } from '@/plugin/axios'
 import OrderDetailModal from '@/components/OrderDetailModal.vue';
+import UserEvaluateStars from '@/components/UserEvaluateStars.vue';
 export default {
   components: {
     OrderDetailModal,
+    UserEvaluateStars
   },
   data() {
     return {
       isModalVisible: false,
       isVisible: {
-        deleteArticle:　false
+        certificate: false,
+        evaluate: false,
       },
       isModalVisible: false,
       orderDetail: {

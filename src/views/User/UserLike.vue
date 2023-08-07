@@ -48,7 +48,7 @@
                       <img class="custom-svg" src="@/assets/images/icon/user/cart-plus.svg" alt="cart-plus">
                     </div>
                   </button>
-                  <button type="submit" class="btn error radius">刪除收藏</button>
+                  <button type="submit" class="btn error radius" @click="showDetail('deleteLike')">刪除收藏</button>
                 </div>
               </div>
             </div>
@@ -59,7 +59,6 @@
             <router-link :to="`/booking-info/${item.id}`">
               <div class="cradPic">
                 <Images :imgURL="`${item.image}`" :alt="`${item.title}`" />
-                <!-- <img :src="item.image" :alt="item.title"> -->
               </div>
             </router-link>
             <div class="content">
@@ -89,7 +88,7 @@
                       <img class="custom-svg" src="@/assets/images/icon/user/cart-plus.svg" alt="cart-plus">
                     </div>
                   </button>
-                  <button type="submit" class="btn error radius">刪除收藏</button>
+                  <button type="submit" class="btn error radius" @click="showDetail('deleteLike')">刪除收藏</button>
                 </div>
               </div>
             </div>
@@ -97,6 +96,25 @@
         </template>
       </div>
     </div>
+  </div>
+  <div class="detail-modal" v-show="isVisible['deleteLike']">
+    <div class="content">
+      <h4 class="h4">確定刪除收藏商品</h4>
+      <div class="subtext text_14">
+        <p>您已選擇刪除商品收藏，此操作將永久刪除該商品收藏並無法恢復。請確保您的決定是確定的，並謹慎考慮是否刪除該商品收藏。</p>
+        <p>如果您確定刪除，請點擊確認按鈕。如有任何疑問或需要協助，請隨時與我們聯繫。謝謝您的配合！</p>
+        <p class="caption error">注意：一旦刪除，商品收藏將從您的收藏清單中移除且無法恢復，請謹慎操作。</p>
+      </div>
+      <div class="icon-24 error" @click="hideDetail('deleteLike')">
+        <img class="custom-svg" src="@/assets/images/icon/menu/close_big.svg" alt="close_big-icon">
+      </div>
+      <div class="btn-space">
+        <button type="submit" class="btn other radius"
+          @click="hideDetail('deleteLike')">取消</button>
+        <button type="submit" class="btn error radius" @click="hideDetail('deleteLike')">確認刪除</button>
+      </div>
+    </div>
+    <div class="pageMask" v-show="isVisible['deleteLike']" @click="hideDetail('deleteLike')"></div>
   </div>
 </template>
 <script>
@@ -118,7 +136,10 @@ export default {
       categoryItem: [
         { type: "商品" },
         { type: "行程" }
-      ]
+      ],
+      isVisible: {
+        deleteLike: false
+      }
     }
   },
   created() {
@@ -177,6 +198,12 @@ export default {
       } else {
         this.isShow = false;
       }
+    },
+    showDetail(itemOrder) {
+      this.isVisible[itemOrder] = true;
+    },
+    hideDetail(itemOrder) {
+      this.isVisible[itemOrder] = false;
     }
   },
   beforeUnmount() {
@@ -185,3 +212,25 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+/* 定義彈出視窗 */
+.detail-modal > .content {
+  // background-color: #fff;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+
+.pageMask {
+  background-color: rgba(black, .3);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+</style>

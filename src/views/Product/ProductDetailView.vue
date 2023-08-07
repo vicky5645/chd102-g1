@@ -91,7 +91,7 @@
       <!-- 推薦商品 -->
       <!-- <img src="/images/img/project/2.jpg" alt=""> -->
       <h3>推薦商品</h3>
-      <section class="recommended_product">
+      <!-- <section class="recommended_product">
         <button class="left" @click="previousProducts">
           <i class="fa fa-chevron-left" aria-hidden="true"></i>
         </button>
@@ -114,15 +114,56 @@
             <div class="product">
               <div class="product_pic">
                 <Images :imgURL="`${product.image}`" :alt="`${product.name}`" />
-                <!-- <img :src="product.image" :alt="product.name" /> -->
               </div>
               <p>{{ product.name }}</p>
             </div>
             </a>
           </div>
         </transition>
-      </section>
+      </section> -->
+      <section class="recommended_product">
+        <swiper
+      :modules="modules"
+      :navigation="{
+        nextEl: '.swiper-btn-next',
+        prevEl: '.swiper-btn-prev',
+      }"
+      :loop="true"
+      :slides-per-view="2"
+      :spaceBetween="10"
+      :slidesPerGroup="2"
+      :breakpoints="{
+        540: {
+          slidesPerView: 3,
+          spaceBetween: 10,
+          slidesPerGroup: 3
+        },
+        768: {
+          slidesPerView: 4,
+          spaceBetween: 20,
+          slidesPerGroup: 4
+        }
+      }"
+      class="productSwiper"
+    >
+        <swiper-slide v-for="(item, index) in productData" :key="index">
+          <!-- <Images :imgURL="`${item.image}`" :alt="`${item.title}`" /> -->
+          <div class="recommendedCard">
+            <Images :imgURL="item.image" :alt="item.title" />
+            <p>{{ item.title }}</p>
+          </div>
+        </swiper-slide>
 
+    </swiper>
+    <div class="swiper-btn-prev">
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+          <!-- wiper-button- -->
+        </div>
+        <div class="swiper-btn-next">
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+      </section>
+      
     </div>
     <div v-else>
       Loading...
@@ -133,14 +174,21 @@
 <script>
 import {GET} from '@/plugin/axios'
 import BreadCrumbs from "@/components/BreadCrumbs.vue";
-import { ref, reactive } from 'vue';
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Navigation } from "swiper/modules";
+import 'swiper/css';
+import 'swiper/css/navigation';
+// import { ref, reactive } from 'vue';
 // import { useStore } from 'vuex';
 export default {
   components: {
-    BreadCrumbs
+    BreadCrumbs,
+    Swiper,
+    SwiperSlide,
   },
   data(){
     return {
+      modules: [Navigation],
       productData: null,
       productDataItem: [],
       addSuccess: false,
@@ -253,6 +301,9 @@ export default {
   // },
   methods: {
     // 規格按鈕
+    ttest() {
+      console.log(this.productData);
+    },
     increment() {
       // only increment if quantity is less than 10
       // if (this.quantity < 10) {
@@ -330,5 +381,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  
+
+
+
 
 </style>

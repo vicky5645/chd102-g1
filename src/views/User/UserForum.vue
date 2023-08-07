@@ -3,7 +3,6 @@
     <h1 class="h4">論壇訊息</h1>
     <hr>
     <div class="user-control-content">
-      <template v-if="isShow">
         <div class="table-wrapper hidden-mobile">
           <div class="thead">
             <span>文章圖片</span>
@@ -27,12 +26,10 @@
             <span>{{ item.likes }}</span>
             <span>{{ item.mes }}</span>
             <div class="btn-space">
-              <button type="submit" class="btn error radius">刪除文章</button>
+              <button type="submit" class="btn error radius" @click="showDetail('deleteArticle')">刪除文章</button>
             </div>
           </div>
         </div>
-      </template>
-      <template v-else>
         <div class="card-out show-mobile" v-for="item, index in userData.forum" :key="item.id">
           <template v-if="checkedItem == ''">
             <div class="card">
@@ -70,13 +67,12 @@
             </div>
           </template>
         </div>
-      </template>
     </div>
   </div>
   <div class="detail-modal" v-show="isVisible['deleteArticle']">
     <div class="content">
       <h4 class="h4">確定刪除論壇文章</h4>
-      <div class="subtext label">
+      <div class="subtext text_14">
         <p>您已選擇刪除論壇文章，此操作將永久刪除該文章並無法恢復。請確保您的決定是確定的，並謹慎考慮是否刪除該文章。</p>
         <p>如果您確定刪除，請點擊確認按鈕。如有任何疑問或需要協助，請隨時與我們聯繫。謝謝您的配合！</p>
         <p class="caption error">注意：一旦刪除，文章將從論壇中移除且無法恢復，請謹慎操作。</p>
@@ -99,18 +95,12 @@ import {GET} from '@/plugin/axios'
 export default {
   data() {
     return {
-      //判斷視窗寬度是否大於768px用
-      isLargeScreen: false,
       // 會員的資料(僅在進入畫面時去取一次資料)
       userData: [],
       checkedItem: '',
       isVisible: {
         deleteArticle: false
-      },
-      //判斷視窗寬度是否大於768px用
-      isLargeScreen: false,
-      // 會員的資料(僅在進入畫面時去取一次資料)
-      userData: [],
+      }
     }
   },
   created() {
@@ -120,26 +110,12 @@ export default {
     })
   },
   mounted() {
-    // 監聽視窗大小改變事件
-    window.addEventListener('resize', this.handleResize);
-    // 初始判定視窗大小
-    this.handleResize();
     svg_icon('.custom-svg', 'currentColor');
   },
   computed: {
 
   },
   methods: {
-    handleResize() {
-      // 判定視窗寬度是否大於等於 768px
-      this.isLargeScreen = window.innerWidth >= 768;
-      // 根據視窗寬度判定是否顯示 .categoryItem
-      if (this.isLargeScreen) {
-        this.isShow = true;
-      } else {
-        this.isShow = false;
-      }
-    },
     showDetail(itemOrder) {
       this.isVisible[itemOrder] = true;
     },
@@ -147,10 +123,6 @@ export default {
       this.isVisible[itemOrder] = false;
     }
   },
-  beforeUnmount() {
-    // 移除事件聆聽器
-    window.removeEventListener('resize', this.handleResize);
-  }
 }
 </script>
 
