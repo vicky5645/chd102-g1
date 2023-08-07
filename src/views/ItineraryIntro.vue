@@ -4,7 +4,7 @@
     <div class="ItineraryBanner">
       <div class="bannerTxt">
         <h2>搭上漫遊列車</h2>
-        <p>開啟您的旅途風光</p>
+        <span>開啟您的旅途風光</span>
       </div>
     </div>
     <div class="container">
@@ -14,7 +14,7 @@
             <img src="@/assets/images/about/IB1_1.jpg" alt="" />
           </div>
           <div class="ItinerarySwitch">
-            {{ tabActive }}
+            <!-- {{ tabActive }} -->
             <button
               v-for="(item, key) in airticles"
               :style="{ color: key == tabActive ? red : blue }"
@@ -478,7 +478,8 @@ export default {
     h2 {
       font-size: 48px;
     }
-    p {
+    span {
+      color: white;
       font-size: 32px;
     }
   }
@@ -509,13 +510,25 @@ export default {
     }
     .ItinerarySwitch {
       position: absolute;
-      top: 80px;
+
+      top: 40px;
+      @include pc {
+        top: 80px;
+      }
+
       left: 50%;
       transform: translateX(-50%);
-      width: 750px;
+
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      @include pc {
+        width: 750px;
+      }
 
       button {
-        margin: 0 -3px;
+        margin: 0 -1px;
         padding: 10px;
         border: 1px solid;
         font-size: 24px;
@@ -639,6 +652,9 @@ export default {
       display: block;
       text-align: right;
       margin-top: 16px;
+      &:hover {
+        color: #7aacbf;
+      }
     }
   }
 }

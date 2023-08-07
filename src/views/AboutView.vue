@@ -9,9 +9,9 @@
         <div class="introTxt">
           <div class="introCard">
             <h3 class="h3">銀月山脈的浪漫之旅</h3>
-            <p>
+            <span>
               在銀光閃爍的月夜中，我們將帶您從綠野牧場出發，經過景觀公園，最終到達神秘的銀月山脈，讓您在浪漫之旅中享受自然的獨特魅力。
-            </p>
+            </span>
             <div class="moreInfo">
               <router-link to="/itinerary-intro">查看更多</router-link>
               <router-link to="/itinerary-intro">
@@ -21,9 +21,9 @@
           </div>
           <div class="introCard">
             <h3 class="h3">湖光山色的奇幻之旅</h3>
-            <p>
+            <span>
               從幽谷湖泊出發，穿越壯觀的亞瑟山口，最後抵達紅葉村，我們將帶您體驗湖光山色中的奇幻之旅，感受大自然的絢爛多彩。
-            </p>
+            </span>
             <div class="moreInfo">
               <router-link to="/itinerary-intro">查看更多</router-link>
               <router-link to="/itinerary-intro">
@@ -33,9 +33,9 @@
           </div>
           <div class="introCard">
             <h3 class="h3">海底餐廳的冒險之旅</h3>
-            <p>
+            <span>
               從生機勃勃的景觀公園出發，經過翠嶺溫泉鄉，到達神秘的海底餐廳，帶您進行一場驚險刺激的冒險之旅，讓您深入探索自然之美。
-            </p>
+            </span>
             <div class="moreInfo">
               <router-link to="/itinerary-intro">查看更多</router-link>
               <router-link to="/itinerary-intro">
@@ -198,7 +198,9 @@ export default {
         opacity: 1;
       }
 
-      p {
+      span {
+        display: block;
+        color: white;
         font-size: 18px;
         padding: 8px 16px;
         line-height: 2rem;
