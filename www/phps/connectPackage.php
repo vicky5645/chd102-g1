@@ -10,9 +10,9 @@ try {
 	$package = $pdo->query($sql); 
 
 	//取回所有的資料, 放在2維陣列中
-	$packageItems= $package->fetchAll(PDO::FETCH_ASSOC);
+	$packageData= $package->fetchAll(PDO::FETCH_ASSOC);
 
-	echo json_encode($packageItems);
+	echo json_encode($packageData);
 } 
 catch (Exception $e) {
 	echo "錯誤row : ", $e->getLine(), "<br>";
