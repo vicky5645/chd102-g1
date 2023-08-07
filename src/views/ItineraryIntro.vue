@@ -461,6 +461,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/style.scss";
 .ItineraryBanner {
   background-image: url(@/assets/images/about/ST3114.jpg);
   background-repeat: no-repeat;
@@ -521,12 +522,26 @@ export default {
       }
     }
     .ItineraryHeader {
-      position: absolute;
-      bottom: 160px;
+      position: relative;
+      @include pad {
+        position: absolute;
+      }
+
+      bottom: 0;
+      @include pc {
+        bottom: 160px;
+      }
+
       left: 0;
+
       background-color: #fff;
+
       opacity: 0.8;
-      width: 60%;
+
+      width: 100%;
+      @include pc {
+        width: 60%;
+      }
       padding: 16px;
     }
   }
@@ -540,12 +555,23 @@ export default {
       position: relative;
 
       .txtBox {
-        position: absolute;
-        bottom: 40px;
+        position: relative;
+        @include pad {
+          position: absolute;
+        }
+
+        bottom: 0;
+        @include pc {
+          bottom: 40px;
+        }
         right: 0px;
         p {
           display: inline-block;
-          width: 60%;
+
+          width: 100%;
+          @include pc {
+            width: 60%;
+          }
           background-color: #a6a6a6;
           opacity: 0.9;
           padding: 16px;
@@ -561,12 +587,21 @@ export default {
       position: relative;
 
       .txtBox {
-        position: absolute;
-        bottom: 40px;
+        position: relative;
+        @include pad {
+          position: absolute;
+        }
+        bottom: 0;
+        @include pc {
+          bottom: 40px;
+        }
         right: 0px;
         p {
           display: inline-block;
-          width: 60%;
+          width: 100%;
+          @include pc {
+            width: 60%;
+          }
           background-color: #a6a6a6;
           opacity: 0.9;
           padding: 16px;
@@ -638,5 +673,17 @@ export default {
   opacity: 0;
   filter: Alpha(opacity=0);
   transform: translateY(150%);
+}
+
+@media all and (max-width: 1200px) {
+  .ItineraryHeader {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    // background-color: #111 !important;
+    opacity: 0.8;
+    width: 60%;
+    padding: 16px;
+  }
 }
 </style>
