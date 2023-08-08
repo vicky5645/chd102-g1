@@ -24,13 +24,6 @@ if($_FILES["image"]["error"] === 0) {
       $pattern->bindValue(":pattern_desc", $_POST["pattern_desc"]);
       $pattern->bindValue(":creation_date", $creation_date);
       $pattern->bindValue(":pattern_file", "images/pattern/$fileName");//添加圖檔路徑
-
-
-// 添加以下代碼進行調試
-echo "pattern_name: ".$_POST["pattern_name"]."<br>";
-echo "pattern_desc: ".$_POST["pattern_desc"]."<br>";
-
-
       $pattern->execute();
       echo "新增成功~<br>";
     } catch (PDOException $e) {

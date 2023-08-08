@@ -2,7 +2,6 @@
 
 <template>
   <!-- select bar -->
-  <!-- {{currentItem}} -->
   <div class="search_new">
     <div class="input-group">
       <input
@@ -62,8 +61,10 @@
   
   <!-- edit modal -->
   <form
-    action="http://localhost:80/phps/editPattern.php" 
-    method="post" enctype="multipart/form-data"
+    :action="`${BASE_URL}/editPattern.php`" 
+    method="post"
+    enctype="multipart/form-data"
+    ref="article-form"
     v-if="showModal"
     class="modal fade"
     id="itemModal"
@@ -147,6 +148,20 @@
               >圖案檔案</span
             >
             <input
+              disabled
+              v-model="currentItem.pattern_file"
+              name="pattern_file"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >上傳檔案</span
+            >
+            <input
               type="file"
               class="form-control"
               id="inputGroupFile02"
@@ -185,7 +200,7 @@
 
   <!-- new modal -->
   <form
-    action="http://localhost:80/phps/postPattern.php" 
+    action="http://localhost/phps/postPattern.php" 
     method="post" 
     enctype="multipart/form-data"
     class="modal fade"
@@ -212,8 +227,8 @@
                 <input
                   disabled
                   v-model="newAnnouncement.pattern_no"
-                  type="text"
                   name="pattern_no"
+                  type="text"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -310,7 +325,6 @@ export default {
     return {
       // 抓 php 資料
       dataFromMySQL: [],
-      pattern_dir: 'images/pattern/',
       // items: [
       //   {
       //     id: 1,
@@ -456,30 +470,54 @@ export default {
     // delete announcement
     deleteAnnouncement() {
       const index = this.dataFromMySQL.findIndex(
-        (item) => item.id === this.currentItem.id
+        (item) => item.pattern_no === this.currentItem.pattern_no
       );
       if (index !== -1) {
+        // 這裡刪除的是vue this.data
         this.dataFromMySQL.splice(index, 1);
         this.showModal = false;
       }
-    },
-    editArticle() {
-      const apiURL = new URL(`${BASE_URL}/editArticle.php`);
-      // console.log(this.$refs["article-form"]);
-      const formData = new FormData(this.$refs["article-form"]);
-      formData.append("type", "edit");
-      formData.append("news_id", this.edit.news_id);
-      formData.append("news_date", this.edit.news_date);
-      fetch(apiURL, {
-          method: "POST",
-          body: formData,
+
+
+      //傳送資料庫要刪除的項目
+      const data = new URLSearchParams();
+      data.append('pattern_no', this.currentItem.pattern_no);
+      data.append('pattern_file', this.currentItem.pattern_file);
+      // 使用 Axios 發送 POST 請求
+      axios.post(`${BASE_URL}deletePattern.php`, data)
+      .then((response) => {
+        // 請求成功後的處理
+        console.log(response.data);
+        location.reload();//刷新頁面
+        alert("已刪除圖案成功！");
       })
-          .then((res) => res.json())
-          .then((status) => {
-              // alert(status.msg);
-              this.confirmModal();
-          });
+      .catch((error) => {
+        // 請求失敗後的處理
+        console.error(error);
+        alert("刪除失敗！");
+      });
+
     },
+    // editArticle() {
+    //   const apiURL = new URL(`${BASE_URL}/editArticle.php`);
+    //   console.log(this.$refs["article-form"]);
+    //   const formData = new FormData(this.$refs["article-form"]);
+    //   formData.append("type", "edit");
+    //   formData.append("news_id", this.edit.news_id);
+    //   formData.append("news_date", this.edit.news_date);
+    //   fetch(apiURL, {
+    //       method: "POST",
+    //       body: formData,
+    //   })
+    //       .then((res) => res.json())
+    //       .then((status) => {
+    //           alert(status.msg);
+    //           this.confirmModal();
+    //       });
+    // },
+    getdataFromMySQL(){
+
+    }
   },
   // 抓 php 資料
   mounted() {
@@ -490,7 +528,7 @@ export default {
         this.dataFromMySQL = response.data;
 
         // 打印取得的資料以確認是否成功
-        console.log("Data retrieved from MySQL:", this.dataFromMySQL);
+        console.log("Data retrieved from MySQL:", "this.dataFromMySQL");
       })
       .catch((error) => {
         console.error("There was an error fetching the data:", error);
