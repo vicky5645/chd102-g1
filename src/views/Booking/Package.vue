@@ -365,6 +365,7 @@ section.package-list {
 </style>
 
 <template>
+  {{ packageData }}
   <section class="title">
     <h1 class="h1">行程選擇</h1>
   </section>
@@ -479,9 +480,12 @@ section.package-list {
 
 <script>
 import { GET } from "@/plugin/axios";
+import axios from "axios";
 export default {
   data() {
     return {
+      packageData: [],
+
       packageList: [],
 
       currentIndex: -1,
@@ -491,6 +495,7 @@ export default {
       arrowTypePrice: "fa-solid fa-caret-up",
       arrowTypeTime: "fa-solid fa-caret-up",
       arrowTypeRemain: "fa-solid fa-caret-up",
+
       spotList: [
         {
           name: "高原遺跡",
@@ -679,6 +684,16 @@ export default {
     GET("/data/packageData.json").then((res) => {
       this.packageList = res;
     });
+
+    axios
+      .get("http://localhost:80/phps/connectPackage.php")
+      .then((res) => {
+        this.packageData = res.data;
+        // console.log(this.package);
+      })
+      .catch((err) => {
+        console.log("Error happened when fetching the data:", err);
+      });
   },
 };
 </script>

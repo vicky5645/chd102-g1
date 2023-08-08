@@ -1,68 +1,68 @@
 [
-    {
-        "id": 1,
-        "name": "忘卻之湖",
-        "pic1": "images/travel/Lake/lake1.jpg",
-        "pic2": "images/travel/Lake/lake2.jpg",
-        "desc1": "幽谷湖泊是一個遠離塵囂的避世之地,讓您逃離日常煩囂,重新與自然連結。您可以漫步於湖邊的迴廊,呼吸著新鮮的空氣,欣賞著四季變幻的美景。在這個寧靜的環境中,您可以深度放鬆、擁抱內心的寧靜。",
-        "desc2": "湖泊周圍環繞著壯麗的山脈,湖水如翡翠般清澈,湖面倒影著蔚藍天空和青翠的樹木。置身於這片自然環境中,您將感受到大自然的奧秘與純粹,彷彿置身於一幅動人的畫卷中。",
-        "slide1": "images/travel/Lake/lake3.jpg",
-        "slide2": "images/travel/Lake/lake4.jpg",
-        "slide3": "images/travel/Lake/lake5.jpg"
-    },
-    {
-        "id": 2,
-        "name": "景觀公園",
-        "pic1": "images/travel/park/park1.jpg",
-        "pic2": "images/travel/park/park2.jpg",
-        "desc1": "當楓葉舞動於秋風中,它們將您帶入一個夢幻的世界。歡迎來到楓葉幻境,一個神奇而迷人的地方,讓您感受自然與美的完美交織。",
-        "desc2": "在楓葉幻境谷中,您將置身於壯麗的景色之中。紅、黃、橙色的楓葉點綴著青翠的樹林,猶如繪畫般的美景令人陶醉。這個谷地散發著一種神秘而寧靜的氛圍,讓您彷彿置身於一個童話世界。",
-        "slide1": "images/travel/park/park3.jpg",
-        "slide2": "images/travel/park/park4.jpg",
-        "slide3": "images/travel/park/lake6.png"
-    },
-    {
-        "id": 3,
-        "name": "銀月山脈",
-        "pic1": "images/travel/Mountain/mountain1.jpg",
-        "pic2": "images/travel/Mountain/mountain4.jpg",
-        "desc1": "在銀月山脈的寧靜中,當夜幕降臨,美麗的奧羅拉綻放出無限的魅力。無數綠色、粉紅色和紫色的光束在黑暗的天空中舞動,像是神秘的幻影穿梭於宇宙之間。這一刻,您將親眼見證大自然最璀璨的繪畫,沉浸在奧羅拉的神秘氛圍中。",
-        "desc2": "此外,銀月山脈也是觀測星空和銀河的絕佳地點。遠離城市的光害,您將沉浸在澄澈的夜空中,目睹無數璀璨的星星和銀河系。無限遙遠的宇宙將展現在您的眼前,令人驚嘆不已。在這個星際奇觀的舞台上,您將感受到宇宙的浩瀚和無限可能",
-        "slide1": "images/travel/Mountain/mountain3.jpg",
-        "slide2": "images/travel/Mountain/mountain5.jpg",
-        "slide3": "images/travel/Mountain/mountain2.jpg"
-    },
-    {
-        "id": 4,
-        "name": "綠野牧場",
-        "pic1": "images/travel/farm/farm1.jpg",
-        "pic2": "images/travel/farm/farm2.jpg",
-        "desc1": "探索大自然的奇妙世界,在綠野牧場尋找一片寧靜與活力的天堂!位於美麗的鄉村風景中,綠野牧場是一個絕佳的旅遊景點,為您帶來難以忘懷的冒險與放鬆。",
-        "desc2": "在這裡,您可以與可愛的動物們親密互動,和溫馴的羊群親手餵食,感受牛群的溫暖擁抱,甚至體驗騎馬的刺激與自由。",
-        "slide1": "images/travel/farm/farm16.jpg",
-        "slide2": "images/travel/farm/farm4.jpg",
-        "slide3": "images/travel/farm/farm5.jpg"
-    },
-    {
-        "id": 5,
-        "name": "高原遺跡",
-        "pic1": "images/travel/history/history10.jpg",
-        "pic2": "images/travel/history/history19.jpg",
-        "desc1": "在村莊的步行街上漫步,您會發現高原遺跡散發著古老歷史的魅力。精雕細琢的巨石都向您展示著這個地方的特色和豐富的歷史。",
-        "desc2": "除了自然景觀,安諾村莊還以其攀岩點聞名,吸引了來自歐洲各地的登山者。您可以挑戰岩壁,體驗刺激的攀岩冒險,領略高原遺跡背後的秘密。",
-        "slide1": "images/travel/history/history11.jpg",
-        "slide2": "images/travel/history/history13.jpg",
-        "slide3": "images/travel/history/history14.jpg"
-    },
-    {
-        "id": 6,
-        "name": "海底餐廳",
-        "pic1": "images/travel/sea-dinner/sea-dinner3.png",
-        "pic2": "images/travel/sea-dinner/sea-dinner2.png",
-        "desc1": "在這浩瀚的海底世界中,迎接一場獨一無二的美食體驗!踏進海底餐廳,您將沉浸於令人夢幻的海洋奇境。",
-        "desc2": "這個位於海底深處的餐廳猶如一座透明的水晶殿堂,四周被璀璨的海底生物和色彩繽紛的珊瑚所環繞。當您坐在餐桌旁,透過透明的落地窗欣賞著游動的熱帶魚群和優雅的海龜,仿佛置身於一個夢幻般的海底世界。",
-        "slide1": "images/travel/sea-dinner/sea-dinner1.png",
-        "slide2": "images/travel/sea-dinner/sea-dinner4.png",
-        "slide3": "images/travel/sea-dinner/sea-dinner5.png"
-    }
+  {
+    "id": 1,
+    "name": "忘卻之湖",
+    "pic1": "images/travel/Lake/lake1.jpg",
+    "pic2": "images/travel/Lake/lake2.jpg",
+    "desc1": "忘卻之湖是一個遠離塵囂的避世之地,讓您逃離日常煩囂,重新與自然連結。您可以漫步於湖邊的迴廊,呼吸著新鮮的空氣,欣賞著四季變幻的美景。在這個寧靜的環境中,您可以深度放鬆、擁抱內心的寧靜。",
+    "desc2": "湖泊周圍環繞著壯麗的山脈,湖水如翡翠般清澈,湖面倒影著蔚藍天空和青翠的樹木。置身於這片自然環境中,您將感受到大自然的奧秘與純粹,彷彿置身於一幅動人的畫卷中。",
+    "slide1": "images/travel/Lake/lake3.jpg",
+    "slide2": "images/travel/Lake/lake4.jpg",
+    "slide3": "images/travel/Lake/lake5.jpg"
+  },
+  {
+    "id": 2,
+    "name": "景觀公園",
+    "pic1": "images/travel/park/park1.jpg",
+    "pic2": "images/travel/park/park2.jpg",
+    "desc1": "當楓葉舞動於秋風中,它們將您帶入一個夢幻的世界。歡迎來到景觀公園,一個神奇而迷人的地方,讓您感受自然與美的完美交織。",
+    "desc2": "在景觀公園中,您將置身於壯麗的景色之中。紅、黃、橙色的楓葉點綴著青翠的樹林,猶如繪畫般的美景令人陶醉。這個公園散發著一種神秘而寧靜的氛圍,讓您彷彿置身於一個童話世界。",
+    "slide1": "images/travel/park/park3.jpg",
+    "slide2": "images/travel/park/park4.jpg",
+    "slide3": "images/travel/park/lake6.png"
+  },
+  {
+    "id": 3,
+    "name": "銀月山脈",
+    "pic1": "images/travel/Mountain/mountain1.jpg",
+    "pic2": "images/travel/Mountain/mountain4.jpg",
+    "desc1": "在銀月山脈的寧靜中,當夜幕降臨,美麗的極光綻放出無限的魅力。無數綠色、粉紅色和紫色的光束在黑暗的天空中舞動,像是神秘的幻影穿梭於宇宙之間。這一刻,您將親眼見證大自然最璀璨的繪畫,沉浸在極光的神秘氛圍中。",
+    "desc2": "此外,銀月山脈也是觀測星空和銀河的絕佳地點。遠離城市的光害,您將沉浸在澄澈的夜空中,目睹無數璀璨的星星和銀河系。無限遙遠的宇宙將展現在您的眼前,令人驚嘆不已。在這個星際奇觀的舞台上,您將感受到宇宙的浩瀚和無限可能",
+    "slide1": "images/travel/Mountain/mountain3.jpg",
+    "slide2": "images/travel/Mountain/mountain5.jpg",
+    "slide3": "images/travel/Mountain/mountain2.jpg"
+  },
+  {
+    "id": 4,
+    "name": "綠野牧場",
+    "pic1": "images/travel/farm/farm1.jpg",
+    "pic2": "images/travel/farm/farm2.jpg",
+    "desc1": "探索大自然的奇妙世界,在綠野牧場尋找一片寧靜與活力的天堂!位於美麗的鄉村風景中,綠野牧場是一個絕佳的旅遊景點,為您帶來難以忘懷的冒險與放鬆。",
+    "desc2": "在這裡,您可以與可愛的動物們親密互動,和溫馴的羊群親手餵食,感受牛群的溫暖擁抱,甚至體驗騎馬的刺激與自由。",
+    "slide1": "images/travel/farm/farm16.jpg",
+    "slide2": "images/travel/farm/farm4.jpg",
+    "slide3": "images/travel/farm/farm5.jpg"
+  },
+  {
+    "id": 5,
+    "name": "高原遺跡",
+    "pic1": "images/travel/history/history10.jpg",
+    "pic2": "images/travel/history/history19.jpg",
+    "desc1": "在村莊的步行街上漫步,您會發現高原遺跡散發著古老歷史的魅力。精雕細琢的巨石都向您展示著這個地方的特色和豐富的歷史。",
+    "desc2": "除了自然景觀,安諾村莊還以其攀岩點聞名,吸引了來自歐洲各地的登山者。您可以挑戰岩壁,體驗刺激的攀岩冒險,領略高原遺跡背後的秘密。",
+    "slide1": "images/travel/history/history11.jpg",
+    "slide2": "images/travel/history/history13.jpg",
+    "slide3": "images/travel/history/history14.jpg"
+  },
+  {
+    "id": 6,
+    "name": "海底餐廳",
+    "pic1": "images/travel/sea-dinner/sea-dinner3.png",
+    "pic2": "images/travel/sea-dinner/sea-dinner2.png",
+    "desc1": "在這浩瀚的海底世界中,迎接一場獨一無二的美食體驗!踏進海底餐廳,您將沉浸於令人夢幻的海洋奇境。",
+    "desc2": "這個根基位於海底的餐廳猶如一座透明的水晶殿堂,四周被璀璨的海底生物和色彩繽紛的珊瑚所環繞。當您坐在餐桌旁,透過透明的落地窗欣賞著游動的熱帶魚群和優雅的海龜,仿佛置身於一個夢幻般的海底世界。",
+    "slide1": "images/travel/sea-dinner/sea-dinner1.png",
+    "slide2": "images/travel/sea-dinner/sea-dinner4.png",
+    "slide3": "images/travel/sea-dinner/sea-dinner5.png"
+  }
 ]

@@ -1,6 +1,9 @@
 <template>
   <div class="login-wrap">
-    <section class="login" v-if="!isRegistered && !loginStatus && !forgetPsw && step === 0">
+    <section
+      class="login"
+      v-if="!isRegistered && !loginStatus && !forgetPsw && step === 0"
+    >
       <div class="loin-form-wrap">
         <div class="loin-form-img"></div>
 
@@ -14,7 +17,11 @@
           </div>
 
           <form>
-            <button v-for="btn in btns" class="login-connect" @click="signInGoogle">
+            <button
+              v-for="btn in btns"
+              class="login-connect"
+              @click="signInGoogle"
+            >
               <i :class="btn.iconClass"></i> {{ btn.text }}
             </button>
 
@@ -36,11 +43,17 @@
             <div class="actions">
               <span>還未加入LOGO嗎？</span>
 
-              <button @click.prevent="changeRegister" class="login-form-register">
+              <button
+                @click.prevent="changeRegister"
+                class="login-form-register"
+              >
                 立即註冊！
               </button>
 
-              <button class="login-form-confirm btn2" @click.prevent="checkLogin">
+              <button
+                class="login-form-confirm btn2"
+                @click.prevent="checkLogin"
+              >
                 確定
               </button>
             </div>
@@ -63,7 +76,11 @@
             </div>
             <form action="">
               <!-- google 登入按鈕 -->
-              <button v-for="btn in btnsRegister" class="login-connect" @click="signInGoogle">
+              <button
+                v-for="btn in btnsRegister"
+                class="login-connect"
+                @click="signInGoogle"
+              >
                 <i :class="btn.iconClass"></i> {{ btn.text }}
               </button>
 
@@ -71,24 +88,43 @@
                 <div class="col">
                   <div class="inputBox">
                     <span>名字</span>
-                    <input type="text" class="payment-name-input" required="required" v-model="register.nameReg"
-                      placeholder="" />
+                    <input
+                      type="text"
+                      class="payment-name-input"
+                      required="required"
+                      v-model="register.nameReg"
+                      placeholder=""
+                    />
                     <div class="payment-name"></div>
                   </div>
                   <div class="inputBox">
                     <span>信箱</span>
-                    <input type="email" class="payment-email-input" v-model="register.emailReg" required="required" />
+                    <input
+                      type="email"
+                      class="payment-email-input"
+                      v-model="register.emailReg"
+                      required="required"
+                    />
                     <div class="payment-email"></div>
                   </div>
                   <div class="inputBox">
                     <span>密碼</span>
-                    <input type="text" class="payment-address-input" v-model="register.pswReg" required="required" />
+                    <input
+                      type="text"
+                      class="payment-address-input"
+                      v-model="register.pswReg"
+                      required="required"
+                    />
                     <div class="payment-address"></div>
                   </div>
                   <div class="inputBox">
                     <span>再次輸入密碼</span>
-                    <input type="text" class="payment-nation-input" required="required"
-                      v-model="register.pswConfirmReg" />
+                    <input
+                      type="text"
+                      class="payment-nation-input"
+                      required="required"
+                      v-model="register.pswConfirmReg"
+                    />
                     <div class="payment-nation"></div>
                   </div>
                 </div>
@@ -96,14 +132,24 @@
 
               <div class="register-form-bottom">
                 <div class="register-form-bottom-agree">
-                  <input type="checkbox" name="membership" id="membership" required="required" />
+                  <input
+                    type="checkbox"
+                    name="membership"
+                    id="membership"
+                    required="required"
+                  />
                   <label for="membership">
                     我已詳閱並同意<a href="" target="_blank">會員條款</a>與
                     <a href="" target="_blank">隱私權規定</a>
                   </label>
                 </div>
 
-                <input class="register-submit" @click="columnCheck" type="submit" value="註冊會員" />
+                <input
+                  class="register-submit"
+                  @click="columnCheck"
+                  type="submit"
+                  value="註冊會員"
+                />
               </div>
             </form>
           </div>
@@ -120,9 +166,19 @@
 
         <p>輸入註冊信箱，傳送驗證碼</p>
         <div class="forget-password-enter">
-          <input type="email" placeholder=" 電子郵件地址 " v-model="memEmail" required="required" />
+          <input
+            type="email"
+            placeholder=" 電子郵件地址 "
+            v-model="memEmail"
+            required="required"
+          />
         </div>
-        <input @click="checkEmail" type="submit" value="傳送" class="forget-password-submit" />
+        <input
+          @click="checkEmail"
+          type="submit"
+          value="傳送"
+          class="forget-password-submit"
+        />
       </form>
     </section>
 
@@ -131,10 +187,30 @@
         <h2>輸入驗證碼</h2>
         <p>已發送驗證碼至sm********@gmail.com</p>
         <div class="enter-valid-input">
-          <input type="text" required="required" v-model="number1" max-length="1" />
-          <input type="text" required="required" v-model="number2" max-length="1" />
-          <input type="text" required="required" v-model="number3" max-length="1" />
-          <input type="text" required="required" v-model="number4" max-length="1" />
+          <input
+            type="text"
+            required="required"
+            v-model="number1"
+            max-length="1"
+          />
+          <input
+            type="text"
+            required="required"
+            v-model="number2"
+            max-length="1"
+          />
+          <input
+            type="text"
+            required="required"
+            v-model="number3"
+            max-length="1"
+          />
+          <input
+            type="text"
+            required="required"
+            v-model="number4"
+            max-length="1"
+          />
         </div>
 
         <div class="enter-valid-re">
@@ -142,7 +218,12 @@
           <p>請<a href="">按此</a>重新發送</p>
         </div>
 
-        <input @click="validCheck" type="submit" value="送出" class="enter-valid-submit" />
+        <input
+          @click="validCheck"
+          type="submit"
+          value="送出"
+          class="enter-valid-submit"
+        />
       </form>
     </section>
 
@@ -153,12 +234,31 @@
 
         <div class="enter-modify-input">
           <label for="modifyPsw">新密碼</label>
-          <input type="text" required="required" v-model="modify.psw" maxlength="12" minlength="6" id="modifyPsw" />
+          <input
+            type="text"
+            required="required"
+            v-model="modify.psw"
+            maxlength="12"
+            minlength="6"
+            id="modifyPsw"
+          />
           <label for="modifyNewPsw">再次輸入新密碼</label>
 
-          <input type="text" required="required" v-model="modify.newPsw" maxlength="12" minlength="6" id="modifyNewPsw" />
+          <input
+            type="text"
+            required="required"
+            v-model="modify.newPsw"
+            maxlength="12"
+            minlength="6"
+            id="modifyNewPsw"
+          />
 
-          <input @click="modifyCheck" type="submit" value="送出" class="enter-modify-submit" />
+          <input
+            @click="modifyCheck"
+            type="submit"
+            value="送出"
+            class="enter-modify-submit"
+          />
         </div>
       </form>
     </section>
@@ -182,8 +282,8 @@ import { firebaseAuth } from "@/assets/config/firebase.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 //google 守門人
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth"
-const provider = new GoogleAuthProvider()
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+const provider = new GoogleAuthProvider();
 
 export default {
   name: "login",
@@ -238,30 +338,31 @@ export default {
     closeModal() {
       this.$emit("emit-status");
     },
+
     checkLogin() {
-      if(this.username === '' || this.password === '')return
+      if (this.username === "" || this.password === "") return;
       signInWithEmailAndPassword(firebaseAuth, this.username, this.password)
         .then((userCredential) => {
           // firebase 的資料
           // const userInfo = userCredential.user
           // this.$store.commit('setName', userInfo);
-          this.$store.commit('setName', this.username);
-          this.$store.commit('setIsLogin', true); // 使用 commit 來改變狀態
+          this.$store.commit("setName", this.username);
+          this.$store.commit("setIsLogin", true); // 使用 commit 來改變狀態
           window.alert("登入成功");
-          this.$router.push('/about');
+          this.$router.push("/about");
         })
         .catch((error) => {
-            const errorCode = error.code
-            console.log(errorCode);
-            if( errorCode === 'auth/wrong-password'){
-              window.alert("密碼錯誤");
-            }else if(errorCode === 'auth/user-not-found'){
-              window.alert("請前往註冊");
-            }else{
-              window.alert(`${errorCode}`);
-              this.errorMsg = "帳號或密碼輸入錯誤";
-            }
-        })
+          const errorCode = error.code;
+          console.log(errorCode);
+          if (errorCode === "auth/wrong-password") {
+            window.alert("密碼錯誤");
+          } else if (errorCode === "auth/user-not-found") {
+            window.alert("請前往註冊");
+          } else {
+            window.alert(`${errorCode}`);
+            this.errorMsg = "帳號或密碼輸入錯誤";
+          }
+        });
     },
     reset() {
       this.register.errorMsg = "";
@@ -272,71 +373,73 @@ export default {
     registerSuccess() {
       this.step = 0;
       // 頁面沒有切換成功，添加重新跳轉頁面
-      console.log('返回登入')
+      console.log("返回登入");
     },
     columnCheck() {
       if (this.register.pswReg === this.register.pswConfirmReg) {
         //存輸入的信箱與密碼
         const email = this.register.emailReg;
         const password = this.register.pswReg;
-        console.log(`email:${email},password:${password}`)
+        console.log(`email:${email},password:${password}`);
 
         // 使用 Firebase 的 createUserWithEmailAndPassword 方法進行註冊
         createUserWithEmailAndPassword(firebaseAuth, email, password)
           .then((userCredential) => {
             // 註冊成功，您可以在這裡處理相應的動作
-            console.log('註冊成功', userCredential);
-            const userInfo = userCredential.user
-            this.$store.commit('setName', userInfo);
+            console.log("註冊成功", userCredential);
+            const userInfo = userCredential.user;
+            this.$store.commit("setName", userInfo);
 
             // 假設您希望在註冊成功後跳轉到其他頁面，您可以在這裡加入相應的路由導航
             this.isRegistered = false;
             this.step = 5;
-          }).catch((error) => {
+          })
+          .catch((error) => {
             // 註冊失敗，處理錯誤訊息
-            const errorCode = error.code
-            if (errorCode === 'auth/email-already-in-use') {
+            const errorCode = error.code;
+            if (errorCode === "auth/email-already-in-use") {
               alert(`您的信箱可能已被註冊過了${errorCode}`);
-            } else if (errorCode === 'auth/weak-password') {
+            } else if (errorCode === "auth/weak-password") {
               alert(`此密碼強度太弱，至少包含六個字符${errorCode}`);
-            } else if (errorCode === 'auth/invalid-email') {
+            } else if (errorCode === "auth/invalid-email") {
               alert(`信箱格式錯誤${errorCode}`);
-
             } else {
-              console.log('註冊失敗', error.message);
+              console.log("註冊失敗", error.message);
               alert(`註冊失敗${error.message}`);
             }
           });
-      }
-      else {
+      } else {
         // 密碼不一致的處理
-        console.log('密碼不一致');
+        console.log("密碼不一致");
         alert(`密碼不一致`);
       }
     },
-    signInGoogle(){
+
+    forgetPassword() {
+      this.forgetPsw = true;
+      this.step = 1;
+    },
+
+    signInGoogle() {
       signInWithPopup(firebaseAuth, provider)
-      .then((result) => {
+        .then((result) => {
           // const credential = GoogleAuthProvider.credentialFromResulsignInGoogleedential.accessToken;
-          this.$store.commit('setIsLogin', true); // 使用 commit 來改變狀態
+          this.$store.commit("setIsLogin", true); // 使用 commit 來改變狀態
           window.alert("google 登入成功");
           const userInfo = result.user;
-          this.$store.commit('setName', this.username);
+          this.$store.commit("setName", this.username);
           // this.$store.commit('setName', userInfo);
-          // this.$router.push({ name: 'result', params: { 
+          // this.$router.push({ name: 'result', params: {
           //     type: 'loginSuccess'
           // }})
-      }).catch((error) => {
-          const errorCode = error.code
+        })
+        .catch((error) => {
+          const errorCode = error.code;
           // this.$Message.warning(errorCode);
-          console.log('google註冊失敗', errorCode);
+          console.log("google註冊失敗", errorCode);
           alert(`google註冊失敗${errorCode}`);
-      });  
-    }
-  },
-  forgetPassword() {
-    this.forgetPsw = true;
-    this.step = 1;
+        });
+    },
   },
 
   checkEmail() {
@@ -377,6 +480,6 @@ export default {
   modifySuccess() {
     this.forgetPsw = false;
     this.step = 0;
-  }
+  },
 };
 </script>

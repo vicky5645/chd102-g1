@@ -20,7 +20,7 @@
                 </div>
               </div>
               <label for="cardNumber" class="card-item__number" ref="cardNumber">
-                <template v-if="getCardType === 'amex'">
+                <!-- <template v-if="getCardType === 'amex'">
                  <span v-for="(n, $index) in amexCardMask" :key="$index">
                   <transition name="slide-fade-up">
                     <div
@@ -40,10 +40,10 @@
                     >{{n}}</div>
                   </transition>
                 </span>
-                </template>
+                </template> -->
 
-                <template v-else>
-                  <span v-for="(n, $index) in otherCardMask" :key="$index">
+                <template v-if="getCardType">
+                  <span v-for="(n, $index) in cardMask" :key="$index">
                     <transition name="slide-fade-up">
                       <div
                         class="card-item__numberItem"
@@ -119,7 +119,7 @@
       <div class="card-form__inner">
         <div class="card-input">
           <label for="cardNumber" class="card-input__label">信用卡卡號</label>
-          <input type="text" id="cardNumber" class="card-input__input" v-maska="generateCardNumberMask" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off">
+          <input type="text" id="cardNumber" class="card-input__input" v-maska data-maska="#### #### #### ####" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off">
         </div>
         <div class="card-input">
           <label for="cardName" class="card-input__label">持卡人姓名</label>
@@ -128,7 +128,7 @@
         <div class="card-form__row">
           <div class="card-form__col">
             <div class="card-form__group">
-              <label for="cardMonth" class="card-input__label">Expiration Date</label>
+              <label for="cardMonth" class="card-input__label">有效期限</label>
               <select class="card-input__input -select" id="cardMonth" v-model="cardMonth" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardDate">
                 <option value="" disabled selected>月份</option>
                 <option v-bind:value="n < 10 ? '0' + n : n" v-for="n in 12" v-bind:disabled="n < minCardMonth" v-bind:key="n">
@@ -146,7 +146,7 @@
           <div class="card-form__col -cvv">
             <div class="card-input">
               <label for="cardCvv" class="card-input__label">CVV</label>
-              <input type="text" class="card-input__input" id="cardCvv" v-maska="'####'" maxlength="4" v-model="cardCvv" v-on:focus="flipCard(true)" v-on:blur="flipCard(false)" autocomplete="off">
+              <input type="text" class="card-input__input" id="cardCvv" v-maska data-maska="###" maxlength="3" v-model="cardCvv" v-on:focus="flipCard(true)" v-on:blur="flipCard(false)" autocomplete="off">
             </div>
           </div>
         </div>
@@ -169,8 +169,7 @@ export default {
       cardYear: "",
       cardCvv: "",
       minCardYear: new Date().getFullYear(),
-      amexCardMask: "#### ###### #####",
-      otherCardMask: "#### #### #### ####",
+      cardMask: "#### #### #### ####",
       cardNumberTemp: "",
       isCardFlipped: false,
       focusElementStyle: null,
@@ -178,7 +177,7 @@ export default {
     };
   },
   mounted() {
-    this.cardNumberTemp = this.otherCardMask;
+    this.cardNumberTemp = this.cardMask;
     document.getElementById("cardNumber").focus();
   },
   computed: {
@@ -199,10 +198,10 @@ export default {
       re = new RegExp('^9792')
       if (number.match(re) != null) return 'troy'
 
+      re = new RegExp("^35");
+      if (number.match(re) != null) return 'jcb'
+
       return "visa"; // default type
-    },
-		generateCardNumberMask () {
-			return this.getCardType === "amex" ? this.amexCardMask : this.otherCardMask;
     },
     minCardMonth () {
       if (this.cardYear === this.minCardYear) return new Date().getMonth() + 1;
