@@ -110,7 +110,7 @@
                   >商品介紹</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
+                  v-model="newAnnouncement.summary"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -123,7 +123,7 @@
                   >商品價格</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
+                  v-model="newAnnouncement.price"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -136,7 +136,7 @@
                   >商品狀態</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
+                  v-model="newAnnouncement.status"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -153,6 +153,7 @@
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
+                  @change="handleFileUpload"
                 />
               </div>
             </div>
@@ -202,7 +203,10 @@ export default {
       newAnnouncement: {
         id: "", // 確保 id 屬性存在
         name: "",
-        qty: "",
+        summary: "",
+        price: "",
+        status: "",
+        file: "",
       },
     };
   },
@@ -255,6 +259,7 @@ export default {
 
       const file = files[0];
       const reader = new FileReader();
+      console.log(file.name);
 
       reader.onload = (e) => {
         this.currentItem.image = e.target.result;
@@ -267,7 +272,10 @@ export default {
       if (
         !this.newAnnouncement.id ||
         !this.newAnnouncement.name ||
-        !this.newAnnouncement.qty
+        !this.newAnnouncement.summary ||
+        !this.newAnnouncement.price ||
+        !this.newAnnouncement.status ||
+        !this.newAnnouncement.file
       ) {
         alert("所有欄位都必須填寫！");
         return;
@@ -278,7 +286,10 @@ export default {
       this.newAnnouncement = {
         id: "",
         name: "",
-        qty: "",
+        summary: "",
+        price: "",
+        status: "",
+        file: "",
       };
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
@@ -289,7 +300,10 @@ export default {
       this.newAnnouncement = {
         id: "",
         name: "",
-        qty: "",
+        summary: "",
+        price: "",
+        status: "",
+        file: "",
       };
     },
 
