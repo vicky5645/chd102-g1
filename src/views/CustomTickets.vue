@@ -39,16 +39,17 @@
             <div class="h3">探尋島嶼之美，搭乘耀眼的七星豪華列車</div>
             <!-- 這裡是放置已選取圖像節點的容器 & 拖曳節點的容器 -->
             <div
-              id="selected_icons"
-              :style="{
-                color: setting.color || '#F29C50', 
-                left: `calc( ${position.x}px)`,
-                top: `calc( ${position.y}px)`
-                }"
+            id="selected_icons"
+            :style="{
+              color: setting.color || '#F29C50', 
+              left: `calc( ${position.x}px)`,
+              top: `calc( ${position.y}px)`
+            }"
               class="preserve-3d"
               @mousedown="onStart">
             </div>
           </div>
+          <img src="~@/assets/logo.svg" alt="logo" />
         </div>
         <div class="block">
           <div class="grid" id="block-img"></div>

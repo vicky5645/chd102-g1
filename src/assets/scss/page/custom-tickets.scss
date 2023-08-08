@@ -78,6 +78,14 @@ $ani-bg: ani-namecard;
       justify-content: center;
       flex-direction: row;
       flex-wrap: nowrap;
+      [alt="logo"] {
+        pointer-events: none;
+        width: 200px;
+        @include poA(calc(100% - 100px),70%);
+        @include pc {
+          width: 300px;
+        }
+      }
     }
     .img-space {
       padding: 5px;
@@ -107,8 +115,9 @@ $ani-bg: ani-namecard;
       width: 100%;
       margin: 40px auto;
       background-color: map-get($BrandColors, Primary);
-      .h2 {
+      .h3 {
         color: rgba(0, 0, 0, 0.5);
+        user-select: none;
       }
       #selected_icons{
         @include poA(0, 0);
