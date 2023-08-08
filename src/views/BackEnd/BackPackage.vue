@@ -30,18 +30,23 @@
         <th scope="col">行程狀態</th>
         <th scope="col">行程名稱</th>
         <th scope="col">行程說明</th>
-        <th scope="col">班次編號</th>
+        <!-- <th scope="col">班次編號</th> -->
         <th scope="col">列車編號</th>
         <th scope="col">車長</th>
         <th scope="col">備註</th>
         <th scope="col"></th>
       </tr>
     </thead>
-    <!-- <tbody>
+
+    <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">
-        <th scope="row">{{ item.id }}</th>
-        <td class="ellipsis">{{ item.name }}</td>
-        <td class="ellipsis">{{ item.qty }}</td>
+        <th scope="row">{{ item.pkg_no }}</th>
+        <td class="ellipsis">{{ item.pkg_price }}</td>
+        <td class="ellipsis">{{ item.pkg_status }}</td>
+        <td class="ellipsis">{{ item.pkg_name }}</td>
+        <td class="ellipsis">{{ item.pkg_desc }}</td>
+        <td class="ellipsis">{{ item.train_no }}</td>
+        <td class="ellipsis">{{ item.conductor }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -53,12 +58,140 @@
           </button>
         </td>
       </tr>
-    </tbody> -->
+    </tbody>
 
     <p v-if="filteredItems.length === 0" class="text-danger">
       * 沒有找到符合搜尋條件的結果
     </p>
   </table>
+
+  <!-- edit modal -->
+  <div
+    v-if="showModal"
+    class="modal fade"
+    id="itemModal"
+    tabindex="-1"
+    aria-labelledby="itemModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" style="max-width: 80%">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="itemModalLabel">修改行程</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            @click="cancelChanges"
+          ></button>
+        </div>
+
+        <!-- modal body -->
+        <div
+          style="display: flex; flex-direction: column"
+          class="modal-body gap-2"
+        >
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >行程價格</span
+            >
+            <input
+              v-model="currentItem.pkg_price"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >行程狀態</span
+            >
+            <input
+              v-model="currentItem.pkg_status"
+              name="pattern_name"
+              type="num"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+              min="0"
+              max="1"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >行程名稱</span
+            >
+            <input
+              v-model="currentItem.pkg_name"
+              name="pattern_desc"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >行程說明</span
+            >
+            <input
+              v-model="currentItem.pkg_desc"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >列車編號</span
+            >
+            <input
+              v-model="currentItem.train_no"
+              type="num"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+              min="1"
+              max="3"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg">車長</span>
+            <input
+              v-model="currentItem.conductor"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+            @click="deleteAnnouncement"
+          >
+            刪除
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            @click="saveChanges"
+          >
+            儲存變更
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- new modal -->
   <div
@@ -219,18 +352,15 @@
 </template>
 
 <script>
+import axios from "axios";
 import { Modal } from "bootstrap";
+import { BASE_URL } from "@/assets/js/common.js";
 
 export default {
   data() {
     return {
-      items: [
-        {
-          // id: 1,
-          // name: "綠野號",
-          // qty: 40,
-        },
-      ],
+      packageData: [],
+
       // search
       searchText: "",
       // model
@@ -251,10 +381,10 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.items;
+        return this.packageData;
       }
 
-      return this.items.filter((item) =>
+      return this.packageData.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
@@ -335,14 +465,25 @@ export default {
 
     // delete announcement
     deleteAnnouncement() {
-      const index = this.items.findIndex(
+      const index = this.packageData.findIndex(
         (item) => item.id === this.currentItem.id
       );
       if (index !== -1) {
-        this.items.splice(index, 1);
+        this.packageData.splice(index, 1);
         this.showModal = false;
       }
     },
+  },
+
+  mounted() {
+    axios
+      .get(`${BASE_URL}/getPackage.php`)
+      .then((response) => {
+        this.packageData = response.data;
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data:", error);
+      });
   },
 };
 </script>

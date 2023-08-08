@@ -37,11 +37,16 @@
         <th scope="col"></th>
       </tr>
     </thead>
-    <!-- <tbody>
+    <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">
-        <th scope="row">{{ item.id }}</th>
-        <td class="ellipsis">{{ item.name }}</td>
-        <td class="ellipsis">{{ item.qty }}</td>
+        <th scope="row">{{ item.org_no }}</th>
+        <td class="ellipsis">{{ item.pkg_no }}</td>
+        <td class="ellipsis">{{ item.pkg_limit }}</td>
+        <td class="ellipsis">{{ item.pkg_sale }}</td>
+        <td class="ellipsis">{{ item.dept_date }}</td>
+        <td class="ellipsis">{{ item.enrolled }}</td>
+        <td class="ellipsis">{{ item.reg_start }}</td>
+        <td class="ellipsis">{{ item.reg_end }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -53,12 +58,140 @@
           </button>
         </td>
       </tr>
-    </tbody> -->
+    </tbody>
 
     <p v-if="filteredItems.length === 0" class="text-danger">
       * 沒有找到符合搜尋條件的結果
     </p>
   </table>
+
+  <!-- edit modal -->
+  <div
+    v-if="showModal"
+    class="modal fade"
+    id="itemModal"
+    tabindex="-1"
+    aria-labelledby="itemModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" style="max-width: 80%">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="itemModalLabel">修改開團</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            @click="cancelChanges"
+          ></button>
+        </div>
+
+        <!-- modal body -->
+        <div
+          style="display: flex; flex-direction: column"
+          class="modal-body gap-2"
+        >
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >行程編號</span
+            >
+            <input
+              v-model="currentItem.pkg_no"
+              type="num"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >優惠折扣</span
+            >
+            <input
+              v-model="currentItem.pkg_sale"
+              name="pattern_name"
+              type="num"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >出發日期</span
+            >
+            <input
+              v-model="currentItem.dept_date"
+              name="pattern_desc"
+              type="date"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >已報名人數</span
+            >
+            <input
+              v-model="currentItem.enrolled"
+              type="num"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >報名開始日期</span
+            >
+            <input
+              v-model="currentItem.reg_start"
+              type="date"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+              min="1"
+              max="3"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >報名截止日期</span
+            >
+            <input
+              v-model="currentItem.reg_end"
+              type="date"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+            @click="deleteAnnouncement"
+          >
+            刪除
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            @click="saveChanges"
+          >
+            儲存變更
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- new modal -->
   <div
@@ -207,18 +340,14 @@
 </template>
 
 <script>
+import axios from "axios";
 import { Modal } from "bootstrap";
+import { BASE_URL } from "@/assets/js/common.js";
 
 export default {
   data() {
     return {
-      items: [
-        {
-          // id: 1,
-          // name: "綠野號",
-          // qty: 40,
-        },
-      ],
+      organizeData: [],
       // search
       searchText: "",
       // model
@@ -239,10 +368,10 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.items;
+        return this.organizeData;
       }
 
-      return this.items.filter((item) =>
+      return this.organizeData.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
@@ -323,14 +452,25 @@ export default {
 
     // delete announcement
     deleteAnnouncement() {
-      const index = this.items.findIndex(
+      const index = this.organizeData.findIndex(
         (item) => item.id === this.currentItem.id
       );
       if (index !== -1) {
-        this.items.splice(index, 1);
+        this.organizeData.splice(index, 1);
         this.showModal = false;
       }
     },
+  },
+
+  mounted() {
+    axios
+      .get(`${BASE_URL}/getOrganize.php`)
+      .then((response) => {
+        this.organizeData = response.data;
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data:", error);
+      });
   },
 };
 </script>
