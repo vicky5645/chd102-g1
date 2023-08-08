@@ -59,11 +59,12 @@
       * 沒有找到符合搜尋條件的結果
     </p>
   </table>
-  
+
   <!-- edit modal -->
   <form
-    action="http://localhost:80/phps/editPattern.php" 
-    method="post" enctype="multipart/form-data"
+    action="http://localhost:80/phps/editPattern.php"
+    method="post"
+    enctype="multipart/form-data"
     v-if="showModal"
     class="modal fade"
     id="itemModal"
@@ -154,10 +155,11 @@
             />
           </div>
           <div class="model_body_pic">
-            <Images 
+            <Images
               v-if="currentItem.pattern_file"
-              :imgURL="`${currentItem.pattern_file}`" 
-              :alt="`Image preview`" />
+              :imgURL="`${currentItem.pattern_file}`"
+              :alt="`Image preview`"
+            />
           </div>
         </div>
 
@@ -185,8 +187,8 @@
 
   <!-- new modal -->
   <form
-    action="http://localhost:80/phps/postPattern.php" 
-    method="post" 
+    action="http://localhost:80/phps/postPattern.php"
+    method="post"
     enctype="multipart/form-data"
     class="modal fade"
     id="itemNewModal"
@@ -272,11 +274,12 @@
                 />
               </div>
               <div class="model_body_pic">
-                <img 
+                <img
                   v-if="newAnnouncement.pattern_file"
-                  :src="`${newAnnouncement.pattern_file}`" 
+                  :src="`${newAnnouncement.pattern_file}`"
                   :alt="`Image preview`"
-                  :id="`imgPreview`" />
+                  :id="`imgPreview`"
+                />
               </div>
             </div>
           </slot>
@@ -310,7 +313,7 @@ export default {
     return {
       // 抓 php 資料
       dataFromMySQL: [],
-      pattern_dir: 'images/pattern/',
+      pattern_dir: "images/pattern/",
       // items: [
       //   {
       //     id: 1,
@@ -342,15 +345,16 @@ export default {
     // search
     filteredItems() {
       if (!this.dataFromMySQL) {
-        alert('沒有資料')
-      } 
-      else {
+        alert("沒有資料");
+      } else {
         if (this.searchText === "") {
           return this.dataFromMySQL;
         }
-  
+
         return this.dataFromMySQL.filter((item) =>
-          Object.values(item).some((val) => String(val).includes(this.searchText))
+          Object.values(item).some((val) =>
+            String(val).includes(this.searchText)
+          )
         );
       }
     },
@@ -390,7 +394,7 @@ export default {
       }
 
       const file = files[0];
-      console.log('file',file)
+      console.log("file", file);
       const reader = new FileReader();
 
       reader.onload = (e) => {
@@ -427,8 +431,6 @@ export default {
       //   console.error(error);
       //   alert("新增失敗！");
       // });
-
-
 
       // this.clearAnnouncement();
       // this.newAnnouncement = {
@@ -471,19 +473,19 @@ export default {
       formData.append("news_id", this.edit.news_id);
       formData.append("news_date", this.edit.news_date);
       fetch(apiURL, {
-          method: "POST",
-          body: formData,
+        method: "POST",
+        body: formData,
       })
-          .then((res) => res.json())
-          .then((status) => {
-              // alert(status.msg);
-              this.confirmModal();
-          });
+        .then((res) => res.json())
+        .then((status) => {
+          // alert(status.msg);
+          this.confirmModal();
+        });
     },
   },
   // 抓 php 資料
   mounted() {
-    const type = 'get'; // 設定要執行的操作，這裡是取得資料
+    const type = "get"; // 設定要執行的操作，這裡是取得資料
     axios
       .get(`${BASE_URL}/getPattern.php?type=${type}`)
       .then((response) => {
