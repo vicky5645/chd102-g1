@@ -161,7 +161,8 @@
     </section>
 
     <section class="forget_password" v-if="forgetPsw && step === 1">
-      <form action="">
+      <div class="forget_password_from">
+
         <h2>忘記密碼</h2>
 
         <p>輸入註冊信箱，傳送驗證碼</p>
@@ -173,101 +174,27 @@
             required="required"
           />
         </div>
-        <input
-          @click="checkEmail"
-          type="submit"
-          value="傳送"
-          class="forget-password-submit"
-        />
-      </form>
+        <button
+          @click="checkEmail()"
+          class="forget-password-submit">
+          傳送
+      </button>
+      </div>
     </section>
 
-    <section class="enter-valid" v-if="forgetPsw && step === 2">
-      <form action="">
-        <h2>輸入驗證碼</h2>
-        <p>已發送驗證碼至sm********@gmail.com</p>
-        <div class="enter-valid-input">
-          <input
-            type="text"
-            required="required"
-            v-model="number1"
-            max-length="1"
-          />
-          <input
-            type="text"
-            required="required"
-            v-model="number2"
-            max-length="1"
-          />
-          <input
-            type="text"
-            required="required"
-            v-model="number3"
-            max-length="1"
-          />
-          <input
-            type="text"
-            required="required"
-            v-model="number4"
-            max-length="1"
-          />
-        </div>
 
-        <div class="enter-valid-re">
-          <p>10 分鐘內若未收到驗證碼</p>
-          <p>請<a href="">按此</a>重新發送</p>
-        </div>
 
-        <input
-          @click="validCheck"
-          type="submit"
-          value="送出"
-          class="enter-valid-submit"
-        />
-      </form>
-    </section>
-
-    <section class="enter-modify" v-if="forgetPsw && step === 3">
-      <form action="">
-        <h2>修改密碼</h2>
-        <p>請輸入 6 -12 位包含英文及數字的密碼</p>
-
-        <div class="enter-modify-input">
-          <label for="modifyPsw">新密碼</label>
-          <input
-            type="text"
-            required="required"
-            v-model="modify.psw"
-            maxlength="12"
-            minlength="6"
-            id="modifyPsw"
-          />
-          <label for="modifyNewPsw">再次輸入新密碼</label>
-
-          <input
-            type="text"
-            required="required"
-            v-model="modify.newPsw"
-            maxlength="12"
-            minlength="6"
-            id="modifyNewPsw"
-          />
-
-          <input
-            @click="modifyCheck"
-            type="submit"
-            value="送出"
-            class="enter-modify-submit"
-          />
-        </div>
-      </form>
-    </section>
+    
 
     <section class="enter-modify-success" v-if="forgetPsw && step === 4">
       <p>修改完成！</p>
       <p>請重新登入</p>
       <button @click="modifySuccess">返回會員登入</button>
     </section>
+
+
+
+
 
     <section class="enter-modify-success" v-if="step === 5">
       <p>🚀 註冊完成 🎉</p>
@@ -279,8 +206,8 @@
 <style></style>
 <script>
 import { firebaseAuth } from "@/assets/config/firebase.js";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged, sendEmailVerification } from "firebase/auth";
+// import {  } from "firebase/auth";
 //google 守門人
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 const provider = new GoogleAuthProvider();
@@ -344,8 +271,9 @@ export default {
       signInWithEmailAndPassword(firebaseAuth, this.username, this.password)
         .then((userCredential) => {
           // firebase 的資料
-          // const userInfo = userCredential.user
-          // this.$store.commit('setName', userInfo);
+          const userInfo = userCredential.user;
+          this.signInUser = userInfo
+          this.$store.commit('setUserInfo', userInfo);
           this.$store.commit("setName", this.username);
           this.$store.commit("setIsLogin", true); // 使用 commit 來改變狀態
           window.alert("登入成功");
@@ -364,9 +292,16 @@ export default {
           }
         });
     },
+
+    forgetPassword() {
+      this.forgetPsw = true;
+      this.step = 1;
+    },
+    
     reset() {
       this.register.errorMsg = "";
     },
+    
     changeRegister() {
       this.isRegistered = true;
     },
@@ -415,10 +350,9 @@ export default {
       }
     },
 
-    forgetPassword() {
-      this.forgetPsw = true;
-      this.step = 1;
-    },
+
+
+
 
     signInGoogle() {
       signInWithPopup(firebaseAuth, provider)
@@ -440,46 +374,35 @@ export default {
           alert(`google註冊失敗${errorCode}`);
         });
     },
+    checkEmail() {
+      if (!this.memEmail) {
+        window.alert("輸入錯誤或無輸入");
+      } else {
+        alert('重設密碼');
+        // this.step = 2;
+        this.resetPsw();
+        // this.memEmail = "";
+      }
+    },
+    resetPsw() {
+      sendPasswordResetEmail(firebaseAuth, this.memEmail)
+        .then(() => {
+          window.alert('已發送信件至信箱，請按照信件說明重設密碼');
+        })
+        .catch((error) => {
+          errorPublish(error)
+        });
+      },
+
+
+    modifySuccess() {
+      this.forgetPsw = false;
+      this.step = 0;
+    },
   },
 
-  checkEmail() {
-    if (!this.memEmail) {
-      return alert("輸入錯誤或無輸入");
-    } else {
-      this.step = 2;
-      this.memEmail = "";
-    }
-  },
-  validCheck() {
-    if (!this.number1 || !this.number2 || !this.number3 || !this.number4) {
-      alert("請輸入驗證碼");
-    } else {
-      this.number1 = this.number2 = this.number3 = this.number4 = "";
-      this.step = 3;
-    }
-  },
-  modifyCheck() {
-    if (!this.modify.psw || !this.modify.newPsw) {
-      alert("請輸入密碼");
-      return;
-    } else if (
-      this.modify.psw === this.modify.newPsw &&
-      this.modify.psw.length >= 6 &&
-      this.modify.psw.length <= 12
-    ) {
-      this.step = 4;
-      this.modify.psw = this.modify.newPsw = "";
-      return;
-    } else {
-      alert("請輸入密碼");
-    }
 
-    this.modify.psw = "";
-    this.modify.newPsw = "";
-  },
-  modifySuccess() {
-    this.forgetPsw = false;
-    this.step = 0;
-  },
+
+
 };
 </script>

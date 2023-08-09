@@ -7,6 +7,7 @@ export default createStore({
 
   state: {
     name: '登入/註冊',
+    userInfo: [],
     cart: [],
     isLogin: false,
     totalPrice: 0,
@@ -31,6 +32,9 @@ export default createStore({
     },
     setName(state, payload) {
       state.name = payload
+    },
+    setUserInfo(state, payload) {
+      state.userInfo = payload
     },
     updateCart(state, newData) {
       state.cart = [...newData];

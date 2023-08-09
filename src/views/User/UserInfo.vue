@@ -3,6 +3,7 @@
     <h1 class="h4">帳號設定</h1>
     <hr>
     <div class="user-control-content">
+      {{ $store.state.userInfo }}
       <div class="input-wrap">
         <label for="name" class="caption">姓名</label>
         <input type="text" id="name">
@@ -24,7 +25,7 @@
       </div>
       <div class="input-wrap long">
         <label for="email" class="caption" required>聯絡 E-mail(必填)</label>
-        <input type="email" id="email">
+        <input type="email" id="email" :value="$store.state.userInfo.email">
       </div>
     </div>
     <div class="right">
