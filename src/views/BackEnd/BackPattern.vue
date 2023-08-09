@@ -2,7 +2,6 @@
 
 <template>
   <!-- select bar -->
-  <!-- {{currentItem}} -->
   <div class="search_new">
     <div class="input-group">
       <input
@@ -59,11 +58,12 @@
       * 沒有找到符合搜尋條件的結果
     </p>
   </table>
-  
+
   <!-- edit modal -->
   <form
-    action="http://localhost:80/phps/editPattern.php" 
-    method="post" enctype="multipart/form-data"
+    action="http://localhost:80/phps/editPattern.php"
+    method="post"
+    enctype="multipart/form-data"
     v-if="showModal"
     class="modal fade"
     id="itemModal"
@@ -147,6 +147,20 @@
               >圖案檔案</span
             >
             <input
+              disabled
+              v-model="currentItem.pattern_file"
+              name="pattern_file"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >上傳檔案</span
+            >
+            <input
               type="file"
               class="form-control"
               id="inputGroupFile02"
@@ -154,10 +168,11 @@
             />
           </div>
           <div class="model_body_pic">
-            <Images 
+            <Images
               v-if="currentItem.pattern_file"
-              :imgURL="`${currentItem.pattern_file}`" 
-              :alt="`Image preview`" />
+              :imgURL="`${currentItem.pattern_file}`"
+              :alt="`Image preview`"
+            />
           </div>
         </div>
 
@@ -185,8 +200,8 @@
 
   <!-- new modal -->
   <form
-    action="http://localhost:80/phps/postPattern.php" 
-    method="post" 
+    action="http://localhost:80/phps/postPattern.php"
+    method="post"
     enctype="multipart/form-data"
     class="modal fade"
     id="itemNewModal"
@@ -212,8 +227,8 @@
                 <input
                   disabled
                   v-model="newAnnouncement.pattern_no"
-                  type="text"
                   name="pattern_no"
+                  type="text"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -272,11 +287,12 @@
                 />
               </div>
               <div class="model_body_pic">
-                <img 
+                <img
                   v-if="newAnnouncement.pattern_file"
-                  :src="`${newAnnouncement.pattern_file}`" 
+                  :src="`${newAnnouncement.pattern_file}`"
                   :alt="`Image preview`"
-                  :id="`imgPreview`" />
+                  :id="`imgPreview`"
+                />
               </div>
             </div>
           </slot>
@@ -310,7 +326,6 @@ export default {
     return {
       // 抓 php 資料
       dataFromMySQL: [],
-      pattern_dir: 'images/pattern/',
       // items: [
       //   {
       //     id: 1,
@@ -342,15 +357,16 @@ export default {
     // search
     filteredItems() {
       if (!this.dataFromMySQL) {
-        alert('沒有資料')
-      } 
-      else {
+        alert("沒有資料");
+      } else {
         if (this.searchText === "") {
           return this.dataFromMySQL;
         }
-  
+
         return this.dataFromMySQL.filter((item) =>
-          Object.values(item).some((val) => String(val).includes(this.searchText))
+          Object.values(item).some((val) =>
+            String(val).includes(this.searchText)
+          )
         );
       }
     },
@@ -390,7 +406,7 @@ export default {
       }
 
       const file = files[0];
-      console.log('file',file)
+      console.log("file", file);
       const reader = new FileReader();
 
       reader.onload = (e) => {
@@ -428,8 +444,6 @@ export default {
       //   alert("新增失敗！");
       // });
 
-
-
       // this.clearAnnouncement();
       // this.newAnnouncement = {
       //   pattern_no: "", // 確保 id 屬性存在
@@ -456,41 +470,62 @@ export default {
     // delete announcement
     deleteAnnouncement() {
       const index = this.dataFromMySQL.findIndex(
-        (item) => item.id === this.currentItem.id
+        (item) => item.pattern_no === this.currentItem.pattern_no
       );
       if (index !== -1) {
+        // 這裡刪除的是vue this.data
         this.dataFromMySQL.splice(index, 1);
         this.showModal = false;
       }
+
+      //傳送資料庫要刪除的項目
+      const data = new URLSearchParams();
+      data.append("pattern_no", this.currentItem.pattern_no);
+      data.append("pattern_file", this.currentItem.pattern_file);
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}deletePattern.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          location.reload(); //刷新頁面
+          alert("已刪除圖案成功！");
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          alert("刪除失敗！");
+        });
     },
-    editArticle() {
-      const apiURL = new URL(`${BASE_URL}/editArticle.php`);
-      // console.log(this.$refs["article-form"]);
-      const formData = new FormData(this.$refs["article-form"]);
-      formData.append("type", "edit");
-      formData.append("news_id", this.edit.news_id);
-      formData.append("news_date", this.edit.news_date);
-      fetch(apiURL, {
-          method: "POST",
-          body: formData,
-      })
-          .then((res) => res.json())
-          .then((status) => {
-              // alert(status.msg);
-              this.confirmModal();
-          });
-    },
+    // editArticle() {
+    //   const apiURL = new URL(`${BASE_URL}/editArticle.php`);
+    //   console.log(this.$refs["article-form"]);
+    //   const formData = new FormData(this.$refs["article-form"]);
+    //   formData.append("type", "edit");
+    //   formData.append("news_id", this.edit.news_id);
+    //   formData.append("news_date", this.edit.news_date);
+    //   fetch(apiURL, {
+    //       method: "POST",
+    //       body: formData,
+    //   })
+    //       .then((res) => res.json())
+    //       .then((status) => {
+    //           alert(status.msg);
+    //           this.confirmModal();
+    //       });
+    // },
+    getdataFromMySQL() {},
   },
   // 抓 php 資料
   mounted() {
-    const type = 'get'; // 設定要執行的操作，這裡是取得資料
+    const type = "get"; // 設定要執行的操作，這裡是取得資料
     axios
       .get(`${BASE_URL}/getPattern.php?type=${type}`)
       .then((response) => {
         this.dataFromMySQL = response.data;
 
         // 打印取得的資料以確認是否成功
-        console.log("Data retrieved from MySQL:", this.dataFromMySQL);
+        console.log("Data retrieved from MySQL:", "this.dataFromMySQL");
       })
       .catch((error) => {
         console.error("There was an error fetching the data:", error);

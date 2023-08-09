@@ -14,16 +14,21 @@ if($_FILES["image"]["error"] === 0) {
     //寫入資料庫
     try {
       require_once("./connect_chd102g1.php");
-      $sql = "insert into pattern (`pattern_no`, `pattern_name`, `pattern_file`, `pattern_desc`, `creation_date`)
-        values (null, :pattern_name, :pattern_file, :pattern_desc, :creation_date);";
+      $sql = "insert into spot (`spot_no`, `spot_name`, `spot_info`, `spot_status`, `spot_file`)
+        values (null, :spot_name, :spot_info, :spot_status, :spot_file);";
       $pattern = $pdo->prepare($sql); 
-      $creation_date = date("Y-m-d");// 自動生成當下時間
 
       // pattern_no 這裡是AUTO_INCREMENT，不需要設定
-      $pattern->bindValue(":pattern_name", $_POST["pattern_name"]);
-      $pattern->bindValue(":pattern_desc", $_POST["pattern_desc"]);
-      $pattern->bindValue(":creation_date", $creation_date);
-      $pattern->bindValue(":pattern_file", "images/pattern/$fileName");//添加圖檔路徑
+      $pattern->bindValue(":spot_name", $_POST["spot_name"]);
+      $pattern->bindValue(":spot_info", $_POST["spot_info"]);
+      $pattern->bindValue(":spot_file", "images/pattern/$fileName");//添加圖檔路徑
+
+
+// 添加以下代碼進行調試
+// echo "pattern_name: ".$_POST["pattern_name"]."<br>";
+// echo "pattern_desc: ".$_POST["pattern_desc"]."<br>";
+
+
       $pattern->execute();
       echo "新增成功~<br>";
     } catch (PDOException $e) {

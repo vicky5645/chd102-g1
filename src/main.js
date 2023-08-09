@@ -17,6 +17,9 @@ import "@/assets/font/custom-fonts.scss";
 // 註冊全域組件
 import Images from "@/components/Images.vue";
 
+//信用卡掩字套件
+import { vMaska } from "maska"
+
 const app = createApp(App);
 app.use(store);
 app.use(router);
@@ -25,4 +28,5 @@ app.use(ViewUIPlus);
 app.use(firebase)
 // app.use(register)
 app.component("Images", Images);
+app.directive("maska", vMaska);
 app.mount("#app");

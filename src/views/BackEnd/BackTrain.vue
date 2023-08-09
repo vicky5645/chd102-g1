@@ -33,9 +33,9 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">
-        <th scope="row">{{ item.id }}</th>
-        <td class="ellipsis">{{ item.name }}</td>
-        <td class="ellipsis">{{ item.qty }}</td>
+        <th scope="row">{{ item.train_no }}</th>
+        <td class="ellipsis">{{ item.train_name }}</td>
+        <td class="ellipsis">{{ item.train_qty }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -219,18 +219,14 @@
 </template>
 
 <script>
+import axios from "axios";
 import { Modal } from "bootstrap";
+import { BASE_URL } from "@/assets/js/common.js";
 
 export default {
   data() {
     return {
-      items: [
-        {
-          id: 1,
-          name: "綠野號",
-          qty: 40,
-        },
-      ],
+      trainData: [],
       // search
       searchText: "",
       // model
@@ -251,10 +247,10 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.items;
+        return this.trainData;
       }
 
-      return this.items.filter((item) =>
+      return this.trainData.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
@@ -335,14 +331,25 @@ export default {
 
     // delete announcement
     deleteAnnouncement() {
-      const index = this.items.findIndex(
+      const index = this.trainData.findIndex(
         (item) => item.id === this.currentItem.id
       );
       if (index !== -1) {
-        this.items.splice(index, 1);
+        this.trainData.splice(index, 1);
         this.showModal = false;
       }
     },
+  },
+
+  mounted() {
+    axios
+      .get(`${BASE_URL}/getTrain.php`)
+      .then((response) => {
+        this.trainData = response.data;
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data:", error);
+      });
   },
 };
 </script>

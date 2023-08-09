@@ -3,16 +3,16 @@ header('Access-Control-Allow-Origin: *');
 
 try {
 	//引入連線工作的檔案
-	require_once("./getData.php");
+	require_once("./connect_chd102g1.php");
 	
 	//執行sql指令並取得pdoStatement
-	$sql = "select * from package";
-	$package = $pdo->query($sql); 
+	$sql = "select * from train";
+	$train = $pdo->query($sql); 
 
 	//取回所有的資料, 放在2維陣列中
-	$packageData= $package->fetchAll(PDO::FETCH_ASSOC);
+	$trainData= $train->fetchAll(PDO::FETCH_ASSOC);
 
-	echo json_encode($packageData);
+	echo json_encode($trainData);
 } 
 catch (Exception $e) {
 	echo "錯誤row : ", $e->getLine(), "<br>";
