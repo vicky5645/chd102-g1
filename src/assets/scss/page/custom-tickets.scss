@@ -56,10 +56,10 @@ $ani-bg: ani-namecard;
   }
   &.title {
     background-color: #fff;
-    height: 260px;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 2.5rem;
   }
   & .des {
     padding: 30px;

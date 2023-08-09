@@ -5,10 +5,10 @@ body {
   background-color: $bodyBgColor !important;
   position: relative;
   overflow-x: hidden;
+  font-size: $body;
   //一般內文
   & p:not(.type):not(.subtext > p){
-    font-size: $body;
-    line-height: 34px;
+    font-weight: 300;
     color: map-get($GrayColors, Gray4 )!important;
   }
   & .introCard p {
