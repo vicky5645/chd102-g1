@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -444,10 +443,10 @@
                 overflow: hidden;
 
                 .part_two_left_train {
-                    // width: 707px;
                     height: 817px;
 
                     img {
+                        object-fit: cover;
                         width: 100%;
                     }
                 }
@@ -485,15 +484,31 @@
                 width: 100vw;
                 position: relative;
 
+                .train_mask {
+                    position: absolute;
+                    z-index: 1;
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    background-color: #2727279c;
+                }
+
                 .about_part_one_train_pic {
                     width: 100vw !important;
+             
                 }
 
                 .about_main_text {
+                    z-index: 2;
                     font-size: 30px;
                     position: absolute;
                     right: 600px;
-                    color: #7AACBF;
+                    color: #fff !important;
+                    p {
+                        color: #fff !important;
+                    }
+
                 }
             }
 
@@ -538,15 +553,7 @@
                     }
                 }
 
-                .train_mask {
-                    position: absolute;
-                    z-index: 1;
-                    top: 0;
-                    left: 0;
-                    width: 100vw;
-                    height: 100vh;
-                    background-color: #2727279c;
-                }
+
 
                 .together_explore {
                     width: 50px !important;
@@ -571,6 +578,7 @@
                     height: 100vh !important;
 
                     img {
+                      
                         height: 100%;
                     }
 
@@ -881,7 +889,7 @@
                                     display: block;
                                     font-size: 40px;
                                     margin-left: auto;
-                                    color:black;
+                                    color: black;
                                 }
 
                                 .fallen_leaves {
@@ -1043,24 +1051,24 @@
             height: 100vh;
             overflow: hidden;
 
- 
+
             .second_attraction_info {
                 width: 100%;
                 height: 100%;
                 clip-path: circle(2.5% at 40% 43%);
                 background-color: #fff;
- 
+
             }
         }
 
         .third_attraction {
             background-color: blue;
- 
+
             width: 100vw;
             height: 100vh;
             overflow: hidden;
 
-   
+
             .third_attraction_info {
                 width: 100%;
                 height: 100%;
@@ -1146,17 +1154,17 @@
 
 
 .customers {
-  
+
     overflow: hidden;
 
 
     .customers_wrap {
         display: flex;
-  
+
         display: flex;
         flex-wrap: nowrap;
         width: fit-content;
-   
+
         height: fit-content;
 
         .customers_title_wrap {
@@ -1198,7 +1206,7 @@
                 background-color: #7AACBF;
                 ;
                 border-radius: 24px;
-   
+
                 width: 100%;
                 height: 100%;
                 display: flex;
@@ -1215,7 +1223,7 @@
 
                 .card_wrap {
                     width: 33.333%;
- 
+
                     perspective: 1000px;
                     transform-style: preserve-3d;
                     perspective-origin: 0% 50%;
@@ -1234,6 +1242,11 @@
                         padding: 24px;
                         background-color: #fff;
                         box-shadow: 0 0 8px #272727;
+                        cursor: pointer;
+
+                        &:hover {
+                            transform: rotate(0deg) !important;
+                        }
 
                         .nail {
                             position: absolute;
@@ -1323,7 +1336,7 @@
 
                     .text {
                         p {
-                            font-size: 16px!important;
+                            font-size: 16px !important;
                         }
                     }
                 }
@@ -1339,15 +1352,3 @@
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-

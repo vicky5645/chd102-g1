@@ -1,6 +1,4 @@
 <template>
-
-  
   <section class="banner">
     <div class="landscape_pic">
       <img v-for="(item, index) in pic_group" :src="item" v-show="item == show_pic" alt="">
@@ -50,12 +48,12 @@
       <div class="about_left">
         <div class="about_part_one_left about_card">
           <div class="train_mask">
-            
+
           </div>
-            <div class="about_part_one_train_pic">
-              <img src="@\assets\images\img\index_pic\index_about_red_train.png" alt="">
-            </div>
-          
+          <div class="about_part_one_train_pic">
+            <img src="@\assets\images\img\index_pic\index_about_red_train.png" alt="">
+          </div>
+
           <div class="about_main_text">
             <h2 class="title">
               ABOUT US
@@ -272,7 +270,6 @@ gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, CustomEase);
 
 
 export default {
-
   components: {
     Weather
   },
@@ -436,7 +433,7 @@ export default {
       delay: 20,
       duration: 0.5
     })
- 
+
 
     ScrollTrigger.create({
       trigger: '.about_part_one_left ',
@@ -446,7 +443,7 @@ export default {
       pinSpacing: false,
       end: `+=4000`,
     });
-   
+
 
     gsap.to('.scroll_train', {
       y: 2990,
@@ -463,7 +460,7 @@ export default {
 
 
 
-   
+
 
     const attractions_wrap = document.querySelector('.attractions_wrap')
     function get_scroll_distance() {
@@ -479,7 +476,7 @@ export default {
 
 
 
-  
+
 
 
     let screen_width = window.innerWidth;
@@ -578,7 +575,7 @@ export default {
       return (customers_wrap - screenW)
     }
     // console.log(get_cus_distance())
- 
+
 
     const customers_ani = gsap.to('.customers_wrap', {
       x: () => `+=${get_cus_distance() * -1}`,
@@ -650,7 +647,7 @@ export default {
     });
 
 
- 
+
 
 
 
@@ -663,7 +660,7 @@ export default {
 
     clearInterval(this.clearpic_settime);
     clearInterval(this.pic_settime);
-   
+
   }
 
 
