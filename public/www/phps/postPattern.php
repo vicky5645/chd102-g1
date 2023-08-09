@@ -25,11 +25,10 @@ if($_FILES["image"]["error"] === 0) {
       $pattern->bindValue(":creation_date", $creation_date);
       $pattern->bindValue(":pattern_file", "images/pattern/$fileName");//添加圖檔路徑
       $pattern->execute();
-      echo "新增成功~<br>";
+
+      $msg = "新增成功";
     } catch (PDOException $e) {
-      echo "錯誤行號 : ", $e->getLine(), "<br>";
-      echo "錯誤原因 : ", $e->getMessage(), "<br>";
-      //echo "系統暫時不能正常運行，請稍後再試<br>";  
+      $msg = "error_line: ".$e->getLine().", error_msg: ".$e->getMessage(); 
     }
 
   }else{

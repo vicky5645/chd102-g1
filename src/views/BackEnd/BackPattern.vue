@@ -377,8 +377,35 @@ export default {
     saveChanges() {
       // 在這裡更新資料
       // 如有需要，你也可以將 currentItem 傳到後端
-      this.currentItem = { ...this.backupItem };
+      // this.currentItem = { ...this.backupItem };
       this.showModal = false;
+      const index = this.dataFromMySQL.findIndex(
+        (item) => item.pattern_no === this.currentItem.pattern_no
+      );
+      if (index !== -1) {
+        // 這裡刪除的是vue this.data
+        this.dataFromMySQL.splice(index, 1);
+        this.showModal = false;
+      }
+      //傳送資料庫要刪除的項目
+      const data = new URLSearchParams();//這不需要
+      data.append("pattern_no", this.currentItem.pattern_no);
+      data.append("pattern_name", this.currentItem.pattern_name);
+      data.append("pattern_desc", this.currentItem.pattern_desc);
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}editPattern.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          location.reload(); //刷新頁面
+          alert("已修改圖案成功！");
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          alert("修改失敗！");
+        });
     },
 
     cancelChanges() {
@@ -518,9 +545,8 @@ export default {
   },
   // 抓 php 資料
   mounted() {
-    const type = "get"; // 設定要執行的操作，這裡是取得資料
     axios
-      .get(`${BASE_URL}/getPattern.php?type=${type}`)
+      .get(`${BASE_URL}/getPattern.php`)
       .then((response) => {
         this.dataFromMySQL = response.data;
 
