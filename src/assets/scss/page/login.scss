@@ -12,9 +12,7 @@
   }
 
   .loin-form-wrap {
-
     display: flex;
-
     // .loin-form-img{
     //   background: linear-gradient(to right, #C8EAC0, #BFE8C4, #A7E1CE, #80D7E0, #51CAF4);
     //   width: 100%;
@@ -22,7 +20,6 @@
     // }
 
     .login-form {
-
       border: 10px solid#ffffff;
       border-radius: 20px 0 0 20px;
       background-color: #ffffff;
@@ -39,23 +36,15 @@
         justify-content: center;
         align-items: center;
         text-align: right;
-      ;
       }
 
-
       .register-form-bottom {
-
-
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-
         .register-form-bottom-agree {
           padding: 10px;
         }
-
-
-
         input {
           color: #F29C50;
           background: none;
@@ -75,14 +64,12 @@
 
 
       button.login-connect {
-
         background-color: #fff;
         border: 1px solid map-get($BrandColors, Secondary2);
         border-radius: 5px;
         padding: 10px;
         font-size: $label;
         color: map-get($GrayColors, Gray4);
-
       }
 
       button.login-connect:hover {
@@ -99,50 +86,34 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-
         p {
           color: map-get($BrandColors, Secondary2);
           font-size: $h3;
           font-weight: bold;
           padding: 10px;
         }
-
         span {
           color: map-get($GrayColors, Gray4);
           font-size: $label;
           padding: 10px;
         }
-
       }
-
-
       .inputBox {
-
         input {
-
           border: 1px solid map-get($BrandColors, Secondary2);
           border-radius: 5px;
           padding: 5px;
           margin: 5px;
-
         }
-
-
       }
-
-
       form {
         display: flex;
         flex-direction: column;
         align-items: center;
 
-
-
-
         span {
           color: map-get($GrayColors, Gray4);
         }
-
 
         .input-wrap {
           display: flex;
@@ -167,11 +138,8 @@
             & input {
 
               border: 1px solid map-get($BrandColors, Secondary2);
-
               border-radius: 8px;
               background-color: #fff;
-
-
 
               &:focus+label,
               &:valid+label {
@@ -196,28 +164,22 @@
             border-radius: 4px;
             pointer-events: none;
             transition: all 0.5s;
-
           }
         }
 
         .forget-password {
-
           padding: 10px;
           color: $linkColor;
           font-weight: bold;
           font-size: $label;
           cursor: pointer;
-
-
         }
 
         .actions span {
           color: #000;
-
         }
 
         .login-form-register {
-
           padding: 10px;
           background-color: transparent;
           color: $linkColor;
@@ -227,7 +189,6 @@
         }
 
         .login-form-confirm {
-
           color: #F29C50;
           background: none;
           border: 2px solid #F29C50;
@@ -238,33 +199,25 @@
           position: relative;
           cursor: pointer;
           transition: color 0.4s linear;
-
         }
 
         .login-form-confirm:hover {
           background-color: #F29C50;
           color: #fff;
         }
-
       }
-
     }
 
     .login-wrap-pic {
       background-color: #2c1e34bc;
       background-size: cover;
-
-
       width: 300px;
       height: 500px;
       border-radius: 0 20px 20px 0;
-
       display: flex;
       justify-content: center;
       align-items: center;
-
     }
-
   }
 
   .enter-modify-success,
@@ -282,7 +235,6 @@
 
     .enter-modify-submit,
     button {
-
       color: #F29C50;
       background: none;
       border: 2px solid #F29C50;
@@ -299,71 +251,53 @@
     button:hover {
       background-color: #F29C50;
       color: #fff;
-
     }
 
     .enter-modify-input {
       display: flex;
       flex-direction: column;
       margin: 10px;
-
       label {
         margin: 5px;
-
       }
-
       input {
         margin: 5px;
         padding: 6px;
         border-radius: 8px;
-
       }
-
     }
 
-    .enter-valid-input{
-
-      input{
+    .enter-valid-input {
+      input {
         border-radius: 4px;
         width: 40px;
       }
-
     }
-    
 
-
-    form {
+    .forget_password_from {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-
       h2 {
         color: map-get($BrandColors, Secondary2);
-
-
       }
-
       p {
         color: map-get($BrandColors, Secondary1);
         font-size: $label;
-
       }
 
       .forget-password-enter {
         font-weight: bold;
         padding: 15px;
-
         input {
           padding: 5px;
           border-radius: 8px;
         }
-
       }
 
       .enter-valid-submit,
       .forget-password-submit {
-
         color: #F29C50;
         background: none;
         border: 2px solid #F29C50;
@@ -374,7 +308,6 @@
         position: relative;
         cursor: pointer;
         transition: color 0.4s linear;
-
       }
 
       .enter-valid-submit:hover,
@@ -383,42 +316,24 @@
         color: #fff;
         cursor: pointer;
       }
-
     }
-
   }
-
-
 }
 
 @media screen and (max-width:768px) {
 
   .login-wrap {
-
     .loin-form-wrap {
-
-
       .login-form {
-
         border: 10px solid#ffffff;
         border-radius: 20px;
         background-color: #ffffff;
         padding: 30px;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-
       }
-
       .login-wrap-pic {
         display: none;
-
       }
-
-
-    
-
     }
-
-
-
   }
 }

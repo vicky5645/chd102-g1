@@ -81,7 +81,8 @@
         </button>
 
         <div class="txt_block" v-show="selectedTab === 'Tab1'">
-          <p v-for="text in productDataItem.description" :key="text">{{ text }}</p>
+          <!-- <p v-for="text in productDataItem.description" :key="text">{{ text }}</p> -->
+          <p>{{ productDataItem.description }}</p>
         </div>
 
         <div class="txt_block" v-show="selectedTab === 'Tab2'">

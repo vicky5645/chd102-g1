@@ -2,19 +2,25 @@ import { createStore } from 'vuex'
 const updateStorage = (cart) => {
   localStorage.setItem('my-cart', JSON.stringify(cart))
 }
-
+import axios from 'axios'
 export default createStore({
 
   state: {
     name: '登入/註冊',
+    userInfo: [],
     cart: [],
     isLogin: false,
     totalPrice: 0,
+
     //景點
     attraction: {
       attr_id: 1,
       attr_name: ''
-    }
+    },
+
+    
+    // 論壇資料
+    AnnouncementData: [],
   },
   getters: {
     cartList(state) {
@@ -25,12 +31,18 @@ export default createStore({
     }
   },
   mutations: {
+    setAnnouncementData(state,payload) {
+      state.AnnouncementData = [...payload];
+    },
     //傳景點id給元件
     throw_attr_id(state, parent_attr_id) {
       state.attraction.attr_id = parent_attr_id
     },
     setName(state, payload) {
       state.name = payload
+    },
+    setUserInfo(state, payload) {
+      state.userInfo = payload
     },
     updateCart(state, newData) {
       state.cart = [...newData];
@@ -109,6 +121,15 @@ export default createStore({
     },
   },
   actions: {
+    async getAnnouncementData(context, value) {
+      try {
+        const res = await axios.get("http://localhost/phps/selectBackendAnnouncements.php");
+        if (!res) throw new Error("沒抓到資料");
+        context.commit('setAnnouncementData', res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    },
     // addCart({commit},item){
     //   commit("addCart",item)
     // },

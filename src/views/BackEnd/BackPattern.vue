@@ -61,9 +61,10 @@
 
   <!-- edit modal -->
   <form
-    action="http://localhost:80/phps/editPattern.php"
-    method="post"
+    action=""
     enctype="multipart/form-data"
+    method="post"
+    ref="article-form"
     v-if="showModal"
     class="modal fade"
     id="itemModal"
@@ -96,6 +97,7 @@
             <input
               disabled
               v-model="currentItem.pattern_no"
+              name="pattern_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -163,15 +165,23 @@
             <input
               type="file"
               class="form-control"
+              accept="image"
+              name="news_img"
               id="inputGroupFile02"
               @change="handleFileUpload"
             />
           </div>
           <div class="model_body_pic">
             <Images
-              v-if="currentItem.pattern_file"
+              v-if="currentItem.pattern_file && !newAnnouncement.pattern_file"
               :imgURL="`${currentItem.pattern_file}`"
               :alt="`Image preview`"
+            />
+            <img
+              v-if="newAnnouncement.pattern_file"
+              :src="`${newAnnouncement.pattern_file}`"
+              :alt="`Image preview`"
+              :id="`imgPreview`"
             />
           </div>
         </div>
@@ -189,7 +199,7 @@
             type="button"
             class="btn btn-primary"
             data-bs-dismiss="modal"
-            @click="saveChanges"
+            @click.prevent="saveChanges"
           >
             儲存變更
           </button>
@@ -220,7 +230,7 @@
               class="modal-body gap-2"
               style="display: flex; flex-direction: column"
             >
-              <div class="input-group input-group-lg">
+              <!-- <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
                   >客製車票圖案編號</span
                 >
@@ -233,7 +243,7 @@
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
                 />
-              </div>
+              </div> -->
               <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
                   >圖案名稱</span
@@ -281,8 +291,8 @@
                 <input
                   type="file"
                   class="form-control"
-                  name="image"
-                  id="image"
+                  name="news_img"
+                  id="inputGroupFile01"
                   @change="handleFileUpload"
                 />
               </div>
@@ -300,13 +310,17 @@
         <div class="modal-footer">
           <slot name="footer">
             <button
+              type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
               @click="clearAnnouncement()"
             >
               取消
             </button>
-            <button class="btn btn-primary" @click="submitAnnouncement()">
+            <button
+              class="btn btn-primary"
+              @click="submitAnnouncement()"
+            >
               確定新增
             </button>
           </slot>
@@ -342,7 +356,7 @@ export default {
       backupItem: {},
       showModal: false,
       selectedFile: null,
-      // new model
+      // new modal
       newAnnouncement: {
         pattern_no: "", // 確保 id 屬性存在
         pattern_name: "",
@@ -373,41 +387,6 @@ export default {
   },
 
   methods: {
-    // model
-    saveChanges() {
-      // 在這裡更新資料
-      // 如有需要，你也可以將 currentItem 傳到後端
-      // this.currentItem = { ...this.backupItem };
-      this.showModal = false;
-      const index = this.dataFromMySQL.findIndex(
-        (item) => item.pattern_no === this.currentItem.pattern_no
-      );
-      if (index !== -1) {
-        // 這裡刪除的是vue this.data
-        this.dataFromMySQL.splice(index, 1);
-        this.showModal = false;
-      }
-      //傳送資料庫要刪除的項目
-      const data = new URLSearchParams();//這不需要
-      data.append("pattern_no", this.currentItem.pattern_no);
-      data.append("pattern_name", this.currentItem.pattern_name);
-      data.append("pattern_desc", this.currentItem.pattern_desc);
-      // 使用 Axios 發送 POST 請求
-      axios
-        .post(`${BASE_URL}editPattern.php`, data)
-        .then((response) => {
-          // 請求成功後的處理
-          console.log(response.data);
-          location.reload(); //刷新頁面
-          alert("已修改圖案成功！");
-        })
-        .catch((error) => {
-          // 請求失敗後的處理
-          console.error(error);
-          alert("修改失敗！");
-        });
-    },
-
     cancelChanges() {
       this.currentItem = { ...this.backupItem };
       this.showModal = false;
@@ -441,8 +420,46 @@ export default {
       };
       reader.readAsDataURL(file);
     },
-
-    // new model
+    // edit model
+    saveChanges() {
+      // 在這裡更新資料
+      // 如有需要，你也可以將 currentItem 傳到後端
+      // this.currentItem = { ...this.backupItem };
+      this.showModal = false;
+      const index = this.dataFromMySQL.findIndex(
+        (item) => item.pattern_no === this.currentItem.pattern_no
+      );
+      if (index !== -1) {
+        // 這裡刪除的是vue this.data
+        this.dataFromMySQL.splice(index, 1);
+        this.showModal = false;
+      }
+      //傳送資料庫的資料
+      console.log("refs",this.$refs["article-form"]);
+      // const formData = new FormData(this.$refs["article-form"]);
+      // const data = new FormData(document.getElementById("itemModal"));
+      // console.log("id-refs",document.getElementById("itemModal"));
+      const data = new URLSearchParams(); //這不需要?
+      data.append("type", "edit");
+      data.append("pattern_no", this.currentItem.pattern_no);
+      data.append("pattern_name", this.currentItem.pattern_name);
+      data.append("pattern_desc", this.currentItem.pattern_desc);
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}editPattern.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          location.reload(); //刷新頁面
+          alert("已修改圖案成功！");
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          alert("修改失敗！");
+        });
+    },
+    // new modal
     submitAnnouncement() {
       if (
         !this.newAnnouncement.pattern_name ||
@@ -479,6 +496,8 @@ export default {
       //   creation_date: "",
       //   pattern_file: null,
       // };
+      // location.reload(); //刷新頁面
+
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
       modalInstance.hide();
@@ -545,6 +564,10 @@ export default {
   },
   // 抓 php 資料
   mounted() {
+    this.$nextTick(() => {
+      console.log("refs", this.$refs["article-form"]);
+      console.log("id-refs",document.getElementById("itemModal"));
+    });
     axios
       .get(`${BASE_URL}/getPattern.php`)
       .then((response) => {

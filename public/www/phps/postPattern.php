@@ -1,15 +1,23 @@
 <?php 
-if($_FILES["image"]["error"] === 0) {
+if($_FILES["news_img"]["error"] === 0) {
   $dir = "../../images/pattern/"; //指定所要上傳的路徑
   if(file_exists($dir)===false){
       mkdir($dir); //make directory
   }
 
-  $from = $_FILES["image"]["tmp_name"];
+  $from = $_FILES["news_img"]["tmp_name"];
 
-  $to = $dir . $_FILES["image"]["name"];
+  //處理檔名 -> 建立唯一性--------------------
+  //---產生主檔名
+  $fileName = uniqid();
+  //---取出副檔名
+  $fileExt = pathInfo($_FILES["news_img"]["name"],
+  PATHINFO_EXTENSION); //test.gif
 
-  $fileName = $_FILES["image"]["name"]; // 將檔案名稱設定給 $fileName
+  $fileName = "$fileName.$fileExt";//用uniqid()去串接副檔名
+
+  $to = $dir . $fileName;
+
   if(copy($from, $to)){
     //寫入資料庫
     try {
@@ -26,16 +34,22 @@ if($_FILES["image"]["error"] === 0) {
       $pattern->bindValue(":pattern_file", "images/pattern/$fileName");//添加圖檔路徑
       $pattern->execute();
 
-      $msg = "新增成功";
+      // $msg = "新增成功";
+      echo "新增成功~<br>";
     } catch (PDOException $e) {
-      $msg = "error_line: ".$e->getLine().", error_msg: ".$e->getMessage(); 
+      // $msg = "error_line: ".$e->getLine().", error_msg: ".$e->getMessage(); 
+      echo "錯誤行號 : ", $e->getLine(), "<br>";
+      echo "錯誤原因 : ", $e->getMessage(), "<br>";
+      echo "系統暫時不能正常運行，請稍後再試<br>";  
     }
 
   }else{
-      echo "寫入失敗";
+    // $msg = "寫入失敗";
+    echo "寫入失敗";
   }
 
 } else {
+  // $msg = "未上傳圖檔";
   echo "未上傳圖檔";
 }
 ?>

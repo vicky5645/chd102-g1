@@ -310,7 +310,6 @@ section.next-step {
 </style>
 
 <template>
-  {{ package }}
   <section class="title">
     <h1 class="h1" v-html="packageDataItem.title"></h1>
   </section>
@@ -531,16 +530,6 @@ export default {
         this.packageList[`${parseFloat(this.$route.params.id) - 1}`];
       this.stageList = this.packageDataItem.stageList;
     });
-
-    axios
-      .get("http://localhost:80/phps/connectPackage.php")
-      .then((res) => {
-        this.package = res.data;
-        console.log(this.package);
-      })
-      .catch((err) => {
-        console.log("Error happened when fetching the data:", err);
-      });
   },
 };
 </script>
