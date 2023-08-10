@@ -75,6 +75,7 @@
     <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
         <div class="modal-header">
+         
           <h5 class="modal-title" id="itemModalLabel">修改客製車票圖案</h5>
           <button
             type="button"
@@ -317,10 +318,7 @@
             >
               取消
             </button>
-            <button
-              class="btn btn-primary"
-              @click="submitAnnouncement()"
-            >
+            <button class="btn btn-primary" @click="submitAnnouncement()">
               確定新增
             </button>
           </slot>
@@ -363,6 +361,7 @@ export default {
         pattern_desc: "",
         creation_date: "",
         pattern_file: null,
+        pattern_file_name: null
       },
     };
   },
@@ -412,11 +411,13 @@ export default {
       }
 
       const file = files[0];
-      console.log("file", file);
+      // console.log("file", file);
       const reader = new FileReader();
-
+      
       reader.onload = (e) => {
+        // console.log(e.target.result)
         this.newAnnouncement.pattern_file = e.target.result;
+        this.newAnnouncement.pattern_file_name = file.name
       };
       reader.readAsDataURL(file);
     },
@@ -435,15 +436,23 @@ export default {
         this.showModal = false;
       }
       //傳送資料庫的資料
-      console.log("refs",this.$refs["article-form"]);
+      // 修改圖檔時，接收變數
+      let imgFile = this.newAnnouncement.pattern_file;
+      // console.log("refs",this.$refs["article-form"]);
       // const formData = new FormData(this.$refs["article-form"]);
       // const data = new FormData(document.getElementById("itemModal"));
       // console.log("id-refs",document.getElementById("itemModal"));
       const data = new URLSearchParams(); //這不需要?
-      data.append("type", "edit");
       data.append("pattern_no", this.currentItem.pattern_no);
       data.append("pattern_name", this.currentItem.pattern_name);
       data.append("pattern_desc", this.currentItem.pattern_desc);
+      if (imgFile) {
+        data.append("type", "editimg");
+        data.append("pattern_file", this.currentItem.pattern_file);
+        data.append("news_filename", this.newAnnouncement.pattern_file_name); // imgFile 是文件对象
+        data.append("news_img", imgFile);
+        console.log("news_img", imgFile);
+      }
       // 使用 Axios 發送 POST 請求
       axios
         .post(`${BASE_URL}editPattern.php`, data)
@@ -566,7 +575,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       console.log("refs", this.$refs["article-form"]);
-      console.log("id-refs",document.getElementById("itemModal"));
+      console.log("id-refs", document.getElementById("itemModal"));
     });
     axios
       .get(`${BASE_URL}/getPattern.php`)

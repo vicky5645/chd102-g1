@@ -6,6 +6,10 @@ body {
   position: relative;
   overflow-x: hidden;
   font-size: $body;
+  // 主要內容高度
+  & main {
+    min-height: calc(100vh - (60px + 100px));
+  }
   //一般內文
   & p:not(.type):not(.subtext > p){
     font-weight: 300;
