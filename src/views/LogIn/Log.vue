@@ -180,8 +180,8 @@
     </section>
 
     <section class="enter-modify-success" v-if="forgetPsw && step === 4">
-      <p>修改完成！</p>
-      <p>請重新登入</p>
+      <p>請至信箱驗證並修改密碼🚀 </p>
+      <p>請返回重新登入↩️</p>
       <button @click="modifySuccess">返回會員登入</button>
     </section>
 
@@ -192,7 +192,7 @@
     </section>
   </div>
 </template>
-<style></style>
+
 <script>
 import { firebaseAuth } from "@/assets/config/firebase.js";
 import {
@@ -384,6 +384,7 @@ export default {
         .catch((error) => {
           errorPublish(error);
         });
+        this.step = 4;
     },
 
     modifySuccess() {
