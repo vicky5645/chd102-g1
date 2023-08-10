@@ -60,7 +60,10 @@
   </table>
 
   <!-- edit modal -->
-  <div
+  <form
+    action="http://localhost:80/phps/edit.php"
+    method="post"
+    enctype="multipart/form-data"
     v-if="showModal"
     class="modal fade"
     id="itemModal"
@@ -92,6 +95,7 @@
             >
             <input
               v-model="currentItem.spot_name"
+              name="spot_name"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -104,7 +108,7 @@
             >
             <input
               v-model="currentItem.spot_info"
-              name="pattern_name"
+              name="spot_info"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -117,7 +121,7 @@
             >
             <input
               v-model="currentItem.spot_status"
-              name="pattern_desc"
+              name="spot_status"
               type="num"
               class="form-control"
               aria-label="Sizing example input"
@@ -132,6 +136,7 @@
             <input
               disabled
               v-model="currentItem.spot_file"
+              name="spot_file"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -140,7 +145,7 @@
           </div>
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
-              >圖案檔案</span
+              >上傳檔案</span
             >
             <input
               type="file"
@@ -178,7 +183,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </form>
 
   <!-- new modal -->
   <form
@@ -203,7 +208,7 @@
               class="modal-body gap-2"
               style="display: flex; flex-direction: column"
             >
-              <div class="input-group input-group-lg">
+              <!-- <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
                   >景點編號</span
                 >
@@ -216,7 +221,7 @@
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
                 />
-              </div>
+              </div> -->
 
               <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
@@ -402,13 +407,6 @@ export default {
         return;
       }
 
-      // console.log(this.newAnnouncement);
-      // this.clearAnnouncement();
-      // this.newAnnouncement = {
-      //   id: "",
-      //   name: "",
-      //   qty: "",
-      // };
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
       modalInstance.hide();
@@ -439,7 +437,7 @@ export default {
       data.append("spot_file", this.currentItem.spot_file);
       // 使用 Axios 發送 POST 請求
       axios
-        .post(`${BASE_URL}deletePattern.php`, data)
+        .post(`${BASE_URL}deleteSpot.php`, data)
         .then((response) => {
           // 請求成功後的處理
           console.log(response.data);

@@ -1,5 +1,6 @@
 <!-- 管理員帳號 -->
 <template>
+  {{ dataFromMySQL }}
   <!-- select bar -->
   <div class="search_new">
     <div class="input-group">
@@ -248,12 +249,21 @@
 </template>
 
 <script>
+import axios from "axios";
 import { Modal } from "bootstrap";
+import { BASE_URL } from "@/assets/js/common.js";
 
 export default {
   data() {
     return {
+      dataFromMySQL: [],
       items: [
+        {
+          id: 1,
+          name: "test",
+          pwd: "test",
+          email: "test@example.com",
+        },
         {
           id: 1,
           name: "test",
@@ -377,6 +387,20 @@ export default {
         this.showModal = false;
       }
     },
+  },
+  // 抓 php 資料
+  mounted() {
+    axios
+      .get(`${BASE_URL}/getBackCmsStaff.php`)
+      .then((response) => {
+        this.dataFromMySQL = response.data;
+
+        // 打印取得的資料以確認是否成功
+        console.log("Data retrieved from MySQL:", "this.dataFromMySQL");
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data:", error);
+      });
   },
 };
 </script>
