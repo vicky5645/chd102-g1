@@ -37,13 +37,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in productData" :key="index">
+      <tr v-for="(item, index) in filteredItems" :key="index">
         <th scope="row">{{ item.prod_no }}</th>
-        <td class="ellipsis">{{ item.prod_name }}</td>
-        <td class="ellipsis">{{ item.prod_summary }}</td>
+        <td class="ellipsis" :title="item.prod_name">{{ item.prod_name }}</td>
+        <td class="ellipsis" :title="item.prod_summary">{{ item.prod_summary }}</td>
         <td class="ellipsis">{{ item.prod_price }}</td>
-        <td class="ellipsis">{{ item.prod_status }}</td>
-        <td class="ellipsis">{{ item.prod_file }}</td>
+        <!-- <td class="ellipsis">{{ item.prod_status }}</td> -->
+        <td class="ellipsis" 
+        :style="{color: productStatusColor(item)}"
+        >{{ productStatus(item) }}</td>
+        <td class="ellipsis" :title="item.prod_file">{{ item.prod_file }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -77,7 +80,7 @@
     <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="itemModalLabel">修改客製車票圖案</h5>
+          <h5 class="modal-title" id="itemModalLabel">修改商品資訊</h5>
           <button
             type="button"
             class="btn-close"
@@ -98,7 +101,7 @@
             >
             <input
               disabled
-              v-model="currentItem.pattern_no"
+              v-model="currentItem.prod_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -107,10 +110,10 @@
           </div>
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
-              >圖案名稱</span
+              >商品名稱</span
             >
             <input
-              v-model="currentItem.pattern_name"
+              v-model="currentItem.prod_name"
               name="pattern_name"
               type="text"
               class="form-control"
@@ -120,10 +123,10 @@
           </div>
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
-              >圖案描述</span
+              >商品介紹</span
             >
             <input
-              v-model="currentItem.pattern_desc"
+              v-model="currentItem.prod_summary"
               name="pattern_desc"
               type="text"
               class="form-control"
@@ -134,11 +137,10 @@
 
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
-              >創建日期</span
+              >商品價格</span
             >
             <input
-              disabled
-              v-model="currentItem.creation_date"
+              v-model="currentItem.prod_price"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -147,11 +149,32 @@
           </div>
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
-              >圖案檔案</span
+              >上架狀態</span
+            >
+            <select class="form-select">
+              <!-- <option selected>未設定</option> -->
+              <option value="1">上架</option>
+              <option value="0">下架</option>
+            </select>
+            <!-- <input
+              v-model="currentItem.prod_status"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            /> -->
+          </div>
+          <!-- <select name="" id="">
+            <option value="">上架</option>
+            <option value="">下架</option>
+          </select> -->
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >商品圖片</span
             >
             <input
               disabled
-              v-model="currentItem.pattern_file"
+              v-model="currentItem.prod_file"
               name="pattern_file"
               type="text"
               class="form-control"
@@ -161,19 +184,18 @@
           </div>
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
-              >上傳檔案</span
+              >更改圖檔</span
             >
             <input
               type="file"
               class="form-control"
-              id="inputGroupFile02"
               @change="handleFileUpload"
             />
           </div>
           <div class="model_body_pic">
             <Images
-              v-if="currentItem.pattern_file"
-              :imgURL="`${currentItem.pattern_file}`"
+              v-if="currentItem.prod_file"
+              :imgURL="`images/online-mall/${currentItem.prod_file}`"
               :alt="`Image preview`"
             />
           </div>
@@ -202,13 +224,7 @@
   </form>
 
   <!-- new modal -->
-  <div
-    class="modal fade"
-    id="itemNewModal"
-    tabindex="-1"
-    aria-labelledby="itemModalLabel"
-    aria-hidden="true"
-  >
+
   <form
     action="http://localhost:80/phps/postProduct.php"
     method="post"
@@ -236,6 +252,7 @@
                   >商品編號</span
                 >
                 <input
+                  disabled
                   v-model="newProduct.prod_no"
                   type="text"
                   class="form-control"
@@ -276,7 +293,7 @@
                 >
                 <input
                   v-model="newProduct.prod_price"
-                  type="text"
+                  type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -287,13 +304,18 @@
                 <span class="input-group-text" id="inputGroup-sizing-lg"
                   >商品狀態</span
                 >
-                <input
+                <select class="form-select" v-model="newProduct.prod_status">
+              <!-- <option selected>未設定</option> -->
+                  <option value="1">上架</option>
+                  <option value="0">下架</option>
+                </select>
+                <!-- <input
                   v-model="newProduct.prod_status"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
-                />
+                /> -->
               </div>
 
               <div class="input-group input-group-lg">
@@ -329,8 +351,7 @@
       </div>
     </div>
     </form>
-  </div>
-  <div>{{ productData }}</div>
+    <div>{{ newProduct.prod_status }}</div>
 </template>
 
 <script>
@@ -341,14 +362,16 @@ import { BASE_URL } from "@/assets/js/common.js";
 export default {
   data() {
     return {
+      dataFromMySQL: [],
       productData: [],
-      items: [
-        {
-          // id: 1,
-          // name: "綠野號",
-          // qty: 40,
-        },
-      ],
+      // items: [
+      //   {
+      //     // id: 1,
+      //     // name: "綠野號",
+      //     // qty: 40,
+      //   },
+      // ],
+
       // search
       searchText: "",
       // model
@@ -372,13 +395,13 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.items;
+        return this.dataFromMySQL;
       }
 
-      return this.items.filter((item) =>
+      return this.dataFromMySQL.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
-    },
+    }
   },
 
   methods: {
@@ -396,6 +419,7 @@ export default {
       this.currentItem = { ...this.backupItem };
       this.showModal = false;
     },
+    //點選查看，將此物品賦值給currentItem
     openModal(item) {
       this.currentItem = item;
       this.showModal = true;
@@ -468,12 +492,21 @@ export default {
         this.showModal = false;
       }
     },
+
+    //判定顯示上下架及顏色
+    productStatus(item) {
+      return item.prod_status === 0 ? '下架' : '上架';
+    },
+    productStatusColor(item) {
+      return item.prod_status === 0 ? 'red' : 'blue';
+    }
   },
   mounted() {
+    const type = "get"; // 設定要執行的操作，這裡是取得資料
     axios
-      .get(`${BASE_URL}/getProduct.php`)
+      .get(`${BASE_URL}/getProduct.php?type=${type}`)
       .then((response) => {
-        this.productData = response.data;
+        this.dataFromMySQL = response.data;
       })
       .catch((error) => {
         console.error("There was an error fetching the data:", error);
@@ -514,4 +547,11 @@ h5 {
 .modal-footer {
   justify-content: center;
 }
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 </style>
