@@ -72,10 +72,9 @@
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" style="max-width: 80%">
+    <div class="modal-dialog" style="max-width: auto">
       <div class="modal-content">
         <div class="modal-header">
-         
           <h5 class="modal-title" id="itemModalLabel">修改客製車票圖案</h5>
           <button
             type="button"
@@ -220,7 +219,7 @@
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" style="max-width: 80%">
+    <div class="modal-dialog" style="max-width: auto">
       <div class="modal-content">
         <div class="modal-header">
           <h5 name="header">新增客製車票圖案</h5>
@@ -338,6 +337,7 @@ export default {
     return {
       // 抓 php 資料
       dataFromMySQL: [],
+      backupItem: {},
       // items: [
       //   {
       //     id: 1,
@@ -351,7 +351,6 @@ export default {
       searchText: "",
       // model
       currentItem: {},
-      backupItem: {},
       showModal: false,
       selectedFile: null,
       // new modal
@@ -361,7 +360,7 @@ export default {
         pattern_desc: "",
         creation_date: "",
         pattern_file: null,
-        pattern_file_name: null
+        pattern_file_name: null,
       },
     };
   },
@@ -413,11 +412,11 @@ export default {
       const file = files[0];
       // console.log("file", file);
       const reader = new FileReader();
-      
+
       reader.onload = (e) => {
-        // console.log(e.target.result)
+        // console.log(e)
         this.newAnnouncement.pattern_file = e.target.result;
-        this.newAnnouncement.pattern_file_name = file.name
+        this.newAnnouncement.pattern_file_name = file.name;
       };
       reader.readAsDataURL(file);
     },
@@ -438,18 +437,14 @@ export default {
       //傳送資料庫的資料
       // 修改圖檔時，接收變數
       let imgFile = this.newAnnouncement.pattern_file;
-      // console.log("refs",this.$refs["article-form"]);
-      // const formData = new FormData(this.$refs["article-form"]);
-      // const data = new FormData(document.getElementById("itemModal"));
-      // console.log("id-refs",document.getElementById("itemModal"));
-      const data = new URLSearchParams(); //這不需要?
+      const data = new FormData(); // POST 表單資料
       data.append("pattern_no", this.currentItem.pattern_no);
       data.append("pattern_name", this.currentItem.pattern_name);
       data.append("pattern_desc", this.currentItem.pattern_desc);
       if (imgFile) {
         data.append("type", "editimg");
         data.append("pattern_file", this.currentItem.pattern_file);
-        data.append("news_filename", this.newAnnouncement.pattern_file_name); // imgFile 是文件对象
+        data.append("news_filename", this.newAnnouncement.pattern_file_name); // imgFile 是圖片data
         data.append("news_img", imgFile);
         console.log("news_img", imgFile);
       }
@@ -534,7 +529,7 @@ export default {
       }
 
       //傳送資料庫要刪除的項目
-      const data = new URLSearchParams();
+      const data = new FormData(); // POST 表單資料
       data.append("pattern_no", this.currentItem.pattern_no);
       data.append("pattern_file", this.currentItem.pattern_file);
       // 使用 Axios 發送 POST 請求
@@ -552,38 +547,17 @@ export default {
           alert("刪除失敗！");
         });
     },
-    // editArticle() {
-    //   const apiURL = new URL(`${BASE_URL}/editArticle.php`);
-    //   console.log(this.$refs["article-form"]);
-    //   const formData = new FormData(this.$refs["article-form"]);
-    //   formData.append("type", "edit");
-    //   formData.append("news_id", this.edit.news_id);
-    //   formData.append("news_date", this.edit.news_date);
-    //   fetch(apiURL, {
-    //       method: "POST",
-    //       body: formData,
-    //   })
-    //       .then((res) => res.json())
-    //       .then((status) => {
-    //           alert(status.msg);
-    //           this.confirmModal();
-    //       });
-    // },
     getdataFromMySQL() {},
   },
   // 抓 php 資料
-  mounted() {
-    this.$nextTick(() => {
-      console.log("refs", this.$refs["article-form"]);
-      console.log("id-refs", document.getElementById("itemModal"));
-    });
+  created() {
     axios
       .get(`${BASE_URL}/getPattern.php`)
       .then((response) => {
         this.dataFromMySQL = response.data;
 
         // 打印取得的資料以確認是否成功
-        console.log("Data retrieved from MySQL:", "this.dataFromMySQL");
+        console.log("Data retrieved from MySQL:", "dataFromMySQL");
       })
       .catch((error) => {
         console.error("There was an error fetching the data:", error);
