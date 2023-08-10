@@ -1,6 +1,6 @@
 <?php 
 if($_FILES["image"]["error"] === 0) {
-  $dir = "../../images/pattern/"; //指定所要上傳的路徑
+  $dir = "../../images/tmp/"; //指定所要上傳的路徑
   if(file_exists($dir)===false){
       mkdir($dir); //make directory
   }
@@ -22,9 +22,9 @@ if($_FILES["image"]["error"] === 0) {
       $spot->bindValue(":spot_name", $_POST["spot_name"]);
       $spot->bindValue(":spot_info", $_POST["spot_info"]);
       $spot->bindValue(":spot_status", $_POST["spot_status"]);
-      $spot->bindValue(":spot_file", "images/pattern/$fileName");//添加圖檔路徑
+      $spot->bindValue(":spot_file", "images/tmp/$fileName");//添加圖檔路徑
       $spot->execute();
-      echo "新增成功~<br>";
+      // echo "新增成功~<br>";
     } catch (PDOException $e) {
       echo "錯誤行號 : ", $e->getLine(), "<br>";
       echo "錯誤原因 : ", $e->getMessage(), "<br>";

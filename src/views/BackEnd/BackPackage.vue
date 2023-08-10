@@ -33,7 +33,7 @@
         <!-- <th scope="col">班次編號</th> -->
         <th scope="col">列車編號</th>
         <th scope="col">車長</th>
-        <th scope="col">備註</th>
+        <!-- <th scope="col">備註</th> -->
         <th scope="col"></th>
       </tr>
     </thead>
@@ -192,9 +192,12 @@
       </div>
     </div>
   </div>
-
+  <!-- http://localhost:80/phps/postPackage.php -->
   <!-- new modal -->
   <div
+    action=""
+    method="post"
+    enctype="multipart/form-data"
     class="modal fade"
     id="itemNewModal"
     tabindex="-1"
@@ -215,24 +218,12 @@
             >
               <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
-                  >行程編號</span
-                >
-                <input
-                  v-model="newAnnouncement.id"
-                  type="text"
-                  class="form-control"
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-lg"
-                />
-              </div>
-
-              <div class="input-group input-group-lg">
-                <span class="input-group-text" id="inputGroup-sizing-lg"
                   >行程價格</span
                 >
                 <input
-                  v-model="newAnnouncement.name"
-                  type="text"
+                  v-model="newAnnouncement.pkg_price"
+                  name="pkg_price"
+                  type="num"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -244,11 +235,14 @@
                   >行程狀態</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
-                  type="text"
+                  v-model="newAnnouncement.pkg_status"
+                  name="pkg_status"
+                  type="num"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
+                  min="0"
+                  max="1"
                 />
               </div>
 
@@ -257,7 +251,8 @@
                   >行程名稱</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
+                  v-model="newAnnouncement.pkg_name"
+                  name="pkg_name"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -270,20 +265,8 @@
                   >行程說明</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
-                  type="text"
-                  class="form-control"
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-lg"
-                />
-              </div>
-
-              <div class="input-group input-group-lg">
-                <span class="input-group-text" id="inputGroup-sizing-lg"
-                  >班次編號</span
-                >
-                <input
-                  v-model="newAnnouncement.qty"
+                  v-model="newAnnouncement.pkg_desc"
+                  name="pkg_desc"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -296,11 +279,14 @@
                   >列車編號</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
-                  type="text"
+                  v-model="newAnnouncement.train_no"
+                  name="train_no"
+                  type="num"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
+                  min="0"
+                  max="3"
                 />
               </div>
 
@@ -309,7 +295,8 @@
                   >車長</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
+                  v-model="newAnnouncement.conductor"
+                  name="conductor"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -317,7 +304,7 @@
                 />
               </div>
 
-              <div class="input-group input-group-lg">
+              <!-- <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
                   >備註</span
                 >
@@ -327,7 +314,7 @@
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
                 />
-              </div>
+              </div> -->
             </div>
           </slot>
         </div>
@@ -335,13 +322,18 @@
         <div class="modal-footer">
           <slot name="footer">
             <button
+              type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
               @click="clearAnnouncement()"
             >
               取消
             </button>
-            <button class="btn btn-primary" @click="submitAnnouncement()">
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click.prevent="submitAnnouncement()"
+            >
               確定新增
             </button>
           </slot>
@@ -370,9 +362,12 @@ export default {
       selectedFile: null,
       // new model
       newAnnouncement: {
-        id: "", // 確保 id 屬性存在
-        name: "",
-        qty: "",
+        pkg_price: "",
+        pkg_status: "",
+        pkg_name: "",
+        pkg_desc: "",
+        train_no: "",
+        conductor: "",
       },
     };
   },
@@ -435,21 +430,40 @@ export default {
     // new model
     submitAnnouncement() {
       if (
-        !this.newAnnouncement.id ||
-        !this.newAnnouncement.name ||
-        !this.newAnnouncement.qty
+        !this.newAnnouncement.pkg_price ||
+        !this.newAnnouncement.pkg_status ||
+        !this.newAnnouncement.pkg_name ||
+        !this.newAnnouncement.pkg_desc ||
+        !this.newAnnouncement.train_no ||
+        !this.newAnnouncement.conductor
       ) {
         alert("所有欄位都必須填寫！");
         return;
       }
 
-      console.log(this.newAnnouncement);
-      this.clearAnnouncement();
-      this.newAnnouncement = {
-        id: "",
-        name: "",
-        qty: "",
-      };
+      //傳送資料庫要新增的項目
+      const data = new URLSearchParams();
+      data.append("pkg_price", this.newAnnouncement.pkg_price);
+      data.append("pkg_status", this.newAnnouncement.pkg_status);
+      data.append("pkg_name", this.newAnnouncement.pkg_name);
+      data.append("pkg_desc", this.newAnnouncement.pkg_desc);
+      data.append("train_no", this.newAnnouncement.train_no);
+      data.append("conductor", this.newAnnouncement.conductor);
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}postPackage.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          location.reload(); //刷新頁面
+          alert("新增成功！");
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          alert("新增失敗！");
+        });
+
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
       modalInstance.hide();
@@ -457,21 +471,43 @@ export default {
 
     clearAnnouncement() {
       this.newAnnouncement = {
-        id: "",
-        name: "",
-        qty: "",
+        pkg_price: "",
+        pkg_status: "",
+        pkg_name: "",
+        pkg_desc: "",
+        train_no: "",
+        conductor: "",
       };
     },
 
     // delete announcement
     deleteAnnouncement() {
       const index = this.packageData.findIndex(
-        (item) => item.id === this.currentItem.id
+        (item) => item.pkg_no === this.currentItem.pkg_no
       );
       if (index !== -1) {
         this.packageData.splice(index, 1);
         this.showModal = false;
       }
+
+      //傳送資料庫要刪除的項目
+      const data = new URLSearchParams();
+      data.append("pkg_no", this.currentItem.pkg_no);
+
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}.deletePackage.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          // location.reload();
+          alert("刪除成功！");
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          alert("刪除失敗！");
+        });
     },
   },
 
