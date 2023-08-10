@@ -162,7 +162,6 @@
 
     <section class="forget_password" v-if="forgetPsw && step === 1">
       <div class="forget_password_from">
-
         <h2>忘記密碼</h2>
 
         <p>輸入註冊信箱，傳送驗證碼</p>
@@ -174,27 +173,17 @@
             required="required"
           />
         </div>
-        <button
-          @click="checkEmail()"
-          class="forget-password-submit">
+        <button @click="checkEmail()" class="forget-password-submit">
           傳送
-      </button>
+        </button>
       </div>
     </section>
-
-
-
-    
 
     <section class="enter-modify-success" v-if="forgetPsw && step === 4">
       <p>修改完成！</p>
       <p>請重新登入</p>
       <button @click="modifySuccess">返回會員登入</button>
     </section>
-
-
-
-
 
     <section class="enter-modify-success" v-if="step === 5">
       <p>🚀 註冊完成 🎉</p>
@@ -206,7 +195,14 @@
 <style></style>
 <script>
 import { firebaseAuth } from "@/assets/config/firebase.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged, sendEmailVerification } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+  onAuthStateChanged,
+  sendEmailVerification,
+} from "firebase/auth";
 // import {  } from "firebase/auth";
 //google 守門人
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -272,8 +268,8 @@ export default {
         .then((userCredential) => {
           // firebase 的資料
           const userInfo = userCredential.user;
-          this.signInUser = userInfo
-          this.$store.commit('setUserInfo', userInfo);
+          this.signInUser = userInfo;
+          this.$store.commit("setUserInfo", userInfo);
           this.$store.commit("setName", this.username);
           this.$store.commit("setIsLogin", true); // 使用 commit 來改變狀態
           window.alert("登入成功");
@@ -297,11 +293,11 @@ export default {
       this.forgetPsw = true;
       this.step = 1;
     },
-    
+
     reset() {
       this.register.errorMsg = "";
     },
-    
+
     changeRegister() {
       this.isRegistered = true;
     },
@@ -350,10 +346,6 @@ export default {
       }
     },
 
-
-
-
-
     signInGoogle() {
       signInWithPopup(firebaseAuth, provider)
         .then((result) => {
@@ -378,7 +370,7 @@ export default {
       if (!this.memEmail) {
         window.alert("輸入錯誤或無輸入");
       } else {
-        alert('重設密碼');
+        alert("重設密碼");
         // this.step = 2;
         this.resetPsw();
         // this.memEmail = "";
@@ -387,22 +379,17 @@ export default {
     resetPsw() {
       sendPasswordResetEmail(firebaseAuth, this.memEmail)
         .then(() => {
-          window.alert('已發送信件至信箱，請按照信件說明重設密碼');
+          window.alert("已發送信件至信箱，請按照信件說明重設密碼");
         })
         .catch((error) => {
-          errorPublish(error)
+          errorPublish(error);
         });
-      },
-
+    },
 
     modifySuccess() {
       this.forgetPsw = false;
       this.step = 0;
     },
   },
-
-
-
-
 };
 </script>
