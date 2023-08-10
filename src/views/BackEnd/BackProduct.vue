@@ -28,9 +28,11 @@
       <tr>
         <th scope="col">商品編號</th>
         <th scope="col">商品名稱</th>
+        <th scope="col">商品類型</th>
         <th scope="col">商品介紹</th>
         <th scope="col">商品價格</th>
         <th scope="col">商品狀態</th>
+        <th scope="col">熱銷商品</th>
         <th scope="col">商品圖片</th>
 
         <th scope="col"></th>
@@ -40,12 +42,14 @@
       <tr v-for="(item, index) in filteredItems" :key="index">
         <th scope="row">{{ item.prod_no }}</th>
         <td class="ellipsis" :title="item.prod_name">{{ item.prod_name }}</td>
+        <td class="ellipsis" :title="item.prod_name">{{ item.prod_type }}</td>
         <td class="ellipsis" :title="item.prod_summary">{{ item.prod_summary }}</td>
         <td class="ellipsis">{{ item.prod_price }}</td>
         <!-- <td class="ellipsis">{{ item.prod_status }}</td> -->
         <td class="ellipsis" 
         :style="{color: productStatusColor(item)}"
         >{{ productStatus(item) }}</td>
+        <td class="ellipsis">{{ item.prod_hot === 1 ? "是" : "否"}}</td>
         <td class="ellipsis" :title="item.prod_file">{{ item.prod_file }}</td>
         <td style="text-align: right">
           <button
@@ -123,6 +127,17 @@
           </div>
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
+              >商品類型</span
+            >
+            <select class="form-select" v-model="currentItem.prod_type">
+              <option value="周邊">周邊</option>
+              <option value="玩具">玩具</option>
+              <option value="食品">食品</option>
+              <option value="圖書">圖書</option>
+            </select>
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
               >商品介紹</span
             >
             <input
@@ -141,7 +156,7 @@
             >
             <input
               v-model="currentItem.prod_price"
-              type="text"
+              type="number"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
@@ -149,25 +164,24 @@
           </div>
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
-              >上架狀態</span
+              >商品狀態</span
             >
             <select class="form-select">
-              <!-- <option selected>未設定</option> -->
               <option value="1">上架</option>
               <option value="0">下架</option>
             </select>
-            <!-- <input
-              v-model="currentItem.prod_status"
-              type="text"
-              class="form-control"
-              aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-lg"
-            /> -->
           </div>
-          <!-- <select name="" id="">
-            <option value="">上架</option>
-            <option value="">下架</option>
-          </select> -->
+
+          <div class="input-group input-group-lg">
+                <span class="input-group-text" id="inputGroup-sizing-lg"
+                  >熱銷商品</span
+                >
+                <select class="form-select" v-model="currentItem.prod_hot">
+                  <option value="1">是</option>
+                  <option value="0">否</option>
+                </select>
+              </div>
+
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
               >商品圖片</span
@@ -275,6 +289,18 @@
               </div>
 
               <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >商品類型</span
+            >
+            <select class="form-select" v-model="newProduct.prod_type">
+              <option value="周邊">周邊</option>
+              <option value="玩具">玩具</option>
+              <option value="食品">食品</option>
+              <option value="圖書">圖書</option>
+            </select>
+          </div>
+
+              <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
                   >商品介紹</span
                 >
@@ -293,7 +319,7 @@
                 >
                 <input
                   v-model="newProduct.prod_price"
-                  type="number"
+                  type="text"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -316,6 +342,16 @@
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
                 /> -->
+              </div>
+
+              <div class="input-group input-group-lg">
+                <span class="input-group-text" id="inputGroup-sizing-lg"
+                  >熱銷商品</span
+                >
+                <select class="form-select" v-model="newProduct.prod_hot">
+                  <option value="1">是</option>
+                  <option value="0">否</option>
+                </select>
               </div>
 
               <div class="input-group input-group-lg">
@@ -352,8 +388,10 @@
     </div>
     </form>
     <div>{{ newProduct.prod_status }}</div>
+    <div>{{ filteredItems[0] }}</div>
+    <div>{{ dataFromMySQL[0] }}</div>
+    <div>{{ currentItem }}</div>
 </template>
-
 <script>
 import axios from "axios";
 import { Modal } from "bootstrap";
@@ -387,6 +425,8 @@ export default {
         prod_price: "",
         prod_status: "",
         prod_file: "",
+        prod_type: "",
+        prod_hot: "",
       },
     };
   },
@@ -479,6 +519,7 @@ export default {
         prod_price: "",
         prod_status: "",
         prod_file: "",
+        prod_type: "",
       };
     },
 
