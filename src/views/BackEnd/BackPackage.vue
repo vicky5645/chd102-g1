@@ -66,7 +66,11 @@
   </table>
 
   <!-- edit modal -->
-  <div
+  <form
+    action=""
+    method="post"
+    enctype="multipart/form-data"
+    ref="package-form"
     v-if="showModal"
     class="modal fade"
     id="itemModal"
@@ -98,6 +102,7 @@
             >
             <input
               v-model="currentItem.pkg_price"
+              name="pkg_price"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -110,8 +115,8 @@
             >
             <input
               v-model="currentItem.pkg_status"
-              name="pattern_name"
-              type="num"
+              name="pkg_status"
+              type="number"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
@@ -125,7 +130,7 @@
             >
             <input
               v-model="currentItem.pkg_name"
-              name="pattern_desc"
+              name="pkg_name"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -139,6 +144,7 @@
             >
             <input
               v-model="currentItem.pkg_desc"
+              name="pkg_desc"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -151,7 +157,8 @@
             >
             <input
               v-model="currentItem.train_no"
-              type="num"
+              name="train_no"
+              type="number"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
@@ -163,6 +170,7 @@
             <span class="input-group-text" id="inputGroup-sizing-lg">車長</span>
             <input
               v-model="currentItem.conductor"
+              name="conductor"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -191,10 +199,10 @@
         </div>
       </div>
     </div>
-  </div>
-  <!-- http://localhost:80/phps/postPackage.php -->
+  </form>
+
   <!-- new modal -->
-  <div
+  <form
     action=""
     method="post"
     enctype="multipart/form-data"
@@ -223,7 +231,7 @@
                 <input
                   v-model="newAnnouncement.pkg_price"
                   name="pkg_price"
-                  type="num"
+                  type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -237,7 +245,7 @@
                 <input
                   v-model="newAnnouncement.pkg_status"
                   name="pkg_status"
-                  type="num"
+                  type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -281,7 +289,7 @@
                 <input
                   v-model="newAnnouncement.train_no"
                   name="train_no"
-                  type="num"
+                  type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -332,7 +340,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              @click.prevent="submitAnnouncement()"
+              @click="submitAnnouncement()"
             >
               確定新增
             </button>
@@ -340,7 +348,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -386,14 +394,6 @@ export default {
   },
 
   methods: {
-    // model
-    saveChanges() {
-      // 在這裡更新資料
-      // 如有需要，你也可以將 currentItem 傳到後端
-      this.currentItem = { ...this.backupItem };
-      this.showModal = false;
-    },
-
     cancelChanges() {
       this.currentItem = { ...this.backupItem };
       this.showModal = false;
@@ -412,19 +412,46 @@ export default {
         });
       });
     },
-    handleFileUpload(event) {
-      const files = event.target.files;
-      if (files.length === 0) {
-        return;
+
+    //edit model
+    saveChanges() {
+      // 在這裡更新資料
+      // 如有需要，你也可以將 currentItem 傳到後端
+      // this.currentItem = { ...this.backupItem };
+      this.showModal = false;
+      const index = this.packageData.findIndex(
+        (item) => item.pkg_no === this.currentItem.pkg_no
+      );
+      if (index !== -1) {
+        // 這裡刪除的是vue this.data
+        this.packageData.splice(index, 1);
+        this.showModal = false;
       }
+      //傳送資料庫的資料
+      // 修改圖檔時，接收變數
+      // let imgFile = this.newAnnouncement.spot_fpkg
 
-      const file = files[0];
-      const reader = new FileReader();
+      const data = new URLSearchParams(); //這不需要?
+      data.append("pkg_no", this.currentItem.pkg_no);
+      data.append("pkg_price", this.currentItem.pkg_price);
+      data.append("pkg_status", this.currentItem.pkg_status);
+      data.append("pkg_desc", this.currentItem.pkg_desc);
+      data.append("train_no", this.currentItem.train_no);
+      data.append("conductor", this.currentItem.conductor);
 
-      reader.onload = (e) => {
-        this.currentItem.image = e.target.result;
-      };
-      reader.readAsDataURL(file);
+      axios
+        .post(`${BASE_URL}editPackage.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          location.reload(); //刷新頁面
+          alert("已修改成功！");
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          alert("修改失敗！");
+        });
     },
 
     // new model
@@ -442,7 +469,7 @@ export default {
       }
 
       //傳送資料庫要新增的項目
-      const data = new URLSearchParams();
+      const data = new FormData();
       data.append("pkg_price", this.newAnnouncement.pkg_price);
       data.append("pkg_status", this.newAnnouncement.pkg_status);
       data.append("pkg_name", this.newAnnouncement.pkg_name);
@@ -460,8 +487,9 @@ export default {
         })
         .catch((error) => {
           // 請求失敗後的處理
-          console.error(error);
-          alert("新增失敗！");
+          // console.error(error);
+          console.log(error);
+          alert("新增失敗！", error);
         });
 
       const modalEl = document.getElementById("itemNewModal");
@@ -496,11 +524,11 @@ export default {
 
       // 使用 Axios 發送 POST 請求
       axios
-        .post(`${BASE_URL}.deletePackage.php`, data)
+        .post(`${BASE_URL}deletePackage.php`, data)
         .then((response) => {
           // 請求成功後的處理
           console.log(response.data);
-          // location.reload();
+          location.reload();
           alert("刪除成功！");
         })
         .catch((error) => {

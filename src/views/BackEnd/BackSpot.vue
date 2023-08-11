@@ -30,7 +30,6 @@
         <th scope="col">景點資訊</th>
         <th scope="col">景點狀態</th>
         <th scope="col">景點圖片</th>
-
         <th scope="col"></th>
       </tr>
     </thead>
@@ -61,9 +60,10 @@
 
   <!-- edit modal -->
   <form
-    action="http://localhost:80/phps/edit.php"
+    action=""
     method="post"
     enctype="multipart/form-data"
+    ref="spot-form"
     v-if="showModal"
     class="modal fade"
     id="itemModal"
@@ -122,10 +122,12 @@
             <input
               v-model="currentItem.spot_status"
               name="spot_status"
-              type="num"
+              type="number"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              min="0"
+              max="1"
             />
           </div>
 
@@ -150,15 +152,22 @@
             <input
               type="file"
               class="form-control"
+              name="image"
               id="inputGroupFile02"
               @change="handleFileUpload"
             />
           </div>
           <div class="model_body_pic">
             <Images
-              v-if="currentItem.spot_file"
+              v-if="currentItem.spot_file && !newAnnouncement.spot_file"
               :imgURL="`${currentItem.spot_file}`"
               :alt="`Image preview`"
+            />
+            <img
+              v-if="newAnnouncement.spot_file"
+              :src="`${newAnnouncement.spot_file}`"
+              :alt="`Image preview`"
+              :id="`imgPreview`"
             />
           </div>
         </div>
@@ -258,7 +267,7 @@
                 <input
                   v-model="newAnnouncement.spot_status"
                   name="spot_status"
-                  type="num"
+                  type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -292,13 +301,18 @@
         <div class="modal-footer">
           <slot name="footer">
             <button
+              type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
               @click="clearAnnouncement()"
             >
               取消
             </button>
-            <button class="btn btn-primary" @click="submitAnnouncement()">
+            <button
+              class="btn btn-primary"
+              type="button"
+              @click="submitAnnouncement()"
+            >
               確定新增
             </button>
           </slot>
@@ -355,14 +369,6 @@ export default {
   },
 
   methods: {
-    // model
-    saveChanges() {
-      // 在這裡更新資料
-      // 如有需要，你也可以將 currentItem 傳到後端
-      this.currentItem = { ...this.backupItem };
-      this.showModal = false;
-    },
-
     cancelChanges() {
       this.currentItem = { ...this.backupItem };
       this.showModal = false;
@@ -392,8 +398,55 @@ export default {
 
       reader.onload = (e) => {
         this.newAnnouncement.spot_file = e.target.result;
+        this.newAnnouncement.spot_file_name = file.name;
       };
       reader.readAsDataURL(file);
+    },
+    //edit model
+    saveChanges() {
+      // 在這裡更新資料
+      // 如有需要，你也可以將 currentItem 傳到後端
+      // this.currentItem = { ...this.backupItem };
+      this.showModal = false;
+      const index = this.dataFromMySQL.findIndex(
+        (item) => item.spot_no === this.currentItem.spot_no
+      );
+      if (index !== -1) {
+        // 這裡刪除的是vue this.data
+        this.dataFromMySQL.splice(index, 1);
+        this.showModal = false;
+      }
+      //傳送資料庫的資料
+      // 修改圖檔時，接收變數
+      let imgFile = this.newAnnouncement.spot_file;
+
+      const data = new URLSearchParams(); //這不需要?
+      data.append("spot_no", this.currentItem.spot_no);
+      data.append("spot_name", this.currentItem.spot_name);
+      data.append("spot_info", this.currentItem.spot_info);
+      data.append("spot_status", this.currentItem.spot_status);
+
+      if (imgFile) {
+        data.append("type", "editimg");
+        data.append("spot_file", this.currentItem.spot_file);
+        data.append("news_filename", this.newAnnouncement.spot_file_name); // imgFile 是文件对象
+        data.append("news_img", imgFile);
+        console.log("news_img", imgFile);
+      }
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}editSpot.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          location.reload(); //刷新頁面
+          alert("已修改圖案成功！");
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          alert("修改失敗！");
+        });
     },
 
     // new model
@@ -417,6 +470,7 @@ export default {
         spot_no: "", // 確保 id 屬性存在
         spot_name: "",
         spot_info: "",
+        spot_status: "",
         spot_file: null,
       };
     },
