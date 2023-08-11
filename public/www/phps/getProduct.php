@@ -5,16 +5,17 @@ try {
 	//引入連線工作的檔案
 	require_once("./connect_chd102g1.php");
 
-	//執行sql指令並取得pdoStatement
-	$sql = "select * from product";
-	$product = $pdo->query($sql);
+	// SQL 查詢
+	$stmt = $pdo->query("SELECT * FROM product");
+    $data = $stmt->fetchAll();
 
 	//取回所有的資料, 放在2維陣列中
-	$productItems = $product->fetchAll(PDO::FETCH_ASSOC);
+	// $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-	echo json_encode($productItems);
-} catch (Exception $e) {
-	echo "錯誤row : ", $e->getLine(), "<br>";
-	echo "錯誤原因 : ", $e->getMessage(), "<br>";
-	//echo "系統暫時不能正常運行，請稍後再試<br>";	
+} catch (PDOException $e) {
+    throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
+
+// 輸出 JSON
+echo json_encode($data);
+?>
