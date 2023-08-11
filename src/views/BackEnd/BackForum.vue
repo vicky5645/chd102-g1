@@ -39,15 +39,15 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">
-        <th scope="row">{{ item.id }}</th>
-        <td class="ellipsis">{{ item.title }}</td>
-        <td class="ellipsis">{{ item.content }}</td>
-        <td class="ellipsis">{{ item.memNo }}</td>
-        <td class="ellipsis">{{ item.date }}</td>
-        <td class="ellipsis">{{ item.views }}</td>
-        <td class="ellipsis">{{ item.likes }}</td>
-        <td class="ellipsis">{{ item.online }}</td>
-        <td class="ellipsis">{{ item.image }}</td>
+        <th scope="row">{{ item.article_no }}</th>
+        <td class="ellipsis">{{ item.article_title }}</td>
+        <td class="ellipsis">{{ item.article_content }}</td>
+        <td class="ellipsis">{{ item.mem_no }}</td>
+        <td class="ellipsis">{{ item.article_date }}</td>
+        <td class="ellipsis">{{ item.article_views }}</td>
+        <td class="ellipsis">{{ item.article_likes }}</td>
+        <td class="ellipsis">{{ item.platform_online }}</td>
+        <td class="ellipsis">{{ item.article_image }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -58,9 +58,6 @@
           </button>
         </td>
       </tr>
-      <div v-if="dataFromMySQL">
-        {{ dataFromMySQL }}
-      </div>
     </tbody>
 
     <p v-if="filteredItems.length === 0" class="text-danger">
@@ -100,7 +97,7 @@
               >文章編號</span
             >
             <input
-              v-model="currentItem.id"
+              v-model="currentItem.article_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -112,7 +109,7 @@
               >文章標題</span
             >
             <input
-              v-model="currentItem.title"
+              v-model="currentItem.article_title"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -125,7 +122,7 @@
               >文章內容</span
             >
             <textarea
-              v-model="currentItem.content"
+              v-model="currentItem.article_content"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
@@ -136,7 +133,7 @@
               >會員編號</span
             >
             <input
-              v-model="currentItem.memNo"
+              v-model="currentItem.mem_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -148,7 +145,7 @@
               >編輯時間</span
             >
             <input
-              v-model="currentItem.date"
+              v-model="currentItem.article_date"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -160,7 +157,7 @@
               >文章瀏覽數</span
             >
             <input
-              v-model="currentItem.views"
+              v-model="currentItem.article_views"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -172,7 +169,7 @@
               >文章按讚數</span
             >
             <input
-              v-model="currentItem.likes"
+              v-model="currentItem.article_likes"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -184,7 +181,7 @@
               >文章上線狀態</span
             >
             <input
-              v-model="currentItem.online"
+              v-model="currentItem.platform_online"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -204,8 +201,8 @@
           </div>
           <div class="model_body_pic">
             <img
-              v-if="currentItem.image"
-              :src="currentItem.image"
+              v-if="currentItem.article_image"
+              :src="currentItem.article_image"
               alt="Image preview"
             />
           </div>
@@ -238,36 +235,38 @@
 import { Modal } from "bootstrap";
 // 抓 php 資料
 import axios from "axios";
+// URL
+import { MAC_URL } from "@/assets/js/common.js";
 
 export default {
   data() {
     return {
-      items: [
-        {
-          id: 1,
-          title: "首次的蒸汽火車體驗",
-          content:
-            "這是我第一次參加蒸汽火車之旅，體驗真是太棒了！從車窗外看著湖光山色，我感受到了旅行的悠閒與寧靜。整個行程由專業的導遊詳細解說，使我對這段旅程有更深的理解。我會向所有人推薦『漫遊列車之旅』。",
-          memNo: 77,
-          date: "2023/7/5",
-          views: 0,
-          likes: 0,
-          online: 1, // 1: online, 0: offline
-          image: require("../../assets/images/img/Forum/f1.png"),
-        },
-        {
-          id: 2,
-          title: "蒸汽火車與手工藝品的完美結合",
-          content:
-            "這次的旅程不僅讓我體驗了蒸汽火車的迷人魅力，還有機會參與當地的手工藝品製作。這種獨特的體驗讓我深深感受到當地的文化和傳統。",
-          memNo: 12,
-          date: "2023/7/5",
-          views: 0,
-          likes: 0,
-          online: 1, // 1: online, 0: offline
-          image: require("../../assets/images/img/Forum/f2.jpg"),
-        },
-      ],
+      // items: [
+      //   {
+      //     id: 1,
+      //     title: "首次的蒸汽火車體驗",
+      //     content:
+      //       "這是我第一次參加蒸汽火車之旅，體驗真是太棒了！從車窗外看著湖光山色，我感受到了旅行的悠閒與寧靜。整個行程由專業的導遊詳細解說，使我對這段旅程有更深的理解。我會向所有人推薦『漫遊列車之旅』。",
+      //     memNo: 77,
+      //     date: "2023/7/5",
+      //     views: 0,
+      //     likes: 0,
+      //     online: 1, // 1: online, 0: offline
+      //     image: require("../../assets/images/img/Forum/f1.png"),
+      //   },
+      //   {
+      //     id: 2,
+      //     title: "蒸汽火車與手工藝品的完美結合",
+      //     content:
+      //       "這次的旅程不僅讓我體驗了蒸汽火車的迷人魅力，還有機會參與當地的手工藝品製作。這種獨特的體驗讓我深深感受到當地的文化和傳統。",
+      //     memNo: 12,
+      //     date: "2023/7/5",
+      //     views: 0,
+      //     likes: 0,
+      //     online: 1, // 1: online, 0: offline
+      //     image: require("../../assets/images/img/Forum/f2.jpg"),
+      //   },
+      // ],
       // search
       searchText: "",
       // model
@@ -277,7 +276,7 @@ export default {
       selectedFile: null,
 
       // 抓 php 資料
-      dataFromMySQL: null,
+      dataForum: [],
     };
   },
 
@@ -285,10 +284,10 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.items;
+        return this.dataForum;
       }
 
-      return this.items.filter((item) =>
+      return this.dataForum.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
@@ -350,13 +349,14 @@ export default {
 
   // 抓 php 資料
   mounted() {
+    const type = "get"; // 設定要執行的操作，這裡是取得資料
     axios
-      .get("http://localhost:8886/phps/getData.php")
+      .get(`${MAC_URL}/getForum.php?type=${type}`)
       .then((response) => {
-        this.dataFromMySQL = response.data[0];
+        this.dataForum = response.data;
 
         // 打印取得的資料以確認是否成功
-        console.log("Data retrieved from MySQL:", this.dataFromMySQL);
+        console.log("Data retrieved from MySQL:", this.dataForum);
       })
       .catch((error) => {
         console.error("There was an error fetching the data:", error);
