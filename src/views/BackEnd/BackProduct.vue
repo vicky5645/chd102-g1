@@ -18,6 +18,7 @@
       id="button-addon2"
       data-bs-toggle="modal"
       data-bs-target="#itemNewModal"
+      @click="getNewProductId"
     >
       新增商品
     </button>
@@ -82,7 +83,7 @@
     aria-hidden="true"
   >
     <div class="modal-dialog" style="max-width: 80%">
-      <div class="modal-content">
+      <div class="modal-content" style="margin: auto">
         <div class="modal-header">
           <h5 class="modal-title" id="itemModalLabel">修改商品資訊</h5>
           <button
@@ -240,9 +241,6 @@
   <!-- new modal -->
 
   <form
-    action="http://localhost:80/phps/postProduct.php"
-    method="post"
-    enctype="multipart/form-data"
     class="modal fade"
     id="itemNewModal"
     tabindex="-1"
@@ -250,7 +248,7 @@
     aria-hidden="true"
   >
     <div class="modal-dialog" style="max-width: 80%">
-      <div class="modal-content">
+      <div class="modal-content" style="margin: auto">
         <div class="modal-header">
           <h5 name="header">新增商品</h5>
         </div>
@@ -292,13 +290,16 @@
             <span class="input-group-text" id="inputGroup-sizing-lg"
               >商品類型</span
             >
-            <select class="form-select" v-model="newProduct.prod_type">
+            <select class="form-select" 
+            v-model="newProduct.prod_type"
+            name
+            >
               <option value="周邊">周邊</option>
               <option value="玩具">玩具</option>
               <option value="食品">食品</option>
               <option value="圖書">圖書</option>
             </select>
-          </div>
+              </div>
 
               <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
@@ -335,13 +336,6 @@
                   <option value="1">上架</option>
                   <option value="0">下架</option>
                 </select>
-                <!-- <input
-                  v-model="newProduct.prod_status"
-                  type="text"
-                  class="form-control"
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-lg"
-                /> -->
               </div>
 
               <div class="input-group input-group-lg">
@@ -361,6 +355,7 @@
                 <input
                   type="file"
                   class="form-control"
+                  name="new_img"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
                   @change="handleFileUpload"
@@ -387,10 +382,12 @@
       </div>
     </div>
     </form>
-    <div>{{ newProduct.prod_status }}</div>
-    <div>{{ filteredItems[0] }}</div>
-    <div>{{ dataFromMySQL[0] }}</div>
-    <div>{{ currentItem }}</div>
+    {{ newProduct }}
+    <!-- <hr> -->
+    <!-- <div v-if="dataFromMySQL.length > 0"> -->
+      <!-- {{ dataFromMySQL[dataFromMySQL.length - 1].prod_no }} -->
+      <!-- {{ getNewProductId }}
+    </div> -->
 </template>
 <script>
 import axios from "axios";
@@ -400,21 +397,12 @@ import { BASE_URL } from "@/assets/js/common.js";
 export default {
   data() {
     return {
+      //後台抓取的商品資料
       dataFromMySQL: [],
-      productData: [],
-      // items: [
-      //   {
-      //     // id: 1,
-      //     // name: "綠野號",
-      //     // qty: 40,
-      //   },
-      // ],
-
       // search
       searchText: "",
       // model
       currentItem: {},
-      backupItem: {},
       showModal: false,
       selectedFile: null,
       // new model
@@ -424,7 +412,7 @@ export default {
         prod_summary: "",
         prod_price: "",
         prod_status: "",
-        prod_file: "",
+        prod_file: "test.png",
         prod_type: "",
         prod_hot: "",
       },
@@ -441,24 +429,16 @@ export default {
       return this.dataFromMySQL.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
+    },
+    //新增商品時的新ID
+    getNewProductId() {
+      this.newProduct.prod_no = parseInt(this.dataFromMySQL[this.dataFromMySQL.length - 1].prod_no) + 1;
     }
   },
 
   methods: {
-    // model
+    // ------------edit model-----------
 
-    //儲存變更
-    saveChanges() {
-      // 在這裡更新資料
-      // 如有需要，你也可以將 currentItem 傳到後端
-      this.currentItem = { ...this.backupItem };
-      this.showModal = false;
-    },
-
-    cancelChanges() {
-      this.currentItem = { ...this.backupItem };
-      this.showModal = false;
-    },
     //點選查看，將此物品賦值給currentItem
     openModal(item) {
       this.currentItem = item;
@@ -474,6 +454,18 @@ export default {
         });
       });
     },
+
+    //按x的時候取消變更
+    cancelChanges() {
+      this.showModal = false;
+    },
+
+    //儲存變更
+    saveChanges() {
+      this.showModal = false;
+    },
+
+    //變更圖檔(共用)
     handleFileUpload(event) {
       const files = event.target.files;
       if (files.length === 0) {
@@ -485,12 +477,14 @@ export default {
       console.log(file.name);
 
       reader.onload = (e) => {
-        this.currentItem.image = e.target.result;
+        this.currentItem.image = e.target.result; //圖檔
+        this.currentItem.prod_file = file.name; //檔案名稱
+        console.log(this.currentItem)
       };
       reader.readAsDataURL(file);
     },
 
-    // new model
+    // ------------new model------------
     submitProduct() {
       if (
         !this.newProduct.prod_no ||
@@ -498,19 +492,38 @@ export default {
         !this.newProduct.prod_summary ||
         !this.newProduct.prod_price ||
         !this.newProduct.prod_status ||
-        !this.newProduct.prod_file
+        !this.newProduct.prod_file ||
+        !this.newProduct.prod_type ||
+        !this.newProduct.prod_hot
       ) {
         alert("所有欄位都必須填寫！");
         return;
       }
+      this.addProduct();
+      // axios.post('test2.php', this.newProduct)
+      //       .then(response => {
+      //           console.log(response.data);
+      //       })
+      //       .catch(error => {
+      //           console.error(error);
+      //       });
 
       console.log(this.newProduct);
-      this.clearProduct();
+      // this.clearProduct();
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
       modalInstance.hide();
+
+    },
+    async addProduct() {
+      await axios({
+        method: 'post',
+        url: "http://localhost/phps/test.php",
+        data: this.newProduct,
+      })
     },
 
+    //清空新增商品欄位
     clearProduct() {
       this.newProduct = {
         prod_no: "",
@@ -523,7 +536,7 @@ export default {
       };
     },
 
-    // delete announcement
+    // 刪除圖案
     deleteAnnouncement() {
       const index = this.items.findIndex(
         (item) => item.id === this.currentItem.id
@@ -542,7 +555,8 @@ export default {
       return item.prod_status === 0 ? 'red' : 'blue';
     }
   },
-  mounted() {
+
+  created () {
     const type = "get"; // 設定要執行的操作，這裡是取得資料
     axios
       .get(`${BASE_URL}/getProduct.php?type=${type}`)
@@ -553,6 +567,17 @@ export default {
         console.error("There was an error fetching the data:", error);
       });
   },
+  // mounted() {
+  //   const type = "get"; // 設定要執行的操作，這裡是取得資料
+  //   axios
+  //     .get(`${BASE_URL}/getProduct.php?type=${type}`)
+  //     .then((response) => {
+  //       this.dataFromMySQL = response.data;
+  //     })
+  //     .catch((error) => {
+  //       console.error("There was an error fetching the data:", error);
+  //     });
+  // },
 };
 </script>
 
