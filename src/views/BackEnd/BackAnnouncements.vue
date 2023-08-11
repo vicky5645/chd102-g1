@@ -42,7 +42,7 @@
         <td class="ellipsis">{{ item.content }}</td>
         <td class="ellipsis">{{ item.date }}</td>
         <td class="ellipsis">
-          <Images :imgURL="`images/img/announcements/${getImgPath(index)}`" :alt="`Image preview`" />
+          <Images :imgURL="`${getImgPath(index)}`" :alt="`Image preview`" />
         </td>
         <td style="text-align: right">
           <button type="button" class="btn btn-outline-primary" style="margin-left: auto" @click="openModal(item)">
