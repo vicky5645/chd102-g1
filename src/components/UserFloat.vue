@@ -75,11 +75,25 @@ const emit = defineEmits(["closeUser", "goLoginUser"]);
 const store = useStore();
 const router = useRouter();
 
-const usersignOut = function () {
+const logoutUser = function () {
   // 登出
-  store.commit("setName", "登入/註冊");
-  store.commit("setIsLogin", false); // 使用 commit 來改變狀態
-  router.push("/about");
+  signOut(firebaseAuth)
+  .then(() => {
+      // Sign-out successful.
+      store.commit("setIsLogin", false);
+      store.commit("setName", "");
+      store.commit('deleteUser');// 使用 VueX mutations -> 清除使用者資料 
+      if (router.currentRoute.path === "/login") {
+        location.reload(); //刷新頁面
+      }else {
+        router.push({ name: "login" });//跳轉
+      }
+      // router.push("/about");
+      })
+      .catch((error) => {
+        // An error happened.
+        alert(`登出錯誤訊息:${error}`);
+      });
 };
 
 // 關閉視窗按鈕
@@ -89,7 +103,7 @@ const closeUser = () => {
 
 // 登出並且隱藏選單
 const handleLogout = () => {
-  usersignOut(); // 執行 signOut 方法
+  logoutUser(); // 執行 signOut 方法
   closeUser(); // 關閉會員選單
 };
 </script>

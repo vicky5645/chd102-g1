@@ -33,6 +33,9 @@ export default createStore({
     },
     totalPrice(state) {
       return state.totalPrice;
+    },
+    getUserInfo(state) {
+      return state.userInfo;
     }
   },
   mutations: {
@@ -162,10 +165,12 @@ export default createStore({
     initStorageLogin({ commit }){
       //指定 localStorage 中 'my-user'的資料
       const user = localStorage.getItem('my-user');
+      commit("setIsLogin", false);
       // 假如沒有建立'my-user'就結束操作
       if (!user) return;
       // 'my-user' 存在，執行updateUser()，JSON 字串解析成 JavaScript 物件
       commit("updateUser", JSON.parse(user));
+      commit("setIsLogin", true);
     }
   },
   modules: {

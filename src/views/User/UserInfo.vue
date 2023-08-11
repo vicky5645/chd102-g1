@@ -3,10 +3,10 @@
     <h1 class="h4">帳號設定</h1>
     <hr>
     <div class="user-control-content">
-      {{ $store.state.userInfo }}
+      <!-- {{ $store.state.userInfo }} -->
       <div class="input-wrap">
         <label for="name" class="caption">姓名</label>
-        <input type="text" id="name">
+        <input type="text" name="name" v-model="$store.state.name">
       </div>
       <div class="input-wrap">
         <label for="gender" class="caption">性別</label>
@@ -62,6 +62,17 @@
 export default {
   data() {
     return {
+      userinfo: {
+        mem_no: 1,
+        mem_name: this.$store.state.name,
+        mem_salutation: "先生",
+        mem_email: this.$store.state.userInfo.email,
+        mem_mobile: "0912345678",
+        mem_addr: "台北市中正區",
+        mem_acc: "wangxm",
+        mem_pwd: "password1",
+        pattern_file: "https://picsum.photos/100/100/?random=22",
+      },
       isVisible: {
         deleteUser: false
       },

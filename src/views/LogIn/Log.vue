@@ -236,7 +236,6 @@ import {
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
-  onAuthStateChanged,
   sendEmailVerification,
 } from "firebase/auth";
 //google 守門人
@@ -247,7 +246,6 @@ export default {
   name: "login",
   data() {
     return {
-      existUser: null, // Initialize existUser in data
       username: "",
       password: "",
       loginStatus: false,
@@ -297,19 +295,22 @@ export default {
     closeModal() {
       this.$emit("emit-status");
     },
-
+    // getUserName(userEmail) {
+    //   const userName = userEmail.split("@")[0];
+    //   this.$store.commit("setName", userName);
+    // },
     checkLogin() {
       if (this.username === "" || this.password === "") return;
       signInWithEmailAndPassword(firebaseAuth, this.username, this.password)
         .then((userCredential) => {
           // firebase 的資料
           const userInfo = userCredential.user;
-          this.signInUser = userInfo;
-          this.$store.commit("updateUser", userInfo);
-          this.$store.commit("setName", this.username);
+          // this.signInUser = userInfo;
+          // this.$store.commit("updateUser", userInfo);
+          // this.getUserName(userInfo.email);
           this.$store.commit("setIsLogin", true); // 使用 commit 來改變狀態
           window.alert("登入成功");
-          // this.$router.push("/about");
+          this.$router.push("/about");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -357,10 +358,10 @@ export default {
           .then((userCredential) => {
             // 註冊成功，您可以在這裡處理相應的動作
             console.log("註冊成功", userCredential);
-            const userInfo = userCredential.user;
-            this.$store.commit("updateUser", userInfo);
+            // const userInfo = userCredential.user;
+            // this.$store.commit("updateUser", userInfo);
 
-            // 假設您希望在註冊成功後跳轉到其他介面
+            // 在註冊成功後跳轉到其他介面
             this.isRegistered = false;
             this.step = 5;
           })
@@ -391,8 +392,7 @@ export default {
           // const credential = GoogleAuthProvider.credentialFromResulsignInGoogleedential.accessToken;
           this.$store.commit("setIsLogin", true); // 使用 commit 來改變狀態
           window.alert("google 登入成功");
-          const userInfo = result.user;
-          this.$store.commit("setName", this.username);
+          // const userInfo = result.user;
           // this.$store.commit("updateUser", userInfo);
         })
         .catch((error) => {
@@ -420,56 +420,24 @@ export default {
           errorPublish(error);
         });
       this.step = 4;
-    },
-    checkAuthState() {
-      //可以使用currentUser屬性獲取當前登錄的用戶。如果用戶未登錄，則currentUser為null：測了一下這個方法有可能失效
-      // existUser = auth.currentUser;
-      //用onAuthStateChanged獲取當前登錄的用戶。如果用戶未登錄，則existUser為null：
-      onAuthStateChanged(firebaseAuth, (user) => {
-        this.existUser = user;
-        if (this.existUser) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-          this.updateUserInfo(this.existUser);
-          // const uid = existUser.uid;
-        } else {
-          // User is signed out
-          this.cleanUserInfo();
-          // alert("未登入帳號");
-        }
-      });
-    },
-    updateUserInfo(user) {
-      // Your update user info logic here
-      this.$store.commit("updateUser", user);
-    },
-    cleanUserInfo() {
-      // Your clean user info logic here
-    },
-    logoutUser() {
-      signOut(firebaseAuth)
-      .then(() => {
-        // Sign-out successful.
-        this.modifySuccess; //返回登入介面
-        this.$store.commit("setIsLogin", false);
-        this.$store.commit("setName", "");
-        // this.$store.commit("updateUser", null);
-        this.$store.commit('deleteUser');// 使用 VueX mutations -> 清除使用者資料 
+    },    
+    // logoutUser() {//登入頁的登出按鈕檢查被註解 用於測試
+    //   signOut(firebaseAuth)
+    //   .then(() => {
+    //     // Sign-out successful.
+    //     this.modifySuccess; //返回登入介面
+    //     this.$store.commit("setIsLogin", false);
+    //     this.$store.commit("setName", "");
+    //     this.$store.commit('deleteUser');// 使用 VueX mutations -> 清除使用者資料 
         
-          // location.reload(); //刷新頁面
-          this.$router.push({ name: "login" });//跳轉
-        })
-        .catch((error) => {
-          // An error happened.
-          alert(`登出錯誤訊息:${error}`);
-        });
-    },
-  },
-  created() {
-    // 檢查使用者的登錄狀態
-    this.checkAuthState();
-    //調用 Vuex 的 initStorageLogin 操作
-    this.$store.dispatch("initStorageLogin");
+    //       location.reload(); //刷新頁面
+    //       // this.$router.push({ name: "login" });//跳轉
+    //     })
+    //     .catch((error) => {
+    //       // An error happened.
+    //       alert(`登出錯誤訊息:${error}`);
+    //     });
+    // },
   },
 };
 </script>

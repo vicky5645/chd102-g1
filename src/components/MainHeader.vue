@@ -86,7 +86,10 @@
 import MainSidebar from "@/components/MainSidebar.vue";
 import CartFloat from "@/components/CartFloat.vue";
 import UserFloat from "@/components/UserFloat.vue";
+// 檢查使用者的登錄狀態
+import authMixin from '@/assets/js/authMixin.js';
 export default {
+  mixins: [authMixin], // 引入 mixin 登錄狀態
   components: {
     MainSidebar,
     CartFloat,
