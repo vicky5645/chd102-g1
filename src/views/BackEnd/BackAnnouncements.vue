@@ -59,8 +59,7 @@
   </table>
 
   <!-- modal -->
-  <div  class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
         <div class="modal-header">
@@ -98,7 +97,7 @@
           </div>
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg">公告圖片</span>
-            <input type="file"  ref="change_img" class="form-control" id="inputGroupFile01" @change="handleFileUpload" />
+            <input type="file" ref="change_img" class="form-control" id="inputGroupFile01" @change="handleFileUpload" />
           </div>
           <div class="model_body_pic">
             <Images v-if="currentItem.image && label_toggle" :imgURL="currentItem.image" alt="Image preview" />
@@ -156,7 +155,7 @@
               </div> -->
               <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg">公告圖片</span>
-                <input  type="file" ref="plus_img" class="form-control" id="inputGroupFile02" name="image"
+                <input type="file" ref="plus_img" class="form-control" id="inputGroupFile02" name="image"
                   @change="handleFileUpload" />
               </div>
               <div class="model_body_pic">
@@ -181,7 +180,7 @@
 </template>
 
 <script>
-import { BASE_URL} from "@/assets/js/common.js";
+import { BASE_URL } from "@/assets/js/common.js";
 import { Modal } from "bootstrap";
 import axios from 'axios'
 import { left } from "@popperjs/core";
@@ -220,7 +219,7 @@ export default {
 
   computed: {
     // search
-    //選欄位加搜尋
+    //各個欄位搜尋或全部欄位搜尋
     filteredItems() {
       if (this.searchText === "") {
         return this.AnnouncementArr
@@ -237,6 +236,11 @@ export default {
 
 
   methods: {
+    //選擇篩選欄位
+    selectOption() {
+      this.selectFieldKey = parseInt(this.$refs.selected.value)
+    },
+    
     // model
     //修改
     async saveChanges() {
@@ -276,7 +280,10 @@ export default {
       // this.currentItem = { ...this.backupItem };
       this.showModal = false;
     },
+
+    //打開燈箱
     openModal(item) {
+      this.$refs.change_img.value = ''
       this.label_toggle = true;
       this.currentItem = { ...item };
       this.showModal = true;
@@ -291,6 +298,8 @@ export default {
         });
       });
     },
+
+    //選擇圖片檔
     handleFileUpload(event) {
       const files = event.target.files;
       if (files.length === 0) {
@@ -310,12 +319,14 @@ export default {
 
 
     // new model
+    //新增送出
     submitAnnouncement() {
       if (
         // !this.newAnnouncement.id ||
         !this.newAnnouncement.title ||
         !this.newAnnouncement.type ||
-        !this.newAnnouncement.content
+        !this.newAnnouncement.content ||
+        !this.$refs.plus_img.files[0]
         // ||!this.newAnnouncement.date
       ) {
         alert("所有欄位都必須填寫！");
@@ -325,14 +336,7 @@ export default {
       }
 
       this.clearAnnouncement();
-      this.newAnnouncement = {
-        id: "",
-        title: "",
-        type: "",
-        content: "",
-        date: "",
-        image: null,
-      };
+
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
       modalInstance.hide();
@@ -347,6 +351,7 @@ export default {
         date: "",
         image: null,
       };
+      this.$refs.plus_img.value = ''
     },
 
     //刪除
@@ -392,10 +397,11 @@ export default {
       this.backgetAnnouncementData();
     },
 
+    //圖片路徑
     getImgPath(index) {
       return this.AnnouncementArr[index].image;
-      // return require(`../../assets/images/img/Announcements/${this.$store.state.AnnouncementData[index].anno_file}`)
     },
+
     //取資料
     async backgetAnnouncementData() {
       await this.$store.dispatch("getAnnouncementData")
@@ -412,11 +418,10 @@ export default {
         })
       });
     },
-    //選擇篩選欄位
-    selectOption() {
-      this.selectFieldKey = parseInt(this.$refs.selected.value)
-    }
+
+
   },
+  //一開始取資料
   created() {
     this.backgetAnnouncementData();
   },
