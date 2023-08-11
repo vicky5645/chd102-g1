@@ -1,4 +1,5 @@
 <?php
+header('Access-Control-Allow-Origin:*');
 
     try {
       require_once("./connect_chd102g1.php");
