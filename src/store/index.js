@@ -2,14 +2,19 @@ import { createStore } from 'vuex'
 const updateStorage = (cart) => {
   localStorage.setItem('my-cart', JSON.stringify(cart))
 }
+//使用者資料傳到localStorage
+const updateStorageLogin = (newUser) => {
+  // 只能保存字串，這裡將JavaScript 處理成 JSON
+  localStorage.setItem('my-user', JSON.stringify(newUser))
+}
 import axios from 'axios'
 export default createStore({
 
   state: {
-    name: '登入/註冊',
-    userInfo: [],
-    cart: [],
+    name: '',
+    userInfo: null,
     isLogin: false,
+    cart: [],
     totalPrice: 0,
 
     //景點
@@ -38,11 +43,24 @@ export default createStore({
     throw_attr_id(state, parent_attr_id) {
       state.attraction.attr_id = parent_attr_id
     },
-    setName(state, payload) {
-      state.name = payload
+    //設定登入狀態
+    setIsLogin(state, value) {
+      state.isLogin = value;
     },
-    setUserInfo(state, payload) {
-      state.userInfo = payload
+    //更新使用者名稱
+    setName(state, userName) {
+      state.name = userName
+    },
+    //更新使用者資料
+    updateUser(state, newUser) {
+      state.userInfo = newUser
+      //取得使用者資料的同時建立localStorage'my-user'
+      updateStorageLogin(state.userInfo);
+    },
+    //刪除localStorage使用者資料
+    deleteUser(state) {
+      state.userInfo = null;
+      localStorage.removeItem('my-user');
     },
     updateCart(state, newData) {
       state.cart = [...newData];
@@ -111,9 +129,6 @@ export default createStore({
       //更新購物車
       updateStorage(state.cart);
     },
-    setIsLogin(state, value) {
-      state.isLogin = value;
-    },
     calculateSum(state) {
       state.totalPrice = state.cart.reduce((accumulator, item) => {
         return accumulator + item.totalPrice;
@@ -143,6 +158,15 @@ export default createStore({
     //   if (!cart) return;
     //   commit("updateCart", JSON.parse(cart));
     // },
+    //接受 commit 觸發 mutation
+    initStorageLogin({ commit }){
+      //指定 localStorage 中 'my-user'的資料
+      const user = localStorage.getItem('my-user');
+      // 假如沒有建立'my-user'就結束操作
+      if (!user) return;
+      // 'my-user' 存在，執行updateUser()，JSON 字串解析成 JavaScript 物件
+      commit("updateUser", JSON.parse(user));
+    }
   },
   modules: {
   }

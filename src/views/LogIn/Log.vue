@@ -1,5 +1,31 @@
 <template>
   <div class="login-wrap">
+    <!-- 檢查使用者的登錄狀態 -->
+    <!-- <div
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: gold;
+        width: 200px;
+        z-index: 999;
+      "
+    >
+    <p>{{ `this.existUser::${this.existUser}` }}</p>
+      <p>{{ this.step }}</p>
+      <p>
+        {{ `isRegistered:${isRegistered}` }}
+      </p>
+      <p>userInfo::{{ this.$store.state.userInfo }}</p>
+      <button
+        type="button"
+        v-for="btn in btns"
+        class="login-connect"
+        @click="logoutUser"
+      >
+        登出
+      </button>
+    </div> -->
     <section
       class="login"
       v-if="!isRegistered && !loginStatus && !forgetPsw && step === 0"
@@ -18,6 +44,7 @@
 
           <form>
             <button
+              type="button"
               v-for="btn in btns"
               class="login-connect"
               @click="signInGoogle"
@@ -44,6 +71,7 @@
               <span>還未加入LOGO嗎？</span>
 
               <button
+                type="button"
                 @click.prevent="changeRegister"
                 class="login-form-register"
               >
@@ -51,6 +79,7 @@
               </button>
 
               <button
+                type="button"
                 class="login-form-confirm btn2"
                 @click.prevent="checkLogin"
               >
@@ -66,7 +95,8 @@
     </section>
 
     <section class="login" v-if="isRegistered">
-      <form action="">
+      <div>
+        <!-- form??? -->
         <div class="loin-form-wrap">
           <div class="login-form">
             <div class="login-test">
@@ -77,6 +107,7 @@
             <form action="">
               <!-- google 登入按鈕 -->
               <button
+                type="button"
                 v-for="btn in btnsRegister"
                 class="login-connect"
                 @click="signInGoogle"
@@ -151,13 +182,14 @@
                   value="註冊會員"
                 />
               </div>
+              <span @click="isRegistered = false">返回會員登入</span>
             </form>
           </div>
           <div class="login-wrap-pic">
             <img src="/images/logo/logoBig.png" alt="Logo" />
           </div>
         </div>
-      </form>
+      </div>
     </section>
 
     <section class="forget_password" v-if="forgetPsw && step === 1">
@@ -173,22 +205,26 @@
             required="required"
           />
         </div>
-        <button @click="checkEmail()" class="forget-password-submit">
+        <button
+          type="button"
+          @click="checkEmail()"
+          class="forget-password-submit"
+        >
           傳送
         </button>
       </div>
     </section>
 
     <section class="enter-modify-success" v-if="forgetPsw && step === 4">
-      <p>請至信箱驗證並修改密碼🚀 </p>
+      <p>請至信箱驗證並修改密碼🚀</p>
       <p>請返回重新登入↩️</p>
-      <button @click="modifySuccess">返回會員登入</button>
+      <button type="button" @click="modifySuccess">返回會員登入</button>
     </section>
 
     <section class="enter-modify-success" v-if="step === 5">
       <p>🚀 註冊完成 🎉</p>
       <p>🚂 請重新登入 ↩️</p>
-      <button @click="registerSuccess()">返回會員登入</button>
+      <button type="button" @click="modifySuccess">返回會員登入</button>
     </section>
   </div>
 </template>
@@ -203,7 +239,6 @@ import {
   onAuthStateChanged,
   sendEmailVerification,
 } from "firebase/auth";
-// import {  } from "firebase/auth";
 //google 守門人
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 const provider = new GoogleAuthProvider();
@@ -212,6 +247,7 @@ export default {
   name: "login",
   data() {
     return {
+      existUser: null, // Initialize existUser in data
       username: "",
       password: "",
       loginStatus: false,
@@ -269,22 +305,24 @@ export default {
           // firebase 的資料
           const userInfo = userCredential.user;
           this.signInUser = userInfo;
-          this.$store.commit("setUserInfo", userInfo);
+          this.$store.commit("updateUser", userInfo);
           this.$store.commit("setName", this.username);
           this.$store.commit("setIsLogin", true); // 使用 commit 來改變狀態
           window.alert("登入成功");
-          this.$router.push("/about");
+          // this.$router.push("/about");
         })
         .catch((error) => {
           const errorCode = error.code;
           console.log(errorCode);
           if (errorCode === "auth/wrong-password") {
-            window.alert("密碼錯誤");
+            // window.alert("密碼錯誤");
+            this.errorMsg = "密碼錯誤";
           } else if (errorCode === "auth/user-not-found") {
-            window.alert("請前往註冊");
+            // window.alert("請前往註冊");
+            this.errorMsg = "請前往註冊";
           } else {
-            window.alert(`${errorCode}`);
-            this.errorMsg = "帳號或密碼輸入錯誤";
+            window.alert(`error::${error}`);
+            this.errorMsg = `${error}帳號或密碼輸入錯誤${errorCode}`;
           }
         });
     },
@@ -301,9 +339,10 @@ export default {
     changeRegister() {
       this.isRegistered = true;
     },
-    registerSuccess() {
-      this.step = 0;
-      // 頁面沒有切換成功，添加重新跳轉頁面
+    modifySuccess() {
+      // 返回登入介面
+      this.isRegistered = false; // 註冊返回登入
+      this.step = 0; this.forgetPsw = false; // 忘記密碼返回登入
       console.log("返回登入");
     },
     columnCheck() {
@@ -319,9 +358,9 @@ export default {
             // 註冊成功，您可以在這裡處理相應的動作
             console.log("註冊成功", userCredential);
             const userInfo = userCredential.user;
-            this.$store.commit("setName", userInfo);
+            this.$store.commit("updateUser", userInfo);
 
-            // 假設您希望在註冊成功後跳轉到其他頁面，您可以在這裡加入相應的路由導航
+            // 假設您希望在註冊成功後跳轉到其他介面
             this.isRegistered = false;
             this.step = 5;
           })
@@ -354,16 +393,12 @@ export default {
           window.alert("google 登入成功");
           const userInfo = result.user;
           this.$store.commit("setName", this.username);
-          // this.$store.commit('setName', userInfo);
-          // this.$router.push({ name: 'result', params: {
-          //     type: 'loginSuccess'
-          // }})
+          // this.$store.commit("updateUser", userInfo);
         })
         .catch((error) => {
           const errorCode = error.code;
-          // this.$Message.warning(errorCode);
           console.log("google註冊失敗", errorCode);
-          alert(`google註冊失敗${errorCode}`);
+          alert(`google註冊失敗${error}`);
         });
     },
     checkEmail() {
@@ -384,13 +419,57 @@ export default {
         .catch((error) => {
           errorPublish(error);
         });
-        this.step = 4;
+      this.step = 4;
     },
-
-    modifySuccess() {
-      this.forgetPsw = false;
-      this.step = 0;
+    checkAuthState() {
+      //可以使用currentUser屬性獲取當前登錄的用戶。如果用戶未登錄，則currentUser為null：測了一下這個方法有可能失效
+      // existUser = auth.currentUser;
+      //用onAuthStateChanged獲取當前登錄的用戶。如果用戶未登錄，則existUser為null：
+      onAuthStateChanged(firebaseAuth, (user) => {
+        this.existUser = user;
+        if (this.existUser) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          this.updateUserInfo(this.existUser);
+          // const uid = existUser.uid;
+        } else {
+          // User is signed out
+          this.cleanUserInfo();
+          // alert("未登入帳號");
+        }
+      });
     },
+    updateUserInfo(user) {
+      // Your update user info logic here
+      this.$store.commit("updateUser", user);
+    },
+    cleanUserInfo() {
+      // Your clean user info logic here
+    },
+    logoutUser() {
+      signOut(firebaseAuth)
+      .then(() => {
+        // Sign-out successful.
+        this.modifySuccess; //返回登入介面
+        this.$store.commit("setIsLogin", false);
+        this.$store.commit("setName", "");
+        // this.$store.commit("updateUser", null);
+        this.$store.commit('deleteUser');// 使用 VueX mutations -> 清除使用者資料 
+        
+          // location.reload(); //刷新頁面
+          this.$router.push({ name: "login" });//跳轉
+        })
+        .catch((error) => {
+          // An error happened.
+          alert(`登出錯誤訊息:${error}`);
+        });
+    },
+  },
+  created() {
+    // 檢查使用者的登錄狀態
+    this.checkAuthState();
+    //調用 Vuex 的 initStorageLogin 操作
+    this.$store.dispatch("initStorageLogin");
   },
 };
 </script>

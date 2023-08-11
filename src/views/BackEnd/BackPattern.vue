@@ -64,7 +64,6 @@
     action=""
     enctype="multipart/form-data"
     method="post"
-    ref="article-form"
     v-if="showModal"
     class="modal fade"
     id="itemModal"

@@ -21,7 +21,7 @@
       <div class="chrt h4" @click="toggleCart">
         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
       </div>
-      <!-- 登入後顯示 -->
+      <!-- 登入 -->
       <template v-if="isLogin">
         <div class="login h4" @click="toggleUser">
           <div class="icon-24">
@@ -29,12 +29,14 @@
           </div>
         </div>
       </template>
-      <!-- 登出後顯示 -->
+      <!-- 未登入 -->
       <template v-else>
         <router-link to="/login" class="login h4">
-          <div class="icon-24">
+          登入/註冊
+          <!-- {{this.$store.state.name}} -->
+          <!-- <div class="icon-24">
             <i class="fa-solid fa-user"></i>
-          </div>
+          </div> -->
         </router-link>
       </template>
       <!-- 自適應側邊攔區塊 -->
@@ -125,12 +127,6 @@ export default {
     goLoginUser() {
       this.userStatus = false;
       this.$router.push({ path: "/user" });
-    },
-    signOut() {
-      // 登出
-      this.$store.commit("setName", "登入/註冊");
-      this.$store.commit("setIsLogin", false); // 使用 commit 來改變狀態
-      this.$router.push("/roaming-orbit");
     },
   },
   mounted() {
