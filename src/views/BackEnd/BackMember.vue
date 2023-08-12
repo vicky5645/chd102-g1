@@ -37,13 +37,29 @@
         <th scope="col"></th>
       </tr>
     </thead>
-    <!-- <tbody>
+    <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">
-        <th scope="row">{{ item.id }}</th>
-        <td class="ellipsis">{{ item.name }}</td>
-        <td class="ellipsis">{{ item.qty }}</td>
+        <th scope="row">{{ item.mem_no }}</th>
+        <td class="ellipsis">{{ item.mem_name }}</td>
+        <td class="ellipsis">
+          {{
+            item.mem_salutation === 0
+              ? "先生"
+              : item.mem_salutation === 1
+              ? "小姐"
+              : "NA"
+          }}
+        </td>
+        <td class="ellipsis">{{ item.mem_email }}</td>
+        <td class="ellipsis">{{ item.mem_mobile }}</td>
+        <td class="ellipsis">{{ item.mem_addr }}</td>
+        <td class="ellipsis">{{ item.mem_acc }}</td>
+        <td class="ellipsis">{{ item.mem_pwd }}</td>
+        <td class="ellipsis">{{ item.pattern_file }}</td>
+
         <td style="text-align: right">
           <button
+            disabled
             type="button"
             class="btn btn-outline-primary"
             style="margin-left: auto"
@@ -53,7 +69,7 @@
           </button>
         </td>
       </tr>
-    </tbody> -->
+    </tbody>
 
     <p v-if="filteredItems.length === 0" class="text-danger">
       * 沒有找到符合搜尋條件的結果
@@ -63,7 +79,7 @@
   <!-- new modal -->
   <div
     class="modal fade"
-    id="itemNewModal"
+    mem_no="itemNewModal"
     tabindex="-1"
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
@@ -71,7 +87,7 @@
     <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 name="header">新增會員</h5>
+          <h5 mem_name="header">新增會員</h5>
         </div>
 
         <div class="modal-body">
@@ -219,11 +235,14 @@
 </template>
 
 <script>
+import axios from "axios";
 import { Modal } from "bootstrap";
+import { BASE_URL } from "@/assets/js/common.js";
 
 export default {
   data() {
     return {
+      dataFromMySQL: [],
       items: [
         {
           // id: 1,
@@ -231,6 +250,17 @@ export default {
           // qty: 40,
         },
       ],
+      // userInfo: {
+      //   mem_no: 1,
+      //   mem_name: "",
+      //   mem_salutation: "",
+      //   mem_email: "",
+      //   mem_mobile: "",
+      //   mem_addr: "",
+      //   mem_acc: "",
+      //   mem_pwd: "",
+      //   pattern_file: "",
+      // },
       // search
       searchText: "",
       // model
@@ -251,10 +281,10 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.items;
+        return this.dataFromMySQL;
       }
 
-      return this.items.filter((item) =>
+      return this.dataFromMySQL.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
@@ -343,6 +373,20 @@ export default {
         this.showModal = false;
       }
     },
+  },
+  // 抓 php 資料
+  created() {
+    axios
+      .get(`${BASE_URL}/getMember.php`)
+      .then((response) => {
+        this.dataFromMySQL = response.data;
+
+        // 打印取得的資料以確認是否成功
+        console.log("Data retrieved from MySQL:", "dataFromMySQL");
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data:", error);
+      });
   },
 };
 </script>

@@ -71,7 +71,7 @@
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" style="max-width: auto">
+    <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="itemModalLabel">修改客製車票圖案</h5>
@@ -218,7 +218,7 @@
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" style="max-width: auto">
+    <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
         <div class="modal-header">
           <h5 name="header">新增客製車票圖案</h5>
@@ -441,7 +441,7 @@ export default {
       data.append("pattern_name", this.currentItem.pattern_name);
       data.append("pattern_desc", this.currentItem.pattern_desc);
       if (imgFile) {
-        data.append("type", "editimg");
+        data.append("type", "editImg");
         data.append("pattern_file", this.currentItem.pattern_file);
         data.append("news_filename", this.newAnnouncement.pattern_file_name); // imgFile 是圖片data
         data.append("news_img", imgFile);

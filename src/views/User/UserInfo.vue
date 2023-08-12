@@ -6,7 +6,7 @@
       <!-- {{ $store.state.userInfo }} -->
       <div class="input-wrap">
         <label for="name" class="caption">姓名</label>
-        <input type="text" name="name" v-model="$store.state.name">
+        <input type="text" name="name" v-if="userInfo" v-model="userInfo.mem_name">
       </div>
       <div class="input-wrap">
         <label for="gender" class="caption">性別</label>
@@ -21,11 +21,11 @@
       </div>
       <div class="input-wrap">
         <label for="phone" class="caption">電話號碼</label>
-        <input type="tel" id="phone">
+        <input type="tel" id="phone" v-if="userInfo" v-model="userInfo.mem_mobile">
       </div>
       <div class="input-wrap long">
         <label for="email" class="caption" required>聯絡 E-mail(必填)</label>
-        <input type="email" id="email" :value="$store.state.userInfo.email">
+        <input type="email" id="email" v-if="userInfo" v-model="userInfo.mem_email">
       </div>
     </div>
     <div class="right">
@@ -62,17 +62,18 @@
 export default {
   data() {
     return {
-      userinfo: {
-        mem_no: 1,
-        mem_name: this.$store.state.name,
-        mem_salutation: "先生",
-        mem_email: this.$store.state.userInfo.email,
-        mem_mobile: "0912345678",
-        mem_addr: "台北市中正區",
-        mem_acc: "wangxm",
-        mem_pwd: "password1",
-        pattern_file: "https://picsum.photos/100/100/?random=22",
-      },
+      userInfo: null,
+      // userInfo: {
+      //   mem_no: 1,
+      //   mem_name: "",
+      //   mem_salutation: "先生",
+      //   mem_email: "",
+      //   mem_mobile: "0912345678",
+      //   mem_addr: "台北市中正區",
+      //   mem_acc: "wangxm",
+      //   mem_pwd: "password1",
+      //   pattern_file: "https://picsum.photos/100/100/?random=22",
+      // },
       isVisible: {
         deleteUser: false
       },
@@ -96,6 +97,9 @@ export default {
     hideDetail(itemOrder) {
       this.isVisible[itemOrder] = false;
     }
+  },
+  created() {
+    this.userInfo = this.$store.state.userInfo;
   },
 }
 </script>

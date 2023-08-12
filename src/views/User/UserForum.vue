@@ -109,9 +109,6 @@ export default {
       this.userData = res
     })
   },
-  mounted() {
-    svg_icon('.custom-svg', 'currentColor');
-  },
   computed: {
 
   },

@@ -10,14 +10,26 @@
               alt="list-icon"
             />
           </div>
-          <span
-            style="
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            "
-            >Hello, {{ $store.state.name }}</span
-          >
+          <template v-if="$store.state.userInfo">
+            <span
+              style="
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              "
+              >Hello, {{ $store.state.userInfo.mem_name }}</span
+            >
+          </template>
+          <template v-else>
+            <span
+              style="
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              "
+              >Hello, Guest</span
+            >
+          </template>
           <img
             class="custom-svg"
             src="@/assets/images/icon/basic/settings.svg"
@@ -78,22 +90,23 @@ const router = useRouter();
 const logoutUser = function () {
   // 登出
   signOut(firebaseAuth)
-  .then(() => {
+    .then(() => {
       // Sign-out successful.
       store.commit("setIsLogin", false);
       store.commit("setName", "");
-      store.commit('deleteUser');// 使用 VueX mutations -> 清除使用者資料 
+      store.commit("deleteUser"); // 使用 VueX mutations -> 清除使用者資料
+      location.reload(); //刷新頁面
       if (router.currentRoute.path === "/login") {
-        location.reload(); //刷新頁面
-      }else {
-        router.push({ name: "login" });//跳轉
+        return
+      } else {
+        router.push({ name: "login" }); //跳轉
       }
       // router.push("/about");
-      })
-      .catch((error) => {
-        // An error happened.
-        alert(`登出錯誤訊息:${error}`);
-      });
+    })
+    .catch((error) => {
+      // An error happened.
+      alert(`登出錯誤訊息:${error}`);
+    });
 };
 
 // 關閉視窗按鈕

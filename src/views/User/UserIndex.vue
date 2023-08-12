@@ -3,9 +3,17 @@
     <aside class="col-md-3">
       <div class="profile-top">
         <div class="avatar">
-          <img :src="pattern_file" alt="avatar" />
+          <template v-if="userInfo !== null && userInfo.pattern_file !== null">
+            <Images :imgURL="`${userInfo.pattern_file}`" :alt="`avatar`" />
+          </template>
+          <template v-else>
+            <Images :imgURL="`images/logo/logoBlack.png`" :alt="`avatar`" />
+          </template>
         </div>
-        <div>{{ $store.state.name }}</div>
+        <div v-if="userInfo !== null">
+          {{ userInfo.mem_name }}
+        </div>
+        <div v-else>Guest</div>
       </div>
       <div class="link-list">
         <router-link
@@ -76,10 +84,26 @@
 // import svg_icon from "@/js/svgcolor.js";
 export default {
   data() {
-    return {};
+    return {
+      userInfo: null,
+      // userInfo: {
+      //   mem_no: 1,
+      //   mem_name: "",
+      //   mem_salutation: "先生",
+      //   mem_email: "",
+      //   mem_mobile: "0912345678",
+      //   mem_addr: "台北市中正區",
+      //   mem_acc: "wangxm",
+      //   mem_pwd: "password1",
+      //   pattern_file: "https://picsum.photos/100/100/?random=22",
+      // },
+    };
   },
   mounted() {
     svg_icon(".custom-svg", "currentColor");
+  },
+  created() {
+    this.userInfo = this.$store.state.userInfo;
   },
 };
 </script>

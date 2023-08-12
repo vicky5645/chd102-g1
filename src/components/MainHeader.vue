@@ -131,10 +131,7 @@ export default {
       this.userStatus = false;
       this.$router.push({ path: "/user" });
     },
-  },
-  mounted() {
-    svg_icon(".custom-svg", "currentColor");
-  },
+  }
 };
 </script>
 

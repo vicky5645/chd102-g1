@@ -9,10 +9,21 @@ const updateStorageLogin = (newUser) => {
 }
 import axios from 'axios'
 export default createStore({
-
   state: {
-    name: '',
+    name: "",
     userInfo: null,
+    // userInfo: {
+    //   uid: existUser.uid, // 沒有存進資料庫
+    //   mem_no: "",
+    //   mem_name: "",
+    //   mem_salutation: "",
+    //   mem_email: "",
+    //   mem_mobile: "",
+    //   mem_addr: "",
+    //   mem_acc: "",
+    //   mem_pwd: "",
+    //   pattern_file: "",
+    // },
     isLogin: false,
     cart: [],
     totalPrice: 0,
@@ -20,10 +31,9 @@ export default createStore({
     //景點
     attraction: {
       attr_id: 1,
-      attr_name: ''
+      attr_name: "",
     },
 
-    
     // 論壇資料
     AnnouncementData: [],
   },
@@ -36,15 +46,15 @@ export default createStore({
     },
     getUserInfo(state) {
       return state.userInfo;
-    }
+    },
   },
   mutations: {
-    setAnnouncementData(state,payload) {
+    setAnnouncementData(state, payload) {
       state.AnnouncementData = [...payload];
     },
     //傳景點id給元件
     throw_attr_id(state, parent_attr_id) {
-      state.attraction.attr_id = parent_attr_id
+      state.attraction.attr_id = parent_attr_id;
     },
     //設定登入狀態
     setIsLogin(state, value) {
@@ -52,18 +62,18 @@ export default createStore({
     },
     //更新使用者名稱
     setName(state, userName) {
-      state.name = userName
+      state.name = userName;
     },
     //更新使用者資料
     updateUser(state, newUser) {
-      state.userInfo = newUser
+      state.userInfo = newUser;
       //取得使用者資料的同時建立localStorage'my-user'
       updateStorageLogin(state.userInfo);
     },
     //刪除localStorage使用者資料
     deleteUser(state) {
       state.userInfo = null;
-      localStorage.removeItem('my-user');
+      localStorage.removeItem("my-user");
     },
     updateCart(state, newData) {
       state.cart = [...newData];
@@ -82,9 +92,11 @@ export default createStore({
 
       if (item) {
         item.amount = parseInt(item.amount) + parseInt(newData.amount);
-        item.totalPrice = parseInt(item.totalPrice) + (parseInt(newData.price) * parseInt(newData.amount));
+        item.totalPrice =
+          parseInt(item.totalPrice) +
+          parseInt(newData.price) * parseInt(newData.amount);
       } else {
-        newData.totalPrice = (parseInt(newData.price) * parseInt(newData.amount))
+        newData.totalPrice = parseInt(newData.price) * parseInt(newData.amount);
         state.cart.push({ ...newData });
       }
 
@@ -141,9 +153,11 @@ export default createStore({
   actions: {
     async getAnnouncementData(context, value) {
       try {
-        const res = await axios.get("http://localhost/phps/selectBackendAnnouncements.php");
+        const res = await axios.get(
+          "http://localhost/phps/selectBackendAnnouncements.php"
+        );
         if (!res) throw new Error("沒抓到資料");
-        context.commit('setAnnouncementData', res.data);
+        context.commit("setAnnouncementData", res.data);
       } catch (err) {
         console.error(err);
       }
@@ -152,7 +166,7 @@ export default createStore({
     //   commit("addCart",item)
     // },
     initStorage({ commit }) {
-      const cart = localStorage.getItem('my-cart');
+      const cart = localStorage.getItem("my-cart");
       if (!cart) return;
       commit("updateCart", JSON.parse(cart));
     },
@@ -162,17 +176,16 @@ export default createStore({
     //   commit("updateCart", JSON.parse(cart));
     // },
     //接受 commit 觸發 mutation
-    initStorageLogin({ commit }){
+    initStorageLogin({ commit }) {
       //指定 localStorage 中 'my-user'的資料
-      const user = localStorage.getItem('my-user');
+      const user = localStorage.getItem("my-user");
       commit("setIsLogin", false);
       // 假如沒有建立'my-user'就結束操作
       if (!user) return;
       // 'my-user' 存在，執行updateUser()，JSON 字串解析成 JavaScript 物件
       commit("updateUser", JSON.parse(user));
       commit("setIsLogin", true);
-    }
+    },
   },
-  modules: {
-  }
-})
+  modules: {},
+});
