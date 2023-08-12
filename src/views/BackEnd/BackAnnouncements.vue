@@ -9,7 +9,7 @@
         <option ref="select" value="2">公告標題</option>
         <option ref="select" value="3">公告類型</option>
         <option ref="select" value="4">公告內容</option>
-        <option ref="select" value="5"> 公告時間</option>
+        <option ref="select" value="5">公告時間</option>
       </select></div>
     <div class="input-group">
       <input v-model="searchText" type="text" class="form-control col" placeholder="輸入文字查詢" aria-label="Search" />
@@ -18,7 +18,7 @@
       </button> -->
     </div>
     <button class="btn btn-outline-primary b_new col" type="button" id="button-addon2" data-bs-toggle="modal"
-      data-bs-target="#itemNewModal">
+      data-bs-target="#itemNewModal" @click="clearAnnouncement">
       新增公告
     </button>
   </div>
@@ -190,6 +190,8 @@ export default {
       AnnouncementArr: [],
       label_toggle: true,
       selectFieldKey: 0,
+      fileExtension: '',
+      validExtensions: ['jpg', 'jpeg', 'png', 'gif'],
       // search
       searchText: "",
       // model
@@ -240,7 +242,7 @@ export default {
     selectOption() {
       this.selectFieldKey = parseInt(this.$refs.selected.value)
     },
-    
+
     // model
     //修改
     async saveChanges() {
@@ -306,11 +308,18 @@ export default {
         return;
       }
       const file = files[0];
-
+      this.fileExtension = file.name.split('.').pop().toLowerCase();
+      if (!this.validExtensions.some(item => item === this.fileExtension)) {
+        event.target.value = "";
+        return alert("請選擇副檔名為jpg、jpeg、png、gif的檔案")
+      }
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.currentItem.image = e.target.result;
-        this.newAnnouncement.image = e.target.result;
+        if (event.target === this.$refs.change_img) {
+          this.currentItem.image = e.target.result;
+        } else {
+          this.newAnnouncement.image = e.target.result;
+        }
         this.label_toggle = false;
       };
       reader.readAsDataURL(file);
@@ -327,6 +336,7 @@ export default {
         !this.newAnnouncement.type ||
         !this.newAnnouncement.content ||
         !this.$refs.plus_img.files[0]
+        // ||!this.newAnnouncement.image 
         // ||!this.newAnnouncement.date
       ) {
         alert("所有欄位都必須填寫！");
@@ -342,6 +352,7 @@ export default {
       modalInstance.hide();
     },
 
+    //清除
     clearAnnouncement() {
       this.newAnnouncement = {
         id: "",
@@ -399,7 +410,7 @@ export default {
 
     //圖片路徑
     getImgPath(index) {
-      return this.AnnouncementArr[index].image;
+      return `${this.AnnouncementArr[index].image}`
     },
 
     //取資料
@@ -407,7 +418,10 @@ export default {
       await this.$store.dispatch("getAnnouncementData")
       this.AnnouncementArr = []
       this.$store.state.AnnouncementData.forEach(element => {
-        const { anno_no: id, anno_title: title, anno_type: type, anno_content: content, anno_date: date, anno_file: image } = element
+        let { anno_no: id, anno_title: title, anno_type: type, anno_content: content, anno_date: date, anno_file: image } = element
+        if (!image.includes("/")) {
+          image = `images/img/announcements/${image}`;
+        }
         this.AnnouncementArr.push({
           id,
           title,
@@ -425,6 +439,9 @@ export default {
   created() {
     this.backgetAnnouncementData();
   },
+  mounted() {
+
+  }
 };
 </script>
 

@@ -47,7 +47,7 @@ $result = ["msg" => $msg];
 
 if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
     try {
-        $sql = "INSERT INTO announcement(anno_title, anno_type, anno_content, anno_file) VALUES (:anno_title, :anno_type, :anno_content, :anno_file)";
+        $sql = "INSERT INTO announcement(anno_title, anno_type, anno_content, anno_date, anno_file) VALUES (:anno_title, :anno_type, :anno_content, CURRENT_TIMESTAMP ,:anno_file)";
         $products = $pdo->prepare($sql);
         $products->bindValue(":anno_title", $_POST["title"]);
         $products->bindValue(":anno_type", $_POST["type"]);
