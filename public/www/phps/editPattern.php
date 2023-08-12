@@ -7,7 +7,7 @@ $type=isset($_POST["type"])?$_POST["type"]:'';
 	try {
 		require_once("./connect_chd102g1.php");
 
-		if($type=='editimg') {
+		if($type=='editImg') {
 			// 接到圖檔內容
 			$base64Image = $_POST['news_img']; // Base64 編碼的圖像數據
 			// 將 Base64 編碼的圖像數據解碼二進制數據

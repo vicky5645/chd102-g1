@@ -1,6 +1,5 @@
 <!-- 管理員帳號 -->
 <template>
-  {{ dataFromMySQL }}
   <!-- select bar -->
   <div class="search_new">
     <div class="input-group">
@@ -35,10 +34,10 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">
-        <th scope="row">{{ item.id }}</th>
-        <td class="ellipsis">{{ item.name }}</td>
-        <td class="ellipsis">{{ item.pwd }}</td>
-        <td class="ellipsis">{{ item.email }}</td>
+        <th scope="row">{{ item.staff_no }}</th>
+        <td class="ellipsis">{{ item.staff_name }}</td>
+        <td class="ellipsis">{{ item.staff_pwd }}</td>
+        <td class="ellipsis">{{ item.staff_email }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -89,7 +88,8 @@
               >後台人員編號</span
             >
             <input
-              v-model="currentItem.id"
+              disabled
+              v-model="currentItem.staff_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -102,7 +102,7 @@
               >後台人員姓名</span
             >
             <input
-              v-model="currentItem.name"
+              v-model="currentItem.staff_name"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -113,7 +113,7 @@
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg">密碼</span>
             <input
-              v-model="currentItem.pwd"
+              v-model="currentItem.staff_pwd"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -126,7 +126,7 @@
               >Email</span
             >
             <input
-              v-model="currentItem.email"
+              v-model="currentItem.staff_email"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -177,24 +177,24 @@
               class="modal-body gap-2"
               style="display: flex; flex-direction: column"
             >
-              <div class="input-group input-group-lg">
+              <!-- <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
                   >後台人員編號</span
                 >
                 <input
-                  v-model="newAnnouncement.id"
+                  v-model="newAnnouncement.staff_no"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
                 />
-              </div>
+              </div> -->
               <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
                   >後台人員姓名</span
                 >
                 <input
-                  v-model="newAnnouncement.name"
+                  v-model="newAnnouncement.staff_name"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -206,7 +206,7 @@
                   >密碼</span
                 >
                 <input
-                  v-model="newAnnouncement.pwd"
+                  v-model="newAnnouncement.staff_name"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -218,7 +218,7 @@
                   >Email</span
                 >
                 <input
-                  v-model="newAnnouncement.email"
+                  v-model="newAnnouncement.staff_email"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -259,17 +259,17 @@ export default {
       dataFromMySQL: [],
       items: [
         {
-          id: 1,
-          name: "test",
-          pwd: "test",
-          email: "test@example.com",
+          staff_no: 1,
+          staff_name: "test",
+          staff_pwd: "test",
+          staff_email: "test@example.com",
         },
-        {
-          id: 1,
-          name: "test",
-          pwd: "test",
-          email: "test@example.com",
-        },
+        // {
+        //   id: 1,
+        //   name: "test",
+        //   pwd: "test",
+        //   email: "test@example.com",
+        // },
       ],
       // search
       searchText: "",
@@ -280,10 +280,10 @@ export default {
       selectedFile: null,
       // new model
       newAnnouncement: {
-        id: "", // 確保 id 屬性存在
-        name: "",
-        pwd: "",
-        email: "",
+        // staff_no: "", // 確保 id 屬性存在
+        // name: "",
+        // pwd: "",
+        // email: "",
       },
     };
   },
@@ -292,10 +292,10 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.items;
+        return this.dataFromMySQL;
       }
 
-      return this.items.filter((item) =>
+      return this.dataFromMySQL.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
@@ -346,10 +346,10 @@ export default {
     // new model
     submitAnnouncement() {
       if (
-        !this.newAnnouncement.id ||
-        !this.newAnnouncement.name ||
-        !this.newAnnouncement.pwd ||
-        !this.newAnnouncement.email
+        !this.newAnnouncement.staff_no ||
+        !this.newAnnouncement.staff_name ||
+        !this.newAnnouncement.staff_pwd ||
+        !this.newAnnouncement.staff_email
       ) {
         alert("所有欄位都必須填寫！");
         return;
@@ -380,7 +380,7 @@ export default {
     // delete announcement
     deleteAnnouncement() {
       const index = this.items.findIndex(
-        (item) => item.id === this.currentItem.id
+        (item) => item.staff_no === this.currentItem.staff_no
       );
       if (index !== -1) {
         this.items.splice(index, 1);
