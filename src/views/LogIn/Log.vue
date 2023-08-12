@@ -176,9 +176,9 @@
                 </div>
 
                 <input
+                  type="button"
                   class="register-submit"
                   @click="columnCheck"
-                  type="submit"
                   value="註冊會員"
                 />
               </div>
@@ -241,7 +241,8 @@ import {
 //google 守門人
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 const provider = new GoogleAuthProvider();
-
+import axios from "axios";
+import { BASE_URL } from "@/assets/js/common.js";
 export default {
   name: "login",
   data() {
@@ -290,7 +291,6 @@ export default {
       ],
     };
   },
-
   methods: {
     closeModal() {
       this.$emit("emit-status");
@@ -304,7 +304,7 @@ export default {
       signInWithEmailAndPassword(firebaseAuth, this.username, this.password)
         .then((userCredential) => {
           // firebase 的資料
-          const userInfo = userCredential.user;
+          // const userInfo = userCredential.user;
           // this.signInUser = userInfo;
           // this.$store.commit("updateUser", userInfo);
           // this.getUserName(userInfo.email);
@@ -343,27 +343,29 @@ export default {
     modifySuccess() {
       // 返回登入介面
       this.isRegistered = false; // 註冊返回登入
-      this.step = 0; this.forgetPsw = false; // 忘記密碼返回登入
+      this.step = 0;
+      this.forgetPsw = false; // 忘記密碼返回登入
       console.log("返回登入");
     },
     columnCheck() {
       if (this.register.pswReg === this.register.pswConfirmReg) {
         //存輸入的信箱與密碼
+        const name = this.register.nameReg;
         const email = this.register.emailReg;
         const password = this.register.pswReg;
-        console.log(`email:${email},password:${password}`);
+        // console.log(`email:${email},password:${password}`);
 
         // 使用 Firebase 的 createUserWithEmailAndPassword 方法進行註冊
         createUserWithEmailAndPassword(firebaseAuth, email, password)
           .then((userCredential) => {
             // 註冊成功，您可以在這裡處理相應的動作
-            console.log("註冊成功", userCredential);
-            // const userInfo = userCredential.user;
-            // this.$store.commit("updateUser", userInfo);
-
+            const returnUserInfo = userCredential.user;
+            console.log("註冊成功userInfo", returnUserInfo);
+            // this.$store.commit("updateUser", returnUserInfo);
+            this.postBackMember(returnUserInfo,name,email,password);
             // 在註冊成功後跳轉到其他介面
-            this.isRegistered = false;
-            this.step = 5;
+            // this.isRegistered = false;
+            // this.step = 5;
           })
           .catch((error) => {
             // 註冊失敗，處理錯誤訊息
@@ -385,7 +387,41 @@ export default {
         alert(`密碼不一致`);
       }
     },
+    // 傳送資料到後台會員資料庫
+    postBackMember(userObj,name,email,password) {
+      let mem = {};
+      mem["mem_no"] = userObj.uid
+      mem["mem_email"] = userObj.email
+      mem["mem_name"] = userObj.displayName? userObj.displayName: name
+      mem["mem_acc"] = email
+      mem["mem_pwd"] = password
 
+      const data = new FormData(); // POST 表單資料
+      // for (const key in mem) {
+        // data.append(key, mem[key]);
+      // }
+      data.append("mem_no", mem["mem_no"]);
+      data.append("mem_email", mem["mem_email"]);
+      data.append("mem_name", mem["mem_name"]);
+      data.append("mem_acc", mem["mem_acc"]);
+      data.append("mem_pwd", mem["mem_pwd"]);
+      console.log("postBackMember::", data);
+
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}postMember.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          // location.reload(); //刷新頁面
+          alert("已新增帳號！");
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          alert("新增帳號失敗！");
+        });
+    },
     signInGoogle() {
       signInWithPopup(firebaseAuth, provider)
         .then((result) => {
@@ -415,12 +451,18 @@ export default {
       sendPasswordResetEmail(firebaseAuth, this.memEmail)
         .then(() => {
           window.alert("已發送信件至信箱，請按照信件說明重設密碼");
+          this.step = 4;
         })
         .catch((error) => {
-          errorPublish(error);
+          const errorCode = error.code;
+          if (errorCode === "auth/invalid-email") {
+            alert(`信箱格式錯誤${errorCode}`);
+          } else {
+            console.log("重置密碼失敗", error.message);
+            alert(`重置密碼失敗${error}`);
+          }
         });
-      this.step = 4;
-    },    
+    },
     // logoutUser() {//登入頁的登出按鈕檢查被註解 用於測試
     //   signOut(firebaseAuth)
     //   .then(() => {
@@ -428,8 +470,8 @@ export default {
     //     this.modifySuccess; //返回登入介面
     //     this.$store.commit("setIsLogin", false);
     //     this.$store.commit("setName", "");
-    //     this.$store.commit('deleteUser');// 使用 VueX mutations -> 清除使用者資料 
-        
+    //     this.$store.commit('deleteUser');// 使用 VueX mutations -> 清除使用者資料
+
     //       location.reload(); //刷新頁面
     //       // this.$router.push({ name: "login" });//跳轉
     //     })

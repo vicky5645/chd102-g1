@@ -21,10 +21,7 @@ export default {
       // emit: 觸發父層的function或js
       this.$emit('close')
     }
-  },
-  mounted() {
-    svg_icon(".custom-svg", "currentColor");
-  },
+  }
 }
 </script>
 
