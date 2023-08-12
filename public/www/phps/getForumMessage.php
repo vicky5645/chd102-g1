@@ -10,7 +10,7 @@ try {
 }
 
 // SQL 查詢
-$stmt = $pdo->query("SELECT * FROM forum");
+$stmt = $pdo->query("SELECT * FROM comment");
 $data = $stmt->fetchAll();
 
 // 輸出 JSON

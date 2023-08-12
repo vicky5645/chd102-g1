@@ -25,10 +25,10 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">
-        <th scope="row">{{ item.id }}</th>
-        <td class="ellipsis">{{ item.articleNo }}</td>
-        <td class="ellipsis">{{ item.memNo }}</td>
-        <td class="ellipsis">{{ item.content }}</td>
+        <th scope="row">{{ item.comment_no }}</th>
+        <td class="ellipsis">{{ item.article_no }}</td>
+        <td class="ellipsis">{{ item.mem_no }}</td>
+        <td class="ellipsis">{{ item.commen_content }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -56,8 +56,8 @@
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" style="max-width: 80%">
-      <div class="modal-content">
+    <div class="modal-dialog" style="max-width: 80%; width: 100%">
+      <div class="modal-content" style="max-width: 100%">
         <div class="modal-header">
           <h5 class="modal-title" id="itemModalLabel">查看論壇文章留言</h5>
           <button
@@ -79,11 +79,12 @@
               >留言ID</span
             >
             <input
-              v-model="currentItem.id"
+              v-model="currentItem.comment_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             />
           </div>
           <div class="input-group input-group-lg">
@@ -91,11 +92,12 @@
               >文章ID</span
             >
             <input
-              v-model="currentItem.articleNo"
+              v-model="currentItem.article_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             />
           </div>
 
@@ -104,41 +106,44 @@
               >會員編號</span
             >
             <input
-              v-model="currentItem.memNo"
+              v-model="currentItem.mem_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             />
           </div>
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
               >留言內容</span
             >
-            <input
-              v-model="currentItem.content"
+            <textarea
+              v-model="currentItem.commen_content"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
-            />
+              disabled
+            >
+            </textarea>
           </div>
         </div>
 
         <div class="modal-footer">
-          <button
+          <!-- <button
             type="button"
             class="btn btn-primary"
             data-bs-dismiss="modal"
             @click="saveChanges"
           >
             儲存變更
-          </button>
+          </button> -->
           <button
             type="button"
             class="btn btn-danger"
             data-bs-dismiss="modal"
-            @click="deleteMessage"
+            @click="deleteComment(currentItem.comment_no)"
           >
             刪除留言
           </button>
@@ -150,40 +155,48 @@
 
 <script>
 import { Modal } from "bootstrap";
+// 抓 php 資料
+import axios from "axios";
+// URL
+import { MAC_URL } from "@/assets/js/common.js";
 
 export default {
   data() {
     return {
-      items: [
-        {
-          id: 1,
-          articleNo: 1,
-          memNo: 24,
-          content:
-            "我完全同意你的感受！我上個月也參加了這個旅程，從湖泊到草原的風景真的令人難以忘懷。導遊的專業解說也增添了旅程的樂趣。",
-        },
-        {
-          id: 2,
-          articleNo: 1,
-          memNo: 26,
-          content:
-            "看了你的分享，我也很期待自己的蒸汽火車之旅！已經在計劃中了，希望能和你一樣有個美好的體驗。",
-        },
-        {
-          id: 3,
-          articleNo: 1,
-          memNo: 29,
-          content:
-            "我非常同意你的看法！我也是第一次體驗蒸汽火車旅行，感覺就像被帶回了過去。那種獨特的懷舊風情讓人難以忘懷。",
-        },
-      ],
+      // items: [
+      //   {
+      //     id: 1,
+      //     articleNo: 1,
+      //     memNo: 24,
+      //     content:
+      //       "我完全同意你的感受！我上個月也參加了這個旅程，從湖泊到草原的風景真的令人難以忘懷。導遊的專業解說也增添了旅程的樂趣。",
+      //   },
+      //   {
+      //     id: 2,
+      //     articleNo: 1,
+      //     memNo: 26,
+      //     content:
+      //       "看了你的分享，我也很期待自己的蒸汽火車之旅！已經在計劃中了，希望能和你一樣有個美好的體驗。",
+      //   },
+      //   {
+      //     id: 3,
+      //     articleNo: 1,
+      //     memNo: 29,
+      //     content:
+      //       "我非常同意你的看法！我也是第一次體驗蒸汽火車旅行，感覺就像被帶回了過去。那種獨特的懷舊風情讓人難以忘懷。",
+      //   },
+      // ],
       // search
       searchText: "",
+
       // model
       currentItem: {},
       backupItem: {},
       showModal: false,
       selectedFile: null,
+
+      // 抓 php 資料
+      getForumMessage: [],
     };
   },
 
@@ -191,10 +204,10 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.items;
+        return this.getForumMessage;
       }
 
-      return this.items.filter((item) =>
+      return this.getForumMessage.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
@@ -202,15 +215,9 @@ export default {
 
   methods: {
     // model
-    saveChanges() {
-      // 在這裡更新資料
-      // 如有需要，你也可以將 currentItem 傳到後端
-      this.currentItem = { ...this.backupItem };
-      this.showModal = false;
-    },
 
     cancelChanges() {
-      this.currentItem = { ...this.backupItem };
+      // this.currentItem = { ...this.backupItem };
       this.showModal = false;
     },
 
@@ -229,30 +236,61 @@ export default {
       });
     },
 
-    handleFileUpload(event) {
-      const files = event.target.files;
-      if (files.length === 0) {
-        return;
+    // handleFileUpload(event) {
+    //   const files = event.target.files;
+    //   if (files.length === 0) {
+    //     return;
+    //   }
+
+    //   const file = files[0];
+    //   const reader = new FileReader();
+
+    //   reader.onload = (e) => {
+    //     this.currentItem.image = e.target.result;
+    //   };
+    //   reader.readAsDataURL(file);
+    // },
+
+    deleteComment(comment_no) {
+      // 再次確認彈窗
+      if (!confirm("您確定要刪除此留言嗎？")) {
+        return; // 如果用戶選擇“取消”，則退出函數
       }
 
-      const file = files[0];
-      const reader = new FileReader();
+      const formData = new FormData();
+      formData.append("comment_no", comment_no);
 
-      reader.onload = (e) => {
-        this.currentItem.image = e.target.result;
-      };
-      reader.readAsDataURL(file);
+
+      axios
+        .post(`${MAC_URL}/deleteForumMessage.php`, formData)
+        .then((response) => {
+          this.currentItem = {}; // 清除當前選定的留言
+          location.reload(); //刷新頁面
+          alert("已刪除留言成功！");
+        })
+        .catch((error) => {
+          console.error("There was an error deleting the article:", error);
+          alert("刪除失敗！");
+        });
     },
-    // delete message
-    deleteMessage() {
-      const index = this.items.findIndex(
-        (item) => item.id === this.currentItem.id
-      );
-      if (index !== -1) {
-        this.items.splice(index, 1);
-        this.showModal = false;
-      }
+
+    getComment() {
+      const type = "get";
+      axios
+        .get(`${MAC_URL}/getForumMessage.php?type=${type}`)
+        .then((response) => {
+          this.getForumMessage = response.data;
+          console.log("Data retrieved from MySQL:", this.getForumMessage);
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data:", error);
+        });
     },
+  },
+
+  // 抓 php 資料
+  mounted() {
+    this.getComment();
   },
 };
 </script>

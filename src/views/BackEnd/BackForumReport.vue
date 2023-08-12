@@ -71,11 +71,11 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">
-        <th scope="row">{{ item.id }}</th>
-        <td class="ellipsis">{{ item.articleNo }}</td>
-        <td class="ellipsis">{{ item.memNo }}</td>
-        <td class="ellipsis">{{ item.content }}</td>
-        <td class="ellipsis">{{ item.type }}</td>
+        <th scope="row">{{ item.report_no }}</th>
+        <td class="ellipsis">{{ item.article_no }}</td>
+        <td class="ellipsis">{{ item.mem_no }}</td>
+        <td class="ellipsis">{{ item.report_content }}</td>
+        <td class="ellipsis">{{ item.report_type }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -103,8 +103,8 @@
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" style="max-width: 80%">
-      <div class="modal-content">
+    <div class="modal-dialog" style="max-width: 80%; width: 100%">
+      <div class="modal-content" style="max-width: 100%">
         <div class="modal-header">
           <h5 class="modal-title" id="itemModalLabel">查看論壇文章檢舉</h5>
           <button
@@ -126,11 +126,12 @@
               >檢舉編號</span
             >
             <input
-              v-model="currentItem.id"
+              v-model="currentItem.report_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             />
           </div>
           <div class="input-group input-group-lg">
@@ -138,11 +139,12 @@
               >文章編號</span
             >
             <input
-              v-model="currentItem.articleNo"
+              v-model="currentItem.article_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             />
           </div>
 
@@ -151,11 +153,12 @@
               >檢舉人會員編號</span
             >
             <input
-              v-model="currentItem.memNo"
+              v-model="currentItem.mem_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             />
           </div>
           <div class="input-group input-group-lg">
@@ -163,11 +166,12 @@
               >檢舉內容</span
             >
             <input
-              v-model="currentItem.content"
+              v-model="currentItem.report_content"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             />
           </div>
           <div class="input-group input-group-lg">
@@ -175,7 +179,7 @@
               >處理狀態</span
             >
             <input
-              v-model="currentItem.type"
+              v-model="currentItem.report_type"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -189,7 +193,7 @@
             type="button"
             class="btn btn-danger"
             data-bs-dismiss="modal"
-            @click="deleteMessage"
+            @click="deleteReport(currentItem.report_no)"
           >
             刪除檢舉
           </button>
@@ -209,6 +213,10 @@
 
 <script>
 import { Modal } from "bootstrap";
+// 抓 php 資料
+import axios from "axios";
+// URL
+import { MAC_URL } from "@/assets/js/common.js";
 
 export default {
   data() {
@@ -217,59 +225,65 @@ export default {
       radio1Checked: true, // 代表 radio1 是被選中的
       radio2Checked: false, // 代表 radio2 是未被選中的
 
-      items: [
-        {
-          id: 1,
-          articleNo: 6,
-          memNo: 24,
-          content: "圖片裸露",
-          type: 0,
-        },
-        {
-          id: 2,
-          articleNo: 6,
-          memNo: 21,
-          content: "文字粗俗",
-          type: 1,
-        },
-        {
-          id: 3,
-          articleNo: 3,
-          memNo: 55,
-          content: "抄襲",
-          type: 1,
-        },
-      ],
+      // items: [
+      //   {
+      //     id: 1,
+      //     articleNo: 6,
+      //     memNo: 24,
+      //     content: "圖片裸露",
+      //     type: 0,
+      //   },
+      //   {
+      //     id: 2,
+      //     articleNo: 6,
+      //     memNo: 21,
+      //     content: "文字粗俗",
+      //     type: 1,
+      //   },
+      //   {
+      //     id: 3,
+      //     articleNo: 3,
+      //     memNo: 55,
+      //     content: "抄襲",
+      //     type: 1,
+      //   },
+      // ],
       // search
+
       searchText: "",
       // model
       currentItem: {},
       backupItem: {},
       showModal: false,
       selectedFile: null,
+
+      // 抓 php 資料
+      dataForumReport: [],
     };
   },
 
   computed: {
     // search
     filteredItems() {
-      let filtered = this.items;
+      let filtered = this.dataForumReport; // 使用從資料庫取得的資料
+
       if (this.radio1Checked) {
-        filtered = filtered.filter((item) => item.type === 0);
+        filtered = filtered.filter((item) => item.report_type === 0); // 根據需要修改條件
       } else if (this.radio2Checked) {
-        filtered = filtered.filter((item) => item.type === 1);
+        filtered = filtered.filter((item) => item.report_type === 1); // 根據需要修改條件
       }
 
       if (this.searchText) {
         const searchTerm = this.searchText.toLowerCase();
         filtered = filtered.filter((item) => {
-          const { id, articleNo, memNo, content, type } = item;
+          const { report_no, article_no, mem_no, report_content, report_type } =
+            item;
           return (
-            id.toString().includes(searchTerm) ||
-            articleNo.toString().includes(searchTerm) ||
-            memNo.toString().includes(searchTerm) ||
-            content.toLowerCase().includes(searchTerm) ||
-            type.toString().includes(searchTerm)
+            report_no.toString().includes(searchTerm) ||
+            article_no.toString().includes(searchTerm) ||
+            mem_no.toString().includes(searchTerm) ||
+            report_content.toLowerCase().includes(searchTerm) ||
+            report_type.toString().includes(searchTerm)
           );
         });
       }
@@ -280,15 +294,35 @@ export default {
 
   methods: {
     // model
+    // saveChanges() {
+    //   // 在這裡更新資料
+    //   // 如有需要，你也可以將 currentItem 傳到後端
+    //   this.currentItem = { ...this.backupItem };
+    //   this.showModal = false;
+    // },
+
     saveChanges() {
-      // 在這裡更新資料
-      // 如有需要，你也可以將 currentItem 傳到後端
-      this.currentItem = { ...this.backupItem };
-      this.showModal = false;
+      const formData = new FormData();
+      formData.append("report_no", this.currentItem.report_no);
+      formData.append("report_type", this.currentItem.report_type);
+
+      axios
+        .post(`${MAC_URL}/editForumReport.php`, formData)
+        .then((response) => {
+          if (response.data.msg) {
+            // Handle success message
+            alert(response.data.msg);
+          }
+          this.showModal = false;
+          location.reload(); //刷新頁面
+        })
+        .catch((error) => {
+          console.error("There was an error updating the article:", error);
+        });
     },
 
     cancelChanges() {
-      this.currentItem = { ...this.backupItem };
+      // this.currentItem = { ...this.backupItem };
       this.showModal = false;
     },
 
@@ -307,30 +341,72 @@ export default {
       });
     },
 
-    handleFileUpload(event) {
-      const files = event.target.files;
-      if (files.length === 0) {
-        return;
-      }
+    // handleFileUpload(event) {
+    //   const files = event.target.files;
+    //   if (files.length === 0) {
+    //     return;
+    //   }
 
-      const file = files[0];
-      const reader = new FileReader();
+    //   const file = files[0];
+    //   const reader = new FileReader();
 
-      reader.onload = (e) => {
-        this.currentItem.image = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    },
+    //   reader.onload = (e) => {
+    //     this.currentItem.image = e.target.result;
+    //   };
+    //   reader.readAsDataURL(file);
+    // },
+
     // delete message
-    deleteMessage() {
-      const index = this.items.findIndex(
-        (item) => item.id === this.currentItem.id
-      );
-      if (index !== -1) {
-        this.items.splice(index, 1);
-        this.showModal = false;
+
+    // deleteMessage() {
+    //   const index = this.items.findIndex(
+    //     (item) => item.id === this.currentItem.id
+    //   );
+    //   if (index !== -1) {
+    //     this.items.splice(index, 1);
+    //     this.showModal = false;
+    //   }
+    // },
+
+    deleteReport(report_no) {
+      // 再次確認彈窗
+      if (!confirm("您確定要刪除此檢舉嗎？")) {
+        return; // 如果用戶選擇“取消”，則退出函數
       }
+
+      const formData = new FormData();
+      formData.append("report_no", report_no);
+
+      axios
+        .post(`${MAC_URL}/deleteForumReport.php`, formData)
+        .then((response) => {
+          this.currentItem = {}; // 清除當前選定的檢舉
+          location.reload(); //刷新頁面
+          alert("已刪除檢舉成功！");
+        })
+        .catch((error) => {
+          console.error("There was an error deleting the article:", error);
+          alert("刪除失敗！");
+        });
     },
+
+    getReport() {
+      const type = "get"; // 設定要執行的操作，這裡是取得資料
+      axios
+        .get(`${MAC_URL}/getForumReport.php?type=${type}`)
+        .then((response) => {
+          this.dataForumReport = response.data; // 確保這個屬性與您的組件中用於顯示文章的屬性相匹配
+          console.log("Data retrieved from MySQL:", this.dataForumReport);
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data:", error);
+        });
+    },
+  },
+
+  // 抓 php 資料
+  mounted() {
+    this.getReport();
   },
 };
 </script>

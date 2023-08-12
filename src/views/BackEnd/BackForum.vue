@@ -11,15 +11,6 @@
         aria-label="Search"
       />
     </div>
-    <!-- <button
-      class="btn btn-outline-primary b_new"
-      type="button"
-      id="button-addon2"
-      data-bs-toggle="modal"
-      data-bs-target="#itemNewModal"
-    >
-      新增公告
-    </button> -->
   </div>
 
   <table class="table">
@@ -74,8 +65,8 @@
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" style="max-width: 80%">
-      <div class="modal-content">
+    <div class="modal-dialog" style="max-width: 80%; width: 100%">
+      <div class="modal-content" style="max-width: 100%">
         <div class="modal-header">
           <h5 class="modal-title" id="itemModalLabel">查看論壇文章</h5>
           <button
@@ -102,6 +93,7 @@
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             />
           </div>
           <div class="input-group input-group-lg">
@@ -114,6 +106,7 @@
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             />
           </div>
 
@@ -126,6 +119,7 @@
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             ></textarea>
           </div>
           <div class="input-group input-group-lg">
@@ -138,6 +132,7 @@
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             />
           </div>
           <div class="input-group input-group-lg">
@@ -150,6 +145,7 @@
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             />
           </div>
           <div class="input-group input-group-lg">
@@ -162,6 +158,7 @@
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             />
           </div>
           <div class="input-group input-group-lg">
@@ -174,6 +171,7 @@
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              disabled
             />
           </div>
           <div class="input-group input-group-lg">
@@ -192,12 +190,12 @@
             <span class="input-group-text" id="inputGroup-sizing-lg"
               >文章圖片</span
             >
-            <input
+            <!-- <input
               type="file"
               class="form-control"
               id="inputGroupFile02"
               @change="handleFileUpload"
-            />
+            /> -->
           </div>
           <div class="model_body_pic">
             <img
@@ -213,7 +211,12 @@
             type="button"
             class="btn btn-danger"
             data-bs-dismiss="modal"
-            @click="deleteArticle"
+            @click="
+              deleteArticle(
+                currentItem.article_no,
+                currentItem.article_image_file
+              )
+            "
           >
             刪除文章
           </button>
@@ -241,32 +244,6 @@ import { MAC_URL } from "@/assets/js/common.js";
 export default {
   data() {
     return {
-      // items: [
-      //   {
-      //     id: 1,
-      //     title: "首次的蒸汽火車體驗",
-      //     content:
-      //       "這是我第一次參加蒸汽火車之旅，體驗真是太棒了！從車窗外看著湖光山色，我感受到了旅行的悠閒與寧靜。整個行程由專業的導遊詳細解說，使我對這段旅程有更深的理解。我會向所有人推薦『漫遊列車之旅』。",
-      //     memNo: 77,
-      //     date: "2023/7/5",
-      //     views: 0,
-      //     likes: 0,
-      //     online: 1, // 1: online, 0: offline
-      //     image: require("../../assets/images/img/Forum/f1.png"),
-      //   },
-      //   {
-      //     id: 2,
-      //     title: "蒸汽火車與手工藝品的完美結合",
-      //     content:
-      //       "這次的旅程不僅讓我體驗了蒸汽火車的迷人魅力，還有機會參與當地的手工藝品製作。這種獨特的體驗讓我深深感受到當地的文化和傳統。",
-      //     memNo: 12,
-      //     date: "2023/7/5",
-      //     views: 0,
-      //     likes: 0,
-      //     online: 1, // 1: online, 0: offline
-      //     image: require("../../assets/images/img/Forum/f2.jpg"),
-      //   },
-      // ],
       // search
       searchText: "",
       // model
@@ -295,17 +272,31 @@ export default {
 
   methods: {
     // model
+    // edit php
     saveChanges() {
-      // 在這裡更新資料
-      // 如有需要，你也可以將 currentItem 傳到後端
-      this.currentItem = { ...this.backupItem };
-      this.showModal = false;
+      const formData = new FormData();
+      formData.append("article_no", this.currentItem.article_no);
+      formData.append("platform_online", this.currentItem.platform_online);
+
+      axios
+        .post(`${MAC_URL}/editForum.php`, formData)
+        .then((response) => {
+          if (response.data.msg) {
+            // Handle success message
+            alert(response.data.msg);
+          }
+          this.showModal = false;
+        })
+        .catch((error) => {
+          console.error("There was an error updating the article:", error);
+        });
     },
 
     cancelChanges() {
-      this.currentItem = { ...this.backupItem };
+      // this.currentItem = { ...this.backupItem };
       this.showModal = false;
     },
+    
     openModal(item) {
       this.currentItem = item;
       this.showModal = true;
@@ -320,47 +311,47 @@ export default {
         });
       });
     },
-    handleFileUpload(event) {
-      const files = event.target.files;
-      if (files.length === 0) {
-        return;
+
+    deleteArticle(article_no, article_image_file) {
+      // 再次確認彈窗
+      if (!confirm("您確定要刪除此文章嗎？")) {
+        return; // 如果用戶選擇“取消”，則退出函數
       }
 
-      const file = files[0];
-      const reader = new FileReader();
+      const formData = new FormData();
+      formData.append("article_no", article_no);
+      formData.append("article_image_file", article_image_file);
 
-      reader.onload = (e) => {
-        this.currentItem.image = e.target.result;
-      };
-      reader.readAsDataURL(file);
+      axios
+        .post(`${MAC_URL}/deleteForum.php`, formData)
+        .then((response) => {
+          this.currentItem = {}; // 清除當前選定的文章
+          location.reload(); //刷新頁面
+          alert("已刪除文章成功！");
+        })
+        .catch((error) => {
+          console.error("There was an error deleting the article:", error);
+          alert("刪除失敗！");
+        });
     },
 
-    // delete article
-    deleteArticle() {
-      const index = this.items.findIndex(
-        (item) => item.id === this.currentItem.id
-      );
-      if (index !== -1) {
-        this.items.splice(index, 1);
-        this.showModal = false;
-      }
+    getArticles() {
+      const type = "get"; // 設定要執行的操作，這裡是取得資料
+      axios
+        .get(`${MAC_URL}/getForum.php?type=${type}`)
+        .then((response) => {
+          this.dataForum = response.data; // 確保這個屬性與您的組件中用於顯示文章的屬性相匹配
+          console.log("Data retrieved from MySQL:", this.dataForum);
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data:", error);
+        });
     },
   },
 
   // 抓 php 資料
   mounted() {
-    const type = "get"; // 設定要執行的操作，這裡是取得資料
-    axios
-      .get(`${MAC_URL}/getForum.php?type=${type}`)
-      .then((response) => {
-        this.dataForum = response.data;
-
-        // 打印取得的資料以確認是否成功
-        console.log("Data retrieved from MySQL:", this.dataForum);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the data:", error);
-      });
+    this.getArticles();
   },
 };
 </script>
