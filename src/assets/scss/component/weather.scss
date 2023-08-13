@@ -15,6 +15,16 @@
         left: 0;
         z-index: -1;
     }
+    .sunny{
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        background-image:url(https://orig13.deviantart.net/64e8/f/2010/230/0/6/skies_of_blue_by_naturedrop.jpg);
+        background-position: top center;
+    }
 
     .today_time_date_loca_wrap {
         padding: 72px;
@@ -170,6 +180,16 @@
                 margin-left: 5px !important;
             }
         }
-
     }
+}
+
+
+@media screen and (max-width:400px){
+
+    .weather .today_time_date_loca_wrap {
+        padding: 6px 0 0 68px;
+    }
+
+
+
 }

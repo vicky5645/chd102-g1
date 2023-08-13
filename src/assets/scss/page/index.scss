@@ -184,24 +184,24 @@
 
 
 
-    .chair_right {
-        width: 397.33px;
-        height: 412.54px;
-        position: absolute;
-        right: 29.67px;
-        bottom: 0px;
-        box-sizing: border-box;
+    // .chair_right {
+    //     width: 397.33px;
+    //     height: 412.54px;
+    //     position: absolute;
+    //     right: 29.67px;
+    //     bottom: 0px;
+    //     box-sizing: border-box;
 
-        img {
-            width: 100%;
-        }
-    }
+    //     img {
+    //         width: 100%;
+    //     }
+    // }
 
 
     .man {
         position: absolute;
-        right: 85px;
-        width: 560px;
+        right: 31px;
+        width: 600px;
         bottom: 0px;
         z-index: 1;
 
@@ -266,12 +266,12 @@
             transform: translateY(0);
         }
 
-        .chair_right {
-            right: 0;
-            width: 150px;
-            height: fit-content;
-            bottom: 60px;
-        }
+        // .chair_right {
+        //     right: 0;
+        //     width: 150px;
+        //     height: fit-content;
+        //     bottom: 60px;
+        // }
 
         .chair_left {
 
@@ -496,7 +496,7 @@
 
                 .about_part_one_train_pic {
                     width: 100vw !important;
-             
+
                 }
 
                 .about_main_text {
@@ -505,6 +505,7 @@
                     position: absolute;
                     right: 600px;
                     color: #fff !important;
+
                     p {
                         color: #fff !important;
                     }
@@ -514,6 +515,12 @@
 
             .about_part_two_left {
                 width: 100vw;
+            }
+
+            .together_explore_wrap {
+                .together_explore {
+                    width: 10px !important;
+                }
             }
         }
 
@@ -530,7 +537,7 @@
 
                     p {
                         padding-left: 20px !important;
-                        font-size: 12px !important;
+                        font-size: 20px !important;
                     }
 
                     .title {
@@ -547,12 +554,21 @@
             }
 
             @media screen and (max-width:768px) {
-                .about_main_text {
-                    p {
-                        padding: 20px 40px !important;
-                    }
-                }
 
+                .about_left {
+                    .about_part_one_left {
+                        .about_main_text {
+                            p {
+                                padding-left: 20px !important;
+                                font-size: 16px !important;
+                                color: #fff !important;
+                                padding: 16px 10px!important;
+                            }
+
+                        }
+                    }
+
+                }
 
 
                 .together_explore {
@@ -578,7 +594,7 @@
                     height: 100vh !important;
 
                     img {
-                      
+
                         height: 100%;
                     }
 
@@ -605,6 +621,8 @@
             }
 
         }
+
+
 
 
 
@@ -661,7 +679,7 @@
 
 .attractions {
     background-color: #012840;
-    ;
+
 
     // outline: red 10px solid;
     overflow: hidden;
@@ -868,6 +886,7 @@
 
                         .text {
                             width: 45.455729166%;
+                            align-self: auto !important;
                             // outline: red solid 50px;
 
                             h4 {
@@ -1080,8 +1099,10 @@
 
     }
 
-
 }
+
+
+
 
 @media screen and (max-width:768px) {
 
@@ -1101,7 +1122,7 @@
             .text {
                 h4 {
                     font-size: 40px !important;
-                    padding: 0 0 8px 0 !important;
+                    padding: 0 0 40px 0 !important;
                 }
 
                 p {
@@ -1144,6 +1165,16 @@
 
 }
 
+@media screen and (max-width:380px) {
+
+    .attraction_inside .first_attraction_main .text p {
+        font-size: 12px !important
+    }
+
+    .attraction_inside .first_attraction_main .text h4 {
+        padding: 0 0 8px 0 !important;
+    }
+}
 
 
 
