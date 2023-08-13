@@ -450,7 +450,8 @@ export default {
         .then((response) => {
           // 請求成功後的處理
           console.log(response.data);
-          location.reload(); //刷新頁面
+          // 重新取得資料
+          this.getdataFromMySQL();
           alert("已修改圖案成功！");
         })
         .catch((error) => {
@@ -496,7 +497,6 @@ export default {
       //   creation_date: "",
       //   pattern_file: null,
       // };
-      // location.reload(); //刷新頁面
 
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
@@ -513,7 +513,7 @@ export default {
       };
     },
 
-    // delete announcement
+    // 刪除
     deleteAnnouncement() {
       const index = this.dataFromMySQL.findIndex(
         (item) => item.pattern_no === this.currentItem.pattern_no
@@ -534,7 +534,8 @@ export default {
         .then((response) => {
           // 請求成功後的處理
           console.log(response.data);
-          location.reload(); //刷新頁面
+          // 重新取得資料
+          this.getdataFromMySQL();
           alert("已刪除圖案成功！");
         })
         .catch((error) => {
@@ -543,21 +544,22 @@ export default {
           alert("刪除失敗！");
         });
     },
-    getdataFromMySQL() {},
-  },
-  // 抓 php 資料
-  created() {
-    axios
-      .get(`${BASE_URL}/getPattern.php`)
-      .then((response) => {
+    //取資料
+    async getdataFromMySQL() {
+      await axios.get(`${BASE_URL}getPattern.php`)
+        .then((response) => {
         this.dataFromMySQL = response.data;
 
-        // 打印取得的資料以確認是否成功
-        console.log("Data retrieved from MySQL:", "dataFromMySQL");
+        // 確認是否成功
+        // console.log("Data retrieved from MySQL:", "dataFromMySQL");
       })
       .catch((error) => {
         console.error("There was an error fetching the data:", error);
       });
+    },
+  },
+  created() {
+    this.getdataFromMySQL();
   },
 };
 </script>
