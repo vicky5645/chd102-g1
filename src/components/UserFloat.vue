@@ -93,19 +93,20 @@ const logoutUser = function () {
     .then(() => {
       // Sign-out successful.
       store.commit("setIsLogin", false);
-      store.commit("setName", "");
+      // store.commit("setName", "");
       store.commit("deleteUser"); // 使用 VueX mutations -> 清除使用者資料
       location.reload(); //刷新頁面
-      if (router.currentRoute.path === "/login") {
+      if ($route.name === "login") {
         return
       } else {
-        router.push({ name: "login" }); //跳轉
+        // router.push({ name: "login" }); //跳轉
+        this.$router.push("/about");
       }
-      // router.push("/about");
+      
     })
     .catch((error) => {
       // An error happened.
-      alert(`登出錯誤訊息:${error}`);
+      console.log(`登出錯誤訊息:${error}`);
     });
 };
 

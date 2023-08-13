@@ -10,7 +10,7 @@ const updateStorageLogin = (newUser) => {
 import axios from 'axios'
 export default createStore({
   state: {
-    name: "",
+    // name: "",
     userInfo: null,
     // userInfo: {
     //   uid: existUser.uid, // 沒有存進資料庫
@@ -60,10 +60,10 @@ export default createStore({
     setIsLogin(state, value) {
       state.isLogin = value;
     },
-    //更新使用者名稱
-    setName(state, userName) {
-      state.name = userName;
-    },
+    //更新使用者名稱 (沒用到)
+    // setName(state, userName) {
+    //   state.name = userName;
+    // },
     //更新使用者資料
     updateUser(state, newUser) {
       state.userInfo = newUser;
