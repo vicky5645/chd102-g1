@@ -33,11 +33,12 @@
         <th scope="col"></th>
       </tr>
     </thead>
-    <!-- <tbody>
+    <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">
-        <th scope="row">{{ item.id }}</th>
-        <td class="ellipsis">{{ item.name }}</td>
-        <td class="ellipsis">{{ item.qty }}</td>
+        <th scope="row">{{ item.pkg_no }}</th>
+        <td class="ellipsis">{{ item.spot_no }}</td>
+        <td class="ellipsis">{{ item.spot_sort }}</td>
+        <td class="ellipsis">{{ item.pkg_howday }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -49,12 +50,158 @@
           </button>
         </td>
       </tr>
-    </tbody> -->
+    </tbody>
 
     <p v-if="filteredItems.length === 0" class="text-danger">
       * 沒有找到符合搜尋條件的結果
     </p>
   </table>
+
+  <!-- edit modal -->
+  <div
+    v-if="showModal"
+    class="modal fade"
+    id="itemModal"
+    tabindex="-1"
+    aria-labelledby="itemModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" style="max-width: 80%">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="itemModalLabel">修改行程景點</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            @click="cancelChanges"
+          ></button>
+        </div>
+
+        <!-- modal body -->
+        <div
+          style="display: flex; flex-direction: column"
+          class="modal-body gap-2"
+        >
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >行程編號</span
+            >
+            <input
+              disabled
+              v-model="currentItem.pkg_no"
+              name="pkg_no"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >景點編號</span
+            >
+            <input
+              disabled
+              v-model="currentItem.pkg_no"
+              name="pkg_no"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >景點排序</span
+            >
+            <input
+              v-model="currentItem.spot_sort"
+              name="spot_sort"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >第幾天</span
+            >
+            <input
+              v-model="currentItem.pkg_howday"
+              name="pkg_howday"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <!-- <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >圖案檔案</span
+            >
+            <input
+              disabled
+              v-model="currentItem.pattern_file"
+              name="pattern_file"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div> -->
+          <!-- <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >上傳檔案</span
+            >
+            <input
+              type="file"
+              class="form-control"
+              accept="image"
+              name="news_img"
+              id="inputGroupFile02"
+              @change="handleFileUpload"
+            />
+          </div> -->
+          <div class="model_body_pic">
+            <Images
+              v-if="currentItem.pattern_file && !newAnnouncement.pattern_file"
+              :imgURL="`${currentItem.pattern_file}`"
+              :alt="`Image preview`"
+            />
+            <img
+              v-if="newAnnouncement.pattern_file"
+              :src="`${newAnnouncement.pattern_file}`"
+              :alt="`Image preview`"
+              :id="`imgPreview`"
+            />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+            @click="deleteAnnouncement"
+          >
+            刪除圖案
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            @click.prevent="saveChanges"
+          >
+            儲存變更
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- new modal -->
   <div
@@ -81,7 +228,8 @@
                   >行程編號</span
                 >
                 <input
-                  v-model="newAnnouncement.id"
+                  v-model="newAnnouncement.pkg_no"
+                  name="pkg_no"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -94,7 +242,8 @@
                   >景點編號</span
                 >
                 <input
-                  v-model="newAnnouncement.name"
+                  v-model="newAnnouncement.spot_no"
+                  name="spot_no"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -107,7 +256,8 @@
                   >景點排序</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
+                  v-model="newAnnouncement.spot_sort"
+                  name="spot_sort"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -120,7 +270,8 @@
                   >第幾天</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
+                  v-model="newAnnouncement.pkg_howday"
+                  name="pkg_howday"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
@@ -151,18 +302,22 @@
 </template>
 
 <script>
+import axios from "axios";
 import { Modal } from "bootstrap";
+import { BASE_URL } from "@/assets/js/common.js";
 
 export default {
   data() {
     return {
-      items: [
-        {
-          // id: 1,
-          // name: "綠野號",
-          // qty: 40,
-        },
-      ],
+      dataFromMySQL: [],
+      // items: [
+      //   {
+      //     pkg_no: 1,
+      //     spot_no: "",
+      //     spot_sort: 40,
+      //     pkg_howday: 1
+      //   },
+      // ],
       // search
       searchText: "",
       // model
@@ -172,9 +327,10 @@ export default {
       selectedFile: null,
       // new model
       newAnnouncement: {
-        id: "", // 確保 id 屬性存在
-        name: "",
-        qty: "",
+        // pkg_no: "", // 確保 id 屬性存在
+        // spot_no: "",
+        // spot_sort: "",
+        // pkg_howday: "",
       },
     };
   },
@@ -183,10 +339,10 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.items;
+        return this.dataFromMySQL;
       }
 
-      return this.items.filter((item) =>
+      return this.dataFromMySQL.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
@@ -275,6 +431,20 @@ export default {
         this.showModal = false;
       }
     },
+  },
+  // 抓 php 資料
+  created() {
+    axios
+      .get(`${BASE_URL}/getPackagePass.php`)
+      .then((response) => {
+        this.dataFromMySQL = response.data;
+
+        // 打印取得的資料以確認是否成功
+        console.log("Data retrieved from MySQL:", "dataFromMySQL");
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data:", error);
+      });
   },
 };
 </script>

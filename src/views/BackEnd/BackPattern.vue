@@ -60,10 +60,7 @@
   </table>
 
   <!-- edit modal -->
-  <form
-    action=""
-    enctype="multipart/form-data"
-    method="post"
+  <div
     v-if="showModal"
     class="modal fade"
     id="itemModal"
@@ -205,7 +202,7 @@
         </div>
       </div>
     </div>
-  </form>
+  </div>
 
   <!-- new modal -->
   <form
