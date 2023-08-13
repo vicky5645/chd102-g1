@@ -86,8 +86,8 @@ export default {
       patternData: [],
       draggable: false,
       position: {
-        x: 0,
-        y: 0
+        x: 45,
+        y: 45
       },
       iconMove: {
         x: 0,

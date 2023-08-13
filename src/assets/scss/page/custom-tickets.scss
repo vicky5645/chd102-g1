@@ -82,8 +82,9 @@ $ani-bg: ani-namecard;
         pointer-events: none;
         width: 200px;
         @include poA(calc(100% - 100px),70%);
-        @include pc {
+        @include pad {
           width: 300px;
+          left: calc(100% - 150px); 
         }
       }
     }
@@ -121,8 +122,9 @@ $ani-bg: ani-namecard;
       }
       #selected_icons{
         @include poA(0, 0);
-        transform-origin: 45px 45px;
-        animation: #{$ani-bg} 4s 1s ease #{$times} both;
+        // 旋轉動畫
+        // transform-origin: 45px 45px;
+        // animation: #{$ani-bg} 4s 1s ease #{$times} both;
         &:hover, &:active {
           animation-play-state: paused; //停止動畫
         }
