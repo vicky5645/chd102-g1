@@ -412,7 +412,7 @@ export default {
             this.$router.push("/about");
             // location.reload(); //刷新頁面
           } else {
-            console.log("已註冊用戶，走登入流程")
+            console.log("已註冊用戶，使用登入流程")
             this.$router.push("/about");
           }
 
@@ -424,9 +424,7 @@ export default {
           // this.$store.commit("updateUser", userInfo);
         })
         .catch((error) => {
-          const errorCode = error.code;
-          console.log("google登入失敗", errorCode);
-          alert(`google登入失敗${error}`);
+          console.log(`google登入失敗${error}`);
         });
     },
     checkEmail() {

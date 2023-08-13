@@ -433,7 +433,7 @@ export default {
       const reader = new FileReader();
 
       reader.onload = (e) => {
-        console.log(e.target.result);
+        // console.log(e.target.result);
         this.newAnnouncement.pattern_file_name = file.name;
         if (file.name.toLowerCase().endsWith(".svg")) {
           const encodedSVG = e.target.result.split(",")[1];
@@ -471,7 +471,6 @@ export default {
         data.append("pattern_file", this.currentItem.pattern_file);
         data.append("news_filename", this.newAnnouncement.pattern_file_name);
         data.append("news_img", imgFile); // imgFile 是新圖片data
-        // console.log("news_img", imgFile);
       }
       // 使用 Axios 發送 POST 請求
       axios
