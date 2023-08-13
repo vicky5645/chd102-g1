@@ -40,7 +40,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in filteredItems" :key="index">
+      <tr v-for="(item, index) in newFilteredItems" :key="index">
         <th scope="row">{{ item.prod_no }}</th>
         <td class="ellipsis" :title="item.prod_name">{{ item.prod_name }}</td>
         <td class="ellipsis" :title="item.prod_name">{{ item.prod_type }}</td>
@@ -71,10 +71,7 @@
   </table>
 
 <!-- edit modal -->
-  <form
-    action="http://localhost:80/phps/editProduct.php"
-    method="post"
-    enctype="multipart/form-data"
+  <div
     v-if="showModal"
     class="modal fade"
     id="itemModal"
@@ -167,7 +164,7 @@
             <span class="input-group-text" id="inputGroup-sizing-lg"
               >商品狀態</span
             >
-            <select class="form-select">
+            <select class="form-select" v-model="currentItem.prod_status">
               <option value="1">上架</option>
               <option value="0">下架</option>
             </select>
@@ -204,15 +201,21 @@
             <input
               type="file"
               class="form-control"
+              name="org_img"
+              id="edit_img"
+              ref="change_img"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
               @change="handleFileUpload"
             />
           </div>
           <div class="model_body_pic">
             <Images
-              v-if="currentItem.prod_file"
+              v-if="currentItem.prod_file && label_toggle"
               :imgURL="`images/online-mall/${currentItem.prod_file}`"
               :alt="`Image preview`"
             />
+            <img v-else :src="currentItem.image" alt="Image preview" />
           </div>
         </div>
 
@@ -221,9 +224,9 @@
             type="button"
             class="btn btn-danger"
             data-bs-dismiss="modal"
-            @click="deleteAnnouncement"
+            @click="deleteProduct"
           >
-            刪除圖案
+            刪除商品
           </button>
           <button
             type="button"
@@ -236,11 +239,11 @@
         </div>
       </div>
     </div>
-  </form>
+  </div>
 
   <!-- new modal -->
 
-  <form
+  <div
     class="modal fade"
     id="itemNewModal"
     tabindex="-1"
@@ -292,7 +295,6 @@
             >
             <select class="form-select" 
             v-model="newProduct.prod_type"
-            name
             >
               <option value="周邊">周邊</option>
               <option value="玩具">玩具</option>
@@ -356,9 +358,20 @@
                   type="file"
                   class="form-control"
                   name="new_img"
+                  id="add_new_img"
+                  ref="plus_img"
+                  accept="image/*"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
                   @change="handleFileUpload"
+                />
+              </div>
+              <div class="model_body_pic">
+                <img
+                  v-if="newProduct.prod_file"
+                  :src="`${newProduct.image}`"
+                  :alt="`Image preview`"
+                  :id="`imgPreview`"
                 />
               </div>
             </div>
@@ -381,13 +394,18 @@
         </div>
       </div>
     </div>
-    </form>
-    {{ newProduct }}
-    <!-- <hr> -->
-    <!-- <div v-if="dataFromMySQL.length > 0"> -->
-      <!-- {{ dataFromMySQL[dataFromMySQL.length - 1].prod_no }} -->
-      <!-- {{ getNewProductId }}
-    </div> -->
+    </div>
+
+    <!-- footer page-->
+    <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" v-for="index in newPage" :key="index">
+      <button class="page-link" @click="page = index"> {{ index }} </button>
+    </li>
+  </ul>
+</nav>
+<button @click="testBug">test</button>
+    <hr>
 </template>
 <script>
 import axios from "axios";
@@ -401,20 +419,33 @@ export default {
       dataFromMySQL: [],
       // search
       searchText: "",
-      // model
-      currentItem: {},
+      // modal
+      currentItem: {
+        prod_no: "", // 確保 id 屬性存在
+        prod_name: "",
+        prod_summary: "",
+        prod_price: "",
+        prod_status: "",
+        prod_file: "",
+        prod_type: "",
+        prod_hot: "",
+        image: null,
+      },
       showModal: false,
       selectedFile: null,
-      // new model
+      label_toggle: true,
+      page: 1,
+      // new modal
       newProduct: {
         prod_no: "", // 確保 id 屬性存在
         prod_name: "",
         prod_summary: "",
         prod_price: "",
         prod_status: "",
-        prod_file: "test.png",
+        prod_file: "",
         prod_type: "",
         prod_hot: "",
+        image: null,
       },
     };
   },
@@ -433,15 +464,24 @@ export default {
     //新增商品時的新ID
     getNewProductId() {
       this.newProduct.prod_no = parseInt(this.dataFromMySQL[this.dataFromMySQL.length - 1].prod_no) + 1;
+    },
+    newPage() {
+      return Math.ceil(this.filteredItems.length / 10);
+    },
+    newFilteredItems() {
+      const begin = (this.page - 1) * 10
+      const end = this.page * 10
+      return this.filteredItems.slice(begin, end);
     }
   },
 
   methods: {
-    // ------------edit model-----------
 
     //點選查看，將此物品賦值給currentItem
     openModal(item) {
-      this.currentItem = item;
+      // this.$refs.change_img.value = ''
+      this.label_toggle = true;
+      this.currentItem = { ...item }; //一層深拷貝
       this.showModal = true;
 
       this.$nextTick(() => {
@@ -455,13 +495,41 @@ export default {
       });
     },
 
+    // ------------edit modal-----------
+
     //按x的時候取消變更
     cancelChanges() {
       this.showModal = false;
     },
 
     //儲存變更
-    saveChanges() {
+    async saveChanges() {
+      try {
+        const index = this.dataFromMySQL.findIndex((item) => item.prod_no === this.currentItem.prod_no);
+        if (index !== -1) {
+          const formData = new FormData();
+          Object.keys(this.currentItem).forEach((key) => {
+            formData.append(`${key}`, this.currentItem[key])
+          })
+          if (this.$refs.change_img && this.$refs.change_img.files[0]) {
+            formData.set('image', this.$refs.change_img.files[0]);
+          }
+          const res = await axios.post(`${BASE_URL}updateBackendProduct.php`, formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            })
+          alert(`${res.data.msg}`);
+          this.showModal = false;
+        }
+
+      } catch (error) {
+        console.error("An error occurred:", error);
+        alert("修改失敗請重新操作")
+      }
+
+      this.getData();
       this.showModal = false;
     },
 
@@ -476,15 +544,29 @@ export default {
       const reader = new FileReader();
       console.log(file.name);
 
+      const inputId = event.target.id; // 獲取觸發事件的 input 的 id
+      // const inputTarget = event.target;
+      // const fileExtension = file.name.split('.').pop().toLowerCase(); // 取得副檔名
+      
       reader.onload = (e) => {
+        if (inputId === 'add_new_img') {
+          // if (inputTarget.$refs.add_new_img) {
+        this.newProduct.image = e.target.result; //圖檔
+        this.newProduct.prod_file = file.name; //檔案名稱
+        console.log(this.newProduct);
+
+      }else if (inputId === 'edit_img') {
+      // }else if (inputTarget.$refs.edit_img) {
         this.currentItem.image = e.target.result; //圖檔
         this.currentItem.prod_file = file.name; //檔案名稱
-        console.log(this.currentItem)
+        console.log(this.currentItem);
+        this.label_toggle = false;
+        }
       };
       reader.readAsDataURL(file);
     },
 
-    // ------------new model------------
+    // ------------new modal------------
     submitProduct() {
       if (
         !this.newProduct.prod_no ||
@@ -498,29 +580,43 @@ export default {
       ) {
         alert("所有欄位都必須填寫！");
         return;
+      } else {
+        this.addProduct();
       }
-      this.addProduct();
-      // axios.post('test2.php', this.newProduct)
-      //       .then(response => {
-      //           console.log(response.data);
-      //       })
-      //       .catch(error => {
-      //           console.error(error);
-      //       });
 
+      this.clearProduct();
       console.log(this.newProduct);
-      // this.clearProduct();
+
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
       modalInstance.hide();
 
     },
+
     async addProduct() {
-      await axios({
-        method: 'post',
-        url: "http://localhost/phps/test.php",
-        data: this.newProduct,
-      })
+      try {
+        const formData = new FormData();
+        Object.keys(this.newProduct).forEach((key) => {
+          formData.append(`${key}`, this.newProduct[key])
+        })
+        formData.set('image', this.$refs.plus_img.files[0]);
+        const res = await axios.post(`${BASE_URL}postProduct.php`, formData,
+        {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          alert(`${res.data.msg}`)
+      } catch (error) {
+        console.error("An error occurred:", error);
+        alert("新增失敗,請重新操作")
+      }
+      this.getData();
+      // await axios({
+      //   method: 'post',
+      //   url: "http://localhost/phps/test.php",
+      //   data: this.newProduct,
+      // })
     },
 
     //清空新增商品欄位
@@ -533,18 +629,29 @@ export default {
         prod_status: "",
         prod_file: "",
         prod_type: "",
+        prod_hot: "",
       };
+      this.$refs.plus_img.value = ''
     },
 
-    // 刪除圖案
-    deleteAnnouncement() {
-      const index = this.items.findIndex(
-        (item) => item.id === this.currentItem.id
-      );
-      if (index !== -1) {
-        this.items.splice(index, 1);
-        this.showModal = false;
+    // 刪除商品
+    async deleteProduct() {
+      try {
+        const index = this.dataFromMySQL.findIndex((item) => item.prod_no === this.currentItem.prod_no);
+        if (index !== -1) {
+          const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}deleteBackendProduct.php`,
+            data: { prod_no: this.currentItem.prod_no },
+          });
+          alert(`${res.data.msg}`)
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+        alert("刪除失敗請重新操作")
       }
+      this.getData();
+      this.showModal = false;
     },
 
     //判定顯示上下架及顏色
@@ -553,11 +660,11 @@ export default {
     },
     productStatusColor(item) {
       return item.prod_status === 0 ? 'red' : 'blue';
-    }
-  },
+    },
 
-  created () {
-    const type = "get"; // 設定要執行的操作，這裡是取得資料
+      //抓資料
+    getData() {
+      const type = "get"; // 設定要執行的操作，這裡是取得資料
     axios
       .get(`${BASE_URL}/getProduct.php?type=${type}`)
       .then((response) => {
@@ -566,6 +673,17 @@ export default {
       .catch((error) => {
         console.error("There was an error fetching the data:", error);
       });
+    },
+    testBug() {
+      // console.log(this.$refs.plus_img.files)
+      console.log(this.$refs.change_img.files[0])
+    }
+  },
+
+
+
+  created () {
+    this.getData();
   },
   // mounted() {
   //   const type = "get"; // 設定要執行的操作，這裡是取得資料
