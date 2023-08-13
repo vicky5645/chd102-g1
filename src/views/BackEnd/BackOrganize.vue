@@ -98,10 +98,13 @@
             >
             <input
               v-model="currentItem.pkg_no"
-              type="num"
+              type="number"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              min="1"
+              max="3"
+              @input="checkInput"
             />
           </div>
           <div class="input-group input-group-lg">
@@ -111,10 +114,12 @@
             <input
               v-model="currentItem.pkg_sale"
               name="pattern_name"
-              type="num"
+              type="number"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              min="0"
+              @input="checkInput"
             />
           </div>
           <div class="input-group input-group-lg">
@@ -137,10 +142,13 @@
             >
             <input
               v-model="currentItem.enrolled"
-              type="num"
+              type="number"
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
+              min="0"
+              max="40"
+              @input="checkInput"
             />
           </div>
           <div class="input-group input-group-lg">
@@ -153,8 +161,6 @@
               class="form-control"
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
-              min="1"
-              max="3"
             />
           </div>
           <div class="input-group input-group-lg">
@@ -213,29 +219,32 @@
               class="modal-body gap-2"
               style="display: flex; flex-direction: column"
             >
-              <div class="input-group input-group-lg">
+              <!-- <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
                   >開團編號</span
                 >
                 <input
                   v-model="newAnnouncement.id"
-                  type="text"
+                  type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
                 />
-              </div>
+              </div> -->
 
               <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
                   >行程編號</span
                 >
                 <input
-                  v-model="newAnnouncement.name"
-                  type="text"
+                  v-model="newAnnouncement.pkg_no"
+                  type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
+                  min="1"
+                  max="3"
+                  @input="checkInput"
                 />
               </div>
 
@@ -244,11 +253,14 @@
                   >人數上限</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
-                  type="text"
+                  v-model="newAnnouncement.pkg_limit"
+                  type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
+                  min="0"
+                  max="40"
+                  @input="checkInput"
                 />
               </div>
 
@@ -257,11 +269,13 @@
                   >優惠折扣</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
-                  type="text"
+                  v-model="newAnnouncement.pkg_sale"
+                  type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
+                  min="0"
+                  @input="checkInput"
                 />
               </div>
 
@@ -270,8 +284,8 @@
                   >出發日期</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
-                  type="text"
+                  v-model="newAnnouncement.dept_date"
+                  type="date"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -283,11 +297,14 @@
                   >已報名人數</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
-                  type="text"
+                  v-model="newAnnouncement.enrolled"
+                  type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
+                  min="0"
+                  max="40"
+                  @input="checkInput"
                 />
               </div>
 
@@ -296,8 +313,8 @@
                   >報名開始日期</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
-                  type="text"
+                  v-model="newAnnouncement.reg_start"
+                  type="date"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -309,8 +326,8 @@
                   >報名截止日期</span
                 >
                 <input
-                  v-model="newAnnouncement.qty"
-                  type="text"
+                  v-model="newAnnouncement.reg_end"
+                  type="date"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -357,9 +374,14 @@ export default {
       selectedFile: null,
       // new model
       newAnnouncement: {
-        id: "", // 確保 id 屬性存在
-        name: "",
-        qty: "",
+        org_no: "", // 確保 id 屬性存在
+        pkg_no: "",
+        pkg_limit: "",
+        pkg_sale: "",
+        dept_date: "",
+        enrolled: "",
+        reg_start: "",
+        reg_end: "",
       },
     };
   },
@@ -378,20 +400,61 @@ export default {
   },
 
   methods: {
+    checkInput(event) {
+      let value = parseInt(event.target.value);
+      let min = parseInt(event.target.min);
+      let max = parseInt(event.target.max);
+      if (value < min) {
+        event.target.value = min;
+      } else if (value > max) {
+        event.target.value = max;
+      }
+    },
     // model
-    saveChanges() {
+    async saveChanges() {
       // 在這裡更新資料
       // 如有需要，你也可以將 currentItem 傳到後端
-      this.currentItem = { ...this.backupItem };
+      // this.currentItem = { ...this.backupItem };
+      try {
+        const index = this.organizeData.findIndex(
+          (item) => item.org_no === this.currentItem.org_no
+        );
+        if (index !== -1) {
+          const formData = new FormData();
+          Object.keys(this.currentItem).forEach((key) => {
+            formData.append(`${key}`, this.currentItem[key]);
+          });
+          // if (this.$refs.change_img.files[0]) {
+          //   formData.set('image', this.$refs.change_img.files[0]);
+          // }
+          const res = await axios.post(
+            `${BASE_URL}/editOrganize.php`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          alert(`${res.data.msg}`);
+          this.showModal = false;
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+        alert("修改失敗請重新操作");
+      }
+
+      this.getOrganizeData();
       this.showModal = false;
     },
 
     cancelChanges() {
-      this.currentItem = { ...this.backupItem };
+      // this.currentItem = { ...this.backupItem };
       this.showModal = false;
     },
+    //打開燈箱
     openModal(item) {
-      this.currentItem = item;
+      this.currentItem = { ...item };
       this.showModal = true;
 
       this.$nextTick(() => {
@@ -404,39 +467,40 @@ export default {
         });
       });
     },
-    handleFileUpload(event) {
-      const files = event.target.files;
-      if (files.length === 0) {
-        return;
-      }
 
-      const file = files[0];
-      const reader = new FileReader();
+    // handleFileUpload(event) {
+    //   const files = event.target.files;
+    //   if (files.length === 0) {
+    //     return;
+    //   }
 
-      reader.onload = (e) => {
-        this.currentItem.image = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    },
+    //   const file = files[0];
+    //   const reader = new FileReader();
+
+    //   reader.onload = (e) => {
+    //     this.currentItem.image = e.target.result;
+    //   };
+    //   reader.readAsDataURL(file);
+    // },
 
     // new model
+    //pkg_sale和enrolled我拿掉了
     submitAnnouncement() {
       if (
-        !this.newAnnouncement.id ||
-        !this.newAnnouncement.name ||
-        !this.newAnnouncement.qty
+        !this.newAnnouncement.pkg_no ||
+        !this.newAnnouncement.pkg_limit ||
+        !this.newAnnouncement.dept_date ||
+        !this.newAnnouncement.reg_start ||
+        !this.newAnnouncement.reg_end
       ) {
         alert("所有欄位都必須填寫！");
         return;
+      } else {
+        this.addOrganize();
       }
 
-      console.log(this.newAnnouncement);
       this.clearAnnouncement();
-      this.newAnnouncement = {
-        id: "",
-        name: "",
-        qty: "",
-      };
+
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
       modalInstance.hide();
@@ -444,33 +508,74 @@ export default {
 
     clearAnnouncement() {
       this.newAnnouncement = {
-        id: "",
-        name: "",
-        qty: "",
+        pkg_no: "",
+        pkg_limit: "",
+        pkg_sale: "",
+        dept_date: "",
+        enrolled: "",
+        reg_start: "",
+        reg_end: "",
       };
     },
 
-    // delete announcement
-    deleteAnnouncement() {
-      const index = this.organizeData.findIndex(
-        (item) => item.id === this.currentItem.id
-      );
-      if (index !== -1) {
-        this.organizeData.splice(index, 1);
-        this.showModal = false;
+    // delete
+    async deleteAnnouncement() {
+      try {
+        const index = this.organizeData.findIndex(
+          (item) => item.org_no === this.org_no
+        );
+        if (index !== -1) {
+          const res = await axios({
+            method: "post",
+            url: `${BASE_URL}/deleteOrganize.php`,
+            data: { id: this.currentItem.org_no },
+          });
+          alert(`${res.data.msg}`);
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+        alert("刪除失敗請重新操作");
+      }
+      this.getOrganizeData();
+      this.showModal = false;
+    },
+
+    //新增
+    async addOrganize() {
+      try {
+        const formData = new FormData();
+        Object.keys(this.newAnnouncement).forEach((key) => {
+          formData.append(`${key}`, this.newAnnouncement[key]);
+        });
+        // formData.set('image', this.$refs.plus_img.files[0]);
+        const res = await axios.post(`${BASE_URL}/postOrganize.php`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        alert(`${res.data.msg}`);
+      } catch (error) {
+        console.error("An error occurred:", error);
+        alert("新增失敗,請重新操作");
+      }
+      this.getOrganizeData();
+    },
+
+    //撈資料
+    async getOrganizeData() {
+      try {
+        const res = await axios.get(`${BASE_URL}/getOrganize.php`);
+        if (!res) throw new Error("沒撈到資料");
+        this.organizeData = res.data;
+      } catch (err) {
+        console.error(err);
       }
     },
   },
 
-  mounted() {
-    axios
-      .get(`${BASE_URL}/getOrganize.php`)
-      .then((response) => {
-        this.organizeData = response.data;
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the data:", error);
-      });
+  //一開始取資料
+  created() {
+    this.getOrganizeData();
   },
 };
 </script>
