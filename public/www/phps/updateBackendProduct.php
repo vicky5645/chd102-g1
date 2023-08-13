@@ -49,6 +49,7 @@ if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
     try {
         $sql = "UPDATE product SET prod_name = :prod_name, prod_summary = :prod_summary, prod_price = :prod_price, prod_status = :prod_status, prod_file = :prod_file, prod_type = :prod_type, prod_hot = :prod_hot WHERE prod_no = :prod_no";
         $products = $pdo->prepare($sql);
+        $products->bindValue(":prod_no", $_POST["prod_no"]);
         $products->bindValue(":prod_name", $_POST["prod_name"]);
         $products->bindValue(":prod_summary", $_POST["prod_summary"]);
         $products->bindValue(":prod_price", $_POST["prod_price"]);
@@ -58,6 +59,12 @@ if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
         $products->bindValue(":prod_hot", $_POST["prod_hot"]);
         $products->execute();
 
+        //刪除原位置的圖檔
+		$prod_file = $_POST["old_file"];// test.png
+		$filePath = MY_DIR . "/" . $prod_file; //../../images/online-mall/test.png
+        if (file_exists($filePath)) { //判斷該路徑圖檔存在才進行刪除
+            unlink($filePath);
+        }
         $msg = "更新成功";
         $result["msg"] = $msg;
         $result["image"] = $banner;
@@ -72,6 +79,7 @@ if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
     try {
         $sql = "UPDATE product SET prod_name = :prod_name, prod_summary = :prod_summary, prod_price = :prod_price, prod_status = :prod_status, prod_type = :prod_type, prod_hot = :prod_hot WHERE prod_no = :prod_no";
         $products = $pdo->prepare($sql);
+        $products->bindValue(":prod_no", $_POST["prod_no"]);
         $products->bindValue(":prod_name", $_POST["prod_name"]);
         $products->bindValue(":prod_summary", $_POST["prod_summary"]);
         $products->bindValue(":prod_price", $_POST["prod_price"]);
