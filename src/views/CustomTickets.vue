@@ -1,5 +1,6 @@
 <template>
   <section class="custom-tickets title">
+    {{ dataFromMySQL }}
     <div class="container">
       <h2 class="h2">{{ $route.meta.title }}</h2>
     </div>
@@ -23,6 +24,9 @@
         <!-- 色彩選擇器等元素 -->
         <input type="color" name="color" v-model="setting.color">
         <div id="leftbox" class="img-space">
+          <!-- <div v-for="icon in patternData" class="cus" :style="{ color: setting.color || '#F29C50' }">
+            <Images :imgURL="`${icon.pattern_file}`" :class="['custom-svg','img']" :alt="``" />
+          </div> -->
           <div v-for="icon in patterns" class="cus" :style="{ color: setting.color || '#F29C50' }">
             <Images :imgURL="`${icon}`" :class="['custom-svg','img']" :alt="``" />
           </div>
@@ -73,10 +77,13 @@
 </template>
 
 <script>
+import axios from "axios";
+import { BASE_URL } from "@/assets/js/common.js";
 import domtoimage from "@/assets/js/dom-to-image.min.js";
 export default {
   data() {
     return {
+      patternData: [],
       draggable: false,
       position: {
         x: 0,
@@ -91,6 +98,7 @@ export default {
       setting: {
         color: '#F29C50'
       },
+      // patterns: [] , 
       patterns: ['images/pattern/1.svg','images/pattern/2.svg', 'images/pattern/3.svg', 'images/pattern/4.svg'],
       isDragging: false,
     }
@@ -203,7 +211,22 @@ export default {
         addImageToCardFunc(icon); // 呼叫 addImageToCard 函數
       })
     }); // 每個圖片增加監聽
-  }
+  },
+  // 抓 php 資料
+  created() {
+    // axios
+    //   .get(`${BASE_URL}/getPattern.php`)
+    //   .then((response) => {
+    //     this.patternData = response.data;
+
+    //     // this.patterns = this.dataFromMySQL.pattern_file
+    //     // 打印取得的資料以確認是否成功
+    //     console.log("Data retrieved from MySQL:", "dataFromMySQL");
+    //   })
+    //   .catch((error) => {
+    //     console.error("There was an error fetching the data:", error);
+    //   });
+  },
 }
 </script>
 
