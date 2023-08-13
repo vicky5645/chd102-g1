@@ -1,31 +1,5 @@
 <template>
   <div class="login-wrap">
-    <!-- 檢查使用者的登錄狀態 -->
-    <!-- <div
-      style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: gold;
-        width: 200px;
-        z-index: 999;
-      "
-    >
-    <p>{{ `this.existUser::${this.existUser}` }}</p>
-      <p>{{ this.step }}</p>
-      <p>
-        {{ `isRegistered:${isRegistered}` }}
-      </p>
-      <p>userInfo::{{ this.$store.state.userInfo }}</p>
-      <button
-        type="button"
-        v-for="btn in btns"
-        class="login-connect"
-        @click="logoutUser"
-      >
-        登出
-      </button>
-    </div> -->
     <section
       class="login"
       v-if="!isRegistered && !loginStatus && !forgetPsw && step === 0"
@@ -239,7 +213,7 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 //google 守門人
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, getAdditionalUserInfo  } from "firebase/auth";
 const provider = new GoogleAuthProvider();
 import axios from "axios";
 import { BASE_URL } from "@/assets/js/common.js";
@@ -390,22 +364,19 @@ export default {
     // 傳送資料到後台會員資料庫
     postBackMember(userObj,name,email,password) {
       let mem = {};
-      mem["mem_no"] = userObj.uid
+      // mem["mem_no"] = userObj.uid
       mem["mem_email"] = userObj.email
       mem["mem_name"] = userObj.displayName? userObj.displayName: name
-      mem["mem_acc"] = email
-      mem["mem_pwd"] = password
+      mem["mem_acc"] = email? email: "other" 
+      mem["mem_pwd"] = password? password: "other" 
 
       const data = new FormData(); // POST 表單資料
-      // for (const key in mem) {
-        // data.append(key, mem[key]);
-      // }
-      data.append("mem_no", mem["mem_no"]);
+      // data.append("mem_no", mem["mem_no"]); // 讓資料庫自己生成
       data.append("mem_email", mem["mem_email"]);
       data.append("mem_name", mem["mem_name"]);
       data.append("mem_acc", mem["mem_acc"]);
       data.append("mem_pwd", mem["mem_pwd"]);
-      console.log("postBackMember::", data);
+      // console.log("postBackMember::", data);
 
       // 使用 Axios 發送 POST 請求
       axios
@@ -425,16 +396,27 @@ export default {
     signInGoogle() {
       signInWithPopup(firebaseAuth, provider)
         .then((result) => {
+          const userInfo = result.user;
+
+          // 使用 getAdditionalUserInfo 方法來獲得 additionalUserInfo 資訊
+          const additionalUserInfo = getAdditionalUserInfo(result);
+
+          if (additionalUserInfo && additionalUserInfo.isNewUser) {
+            console.log("首次註冊的用戶")
+          } else {
+            console.log("已註冊用戶，走登入流程")
+          }
+
           // const credential = GoogleAuthProvider.credentialFromResulsignInGoogleedential.accessToken;
           this.$store.commit("setIsLogin", true); // 使用 commit 來改變狀態
           window.alert("google 登入成功");
-          // const userInfo = result.user;
-          // this.$store.commit("updateUser", userInfo);
+          // console.log(" result.additionalUserInfo.isNewUser::",  result.additionalUserInfo)
+          this.$store.commit("updateUser", userInfo);
         })
         .catch((error) => {
           const errorCode = error.code;
-          console.log("google註冊失敗", errorCode);
-          alert(`google註冊失敗${error}`);
+          console.log("google登入失敗", errorCode);
+          alert(`google登入失敗${error}`);
         });
     },
     checkEmail() {
@@ -463,23 +445,6 @@ export default {
           }
         });
     },
-    // logoutUser() {//登入頁的登出按鈕檢查被註解 用於測試
-    //   signOut(firebaseAuth)
-    //   .then(() => {
-    //     // Sign-out successful.
-    //     this.modifySuccess; //返回登入介面
-    //     this.$store.commit("setIsLogin", false);
-    //     this.$store.commit("setName", "");
-    //     this.$store.commit('deleteUser');// 使用 VueX mutations -> 清除使用者資料
-
-    //       location.reload(); //刷新頁面
-    //       // this.$router.push({ name: "login" });//跳轉
-    //     })
-    //     .catch((error) => {
-    //       // An error happened.
-    //       alert(`登出錯誤訊息:${error}`);
-    //     });
-    // },
   },
 };
 </script>

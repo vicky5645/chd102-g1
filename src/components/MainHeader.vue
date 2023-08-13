@@ -1,6 +1,14 @@
 <template>
-  <CartFloat :cartStatus="cartStatus" @closeCart="cartStatus = false" @goCartInfo="goCartInfo" />
-  <UserFloat :userStatus="userStatus" @closeUser="userStatus = false" @goLoginUser="goLoginUser" />
+  <CartFloat
+    :cartStatus="cartStatus"
+    @closeCart="cartStatus = false"
+    @goCartInfo="goCartInfo"
+  />
+  <UserFloat
+    :userStatus="userStatus"
+    @closeUser="userStatus = false"
+    @goLoginUser="goLoginUser"
+  />
   <header>
     <nav>
       <router-link to="/roaming-orbit">
@@ -17,6 +25,23 @@
         <router-link to="/online-booking">線上訂票</router-link>
         <!-- <router-link to="/Attractions">景點介紹</router-link> -->
       </div>
+      <!-- 檢查使用者的登錄狀態 -->
+      <!-- <div
+        style="
+          position: fixed;
+          top: 0;
+          left: 0;
+          background-color: gold;
+          width: 800px;
+          z-index: 999;
+        "
+      >
+        <p>{{ `this.existUser::${this.existUser}` }}</p>
+        <p>
+          {{ `isRegistered:${isRegistered}` }}
+        </p>
+        {{ this.existUser }}
+      </div> -->
       <!-- 購物車 -->
       <div class="chrt h4" @click="toggleCart">
         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -40,7 +65,12 @@
         </router-link>
       </template>
       <!-- 自適應側邊攔區塊 -->
-      <div id="menu-switch" class="ham" :class="{ active: openSidebar }" @click="toggleSidebar">
+      <div
+        id="menu-switch"
+        class="ham"
+        :class="{ active: openSidebar }"
+        @click="toggleSidebar"
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -66,11 +96,14 @@
           </div>
         </template>
         <template v-slot:slotfooter>
-          <div class="link-list">
-          </div>
+          <div class="link-list"></div>
         </template>
       </MainSidebar>
-      <div class="pageMask" @click="menuclose" :class="{ active: openSidebar }"></div>
+      <div
+        class="pageMask"
+        @click="menuclose"
+        :class="{ active: openSidebar }"
+      ></div>
     </nav>
   </header>
 </template>
@@ -87,7 +120,7 @@ import MainSidebar from "@/components/MainSidebar.vue";
 import CartFloat from "@/components/CartFloat.vue";
 import UserFloat from "@/components/UserFloat.vue";
 // 檢查使用者的登錄狀態
-import authMixin from '@/assets/js/authMixin.js';
+import authMixin from "@/assets/js/authMixin.js";
 export default {
   mixins: [authMixin], // 引入 mixin 登錄狀態
   components: {
@@ -131,7 +164,7 @@ export default {
       this.userStatus = false;
       this.$router.push({ path: "/user" });
     },
-  }
+  },
 };
 </script>
 
@@ -140,12 +173,12 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
-  transition: background-color .5s;
-  background-color: rgba(black,0);
+  transition: background-color 0.5s;
+  background-color: rgba(black, 0);
   &.active {
     width: 100vw;
     height: 100vh;
-    background-color: rgba(black,.5);
+    background-color: rgba(black, 0.5);
   }
 }
 </style>
