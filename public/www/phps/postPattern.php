@@ -1,25 +1,33 @@
 <?php
-if($_FILES["news_img"]["error"] === 0) {
+header('Access-Control-Allow-Origin:*');
+header("Content-Type:application/json;charset=utf-8");
+$type = isset($_POST["type"]) ? $_POST["type"] : '';
+
+
+if($type == 'addImg') {
   $dir = "../../images/pattern/"; //指定所要上傳的路徑
   if(file_exists($dir)===false){
       mkdir($dir); //make directory
   }
 
-  $from = $_FILES["news_img"]["tmp_name"];
+  // 接到圖檔內容
+  $base64Image = $_POST['news_img']; // Base64 編碼的圖像數據
+  // 將 Base64 編碼的圖像數據解碼二進制數據
+  $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Image));
 
   //處理檔名 -> 建立唯一性--------------------
   //---產生主檔名
   $fileName = uniqid(); //13個隨機字符
   //---取出副檔名   
-  $fileExt = pathInfo($_FILES["news_img"]["name"],
-  PATHINFO_EXTENSION); //取得物件格式裡的檔案名稱後再處理: 01.svg -> .svg
+  $newsFileName = $_POST['news_filename']; //test.gif
+  $fileExt = pathInfo($newsFileName, PATHINFO_EXTENSION);
 
   $fileName = "$fileName.$fileExt";//用uniqid()去串接副檔名
 
-  $to = $dir . $fileName;
-
-  if(copy($from, $to)){
-    //寫入資料庫
+  //儲存圖檔到指定路徑
+  $newfilePath = $dir . $fileName;
+  if(file_put_contents($newfilePath, $imageData)){
+    // 成功新增圖檔後，執行資料庫
     try {
       require_once("./connect_chd102g1.php");
       $sql = "INSERT INTO pattern (`pattern_no`, `pattern_name`, `pattern_file`, `pattern_desc`, `creation_date`)
@@ -33,18 +41,18 @@ if($_FILES["news_img"]["error"] === 0) {
       $pattern->bindValue(":pattern_file", "images/pattern/$fileName");//添加圖檔路徑
       $pattern->execute();
 
-      echo "新增成功~<br>";
+      $msg = "新增成功~";
     } catch (PDOException $e) {
-      echo "錯誤行號 : ", $e->getLine(), "<br>";
-      echo "錯誤原因 : ", $e->getMessage(), "<br>";
-      echo "系統暫時不能正常運行，請稍後再試<br>";  
+      $msg = "error_line: " . $e->getLine() . ", error_msg: " . $e->getMessage();
     }
 
   }else{
-    echo "寫入失敗";
+    $msg = "寫入失敗";
   }
 
 } else {
-  echo "未上傳圖檔";
+  $msg = "未上傳圖檔";
 }
+$result = ["msg" => $msg];
+echo json_encode($result);
 ?>
