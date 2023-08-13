@@ -72,7 +72,7 @@
 
 <!-- edit modal -->
   <div
-    v-if="showModal"
+    v-show="showModal"
     class="modal fade"
     id="itemModal"
     tabindex="-1"
@@ -322,7 +322,7 @@
                 >
                 <input
                   v-model="newProduct.prod_price"
-                  type="text"
+                  type="number"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
@@ -404,8 +404,6 @@
     </li>
   </ul>
 </nav>
-<button @click="testBug">test</button>
-    <hr>
 </template>
 <script>
 import axios from "axios";
@@ -479,7 +477,7 @@ export default {
 
     //點選查看，將此物品賦值給currentItem
     openModal(item) {
-      // this.$refs.change_img.value = ''
+      this.$refs.change_img.value = ''
       this.label_toggle = true;
       this.currentItem = { ...item }; //一層深拷貝
       this.showModal = true;
@@ -511,8 +509,9 @@ export default {
           Object.keys(this.currentItem).forEach((key) => {
             formData.append(`${key}`, this.currentItem[key])
           })
-          if (this.$refs.change_img && this.$refs.change_img.files[0]) {
+          if (this.$refs.change_img.files[0]) {
             formData.set('image', this.$refs.change_img.files[0]);
+            formData.set('old_file', this.dataFromMySQL[index].prod_file)
           }
           const res = await axios.post(`${BASE_URL}updateBackendProduct.php`, formData,
             {
@@ -612,11 +611,6 @@ export default {
         alert("新增失敗,請重新操作")
       }
       this.getData();
-      // await axios({
-      //   method: 'post',
-      //   url: "http://localhost/phps/test.php",
-      //   data: this.newProduct,
-      // })
     },
 
     //清空新增商品欄位
@@ -642,7 +636,10 @@ export default {
           const res = await axios({
             method: 'post',
             url: `${BASE_URL}deleteBackendProduct.php`,
-            data: { prod_no: this.currentItem.prod_no },
+            data: {
+               prod_no: this.currentItem.prod_no,
+               old_file: this.dataFromMySQL[index].prod_file
+              },
           });
           alert(`${res.data.msg}`)
         }
@@ -675,8 +672,7 @@ export default {
       });
     },
     testBug() {
-      // console.log(this.$refs.plus_img.files)
-      console.log(this.$refs.change_img.files[0])
+      console.log(formData)
     }
   },
 

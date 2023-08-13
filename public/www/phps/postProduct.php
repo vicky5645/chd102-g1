@@ -89,7 +89,8 @@ if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
     //     $msg = "資料庫寫入失敗，錯誤行號 : " . $e->getLine() . ", 錯誤訊息 : " . $e->getMessage();
     //     $result = ["msg" => $msg];
     // }
-    echo "未上傳圖片";
+    $msg = "未正常上傳圖片";
+    $result = ["msg" => $msg];
 }
 
 echo json_encode($result);
