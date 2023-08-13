@@ -6,6 +6,7 @@ $secondary2: #b3cee2;
 * {
   box-sizing: border-box;
 }
+
 .container {
   @include layout(1200);
 }
@@ -13,6 +14,7 @@ $secondary2: #b3cee2;
 section.title {
   text-align: center;
   background-color: white;
+
   h1 {
     font-size: 2rem;
     padding: 1.25rem;
@@ -26,10 +28,12 @@ section.spot-filter {
   border-radius: 15px;
   padding: 0.5rem 0;
   margin-top: 1rem;
+
   .spot-tag {
     margin: 1rem 0;
     position: relative;
     left: -8px;
+
     span {
       font-size: 1.5rem;
       font-weight: bold;
@@ -50,26 +54,38 @@ section.spot-filter {
       border-color: transparent #7aacbf transparent transparent;
     }
   }
+
   .spot-list {
     display: flex;
+
     .spot-item {
       text-align: center;
+
       p {
         font-size: 1.25rem;
         font-weight: bold;
       }
+
+      .spotName {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #6B7280;
+      }
+
       .spot-img {
         cursor: pointer;
         aspect-ratio: 1/1;
         border-radius: 50%;
         transition: all 0.3s ease-in-out;
         overflow: hidden;
+
         img {
           border-radius: 50%;
           width: 100%;
           aspect-ratio: 1/1;
           object-fit: cover;
           transition: all 0.3s ease-in-out;
+
           &:hover {
             transform: scale(1.1);
           }
@@ -87,6 +103,7 @@ section.spot-filter {
     align-items: center;
     border-top: 1px solid map-get($GrayColors, Gray6);
     padding: 0.5rem 0 0.25rem 0;
+
     .inner {
       font-size: 1.25rem;
       line-height: 40px;
@@ -96,6 +113,7 @@ section.spot-filter {
 
     .btn-wrap {
       margin-right: auto;
+
       button {
         display: inline-block;
         font-size: 1.25rem;
@@ -103,6 +121,7 @@ section.spot-filter {
         background-color: transparent;
         border: none;
         margin: 0 3rem;
+
         i {
           margin-left: 0.25rem;
         }
@@ -111,6 +130,7 @@ section.spot-filter {
 
     .reset {
       margin-right: 1rem;
+
       button {
         font-size: 1.25rem;
         padding: 0.25rem;
@@ -136,9 +156,11 @@ section.package-list {
     position: relative;
     margin: 1.25rem 0;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
     // box-shadow: 0px 1px 6px 0px rgba(122, 172, 191, 0.2);
     .img {
       width: 42.5%;
+
       img {
         display: block;
         width: 100%;
@@ -162,7 +184,9 @@ section.package-list {
         display: flex;
         flex-direction: column;
         margin: auto 0;
+
         .spec {
+
           .seat,
           .date,
           .train {
@@ -183,11 +207,13 @@ section.package-list {
       position: relative;
       display: flex;
       flex-direction: column;
+
       del {
         color: rgb(146, 137, 137);
         font-size: 1.25rem;
         margin: auto 0 1rem 0;
       }
+
       .purchase {
         span {
           display: block;
@@ -223,6 +249,7 @@ section.package-list {
       font-size: 2.5rem;
       color: map-get($BrandColors, Primary);
     }
+
     .sale {
       position: absolute;
       background-color: #fbc756;
@@ -231,6 +258,7 @@ section.package-list {
       padding: 0.5rem;
       border-radius: 0 5px 5px 0;
       font-weight: bold;
+
       .triangle {
         position: absolute;
         top: 100%;
@@ -260,33 +288,40 @@ section.package-list {
 
       .reset {
         margin-right: 1rem;
+
         button {
           font-size: 1rem;
         }
       }
     }
   }
+
   section.package-list {
     .package-item {
       flex-wrap: wrap;
+
       .img {
         width: 100%;
+
         img {
           object-fit: cover;
           border-radius: 15px;
         }
       }
+
       .info {
         width: 100%;
         padding: 0.75rem 0.5rem;
         display: flex;
         flex-direction: column;
         flex-grow: 0;
+
         h3 {
           text-align: center;
           width: 100%;
           font-size: 1.5rem;
         }
+
         .wrap {
           .spec {
             padding: 0.5rem 0;
@@ -335,9 +370,16 @@ section.package-list {
     .spot-list {
       display: flex;
       flex-wrap: wrap;
+
       .spot-item {
         &.col-2 {
           width: 50%;
+
+          div {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #6B7280;
+          }
         }
       }
     }
@@ -355,6 +397,7 @@ section.package-list {
       .btn-wrap {
         display: flex;
         margin: auto;
+
         button {
           margin: 0 0.5rem;
         }
@@ -375,43 +418,33 @@ section.package-list {
         <div class="triangle"></div>
       </div>
       <div class="spot-list">
-        <div
-          class="spot-item col-2"
-          v-for="(item, index) in spotList"
-          :key="index"
-          @click="filterIndex(index)"
-        >
+        <div class="spot-item col-2" v-for="(item, index) in spotList" :key="index" @click="filterIndex(index)">
           <div class="spot-img">
             <img :src="item.link" alt="" />
           </div>
-          <p>{{ item.name }}</p>
+          <!-- <p >{{ item.name }}</p> -->
+          <div ref="spotName" class="spotName">{{ item.name }}</div>
         </div>
       </div>
       <div class="filter">
         <div class="inner">排序</div>
         <div class="btn-wrap">
-          <button
-            @click="
-              sortPrice();
-              toggleArrowPrice();
-            "
-          >
+          <button @click="
+            sortPrice();
+          toggleArrowPrice();
+          ">
             行程價格<i :class="arrowTypePrice"></i>
           </button>
-          <button
-            @click="
-              sortTime();
-              toggleArrowTime();
-            "
-          >
+          <button @click="
+            sortTime();
+          toggleArrowTime();
+          ">
             出發日期<i :class="arrowTypeTime"></i>
           </button>
-          <button
-            @click="
-              sortRemain();
-              toggleArrowRemain();
-            "
-          >
+          <button @click="
+            sortRemain();
+          toggleArrowRemain();
+          ">
             剩餘名額<i :class="arrowTypeRemain"></i>
           </button>
         </div>
@@ -422,11 +455,7 @@ section.package-list {
     </section>
 
     <section class="package-list">
-      <div
-        class="package-item"
-        v-for="(item, index) in selectSpot(currentIndex)"
-        :key="index"
-      >
+      <div class="package-item" v-for="(item, index) in selectSpot(currentIndex)" :key="index">
         <div class="img">
           <Images :imgURL="`${item.link}`" :alt="``" />
           <!-- <img :src="item.link" alt="" /> -->
@@ -436,11 +465,14 @@ section.package-list {
           <div class="wrap">
             <div class="spec">
               <div class="seat">
-                <Icon type="md-contact" />剩餘<b>{{ item.seat }}</b
-                >個名額
+                <Icon type="md-contact" />剩餘<b>{{ item.seat }}</b>個名額
               </div>
-              <div class="date"><Icon type="md-calendar" />{{ item.date }}</div>
-              <div class="train"><Icon type="md-train" />{{ item.train }}</div>
+              <div class="date">
+                <Icon type="md-calendar" />{{ item.date }}
+              </div>
+              <div class="train">
+                <Icon type="md-train" />{{ item.train }}
+              </div>
             </div>
             <p class="clamp-2">{{ item.info }}</p>
           </div>
@@ -448,25 +480,15 @@ section.package-list {
 
         <div class="price">
           <del v-if="item.sale">NT${{ item.origin }}</del>
-          <div
-            class="purchase"
-            :style="{ 'margin-top': !item.sale ? 'auto' : 'initial' }"
-          >
+          <div class="purchase" :style="{ 'margin-top': !item.sale ? 'auto' : 'initial' }">
             <router-link :to="`/booking-info/${item.id}`">
-              <span
-                class="btn primary"
-                @mouseover="change(index)"
-                @mouseleave="reset(index)"
-                >{{ item.inner }}</span
-              >
+              <span class="btn primary" @mouseover="change(item, $event)" @mouseleave="reset(item, $event)">{{
+                item.inner
+              }}</span>
             </router-link>
           </div>
         </div>
-        <Icon
-          :type="item.heartType"
-          class="heart"
-          @click="toggleHeart(index)"
-        />
+        <Icon :type="item.heartType" class="heart" @click="toggleHeart(index)" />
 
         <div class="sale" v-show="item.sale == true">
           早鳥優惠中
@@ -488,7 +510,7 @@ export default {
       currentIndex: -1,
 
       ascending: true,
-
+      colorToggle: true,
       arrowTypePrice: "fa-solid fa-caret-up",
       arrowTypeTime: "fa-solid fa-caret-up",
       arrowTypeRemain: "fa-solid fa-caret-up",
@@ -549,11 +571,14 @@ export default {
     //景點篩選圖對應的index
     filterIndex(index) {
       this.currentIndex = index;
+      this.$refs.spotName.forEach(item => item.style = "")
+      this.$refs.spotName[index].style.color = "#fbc756"
     },
 
     //讓景點篩選重置，return [...this.packageList]
     resetSpot() {
       this.currentIndex = -1;
+      this.$refs.spotName.forEach(item => item.style = "")
     },
 
     //按景點圖片，會對應有經過此景點的行程
@@ -590,12 +615,14 @@ export default {
     },
 
     //價錢切換成立即購買
-    change(index) {
-      this.packageList[index].inner = this.packageList[index].hover;
+    change(item, event) {
+      // this.packageList[index].inner = this.packageList[index].hover;
+      event.target.innerText = item.hover;
     },
 
-    reset(index) {
-      this.packageList[index].inner = this.packageList[index].price;
+    reset(item, event) {
+      // this.packageList[index].inner = this.packageList[index].price;
+      event.target.innerText = item.price;
     },
     // ---------------------------
     //愛心切換
@@ -640,6 +667,8 @@ export default {
       } else {
         this.arrowTypeTime = "fa-solid fa-caret-down";
       }
+      document.querySelectorAll('.btn-wrap button').forEach(item => item.style = "")
+      document.querySelectorAll('.btn-wrap button')[1].style.color = "#fbc756";
     },
     //原始價格排序
     sortPrice() {
@@ -657,6 +686,8 @@ export default {
       } else {
         this.arrowTypePrice = "fa-solid fa-caret-down";
       }
+      document.querySelectorAll('.btn-wrap button').forEach(item => item.style = "")
+      document.querySelectorAll('.btn-wrap button')[0].style.color = "#fbc756";
     },
     //剩餘名額排序
     sortRemain() {
@@ -674,6 +705,8 @@ export default {
       } else {
         this.arrowTypeRemain = "fa-solid fa-caret-down";
       }
+      document.querySelectorAll('.btn-wrap button').forEach(item => item.style = "")
+      document.querySelectorAll('.btn-wrap button')[2].style.color = "#fbc756";
     },
   },
   mounted() {
@@ -683,4 +716,15 @@ export default {
     });
   },
 };
+
+
+
+
+
+
+
+
+
+
+
 </script>
