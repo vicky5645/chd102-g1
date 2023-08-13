@@ -37,9 +37,9 @@
     <div class="floor down">
       <img src="@/assets/images/img/index_pic/floor.png" alt="">
     </div>
-    <div class="chair_right down">
+    <!-- <div class="chair_right down">
       <img src="@/assets/images/img/index_pic/chair_right.png" alt="">
-    </div>
+    </div> -->
   </section>
 
 
@@ -574,7 +574,7 @@ export default {
 
       return (customers_wrap - screenW)
     }
-    // console.log(get_cus_distance())
+    
 
 
     const customers_ani = gsap.to('.customers_wrap', {
@@ -646,11 +646,6 @@ export default {
       }
     });
 
-
-
-
-
-
   },
 
 
@@ -662,9 +657,6 @@ export default {
     clearInterval(this.pic_settime);
 
   }
-
-
-
 
 
 }

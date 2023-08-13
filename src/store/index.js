@@ -2,7 +2,8 @@ import { createStore } from 'vuex'
 const updateStorage = (cart) => {
   localStorage.setItem('my-cart', JSON.stringify(cart))
 }
-import axios from 'axios'
+import axios from 'axios';
+import { BASE_URL } from "@/assets/js/common.js";
 export default createStore({
 
   state: {
@@ -123,7 +124,7 @@ export default createStore({
   actions: {
     async getAnnouncementData(context, value) {
       try {
-        const res = await axios.get("http://localhost/phps/selectBackendAnnouncements.php");
+        const res = await axios.get(`${BASE_URL}selectBackendAnnouncements.php`);
         if (!res) throw new Error("沒抓到資料");
         context.commit('setAnnouncementData', res.data);
       } catch (err) {
