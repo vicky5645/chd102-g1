@@ -160,8 +160,8 @@
             >
             <input
               type="file"
+              accept="image/*"
               class="form-control"
-              accept="image"
               name="news_img"
               id="inputGroupFile02"
               @change="handleFileUpload"
@@ -169,13 +169,19 @@
           </div>
           <div class="model_body_pic">
             <Images
-              v-if="currentItem.pattern_file && !newAnnouncement.pattern_file"
+              v-if="currentItem.pattern_file && !newAnnouncement.pattern_file && !encodedSVG"
               :imgURL="`${currentItem.pattern_file}`"
               :alt="`Image preview`"
             />
             <img
-              v-if="newAnnouncement.pattern_file"
+              v-if="newAnnouncement.pattern_file && !encodedSVG"
               :src="`${newAnnouncement.pattern_file}`"
+              :alt="`Image preview`"
+              :id="`imgPreview`"
+            />
+            <img
+              v-if="encodedSVG"
+              :src="`${encodedSVG}`"
               :alt="`Image preview`"
               :id="`imgPreview`"
             />
@@ -205,10 +211,7 @@
   </div>
 
   <!-- new modal -->
-  <form
-    action="http://localhost:80/phps/postPattern.php"
-    method="post"
-    enctype="multipart/form-data"
+  <div
     class="modal fade"
     id="itemNewModal"
     tabindex="-1"
@@ -286,6 +289,7 @@
                 >
                 <input
                   type="file"
+                  accept="image/*"
                   class="form-control"
                   name="news_img"
                   id="inputGroupFile01"
@@ -294,8 +298,14 @@
               </div>
               <div class="model_body_pic">
                 <img
-                  v-if="newAnnouncement.pattern_file"
+                  v-if="newAnnouncement.pattern_file && !encodedSVG"
                   :src="`${newAnnouncement.pattern_file}`"
+                  :alt="`Image preview`"
+                  :id="`imgPreview`"
+                />
+                <img
+                  v-if="encodedSVG"
+                  :src="`${encodedSVG}`"
                   :alt="`Image preview`"
                   :id="`imgPreview`"
                 />
@@ -313,14 +323,18 @@
             >
               取消
             </button>
-            <button class="btn btn-primary" @click="submitAnnouncement()">
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="submitAnnouncement()"
+            >
               確定新增
             </button>
           </slot>
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -358,6 +372,7 @@ export default {
         pattern_file: null,
         pattern_file_name: null,
       },
+      encodedSVG: null,
     };
   },
 
@@ -382,8 +397,10 @@ export default {
 
   methods: {
     cancelChanges() {
-      this.currentItem = { ...this.backupItem };
+      this.currentItem = {};
       this.showModal = false;
+      this.clearAnnouncement();
+      this.encodedSVG = null;
     },
     openModal(item) {
       this.currentItem = item;
@@ -406,13 +423,25 @@ export default {
       }
 
       const file = files[0];
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        alert("檔案大小超過 2MB");
+        event.target.value = ""; // 清空
+        return;
+      }
       // console.log("file", file);
       const reader = new FileReader();
 
       reader.onload = (e) => {
-        // console.log(e)
-        this.newAnnouncement.pattern_file = e.target.result;
+        console.log(e.target.result);
         this.newAnnouncement.pattern_file_name = file.name;
+        if (file.name.toLowerCase().endsWith(".svg")) {
+          const encodedSVG = e.target.result.split(",")[1];
+          this.newAnnouncement.pattern_file = encodedSVG;
+          this.encodedSVG = e.target.result;
+        } else {
+          this.newAnnouncement.pattern_file = e.target.result;
+        }
       };
       reader.readAsDataURL(file);
     },
@@ -440,9 +469,9 @@ export default {
       if (imgFile) {
         data.append("type", "editImg");
         data.append("pattern_file", this.currentItem.pattern_file);
-        data.append("news_filename", this.newAnnouncement.pattern_file_name); // imgFile 是圖片data
-        data.append("news_img", imgFile);
-        console.log("news_img", imgFile);
+        data.append("news_filename", this.newAnnouncement.pattern_file_name);
+        data.append("news_img", imgFile); // imgFile 是新圖片data
+        // console.log("news_img", imgFile);
       }
       // 使用 Axios 發送 POST 請求
       axios
@@ -451,52 +480,57 @@ export default {
           // 請求成功後的處理
           console.log(response.data);
           // 重新取得資料
-          this.getdataFromMySQL();
           alert("已修改圖案成功！");
+          this.getdataFromMySQL();
         })
         .catch((error) => {
           // 請求失敗後的處理
           console.error(error);
           alert("修改失敗！");
         });
+      // this.clearAnnouncement();
     },
     // new modal
     submitAnnouncement() {
+      const newModel = this.newAnnouncement;
+      const imgFile = this.newAnnouncement.pattern_file;
       if (
-        !this.newAnnouncement.pattern_name ||
-        !this.newAnnouncement.pattern_desc
+        !newModel.pattern_name ||
+        !newModel.pattern_desc ||
+        !newModel.pattern_file
       ) {
         alert("所有欄位都必須填寫！");
         return;
       }
 
-      // 準備要傳送的資料，這裡假設要傳送 pattern_name 和 pattern_desc
-      // const data = {
-      //   pattern_name: this.newAnnouncement.pattern_name,
-      //   pattern_desc: this.newAnnouncement.pattern_desc,
-      // };
+      // 準備要傳送的資料
+      const data = new FormData(); // POST 表單資料
+      data.append("pattern_name", newModel.pattern_name);
+      data.append("pattern_desc", newModel.pattern_desc);
+      data.append("news_filename", newModel.pattern_file_name);
 
-      // // 使用 Axios 發送 POST 請求
-      // axios.post("http://localhost:80/phps/postPattern.php", data)
-      // .then((response) => {
-      //   // 請求成功後的處理
-      //   console.log(response.data);
-      //   alert("新增成功！");
-      // })
-      // .catch((error) => {
-      //   // 請求失敗後的處理
-      //   console.error(error);
-      //   alert("新增失敗！");
-      // });
+      if (newModel.pattern_file) {
+        data.append("type", "addImg");
+        data.append("news_img", imgFile);
+      }
 
-      // this.clearAnnouncement();
-      // this.newAnnouncement = {
-      //   pattern_no: "", // 確保 id 屬性存在
-      //   pattern_name: "",
-      //   pattern_desc: "",
-      //   creation_date: "",
-      //   pattern_file: null,
-      // };
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}postPattern.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          // 重新取得資料
+          alert("新增成功！");
+          this.getdataFromMySQL();
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          alert("新增失敗！");
+        });
+
+      this.clearAnnouncement();
 
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
@@ -510,6 +544,7 @@ export default {
         pattern_desc: "",
         creation_date: "",
         pattern_file: null,
+        pattern_file_name: null,
       };
     },
 
@@ -535,8 +570,8 @@ export default {
           // 請求成功後的處理
           console.log(response.data);
           // 重新取得資料
-          this.getdataFromMySQL();
           alert("已刪除圖案成功！");
+          this.getdataFromMySQL();
         })
         .catch((error) => {
           // 請求失敗後的處理
@@ -546,16 +581,17 @@ export default {
     },
     //取資料
     async getdataFromMySQL() {
-      await axios.get(`${BASE_URL}getPattern.php`)
+      await axios
+        .get(`${BASE_URL}getPattern.php`)
         .then((response) => {
-        this.dataFromMySQL = response.data;
+          this.dataFromMySQL = response.data;
 
-        // 確認是否成功
-        // console.log("Data retrieved from MySQL:", "dataFromMySQL");
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the data:", error);
-      });
+          // 確認是否成功
+          // console.log("Data retrieved from MySQL:", "dataFromMySQL");
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data:", error);
+        });
     },
   },
   created() {
