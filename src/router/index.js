@@ -460,4 +460,22 @@ const router = createRouter({
   routes: routesUser,
 });
 
+// router.beforeEach((to, from, next) => {
+//   if (to.name === 'payment' && from.name !== 'checkout') {
+//     // 如果目標路由是 "payment"，但不是從 "checkout" 來的，則導向 "checkout"
+//     next({ name: 'payment' });
+//     // return { name: 'checkout'}
+//   } else {
+//     next(); // 其他路由正常導航
+//   }
+// });
+
+router.beforeEach((to, from) => {
+  if (to.name === 'payment' && from.name !== 'checkout') {
+    // 如果目標路由是 "payment"，但不是從 "checkout" 來的，則導向 "online-mall"
+    return { name: 'online-mall'}
+  }
+});
+
+
 export default router;
