@@ -42,7 +42,7 @@
       <tr v-for="(item, index) in filteredItems" :key="index">
         <th scope="row">{{ item.pkg_no }}</th>
         <td class="ellipsis">{{ item.pkg_price }}</td>
-        <td class="ellipsis">{{ item.pkg_status }}</td>
+        <td class="ellipsis">{{ pkgStatus(item.pkg_status) }}</td>
         <td class="ellipsis">{{ item.pkg_name }}</td>
         <td class="ellipsis">{{ item.pkg_desc }}</td>
         <td class="ellipsis">{{ item.train_no }}</td>
@@ -70,7 +70,6 @@
     action=""
     method="post"
     enctype="multipart/form-data"
-    ref="package-form"
     v-if="showModal"
     class="modal fade"
     id="itemModal"
@@ -122,6 +121,7 @@
               aria-describedby="inputGroup-sizing-lg"
               min="0"
               max="1"
+              @input="checkInput"
             />
           </div>
           <div class="input-group input-group-lg">
@@ -164,6 +164,7 @@
               aria-describedby="inputGroup-sizing-lg"
               min="1"
               max="3"
+              @input="checkInput"
             />
           </div>
           <div class="input-group input-group-lg">
@@ -189,7 +190,6 @@
             刪除
           </button>
           <button
-            type="button"
             class="btn btn-primary"
             data-bs-dismiss="modal"
             @click="saveChanges"
@@ -251,6 +251,7 @@
                   aria-describedby="inputGroup-sizing-lg"
                   min="0"
                   max="1"
+                  @input="checkInput"
                 />
               </div>
 
@@ -293,8 +294,9 @@
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
-                  min="0"
+                  min="1"
                   max="3"
+                  @input="checkInput"
                 />
               </div>
 
@@ -337,11 +339,7 @@
             >
               取消
             </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              @click="submitAnnouncement()"
-            >
+            <button class="btn btn-primary" @click="submitAnnouncement()">
               確定新增
             </button>
           </slot>
@@ -371,7 +369,7 @@ export default {
       // new model
       newAnnouncement: {
         pkg_price: "",
-        pkg_status: "",
+        pkg_status: 0,
         pkg_name: "",
         pkg_desc: "",
         train_no: "",
@@ -394,6 +392,22 @@ export default {
   },
 
   methods: {
+    //顯示上下架
+    pkgStatus(pkg_status) {
+      return pkg_status == 1 ? "上架" : "下架";
+    },
+    //讓使用者只能輸入介於min到max
+    checkInput(event) {
+      let value = parseInt(event.target.value);
+      let min = parseInt(event.target.min);
+      let max = parseInt(event.target.max);
+      if (value < min) {
+        event.target.value = min;
+      } else if (value > max) {
+        event.target.value = max;
+      }
+    },
+
     cancelChanges() {
       this.currentItem = { ...this.backupItem };
       this.showModal = false;
@@ -435,6 +449,7 @@ export default {
       data.append("pkg_no", this.currentItem.pkg_no);
       data.append("pkg_price", this.currentItem.pkg_price);
       data.append("pkg_status", this.currentItem.pkg_status);
+      data.append("pkg_name", this.currentItem.pkg_name);
       data.append("pkg_desc", this.currentItem.pkg_desc);
       data.append("train_no", this.currentItem.train_no);
       data.append("conductor", this.currentItem.conductor);
@@ -443,9 +458,9 @@ export default {
         .post(`${BASE_URL}editPackage.php`, data)
         .then((response) => {
           // 請求成功後的處理
-          console.log(response.data);
+          // console.log(response.data);
           location.reload(); //刷新頁面
-          alert("已修改成功！");
+          alert("修改成功！");
         })
         .catch((error) => {
           // 請求失敗後的處理
@@ -458,7 +473,6 @@ export default {
     submitAnnouncement() {
       if (
         !this.newAnnouncement.pkg_price ||
-        !this.newAnnouncement.pkg_status ||
         !this.newAnnouncement.pkg_name ||
         !this.newAnnouncement.pkg_desc ||
         !this.newAnnouncement.train_no ||
@@ -500,7 +514,7 @@ export default {
     clearAnnouncement() {
       this.newAnnouncement = {
         pkg_price: "",
-        pkg_status: "",
+        pkg_status: 0,
         pkg_name: "",
         pkg_desc: "",
         train_no: "",
@@ -527,7 +541,7 @@ export default {
         .post(`${BASE_URL}deletePackage.php`, data)
         .then((response) => {
           // 請求成功後的處理
-          console.log(response.data);
+          // console.log(response.data);
           location.reload();
           alert("刪除成功！");
         })

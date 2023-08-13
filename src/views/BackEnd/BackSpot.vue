@@ -38,7 +38,7 @@
         <th scope="row">{{ item.spot_no }}</th>
         <td class="ellipsis">{{ item.spot_name }}</td>
         <td class="ellipsis">{{ item.spot_info }}</td>
-        <td class="ellipsis">{{ item.spot_status }}</td>
+        <td class="ellipsis">{{ spotStatus(item.spot_status) }}</td>
         <td class="ellipsis">{{ item.spot_file }}</td>
         <td style="text-align: right">
           <button
@@ -63,7 +63,6 @@
     action=""
     method="post"
     enctype="multipart/form-data"
-    ref="spot-form"
     v-if="showModal"
     class="modal fade"
     id="itemModal"
@@ -128,6 +127,7 @@
               aria-describedby="inputGroup-sizing-lg"
               min="0"
               max="1"
+              @input="checkInput"
             />
           </div>
 
@@ -182,7 +182,6 @@
             刪除
           </button>
           <button
-            type="button"
             class="btn btn-primary"
             data-bs-dismiss="modal"
             @click="saveChanges"
@@ -271,6 +270,8 @@
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
+                  min="0"
+                  max="1"
                 />
               </div>
 
@@ -308,11 +309,7 @@
             >
               取消
             </button>
-            <button
-              class="btn btn-primary"
-              type="button"
-              @click="submitAnnouncement()"
-            >
+            <button class="btn btn-primary" @click="submitAnnouncement()">
               確定新增
             </button>
           </slot>
@@ -331,13 +328,7 @@ export default {
   data() {
     return {
       dataFromMySQL: [],
-      // items: [
-      //   {
-      //     id: 1,
-      //     name: "綠野號",
-      //     qty: 40,
-      //   },
-      // ],
+
       // search
       searchText: "",
       // model
@@ -350,6 +341,7 @@ export default {
         spot_no: "", // 確保 id 屬性存在
         spot_name: "",
         spot_info: "",
+        spot_status: 0,
         spot_file: null,
       },
     };
@@ -369,6 +361,22 @@ export default {
   },
 
   methods: {
+    //顯示上下架
+    spotStatus(spot_status) {
+      return spot_status == 1 ? "上架" : "下架";
+    },
+    //讓使用者只能輸入介於min到max
+    checkInput(event) {
+      let value = parseInt(event.target.value);
+      let min = parseInt(event.target.min);
+      let max = parseInt(event.target.max);
+      if (value < min) {
+        event.target.value = min;
+      } else if (value > max) {
+        event.target.value = max;
+      }
+    },
+
     cancelChanges() {
       this.currentItem = { ...this.backupItem };
       this.showModal = false;
@@ -438,9 +446,9 @@ export default {
         .post(`${BASE_URL}editSpot.php`, data)
         .then((response) => {
           // 請求成功後的處理
-          console.log(response.data);
+          // console.log(response.data);
           location.reload(); //刷新頁面
-          alert("已修改圖案成功！");
+          alert("修改成功！");
         })
         .catch((error) => {
           // 請求失敗後的處理
@@ -451,11 +459,7 @@ export default {
 
     // new model
     submitAnnouncement() {
-      if (
-        !this.newAnnouncement.spot_name ||
-        !this.newAnnouncement.spot_info ||
-        !this.newAnnouncement.spot_status
-      ) {
+      if (!this.newAnnouncement.spot_name || !this.newAnnouncement.spot_info) {
         alert("所有欄位都必須填寫！");
         return;
       }
@@ -470,7 +474,7 @@ export default {
         spot_no: "", // 確保 id 屬性存在
         spot_name: "",
         spot_info: "",
-        spot_status: "",
+        spot_status: 0,
         spot_file: null,
       };
     },
@@ -514,9 +518,6 @@ export default {
       .get(`${BASE_URL}/getSpot.php`)
       .then((response) => {
         this.dataFromMySQL = response.data;
-
-        // 打印取得的資料以確認是否成功
-        // console.log("Data retrieved from MySQL:", this.dataFromMySQL);
       })
       .catch((error) => {
         console.error("There was an error fetching the data:", error);

@@ -10,9 +10,9 @@ try {
 	$organize = $pdo->query($sql); 
 
 	//取回所有的資料, 放在2維陣列中
-	$organizeItems= $organize->fetchAll(PDO::FETCH_ASSOC);
+	$organizeData= $organize->fetchAll(PDO::FETCH_ASSOC);
 
-	echo json_encode($organizeItems);
+	echo json_encode($organizeData);
 } 
 catch (Exception $e) {
 	echo "錯誤row : ", $e->getLine(), "<br>";
