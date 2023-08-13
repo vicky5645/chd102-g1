@@ -462,14 +462,14 @@ const router = createRouter({
 
 // router.beforeEach((to, from, next) => {
 //   if (to.name === 'payment' && from.name !== 'checkout') {
-//     // 如果目標路由是 "payment"，但不是從 "checkout" 來的，則導向 "checkout"
-//     next({ name: 'payment' });
-//     // return { name: 'checkout'}
+//     // 如果目標路由是 "payment"，但不是從 "checkout" 來的，則導向 "online-mall"
+//     next({ name: 'online-mall' });
 //   } else {
 //     next(); // 其他路由正常導航
 //   }
 // });
 
+// Vue Router 4 寫法可不用next()
 router.beforeEach((to, from) => {
   if (to.name === 'payment' && from.name !== 'checkout') {
     // 如果目標路由是 "payment"，但不是從 "checkout" 來的，則導向 "online-mall"
