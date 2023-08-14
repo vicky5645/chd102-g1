@@ -1,7 +1,16 @@
 <!-- 後台行程景點 -->
 <template>
+selectFieldKey {{ selectFieldKey }}
   <!-- select bar -->
   <div class="search_new">
+    <div class="col-md-2"><select ref="selected" class="form-select" @change="selectOption">
+        <option ref="select" value="0">全部查詢</option>
+        <option ref="select" value="1">公告編號</option>
+        <option ref="select" value="2">公告標題</option>
+        <option ref="select" value="3">公告類型</option>
+        <option ref="select" value="4">公告內容</option>
+        <option ref="select" value="5">公告時間</option>
+      </select></div>
     <div class="input-group">
       <input
         v-model="searchText"
@@ -38,7 +47,7 @@
         <th scope="row">{{ item.pkg_no }}</th>
         <td class="ellipsis">{{ item.spot_no }}</td>
         <td class="ellipsis">{{ item.spot_sort }}</td>
-        <td class="ellipsis">{{ item.pkg_howday }}</td>
+        <td class="ellipsis">{{ `第${item.pkg_howday}天` }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -320,6 +329,7 @@ export default {
       // ],
       // search
       searchText: "",
+      selectFieldKey: 0,
       // model
       currentItem: {},
       backupItem: {},
@@ -349,6 +359,10 @@ export default {
   },
 
   methods: {
+    //選擇篩選欄位
+    selectOption() {
+      this.selectFieldKey = parseInt(this.$refs.selected.value)
+    },
     // model
     saveChanges() {
       // 在這裡更新資料
@@ -431,20 +445,23 @@ export default {
         this.showModal = false;
       }
     },
-  },
-  // 抓 php 資料
-  created() {
-    axios
-      .get(`${BASE_URL}/getPackagePass.php`)
-      .then((response) => {
-        this.dataFromMySQL = response.data;
+    //取資料
+    async getdataFromMySQL() {
+      await axios
+        .get(`${BASE_URL}getPackagePass.php`)
+        .then((response) => {
+          this.dataFromMySQL = response.data;
 
-        // 打印取得的資料以確認是否成功
-        console.log("Data retrieved from MySQL:", "dataFromMySQL");
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the data:", error);
-      });
+          // 確認是否成功
+          console.log("Data retrieved from MySQL:", "dataFromMySQL");
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data:", error);
+        });
+    },
+  },
+  created() {
+    this.getdataFromMySQL();
   },
 };
 </script>
