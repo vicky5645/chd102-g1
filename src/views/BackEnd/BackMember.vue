@@ -154,9 +154,7 @@
             />
           </div>
           <div class="input-group input-group-lg">
-            <span class="input-group-text" id="inputGroup-sizing-lg"
-              >手機</span
-            >
+            <span class="input-group-text" id="inputGroup-sizing-lg">手機</span>
             <input
               disabled
               v-model="currentItem.mem_mobile"
@@ -168,9 +166,7 @@
             />
           </div>
           <div class="input-group input-group-lg">
-            <span class="input-group-text" id="inputGroup-sizing-lg"
-              >住址</span
-            >
+            <span class="input-group-text" id="inputGroup-sizing-lg">住址</span>
             <input
               disabled
               v-model="currentItem.mem_addr"
@@ -182,9 +178,7 @@
             />
           </div>
           <div class="input-group input-group-lg">
-            <span class="input-group-text" id="inputGroup-sizing-lg"
-              >帳號</span
-            >
+            <span class="input-group-text" id="inputGroup-sizing-lg">帳號</span>
             <input
               disabled
               v-model="currentItem.mem_acc"
@@ -196,9 +190,7 @@
             />
           </div>
           <div class="input-group input-group-lg">
-            <span class="input-group-text" id="inputGroup-sizing-lg"
-              >密碼</span
-            >
+            <span class="input-group-text" id="inputGroup-sizing-lg">密碼</span>
             <input
               disabled
               v-model="currentItem.mem_pwd"
@@ -242,14 +234,14 @@
           >
             刪除會員
           </button>
-          <button
+          <!-- <button
             type="button"
             class="btn btn-primary"
             data-bs-dismiss="modal"
             @click.prevent="saveChanges"
           >
             儲存變更
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
@@ -449,9 +441,15 @@ export default {
       selectedFile: null,
       // new model
       newAnnouncement: {
-        id: "", // 確保 id 屬性存在
-        name: "",
-        qty: "",
+        // mem_no: null,
+        // mem_name: "",
+        // mem_salutation: "",
+        // mem_email: "",
+        // mem_mobile: "",
+        // mem_addr: "",
+        // mem_acc: "",
+        // mem_pwd: "",
+        // pattern_file: "",
       },
     };
   },
@@ -524,11 +522,6 @@ export default {
 
       console.log(this.newAnnouncement);
       this.clearAnnouncement();
-      this.newAnnouncement = {
-        id: "",
-        name: "",
-        qty: "",
-      };
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
       modalInstance.hide();
@@ -536,36 +529,65 @@ export default {
 
     clearAnnouncement() {
       this.newAnnouncement = {
-        id: "",
-        name: "",
-        qty: "",
+        mem_no: null,
+        mem_name: "",
+        mem_salutation: "",
+        mem_email: "",
+        mem_mobile: "",
+        mem_addr: "",
+        mem_acc: "",
+        mem_pwd: "",
+        pattern_file: "",
       };
     },
 
     // delete announcement
     deleteAnnouncement() {
-      const index = this.items.findIndex(
-        (item) => item.id === this.currentItem.id
+      const index = this.dataFromMySQL.findIndex(
+        (item) => item.mem_no === this.currentItem.mem_no
       );
       if (index !== -1) {
-        this.items.splice(index, 1);
+        this.dataFromMySQL.splice(index, 1);
         this.showModal = false;
       }
+      //傳送資料庫要刪除的項目
+      const data = new FormData(); // POST 表單資料
+      data.append("mem_no", this.currentItem.mem_no);
+      // data.append("pattern_file", this.currentItem.pattern_file);
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}deleteMember.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          // 重新取得資料
+          alert("已刪除會員成功！");
+          this.getdataFromMySQL();
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          console.log("刪除失敗！");
+        });
+    },
+    //取資料
+    async getdataFromMySQL() {
+      await axios
+        .get(`${BASE_URL}/getMember.php`)
+        .then((response) => {
+          this.dataFromMySQL = response.data;
+
+          // 打印取得的資料以確認是否成功
+          console.log("Data retrieved from MySQL:", "dataFromMySQL");
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data:", error);
+        });
     },
   },
   // 抓 php 資料
   created() {
-    axios
-      .get(`${BASE_URL}/getMember.php`)
-      .then((response) => {
-        this.dataFromMySQL = response.data;
-
-        // 打印取得的資料以確認是否成功
-        console.log("Data retrieved from MySQL:", "dataFromMySQL");
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the data:", error);
-      });
+    this.getdataFromMySQL();
   },
 };
 </script>
