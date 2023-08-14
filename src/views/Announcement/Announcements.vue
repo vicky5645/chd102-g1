@@ -25,7 +25,7 @@
     </div>
 
     <template v-if="filteredArticles.length">
-      <div v-for="article in filteredArticles" :key="article.id" class="article_card">
+      <div v-for="(article, index) in filteredArticles" :key="article.id" class="article_card">
         <div class="pic">
           <Images :imgURL="`${article.image}`" :alt="`Article Image`" />
           <!-- <img :src="article.image" alt="Article Image" /> -->
@@ -36,7 +36,8 @@
           </p>
           <h3>{{ article.title }}</h3>
           <p class="card_txt_content">{{ article.content }}</p>
-          <router-link :to="`/announcement-details/${article.id}`" class="more">查看更多</router-link>
+          <!-- <router-link :to="`/announcement-details/${article.id}`" class="more">查看更多</router-link> -->
+          <router-link :to="`/announcement-details/${index + 1}`" class="more">查看更多</router-link>
         </div>
       </div>
     </template>
@@ -47,7 +48,7 @@
 </template>
 
 <script>
-import {GET} from '@/plugin/axios'
+import { GET } from '@/plugin/axios'
 export default {
   data() {
     return {
@@ -111,13 +112,38 @@ export default {
           (this.selectedType === "所有" || this.selectedType === article.type)
       );
     },
+    async backgetAnnouncementData() {
+      await this.$store.dispatch("getAnnouncementData")
+      this.airticles = []
+      this.$store.state.AnnouncementData.forEach(element => {
+        let { anno_no: id, anno_title: title, anno_type: type, anno_content: content, anno_date: date, anno_file: image } = element
+        if (!image.includes("/")) {
+          image = `images/img/announcements/${image}`;
+        }
+        this.airticles.push({
+          id,
+          title,
+          type,
+          content,
+          date,
+          image
+        })
+      });
+      this.filteredArticles = this.airticles
+    },
   },
   created() {
-      // 取得API
-    GET('/data/airticlesData.json').then(res => {
-      this.airticles = res;
-      this.filteredArticles = this.airticles;
-    })
+    // 取得API
+    // GET('/data/airticlesData.json').then(res => {
+    //   this.airticles = res;
+    //   this.filteredArticles = this.airticles;
+    // })
+    this.backgetAnnouncementData();
   },
+
+
+
+
+
 };
 </script>

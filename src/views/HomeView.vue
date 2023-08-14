@@ -275,6 +275,8 @@ export default {
   },
   data() {
     return {
+      gsap_about_scroll_card: {},
+      gsap_about_scroll_train:{}, 
       travelData: "./data/travel_cus.json",
       about_device_switch: true,
       pic_settime_name: null,
@@ -435,7 +437,7 @@ export default {
     })
 
 
-    ScrollTrigger.create({
+    this.gsap_about_scroll_card = ScrollTrigger.create({
       trigger: '.about_part_one_left ',
       start: 'top top',
       pin: true,
@@ -445,7 +447,7 @@ export default {
     });
 
 
-    gsap.to('.scroll_train', {
+    this.gsap_about_scroll_train = gsap.to('.scroll_train', {
       y: 2990,
       scrollTrigger: {
         trigger: '.about_right',
@@ -480,7 +482,7 @@ export default {
 
 
     let screen_width = window.innerWidth;
-    let screen_height = window.innerHeight;
+   
 
     function get_distance() {
       return screen_width = window.innerWidth
@@ -574,7 +576,7 @@ export default {
 
       return (customers_wrap - screenW)
     }
-    
+
 
 
     const customers_ani = gsap.to('.customers_wrap', {
@@ -652,7 +654,8 @@ export default {
 
 
   beforeUnmount() {
-
+    this.gsap_about_scroll_card.kill();
+    this.gsap_about_scroll_train.kill() 
     clearInterval(this.clearpic_settime);
     clearInterval(this.pic_settime);
 
