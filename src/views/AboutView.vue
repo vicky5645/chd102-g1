@@ -7,40 +7,42 @@
     <div class="introWrapper">
       <div class="container">
         <div class="introTxt">
-          <div class="introCard">
-            <h3 class="h3">銀月山脈的浪漫之旅</h3>
-            <span>
-              在銀光閃爍的月夜中，我們將帶您從綠野牧場出發，經過景觀公園，最終到達神秘的銀月山脈，讓您在浪漫之旅中享受自然的獨特魅力。
-            </span>
-            <div class="moreInfo">
-              <router-link to="/itinerary-intro">查看更多</router-link>
-              <router-link to="/itinerary-intro">
-                <img src="#" alt="" />
-              </router-link>
+          <div class="cardWrap">
+            <div class="introCard">
+              <h3 class="h3">銀月山脈的浪漫之旅</h3>
+              <span>
+                在銀光閃爍的月夜中，我們將帶您從綠野牧場出發，經過景觀公園，最終到達神秘的銀月山脈，讓您在浪漫之旅中享受自然的獨特魅力。
+              </span>
+              <div class="moreInfo">
+                <router-link to="/itinerary-intro">查看更多</router-link>
+                <router-link to="/itinerary-intro">
+                  <img src="#" alt="" />
+                </router-link>
+              </div>
             </div>
-          </div>
-          <div class="introCard">
-            <h3 class="h3">湖光山色的奇幻之旅</h3>
-            <span>
-              從幽谷湖泊出發，穿越壯觀的亞瑟山口，最後抵達紅葉村，我們將帶您體驗湖光山色中的奇幻之旅，感受大自然的絢爛多彩。
-            </span>
-            <div class="moreInfo">
-              <router-link to="/itinerary-intro">查看更多</router-link>
-              <router-link to="/itinerary-intro">
-                <img src="#" alt="" />
-              </router-link>
+            <div class="introCard">
+              <h3 class="h3">湖光山色的奇幻之旅</h3>
+              <span>
+                從幽谷湖泊出發，穿越壯觀的亞瑟山口，最後抵達紅葉村，我們將帶您體驗湖光山色中的奇幻之旅，感受大自然的絢爛多彩。
+              </span>
+              <div class="moreInfo">
+                <router-link to="/itinerary-intro">查看更多</router-link>
+                <router-link to="/itinerary-intro">
+                  <img src="#" alt="" />
+                </router-link>
+              </div>
             </div>
-          </div>
-          <div class="introCard">
-            <h3 class="h3">海底餐廳的冒險之旅</h3>
-            <span>
-              從生機勃勃的景觀公園出發，經過翠嶺溫泉鄉，到達神秘的海底餐廳，帶您進行一場驚險刺激的冒險之旅，讓您深入探索自然之美。
-            </span>
-            <div class="moreInfo">
-              <router-link to="/itinerary-intro">查看更多</router-link>
-              <router-link to="/itinerary-intro">
-                <img src="#" alt="" />
-              </router-link>
+            <div class="introCard">
+              <h3 class="h3">海底餐廳的冒險之旅</h3>
+              <span>
+                從生機勃勃的景觀公園出發，經過翠嶺溫泉鄉，到達神秘的海底餐廳，帶您進行一場驚險刺激的冒險之旅，讓您深入探索自然之美。
+              </span>
+              <div class="moreInfo">
+                <router-link to="/itinerary-intro">查看更多</router-link>
+                <router-link to="/itinerary-intro">
+                  <img src="#" alt="" />
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -132,6 +134,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/style.scss";
 * {
   margin: 0;
   padding: 0;
@@ -181,29 +184,49 @@ export default {
 
   .introTxt {
     height: 100vh;
-    display: flex;
-    justify-content: space-between;
-    color: white;
-    font-weight: bold;
+    position: relative;
+    @include pad {
+      display: flex;
+      justify-content: space-between;
+      color: white;
+      font-weight: bold;
+    }
 
-    .introCard {
-      background-color: rgba($color: #898989, $alpha: 0.6);
-      margin-top: auto;
-      width: 33.333333%;
-      padding-bottom: 40px;
-
-      h3 {
-        // font-size: 28px;
-        padding: 8px 16px;
-        opacity: 1;
+    .cardWrap {
+      width: 100%;
+      color: white;
+      @include pad {
+        display: flex;
       }
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      .introCard {
+        background-color: rgba($color: #898989, $alpha: 0.6);
+        margin-top: auto;
 
-      span {
-        display: block;
-        color: white;
-        font-size: 18px;
-        padding: 8px 16px;
-        line-height: 2rem;
+        width: 100%;
+        @include pc {
+          width: 33.333333%;
+          padding-bottom: 40px;
+        }
+
+        h3 {
+          // font-size: 28px;
+          padding: 8px 16px;
+          opacity: 1;
+        }
+
+        span {
+          display: none;
+          @include pad {
+            display: block;
+            color: white;
+            font-size: 18px;
+            padding: 8px 16px;
+            line-height: 2rem;
+          }
+        }
       }
 
       .moreInfo {
