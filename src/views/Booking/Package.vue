@@ -69,7 +69,7 @@ section.spot-filter {
       .spotName {
         font-size: 1.25rem;
         font-weight: bold;
-        color: #6B7280;
+        color: #6b7280;
       }
 
       .spot-img {
@@ -186,7 +186,6 @@ section.package-list {
         margin: auto 0;
 
         .spec {
-
           .seat,
           .date,
           .train {
@@ -378,7 +377,7 @@ section.package-list {
           div {
             font-size: 1.25rem;
             font-weight: bold;
-            color: #6B7280;
+            color: #6b7280;
           }
         }
       }
@@ -418,7 +417,12 @@ section.package-list {
         <div class="triangle"></div>
       </div>
       <div class="spot-list">
-        <div class="spot-item col-2" v-for="(item, index) in spotList" :key="index" @click="filterIndex(index)">
+        <div
+          class="spot-item col-2"
+          v-for="(item, index) in spotList"
+          :key="index"
+          @click="filterIndex(index)"
+        >
           <div class="spot-img">
             <img :src="item.link" alt="" />
           </div>
@@ -429,22 +433,28 @@ section.package-list {
       <div class="filter">
         <div class="inner">排序</div>
         <div class="btn-wrap">
-          <button @click="
-            sortPrice();
-          toggleArrowPrice();
-          ">
+          <button
+            @click="
+              sortPrice();
+              toggleArrowPrice();
+            "
+          >
             行程價格<i :class="arrowTypePrice"></i>
           </button>
-          <button @click="
-            sortTime();
-          toggleArrowTime();
-          ">
+          <button
+            @click="
+              sortTime();
+              toggleArrowTime();
+            "
+          >
             出發日期<i :class="arrowTypeTime"></i>
           </button>
-          <button @click="
-            sortRemain();
-          toggleArrowRemain();
-          ">
+          <button
+            @click="
+              sortRemain();
+              toggleArrowRemain();
+            "
+          >
             剩餘名額<i :class="arrowTypeRemain"></i>
           </button>
         </div>
@@ -455,7 +465,11 @@ section.package-list {
     </section>
 
     <section class="package-list">
-      <div class="package-item" v-for="(item, index) in selectSpot(currentIndex)" :key="index">
+      <div
+        class="package-item"
+        v-for="(item, index) in selectSpot(currentIndex)"
+        :key="index"
+      >
         <div class="img">
           <Images :imgURL="`${item.link}`" :alt="``" />
           <!-- <img :src="item.link" alt="" /> -->
@@ -465,14 +479,11 @@ section.package-list {
           <div class="wrap">
             <div class="spec">
               <div class="seat">
-                <Icon type="md-contact" />剩餘<b>{{ item.seat }}</b>個名額
+                <Icon type="md-contact" />剩餘<b>{{ item.seat }}</b
+                >個名額
               </div>
-              <div class="date">
-                <Icon type="md-calendar" />{{ item.date }}
-              </div>
-              <div class="train">
-                <Icon type="md-train" />{{ item.train }}
-              </div>
+              <div class="date"><Icon type="md-calendar" />{{ item.date }}</div>
+              <div class="train"><Icon type="md-train" />{{ item.train }}</div>
             </div>
             <p class="clamp-2">{{ item.info }}</p>
           </div>
@@ -480,15 +491,25 @@ section.package-list {
 
         <div class="price">
           <del v-if="item.sale">NT${{ item.origin }}</del>
-          <div class="purchase" :style="{ 'margin-top': !item.sale ? 'auto' : 'initial' }">
+          <div
+            class="purchase"
+            :style="{ 'margin-top': !item.sale ? 'auto' : 'initial' }"
+          >
             <router-link :to="`/booking-info/${item.id}`">
-              <span class="btn primary" @mouseover="change(item, $event)" @mouseleave="reset(item, $event)">{{
-                item.inner
-              }}</span>
+              <span
+                class="btn primary"
+                @mouseover="change(item, $event)"
+                @mouseleave="reset(item, $event)"
+                >{{ item.inner }}</span
+              >
             </router-link>
           </div>
         </div>
-        <Icon :type="item.heartType" class="heart" @click="toggleHeart(index)" />
+        <Icon
+          :type="item.heartType"
+          class="heart"
+          @click="toggleHeart(index)"
+        />
 
         <div class="sale" v-show="item.sale == true">
           早鳥優惠中
@@ -571,14 +592,14 @@ export default {
     //景點篩選圖對應的index
     filterIndex(index) {
       this.currentIndex = index;
-      this.$refs.spotName.forEach(item => item.style = "")
-      this.$refs.spotName[index].style.color = "#fbc756"
+      this.$refs.spotName.forEach((item) => (item.style = ""));
+      this.$refs.spotName[index].style.color = "#d4a133";
     },
 
     //讓景點篩選重置，return [...this.packageList]
     resetSpot() {
       this.currentIndex = -1;
-      this.$refs.spotName.forEach(item => item.style = "")
+      this.$refs.spotName.forEach((item) => (item.style = ""));
     },
 
     //按景點圖片，會對應有經過此景點的行程
@@ -667,8 +688,10 @@ export default {
       } else {
         this.arrowTypeTime = "fa-solid fa-caret-down";
       }
-      document.querySelectorAll('.btn-wrap button').forEach(item => item.style = "")
-      document.querySelectorAll('.btn-wrap button')[1].style.color = "#fbc756";
+      document
+        .querySelectorAll(".btn-wrap button")
+        .forEach((item) => (item.style = ""));
+      document.querySelectorAll(".btn-wrap button")[1].style.color = "#d4a133";
     },
     //原始價格排序
     sortPrice() {
@@ -686,8 +709,10 @@ export default {
       } else {
         this.arrowTypePrice = "fa-solid fa-caret-down";
       }
-      document.querySelectorAll('.btn-wrap button').forEach(item => item.style = "")
-      document.querySelectorAll('.btn-wrap button')[0].style.color = "#fbc756";
+      document
+        .querySelectorAll(".btn-wrap button")
+        .forEach((item) => (item.style = ""));
+      document.querySelectorAll(".btn-wrap button")[0].style.color = "#d4a133";
     },
     //剩餘名額排序
     sortRemain() {
@@ -705,8 +730,10 @@ export default {
       } else {
         this.arrowTypeRemain = "fa-solid fa-caret-down";
       }
-      document.querySelectorAll('.btn-wrap button').forEach(item => item.style = "")
-      document.querySelectorAll('.btn-wrap button')[2].style.color = "#fbc756";
+      document
+        .querySelectorAll(".btn-wrap button")
+        .forEach((item) => (item.style = ""));
+      document.querySelectorAll(".btn-wrap button")[2].style.color = "#d4a133";
     },
   },
   mounted() {
@@ -716,15 +743,4 @@ export default {
     });
   },
 };
-
-
-
-
-
-
-
-
-
-
-
 </script>
