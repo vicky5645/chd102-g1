@@ -128,11 +128,8 @@ main:has(.cartPage){
                 justify-content: space-between;
                 align-items: center;
                 button{
-                    // border: 1px solid #777;
                     background-color: $linkColor;
                     color: $btnTextColor;
-                    // border: none;
-                    // box-shadow: 1px 1px 3px #00000080;
                     border: 1px solid rgba(0, 0, 0, .01);
                     box-shadow: 1px 1px rgba(0, 0, 0, .3);
                     display: flex;

@@ -23,7 +23,7 @@
           <Images :imgURL="`${bigPic}`" :alt="`${productDataItem.title}`" />
           <!-- <img :src="bigPic" :alt="productDataItem.title"> -->
         </div>
-        <div class="small_pic_list">
+        <div class="small_pic_list" style="display: none;">
           <div
             v-for="(pic, index) in smallPics"
             :key="index"
@@ -149,10 +149,12 @@
     >
         <swiper-slide v-for="(item, index) in productData" :key="index">
           <!-- <Images :imgURL="`${item.image}`" :alt="`${item.title}`" /> -->
+          <router-link :to="`/productDetail/${item.id}`">
           <div class="recommendedCard">
             <Images :imgURL="item.image" :alt="item.title" />
             <p>{{ item.title }}</p>
           </div>
+        </router-link>
         </swiper-slide>
 
     </swiper>
@@ -347,6 +349,7 @@ export default {
     },
     clickTest() {
       console.log(this.productDataItem.price)
+      console.log(this.$store.state.isLogin)
     },
     // 點擊小圖換大圖
     selectButton(button) {

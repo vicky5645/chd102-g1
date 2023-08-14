@@ -24,13 +24,13 @@
                     <div class="recipient">
                         <div class="recipientInfo">
                             <h4 class="title">收件人</h4>
-                            <input id="recipientName" class="typeStyle" type="text" value="麥大明">
+                            <input id="recipientName" class="typeStyle" type="text" v-model="mem_name">
                             <h4 class="title">連絡電話</h4>
-                            <input id="recipientPhone" class="typeStyle" type="text" value="0912345678">
+                            <input id="recipientPhone" class="typeStyle" type="text" v-model="mem_mobile">
                             <h4 class="title">收件人地址：</h4>
-                            <input id="recipientAddress" class="typeStyle" type="text" value="320桃園市中壢區復興路46號9樓">
+                            <input id="recipientAddress" class="typeStyle" type="text" v-model="mem_addr">
                         </div>
-                        <input id="sameWithUser" type="checkbox"> <label for="sameWithUser">同會員資料</label>
+                        <input id="sameWithUser" type="checkbox" @click="getUserInfo"> <label for="sameWithUser">同會員資料</label>
                     </div>
                     <h4 class="title">付款方式</h4>
                     <form action="">
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="checkOut">
-                <button class="btn-checkOut" @click="goPayment">前往結帳</button>
+                <button class="btn-checkOut default-btn" @click="goPayment">前往結帳</button>
             </div>
         </div>
     </main>
@@ -72,6 +72,9 @@ export default {
             isShow: true,
             productData: [],
             showCheckList: true,
+            mem_name:"",
+            mem_mobile:"",
+            mem_addr:"",
         }
     },
     components: {
@@ -93,8 +96,19 @@ export default {
     },
     methods: {
         toggleCheckList() {
-        this.showCheckList = !this.showCheckList; // 點擊時切換顯示和隱藏的狀態
-    },
+            this.showCheckList = !this.showCheckList; // 點擊時切換顯示和隱藏的狀態
+        },
+        getUserInfo(event) {
+            if (event.target.checked) {
+                this.mem_name = "麥大明";
+                this.mem_mobile = "0912345678";
+                this.mem_addr = "320桃園市中壢區復興路46號9樓";
+            } else {
+                this.mem_name = "";
+                this.mem_mobile = "";
+                this.mem_addr = "";
+            }
+        },
         goPayment() {
             // alert("即將跳轉信用卡付款頁面！");
             this.$router.push('/payment');

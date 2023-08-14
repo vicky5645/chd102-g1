@@ -38,7 +38,11 @@ hr{
             }
         }
         .detailsInfo{
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 8px;
             margin-bottom: 10px;
+            height: 100%;
             .orderList{
                 display: flex;
                 align-items: center;
@@ -53,22 +57,26 @@ hr{
             .orderDetails{
                 // overflow: auto;
                 // height: 100px;
-                // width: 300px;
+                width: 100%;
                 margin: 2px 0;
                 // border: 1px solid map-get($GrayColors, Gray5);
                 border-top: 1px solid map-get($GrayColors, Gray5);
                 border-bottom: 1px solid map-get($GrayColors, Gray5);
                 // background-color: #fff;
+                .orderItem + .orderItem {
+                    border-top: 1px solid #ccc;
+                }
                 .orderItem{
                     width: 100%;
                     display: flex;
                     align-items: center;
-                    padding: 5px;
+                    padding: 8px 0;
                     // border: 1px solid #ccc;
                     // background-color: #fff;
                     // box-shadow: 1px 1px 3px #ccc;
-                    border-bottom: 1px solid #ccc;
+                    // border-bottom: 1px solid #ccc;
                     user-select: none;
+
                     .orderPic{
                         width: 50px;
                         height: 50px;
@@ -105,13 +113,14 @@ hr{
     }
     .checkOut{
         .btn-checkOut{
-            background-color: $linkColor;
-            color: #fff;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            border: none;
+            // background-color: $linkColor;
+            // color: #fff;
+            // padding: 10px 24px;
+            // border-radius: 8px;
+            // font-size: 16px;
+            // font-weight: 600;
+            // border: none;
+            margin-bottom: 30px;
         }
     }
 }
@@ -142,7 +151,7 @@ hr{
             display: flex;
             justify-content: space-between;
             border-bottom: 1px dashed $color;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             .selectInfo{
                 width: 40%;
                 form{
@@ -160,11 +169,12 @@ hr{
                     margin: 0 0 10px 0;
                 }
                 .orderDetails{
-                    min-height: 300px;
+                    // min-height: 300px;
                     .orderItem{
                         .orderInfo{
-                            gap: 10px;
+                            // gap: 10px;
                             flex-direction: row;
+                            align-items: center;
                             .orderGroup{
                                 margin-left: auto;
                                 display: flex;

@@ -17,9 +17,9 @@
         <span class="h3">{{ totalPrice }}</span>
       </div>
       <div class="checkOut">
-        <button class="btn-back" @click="goBack">返回</button>
+        <button class="btn-back" @click="goBackMall">返回商城</button>
         <!-- <router-link to="/checkout"> -->
-        <button class="btn-checkOut" @click="checkPrice">前往結帳</button>
+        <button class="btn-checkOut default-btn" @click="checkPrice">前往結帳</button>
         <!-- </router-link> -->
       </div>
     </div>
@@ -42,16 +42,21 @@ export default {
     updateTotalPrice() {
       this.$store.commit("calculateSum");
     },
-    goBack() {
-      // 使用 router.go() 方法導向上一頁
-      this.$router.go(-1);
+    goBackMall() {
+      this.$router.push({ path: "/online-mall" });
     },
     checkPrice() {
       if (this.totalPrice <= 0 ) {
         return alert("您尚未選購任何商品！");
+      } else {
+      if (this.$store.state.isLogin === true) {
+        this.$router.push({ path: "/checkout" });
+      } else {
+      window.alert("請先登入會員");
+      this.$router.push({ path: "/login" });
       }
-      this.$router.push('/checkout');
     }
+  }
   },
 }
 </script>
