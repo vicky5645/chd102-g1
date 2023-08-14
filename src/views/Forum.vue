@@ -9,11 +9,7 @@
       </div>
 
       <div class="search_bar">
-        <input
-          v-model="searchText"
-          type="search"
-          placeholder="輸入關鍵字查詢"
-        />
+        <input v-model="searchText" type="search" placeholder="輸入關鍵字查詢" />
         <button @click="searchArticles">搜尋</button>
       </div>
       <button class="new_button_pad" @click="showForm = true">
@@ -27,6 +23,7 @@
         <div class="post_content">
           <div class="avatar">
             <img :src="post.avatar" alt="" />
+            <!-- <Images :imgURL="post.avatar" :alt="`Image preview`" /> -->
           </div>
 
           <div class="name_and_data">
@@ -35,7 +32,11 @@
           </div>
         </div>
 
-        <div class="post_pic"><img :src="post.image" alt="Post Image" /></div>
+        <div class="post_pic">
+          <!-- <img :src="post.image" alt="Post Image" /> -->
+          <Images :imgURL="`${post.image}`" :alt="`Image preview`" />
+        </div>
+
         <h2 class="post_title">{{ post.title }}</h2>
         <p class="post_txt">{{ post.content }}</p>
 
@@ -62,10 +63,7 @@
                 <img src="../assets/images/img/Forum/s_ins.svg" alt="ins" />
               </div>
               <div>
-                <img
-                  src="../assets/images/img/Forum/s_twitter.svg"
-                  alt="twitter"
-                />
+                <img src="../assets/images/img/Forum/s_twitter.svg" alt="twitter" />
               </div>
             </div>
           </button>
@@ -90,22 +88,12 @@
         <button @click="submitPost" class="post_form_submit">發布</button>
       </div>
       <div class="post_form_content">
-        <input
-          type="text"
-          v-model="title"
-          class="post_form_title"
-          placeholder="輸入文章標題"
-        />
+        <input type="text" v-model="title" class="post_form_title" placeholder="輸入文章標題" />
         <div v-if="titleError" class="error">{{ titleError }}</div>
 
         <textarea v-model="content" placeholder="輸入文章內容"></textarea>
         <div v-if="contentError" class="error">{{ contentError }}</div>
-        <input
-          class="post_form_pic"
-          type="file"
-          accept=".jpg,.png"
-          @change="onFileChange"
-        />
+        <input ref="postFormPic" class="post_form_pic" type="file" accept=".jpg,.png" @change="onFileChange" />
         <div class="pic_preview">
           <img :src="imagePreview" v-if="imagePreview" />
         </div>
@@ -171,10 +159,7 @@
               <img src="../assets/images/img/Forum/s_ins.svg" alt="ins" />
             </div>
             <div>
-              <img
-                src="../assets/images/img/Forum/s_twitter.svg"
-                alt="twitter"
-              />
+              <img src="../assets/images/img/Forum/s_twitter.svg" alt="twitter" />
             </div>
           </div>
         </button>
@@ -186,11 +171,7 @@
         <button>留言</button>
       </div>
 
-      <div
-        class="message_list"
-        v-for="message in posts_message"
-        :key="message.id"
-      >
+      <div class="message_list" v-for="message in posts_message" :key="message.id">
         <div class="message_list_row">
           <div class="message_avatar_name">
             <div class="message_avatar">
@@ -220,12 +201,7 @@
 
         <div class="modal">
           <div class="modal_title">您確定要檢舉此文章嗎？</div>
-          <input
-            v-model="reportReason"
-            type="text"
-            placeholder="請描述檢舉原因"
-            maxlength="100"
-          />
+          <input v-model="reportReason" type="text" placeholder="請描述檢舉原因" maxlength="100" />
           <div v-if="reportError" class="error">{{ reportError }}</div>
 
           <div class="modal_button_list">
@@ -240,92 +216,95 @@
 
 <script>
 // 新增文章
+import axios from "axios";
 import { ref, watch } from "vue";
-
+import { BASE_URL } from "@/assets/js/common.js";
 export default {
   data() {
     return {
-      posts: [
-        {
-          id: 1,
-          avatar: require("../assets/images/img/Forum/ava1.png"),
-          data: "6/23 20:38",
-          name: "Lily",
-          image: require("../assets/images/img/Forum/f1.png"),
-          title: "首次的蒸汽火車體驗",
-          content:
-            "這是我第一次參加蒸汽火車之旅，體驗真是太棒了！從車窗外看著湖光山色，我感受到了旅行的悠閒與寧靜。整個行程由專業的導遊詳細解說，使我對這段旅程有更深的理解。我會向所有人推薦『漫遊列車之旅』。",
-          likes: 0,
-          comments: 0,
-          showPopup: false,
-        },
-        {
-          id: 2,
-          avatar: require("../assets/images/img/Forum/ava1.png"),
-          data: "6/17 15:22",
-          name: "Aric",
-          image: require("../assets/images/img/Forum/f2.jpg"),
-          title: "蒸汽火車與手工藝品的完美結合",
-          content:
-            "這次的旅程不僅讓我體驗了蒸汽火車的迷人魅力，還有機會參與當地的手工藝品製作。這種獨特的體驗讓我深深感受到當地的文化和傳統。",
-          likes: 0,
-          comments: 0,
-          showPopup: false,
-        },
-        {
-          id: 3,
-          avatar: require("../assets/images/img/Forum/ava1.png"),
-          data: "6/6 09:17",
-          name: "Amy",
-          image: require("../assets/images/img/Forum/f3.jpg"),
-          title: "永續旅遊的承諾",
-          content:
-            "我非常欣賞『漫遊列車之旅』對於永續旅遊的承諾。知道我的旅程能夠為保護地球出一份力，我覺得非常的開心和有意義。",
-          likes: 0,
-          comments: 0,
-          showPopup: false,
-        },
-        {
-          id: 4,
-          avatar: require("../assets/images/img/Forum/ava1.png"),
-          data: "6/1 18:50",
-          name: "Beeeeee",
-          image: require("../assets/images/img/Forum/f4.jpg"),
-          title: "美食與美景的雙重享受",
-          content:
-            "參加了『漫遊列車之旅』的美食之旅，我體驗到了美食與美景的完美結合。優美的風景和美味的食物，讓我在這次的旅程中得到了前所未有的快樂。",
-          likes: 0,
-          comments: 0,
-          showPopup: false,
-        },
-      ],
+      posts: [],
+
+      // posts: [
+      //   {
+      //     id: 1,
+      //     avatar: require("../assets/images/img/Forum/ava1.png"),
+      //     data: "6/23 20:38",
+      //     name: "Lily",
+      //     image: require("../assets/images/img/Forum/f1.png"),
+      //     title: "首次的蒸汽火車體驗",
+      //     content:
+      //       "這是我第一次參加蒸汽火車之旅，體驗真是太棒了！從車窗外看著湖光山色，我感受到了旅行的悠閒與寧靜。整個行程由專業的導遊詳細解說，使我對這段旅程有更深的理解。我會向所有人推薦『漫遊列車之旅』。",
+      //     likes: 0,
+      //     comments: 0,
+      //     showPopup: false,
+      //   },
+      //   {
+      //     id: 2,
+      //     avatar: require("../assets/images/img/Forum/ava1.png"),
+      //     data: "6/17 15:22",
+      //     name: "Aric",
+      //     image: require("../assets/images/img/Forum/f2.jpg"),
+      //     title: "蒸汽火車與手工藝品的完美結合",
+      //     content:
+      //       "這次的旅程不僅讓我體驗了蒸汽火車的迷人魅力，還有機會參與當地的手工藝品製作。這種獨特的體驗讓我深深感受到當地的文化和傳統。",
+      //     likes: 0,
+      //     comments: 0,
+      //     showPopup: false,
+      //   },
+      //   {
+      //     id: 3,
+      //     avatar: require("../assets/images/img/Forum/ava1.png"),
+      //     data: "6/6 09:17",
+      //     name: "Amy",
+      //     image: require("../assets/images/img/Forum/f3.jpg"),
+      //     title: "永續旅遊的承諾",
+      //     content:
+      //       "我非常欣賞『漫遊列車之旅』對於永續旅遊的承諾。知道我的旅程能夠為保護地球出一份力，我覺得非常的開心和有意義。",
+      //     likes: 0,
+      //     comments: 0,
+      //     showPopup: false,
+      //   },
+      //   {
+      //     id: 4,
+      //     avatar: require("../assets/images/img/Forum/ava1.png"),
+      //     data: "6/1 18:50",
+      //     name: "Beeeeee",
+      //     image: require("../assets/images/img/Forum/f4.jpg"),
+      //     title: "美食與美景的雙重享受",
+      //     content:
+      //       "參加了『漫遊列車之旅』的美食之旅，我體驗到了美食與美景的完美結合。優美的風景和美味的食物，讓我在這次的旅程中得到了前所未有的快樂。",
+      //     likes: 0,
+      //     comments: 0,
+      //     showPopup: false,
+      //   },
+      // ],
       // 分類按鈕
       selectedType: "所有",
 
       // 文章詳細視窗
       selectedPost: null, // 選定的文章預設為空
-
+      posts_message: [],
       // 文章留言
-      posts_message: [
-        {
-          id: 1,
-          avatar: require("../assets/images/img/Forum/ava2.png"),
-          name: "peter",
-          txt: "我完全同意你的感受！我上個月也參加了這個旅程，從湖泊到草原的風景真的令人難以忘懷。導遊的專業解說也增添了旅程的樂趣。",
-        },
-        {
-          id: 2,
-          avatar: require("../assets/images/img/Forum/ava2.png"),
-          name: "Amy",
-          txt: "看了你的分享，我也很期待自己的蒸汽火車之旅！已經在計劃中了，希望能和你一樣有個美好的體驗。",
-        },
-        {
-          id: 3,
-          avatar: require("../assets/images/img/Forum/ava2.png"),
-          name: "wendy",
-          txt: "我非常同意你的看法！我也是第一次體驗蒸汽火車旅行，感覺就像被帶回了過去。那種獨特的懷舊風情讓人難以忘懷。",
-        },
-      ],
+      // posts_message: [
+      //   {
+      //     id: 1,
+      //     avatar: require("../assets/images/img/Forum/ava2.png"),
+      //     name: "peter",
+      //     txt: "我完全同意你的感受！我上個月也參加了這個旅程，從湖泊到草原的風景真的令人難以忘懷。導遊的專業解說也增添了旅程的樂趣。",
+      //   },
+      //   {
+      //     id: 2,
+      //     avatar: require("../assets/images/img/Forum/ava2.png"),
+      //     name: "Amy",
+      //     txt: "看了你的分享，我也很期待自己的蒸汽火車之旅！已經在計劃中了，希望能和你一樣有個美好的體驗。",
+      //   },
+      //   {
+      //     id: 3,
+      //     avatar: require("../assets/images/img/Forum/ava2.png"),
+      //     name: "wendy",
+      //     txt: "我非常同意你的看法！我也是第一次體驗蒸汽火車旅行，感覺就像被帶回了過去。那種獨特的懷舊風情讓人難以忘懷。",
+      //   },
+      // ],
 
       // 搜尋功能_現有的屬性...
       searchText: "",
@@ -340,6 +319,7 @@ export default {
       // 檢舉文字框
       reportReason: "",
       reportError: "",
+      getdataArr: ""
     };
   },
 
@@ -356,6 +336,7 @@ export default {
         top: 0,
         behavior: "smooth",
       });
+      this.getForumMessageData(postId)
     },
 
     // 關閉文章詳細視窗
@@ -430,8 +411,74 @@ export default {
     cancelReport() {
       this.showReportModal = false;
     },
-  },
 
+
+    //抓論壇資料
+    // async getForumData() {
+    //   this.posts = []
+    //   try {
+    //     const res = await axios.get(`${BASE_URL}getFrontForumArticle.php`);
+    //     if (!res) throw new Error("沒抓到資料");
+    //     res.data.forEach((element) => {
+    //       let { article_no: id, article_title: title, article_content: content,
+    //         mem_no, article_date: data, article_views, article_likes: likes, platform_online,
+    //         article_image: image, mem_name: name } = element
+    //       image = `images/img/Forum/${image.split('/').pop()}`
+    //       this.posts.push({
+    //         id,
+    //         title,
+    //         content,
+    //         name,
+    //         mem_no,
+    //         data,
+    //         article_views,
+    //         likes,
+    //         platform_online,
+    //         image,
+    //         avatar: "images/img/Forum/ava1.png",
+    //         comments: 0,
+    //         showPopup: false,
+    //       })
+    //     })
+    //     this.filteredPosts = [...this.posts]
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // },
+    // ///抓文章留言資料
+
+    // async getForumMessageData(postId) {
+    //   this.posts_message = []
+    //   try {
+    //     const formData = new FormData();
+    //     formData.append("id", postId)
+    //     const res = await axios.post(`${BASE_URL}getFrontForumMessage.php`, formData);
+    //     if (!res) throw new Error("沒抓到資料");
+    //     res.data.forEach((element) => {
+    //       let { comment_no: id, article_no, mem_no, mem_name: name, commen_content: txt } = element
+    //       this.posts_message.push({
+    //         id,
+    //         article_no,
+    //         mem_no,
+    //         name,
+    //         txt,
+    //         avatar: "images/img/Forum/ava2.png",
+    //       })
+    //     })
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // },
+
+    //新增文章
+
+
+  },
+  created() {
+    this.getForumData()
+    // console.log(this.contentError)
+
+  },
   mounted() {
     // 當組件被加載時，執行一次搜尋，顯示所有帖子
     this.searchArticles();
@@ -466,6 +513,116 @@ export default {
     const imagePreview = ref(null);
     const titleError = ref("");
     const contentError = ref("");
+    const postFormPic = ref(null);
+    let posts = ref([]);
+    let filteredPosts = ref([]);
+    let posts_message = ref([]);
+
+
+    const addArticleObject = ref({
+      title,
+      content,
+      image: null,
+      mem_no: 1,
+      article_views: 0,
+      article_likes: 0,
+      platform_online: 0,
+      article_image: null
+    });
+
+
+    //抓文章資料
+    const getForumData = async () => {
+      posts.value = []
+      try {
+        const res = await axios.get(`${BASE_URL}getFrontForumArticle.php`);
+        if (!res) throw new Error("沒抓到資料");
+        res.data.forEach((element) => {
+          let { article_no: id, article_title: title, article_content: content,
+            mem_no, article_date: data, article_views, article_likes: likes, platform_online,
+            article_image: image, mem_name: name } = element
+          image = `images/img/Forum/${image.split('/').pop()}`
+          posts.value.push({
+            id,
+            title,
+            content,
+            name,
+            mem_no,
+            data,
+            article_views,
+            likes,
+            platform_online,
+            image,
+            avatar: "images/img/Forum/ava1.png",
+            comments: 0,
+            showPopup: false,
+          })
+        })
+        filteredPosts.value = [...posts.value]
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+
+    ///抓文章留言資料
+
+    const getForumMessageData = async (postId) => {
+      posts_message.value = []
+      try {
+        const formData = new FormData();
+        formData.append("id", postId)
+        const res = await axios.post(`${BASE_URL}getFrontForumMessage.php`, formData);
+        if (!res) throw new Error("沒抓到資料");
+        res.data.forEach((element) => {
+          let { comment_no: id, article_no, mem_no, mem_name: name, commen_content: txt } = element
+          posts_message.value.push({
+            id,
+            article_no,
+            mem_no,
+            name,
+            txt,
+            avatar: "images/img/Forum/ava2.png",
+          })
+        })
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+
+
+
+
+
+
+
+
+    // 新增文章
+
+    const addForumData = async () => {
+      try {
+        const formData = new FormData();
+        Object.keys(addArticleObject.value).forEach((key) => {
+          formData.append(`${key}`, addArticleObject.value[key])
+        })
+        formData.set('image', postFormPic.value.files[0]);
+        const res = await axios.post(`${BASE_URL}postFrontForumArticle.php`, formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+        alert(`${res.data.msg}`)
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+
+
+
 
     watch(title, (newValue) => {
       if (newValue.trim() === "" || newValue.length < 8) {
@@ -503,7 +660,7 @@ export default {
       image.value = file;
     };
 
-    const submitPost = () => {
+    const submitPost = async () => {
       if (title.value.trim() === "" || title.value.length < 3) {
         titleError.value = "文章標題至少需要3個字符且不能為空";
         return;
@@ -517,7 +674,9 @@ export default {
       if (titleError.value || contentError.value) {
         return;
       }
+      await addForumData();
 
+      getForumData()
       // 在此處處理提交後的邏輯，例如將數據發送到伺服器
       console.log(title.value, content.value, image.value);
       showForm.value = false;
@@ -525,6 +684,9 @@ export default {
       content.value = "";
       image.value = null;
       imagePreview.value = null;
+
+    
+      // getForumData()
     };
 
     return {
@@ -537,7 +699,16 @@ export default {
       submitPost,
       titleError,
       contentError,
+      addArticleObject,
+      addForumData,
+      postFormPic,
+      posts,
+      filteredPosts,
+      getForumData,
+      getForumMessageData,
+      posts_message
     };
+
   },
 };
 </script>

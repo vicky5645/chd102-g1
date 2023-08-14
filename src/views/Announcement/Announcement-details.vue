@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {GET} from '@/plugin/axios'
+import { GET } from '@/plugin/axios'
 export default {
   data() {
     return {
@@ -48,7 +48,31 @@ export default {
       //       "我們非常榮幸地宣布，“湖光山色”全新蒸汽火車之旅現已開放預訂！這個行程將帶領您從城市的喧囂中抽身，進入壯麗的大自然，穿越秀美的山脈，欣賞湖光山色的美景。在這次旅程中，您將有機會體驗古老的蒸汽火車，聆聽其叮叮噹噹的旋律，感受時光倒流的魔力。不要錯過這次與大自然親近的絕佳機會，現在就開始預訂吧！",
       //   },
       // ],
+
+
     };
+  },
+  methods: {
+    async backgetAnnouncementData() {
+      await this.$store.dispatch("getAnnouncementData")
+      this.airticles = []
+      this.$store.state.AnnouncementData.forEach(element => {
+        let { anno_no: id, anno_title: title, anno_type: type, anno_content: content, anno_date: date, anno_file: image } = element
+        if (!image.includes("/")) {
+          image = `images/img/announcements/${image}`;
+        }
+        this.airticles.push({
+          id,
+          title,
+          type,
+          content,
+          date,
+          image
+        })
+      });
+      this.airticlesItem = this.airticles[`${parseFloat(this.$route.params.id) - 1}`];
+      // this.airticlesItem = this.airticles[`${parseFloat(this.$route.params.id)}`];
+    },
   },
   props: {
     article: {
@@ -57,11 +81,13 @@ export default {
     },
   },
   created() {
-      // 取得API
-    GET('/data/airticlesData.json').then(res => {
-      this.airticles = res;
-      this.airticlesItem = this.airticles[`${parseFloat(this.$route.params.id) - 1}`];
-    })
+    // 取得API
+    // GET('/data/airticlesData.json').then(res => {
+    //   this.airticles = res;
+    //   this.airticlesItem = this.airticles[`${parseFloat(this.$route.params.id) - 1}`];
+    // })
+    this.backgetAnnouncementData();
+    
   },
 };
 </script>

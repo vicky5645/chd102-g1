@@ -419,9 +419,7 @@ export default {
       this.AnnouncementArr = []
       this.$store.state.AnnouncementData.forEach(element => {
         let { anno_no: id, anno_title: title, anno_type: type, anno_content: content, anno_date: date, anno_file: image } = element
-        if (!image.includes("/")) {
-          image = `images/img/announcements/${image}`;
-        }
+        image = `images/img/announcements/${image.split('/').pop()}`
         this.AnnouncementArr.push({
           id,
           title,
@@ -439,9 +437,6 @@ export default {
   created() {
     this.backgetAnnouncementData();
   },
-  mounted() {
-
-  }
 };
 </script>
 

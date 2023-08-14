@@ -478,4 +478,10 @@ router.beforeEach((to, from) => {
 });
 
 
+//每次切換頁面時都是置頂
+router.beforeEach((to, from, next) => {
+  window.scrollTo(0, 0); 
+  next();
+});
+
 export default router;
