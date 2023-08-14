@@ -11,7 +11,7 @@
         aria-label="Search"
       />
     </div>
-    <button
+    <!-- <button
       class="btn btn-outline-primary b_new"
       type="button"
       id="button-addon2"
@@ -19,7 +19,7 @@
       data-bs-target="#itemNewModal"
     >
       新增會員
-    </button>
+    </button> -->
   </div>
 
   <table class="table">
@@ -59,7 +59,6 @@
 
         <td style="text-align: right">
           <button
-            disabled
             type="button"
             class="btn btn-outline-primary"
             style="margin-left: auto"
@@ -75,11 +74,190 @@
       * 沒有找到符合搜尋條件的結果
     </p>
   </table>
+  <!-- edit modal -->
+  <div
+    v-if="showModal"
+    class="modal fade"
+    id="itemModal"
+    tabindex="-1"
+    aria-labelledby="itemModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" style="max-width: 80%">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="itemModalLabel">查看會員資料</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            @click="cancelChanges"
+          ></button>
+        </div>
 
+        <!-- modal body -->
+        <div
+          style="display: flex; flex-direction: column"
+          class="modal-body gap-2"
+        >
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >會員編號</span
+            >
+            <input
+              disabled
+              v-model="currentItem.mem_no"
+              name="mem_no"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >會員姓名</span
+            >
+            <input
+              disabled
+              v-model="currentItem.mem_name"
+              name="mem_name"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg">稱謂</span>
+            <input
+              disabled
+              v-model="currentItem.mem_salutation"
+              name="mem_salutation"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg">信箱</span>
+            <input
+              disabled
+              v-model="currentItem.mem_email"
+              name="mem_email"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >手機</span
+            >
+            <input
+              disabled
+              v-model="currentItem.mem_mobile"
+              name="mem_mobile"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >住址</span
+            >
+            <input
+              disabled
+              v-model="currentItem.mem_addr"
+              name="mem_addr"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >帳號</span
+            >
+            <input
+              disabled
+              v-model="currentItem.mem_acc"
+              name="mem_acc"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >密碼</span
+            >
+            <input
+              disabled
+              v-model="currentItem.mem_pwd"
+              name="mem_pwd"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >頭像檔案</span
+            >
+            <input
+              disabled
+              v-model="currentItem.pattern_file"
+              name="pattern_file"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="model_body_pic">
+            <Images
+              v-if="currentItem.pattern_file"
+              :imgURL="`${currentItem.pattern_file}`"
+              :alt="`Image preview`"
+              :id="`imgPreview`"
+            />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+            @click="deleteAnnouncement"
+          >
+            刪除會員
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            @click.prevent="saveChanges"
+          >
+            儲存變更
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- new modal -->
   <div
     class="modal fade"
-    mem_no="itemNewModal"
+    id="itemNewModal"
     tabindex="-1"
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
@@ -205,6 +383,7 @@
                   >圖案檔案</span
                 >
                 <input
+                  disabled
                   type="file"
                   class="form-control"
                   aria-label="Sizing example input"
