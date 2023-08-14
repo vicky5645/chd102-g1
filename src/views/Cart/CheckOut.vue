@@ -10,7 +10,7 @@
             <hr class="hrBot">
             <div class="wrap">
                 <div class="selectInfo">
-                    <h4>運送方式</h4>
+                    <h4 class="title">運送方式</h4>
                     <form action="">
                         <div>
                             <input type="radio" id="delivery-home" name="delivery" value="" checked>
@@ -23,15 +23,16 @@
                     </form>
                     <div class="recipient">
                         <div class="recipientInfo">
-                            <div class="recipientName">麥 大明</div>
-                            <div class="recipientPhone">+886 912345678</div>
+                            <h4 class="title">收件人</h4>
+                            <input id="recipientName" class="typeStyle" type="text" value="麥大明">
+                            <h4 class="title">連絡電話</h4>
+                            <input id="recipientPhone" class="typeStyle" type="text" value="0912345678">
+                            <h4 class="title">收件人地址：</h4>
+                            <input id="recipientAddress" class="typeStyle" type="text" value="320桃園市中壢區復興路46號9樓">
                         </div>
-                        <div class="address">
-                            <div class="title">收件人地址：</div>
-                            <div class="recipientAddress">320桃園市中壢區復興路46號9樓</div>
-                        </div>
+                        <input id="sameWithUser" type="checkbox"> <label for="sameWithUser">同會員資料</label>
                     </div>
-                    <h4>付款方式</h4>
+                    <h4 class="title">付款方式</h4>
                     <form action="">
                         <div>
                             <input type="radio" id="creditCard" name="pay" value="" checked>
@@ -48,7 +49,7 @@
                         <h4>商品訂單明細</h4>
                         <i class="fa-solid fa-angle-right" :style="{ transform: showCheckList ? 'rotate(90deg)' : 'rotate(0deg)' }"></i>
                     </div>
-                    <CheckOutList v-if="showCheckList"/>
+                    <CheckOutList v-show="showCheckList"/>
                     <hr class="hrBot">
                     <div class="totalPrice item-price">
                         總計:

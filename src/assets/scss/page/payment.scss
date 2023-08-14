@@ -1,19 +1,22 @@
 @import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600,700|Source+Sans+Pro:400,600,700&display=swap");
 
+main:has(.wrapper_card){
+  max-width: 1200px;
+  margin: auto;
+}
 
-// body {
-//   background: #ddeefc;
-//   font-family: "Source Sans Pro", sans-serif;
-//   font-size: 16px;
-// }
-// * {
-//   box-sizing: border-box;
-//   &:focus {
-//     outline: none;
-//   }
-// }
+.back_button {
+  margin-bottom: 12px;
+  box-shadow: 0px -1px 0px 0px #f29c50 inset;
+  display: inline-block;
+  font-size: 16px;
+  padding: 4px 0;
+  color: #f29c50;
+  cursor: pointer;
+}
+
 .wrapper_card {
-  min-height: 100vh;
+  min-height: 90vh;
   display: flex;
   padding: 50px 15px;
   @media screen and (max-width: 700px), (max-height: 500px) {
@@ -103,6 +106,7 @@
     width: 100%;
     height: 55px;
     background: #2364d2;
+    // background-color: $linkColor;
     border: none;
     border-radius: 5px;
     font-size: 22px;
@@ -512,7 +516,7 @@
 .card-input {
   margin-bottom: 20px;
   &__label {
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 5px;
     font-weight: 500;
     color: #1a3b5d;
@@ -542,6 +546,7 @@
       box-shadow: 0px 10px 20px -13px rgba(32, 56, 117, 0.35);
     }
     &.-select {
+      appearance: none;
       -webkit-appearance: none;
       background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAeCAYAAABuUU38AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAUxJREFUeNrM1sEJwkAQBdCsngXPHsQO9O5FS7AAMVYgdqAd2IGCDWgFnryLFQiCZ8EGnJUNimiyM/tnk4HNEAg/8y6ZmMRVqz9eUJvRaSbvutCZ347bXVJy/ZnvTmdJ862Me+hAbZCTs6GHpyUi1tTSvPnqTpoWZPUa7W7ncT3vK4h4zVejy8QzM3WhVUO8ykI6jOxoGA4ig3BLHcNFSCGqGAkig2yqgpEiMsjSfY9LxYQg7L6r0X6wS29YJiYQYecemY+wHrXD1+bklGhpAhBDeu/JfIVGxaAQ9sb8CI+CQSJ+QmJg0Ii/EE2MBiIXooHRQhRCkBhNhBcEhLkwf05ZCG8ICCOpk0MULmvDSY2M8UawIRExLIQIEgHDRoghihgRIgiigBEjgiFATBACAgFgghEwSAAGgoBCBBgYAg5hYKAIFYgHBo6w9RRgAFfy160QuV8NAAAAAElFTkSuQmCC');
       background-size: 12px;
@@ -592,40 +597,21 @@
   pointer-events: none;
 }
 
-
-
-.github-btn {
-  position: absolute;
-  right: 40px;
-  bottom: 50px;
-  text-decoration: none;
-  padding: 15px 25px;
-  border-radius: 4px;
-  box-shadow: 0px 4px 30px -6px rgba(36, 52, 70, 0.65);
-  background: #24292e;
-  color: #fff;
-  font-weight: bold;
-  letter-spacing: 1px;
+.priceInfo {
+  margin-bottom: 20px;
   font-size: 16px;
-  text-align: center;
-  transition: all .3s ease-in-out;
-
-  @media screen and (min-width: 500px) {
-    &:hover {
-      transform: scale(1.1);
-      box-shadow: 0px 17px 20px -6px rgba(36, 52, 70, 0.36);
-    }
+  font-weight: 500;
+  color: #1a3b5d;
+  width: 100%;
+  user-select: none;
+  .price {
+    font-size: 32px;
+    padding-top: 5px;
+    font-weight: 900;
+    display: block;
+    border-bottom: 1px solid #ced6e0;
+    &::before {
+      content: " NT$ ";
   }
-
-  @media screen and (max-width: 700px) {
-    position: relative;
-    bottom: auto;
-    right: auto;
-    margin-top: 20px;
-
-    &:active {
-      transform: scale(1.1);
-      box-shadow: 0px 17px 20px -6px rgba(36, 52, 70, 0.36);
-    }
   }
 }
