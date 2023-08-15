@@ -7,7 +7,8 @@
         <hr class="hrTop">
         <CartList/>
         <div class="checkOut">
-                <button class="btn-checkOut default-btn" @click="goCartInfo">確認清單</button>
+                <button class="btn-checkOut default-btn" @click="goShoppingMall" v-if="cartEmpty">前往商城</button>
+                <button class="btn-checkOut default-btn" @click="goCartInfo" v-else>確認清單</button>
         </div>
     </div>
     <div class="pageMask" v-show="cartStatus" @click="closeCart"></div>
@@ -25,8 +26,12 @@ export default {
     CartList
   },
     props: ['cartStatus'],
-    emits: ['closeCart', 'goCartInfo'],
-
+    emits: ['closeCart', 'goCartInfo', 'goShoppingMall'],
+    computed: {
+        cartEmpty () {
+            return this.$store.state.cart <= 0;
+        }
+    },
     methods: {
     // 關閉視窗按鈕
         closeCart() {
@@ -35,7 +40,11 @@ export default {
     // 前往購物車清單
         goCartInfo() {
             this.$emit('goCartInfo')
-    }
+    },
+    //前往商城
+        goShoppingMall() {
+            this.$emit('goShoppingMall')
+        }
 
     }
 }

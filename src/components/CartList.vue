@@ -1,5 +1,6 @@
 <template>
     <div class="cartList">
+      <div class="cartEmpty" v-if="cartList.length <= 0">購物車空空的，趕快去選購吧！</div>
         <div class="cart-card card-block" v-for="item in cartList" :key="item.id" :data-item="item.title">
             <div class="cart-cardPic-group">
                 <div class="drop">

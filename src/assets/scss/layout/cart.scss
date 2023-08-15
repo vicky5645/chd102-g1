@@ -4,26 +4,18 @@ main:has(.cartPage){
 }
 //浮窗購物車專用
 .cartFloat{
-    width: 400px;
+    width: auto;
     position: fixed;
-    top: 60px;
-    right: 60px;
+    top: 70px;
+    right: 10px;
+    left: 10px;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, .3);
     border: 1px solid rgba(0, 0, 0, .01);
     border-radius: 8px;
     z-index: 10;
     background-color: #ffffffe6 !important;
     padding-bottom: 0 !important;
-    // max-height: 600px;
-    // overflow-y: overlay;
-    // &::-webkit-scrollbar {
-    //     width: 8px;
-    // }
-    // &::-webkit-scrollbar-thumb {
-    //     border-radius: 4px;
-    //     background-color: rgba(0, 0, 0, 0.4);
-    //     border: 1px solid slategrey;
-    // }
+    
     .closeMark{
         position: absolute;
         top: 16px;
@@ -44,6 +36,9 @@ main:has(.cartPage){
             background-color: rgba(0, 0, 0, 0.4);
             border: 1px solid slategrey;
         }
+    }
+    .cartEmpty {
+        margin-left: 8px;
     }
     .checkOut {
         padding: 8px;
@@ -75,6 +70,16 @@ main:has(.cartPage){
         content: " $ ";
     }
 }
+
+@include pad {
+    .cartFloat {
+        width: 400px;
+        top: 60px;
+        right: 60px;
+        left: unset;
+    }
+}
+
   .cartPage{
     background-color: $bodyBgColor;
     padding-bottom: 30px;
@@ -88,6 +93,9 @@ main:has(.cartPage){
     }
     .cartList{
         min-height: 400px;
+        .cartEmpty {
+            margin-left: 16px;
+        }
         .cart-card{
             display: flex;
             align-items: center;

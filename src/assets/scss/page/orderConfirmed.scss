@@ -1,0 +1,88 @@
+.order-confirmed {
+    margin: auto;
+    max-width: 1200px;
+    min-height: 100vh;
+    text-align: center;
+
+    .icon-wrap {
+        user-select: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        position: fixed;
+        // width: auto;
+        max-width: 560px;
+        height: 400px;
+        top: 0;
+        left: 10px;
+        right: 10px;
+        bottom: 0;
+        z-index: 10;
+        padding: 30px 20px;
+        color: #F29C50;
+        font-size: 20px;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 8px;
+        // background: rgba(255, 255, 255, .8);
+        background-color: #fff;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .3s;
+
+        svg {
+            margin-bottom: 10px;
+        }
+
+        .catchy {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        p:last-of-type {
+            margin-bottom: 20px;
+        }
+        
+    //SVG動畫控制區
+        .circle,
+        .check {
+            fill: none;
+            stroke: #F29C50;
+            stroke-width: 3;
+        }
+
+        .check {
+            stroke-dasharray: 80 100;
+            stroke-dashoffset: 80;
+        }
+
+        &.showing {
+            opacity: 1;
+            pointer-events: auto;
+            .check {
+                animation: check .3s cubic-bezier(0.5, 0, 0.6, 1) forwards .2s;
+            }
+        }
+    }
+
+    @keyframes check {
+        from {
+            stroke-dashoffset: 80;
+        }
+        to {
+            stroke-dashoffset: 0;
+        }
+    }
+
+    @keyframes circle {
+        from {
+            stroke-dashoffset: -300;
+        }
+        to {
+            stroke-dashoffset: 0;
+        }
+    }
+}

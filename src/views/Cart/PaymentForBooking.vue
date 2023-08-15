@@ -184,7 +184,7 @@
           </div>
         </div>
 
-        <button class="card-form__button">
+        <button class="card-form__button" @click="submitOrder">
           確認送出
         </button>
       </div>
@@ -272,6 +272,19 @@ export default {
         }
       }, 300);
       vm.isInputFocused = false;
+    },
+    submitOrder() {
+      if (
+        this.cardNumber == "" ||
+        this.cardName == "" ||
+        this.cardMonth == "" ||
+        this.cardYear == "" ||
+        this.cardCvv == ""
+      ) {
+        window.alert('請確實填寫所有欄位');
+      } else {
+        this.$router.push('/orderconfirmed');
+      }
     }
   }
 }
