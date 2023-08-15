@@ -188,6 +188,15 @@ const routesUser = [
     },
   },
   {
+    path: "/orderConfirmed",
+    name: "orderConfirmed",
+    component: () =>
+      import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/OrderConfirmed.vue"),
+    meta: {
+      title: "訂單完成畫面",
+    },
+  },
+  {
     path: "/login",
     name: "login",
     component: () =>
@@ -487,6 +496,12 @@ router.beforeEach((to, from) => {
 router.beforeEach((to, from) => {
   if (to.name == 'checkout' && from.name !== 'cart' ){
     return { name: 'cart'}
+  }
+});
+
+router.beforeEach((to, from) => {
+  if (to.name == 'orderConfirmed' && (from.name !== 'paymentForMall' && from.name !== 'paymentForBooking')){
+    return { name: 'about'}
   }
 });
 

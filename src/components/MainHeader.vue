@@ -3,6 +3,7 @@
     :cartStatus="cartStatus"
     @closeCart="cartStatus = false"
     @goCartInfo="goCartInfo"
+    @goShoppingMall="goShoppingMall"
   />
   <UserFloat
     :userStatus="userStatus"
@@ -155,6 +156,10 @@ export default {
     goCartInfo() {
       this.cartStatus = false;
       this.$router.push({ path: "/cart" });
+    },
+    goShoppingMall() {
+      this.cartStatus = false;
+      this.$router.push({ path: "/online-mall" });
     },
     // 會員專區選單
     toggleUser() {

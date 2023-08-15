@@ -156,6 +156,12 @@ export default createStore({
         return accumulator + item.totalPrice;
       }, 0);
     },
+    //清空購物車
+    clearCart(state) {
+      state.cart = [];
+      updateStorage(state.cart);
+    }
+      
   },
   actions: {
     async getAnnouncementData(context, value) {
