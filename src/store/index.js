@@ -29,6 +29,8 @@ export default createStore({
     cart: [],
     totalPrice: 0,
 
+    //總票價
+    totalBooking: 0,
     //景點
     attraction: {
       attr_id: 1,
@@ -52,6 +54,10 @@ export default createStore({
   mutations: {
     setAnnouncementData(state, payload) {
       state.AnnouncementData = [...payload];
+    },
+    //取得總票價
+    getTotalBooking(state, value) {
+      state.totalBooking = value;
     },
     //傳景點id給元件
     throw_attr_id(state, parent_attr_id) {
