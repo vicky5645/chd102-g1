@@ -9,7 +9,11 @@
       </div>
 
       <div class="search_bar">
-        <input v-model="searchText" type="search" placeholder="輸入關鍵字查詢" />
+        <input
+          v-model="searchText"
+          type="search"
+          placeholder="輸入關鍵字查詢"
+        />
         <button @click="searchArticles">搜尋</button>
       </div>
       <button class="new_button_pad" @click="showForm = true">
@@ -63,7 +67,10 @@
                 <img src="../assets/images/img/Forum/s_ins.svg" alt="ins" />
               </div>
               <div>
-                <img src="../assets/images/img/Forum/s_twitter.svg" alt="twitter" />
+                <img
+                  src="../assets/images/img/Forum/s_twitter.svg"
+                  alt="twitter"
+                />
               </div>
             </div>
           </button>
@@ -88,12 +95,23 @@
         <button @click="submitPost" class="post_form_submit">發布</button>
       </div>
       <div class="post_form_content">
-        <input type="text" v-model="title" class="post_form_title" placeholder="輸入文章標題" />
+        <input
+          type="text"
+          v-model="title"
+          class="post_form_title"
+          placeholder="輸入文章標題"
+        />
         <div v-if="titleError" class="error">{{ titleError }}</div>
 
         <textarea v-model="content" placeholder="輸入文章內容"></textarea>
         <div v-if="contentError" class="error">{{ contentError }}</div>
-        <input ref="postFormPic" class="post_form_pic" type="file" accept=".jpg,.png" @change="onFileChange" />
+        <input
+          ref="postFormPic"
+          class="post_form_pic"
+          type="file"
+          accept=".jpg,.png"
+          @change="onFileChange"
+        />
         <div class="pic_preview">
           <img :src="imagePreview" v-if="imagePreview" />
         </div>
@@ -129,7 +147,7 @@
       </div>
 
       <div class="post_pic">
-        <img :src="selectedPost.image" alt="Post Image" />
+        <img :src="selectedPost.image" alt="Post Image" ref="forumPic" />
       </div>
       <h2 class="post_title">{{ selectedPost.title }}</h2>
       <p class="post_txt">{{ selectedPost.content }}</p>
@@ -159,7 +177,10 @@
               <img src="../assets/images/img/Forum/s_ins.svg" alt="ins" />
             </div>
             <div>
-              <img src="../assets/images/img/Forum/s_twitter.svg" alt="twitter" />
+              <img
+                src="../assets/images/img/Forum/s_twitter.svg"
+                alt="twitter"
+              />
             </div>
           </div>
         </button>
@@ -167,11 +188,19 @@
 
       <!-- 留言  -->
       <div class="talk_bar">
-        <input type="text" placeholder="分享點心得吧 ~ " />
-        <button>留言</button>
+        <input
+          type="text"
+          v-model="addForumMessage.commen_content"
+          placeholder="分享點心得吧 ~ "
+        />
+        <button @click="addForumMessageData(selectedPost.id)">留言</button>
       </div>
 
-      <div class="message_list" v-for="message in posts_message" :key="message.id">
+      <div
+        class="message_list"
+        v-for="message in posts_message"
+        :key="message.id"
+      >
         <div class="message_list_row">
           <div class="message_avatar_name">
             <div class="message_avatar">
@@ -189,7 +218,9 @@
         <div class="modal">
           <div class="modal_title">您確定要刪除此文章嗎？</div>
           <div class="modal_button_list">
-            <button @click="confirmDelete" class="b_sure">確定</button>
+            <button @click="deleteForumData(selectedPost.id)" class="b_sure">
+              確定
+            </button>
             <button @click="cancelDelete">取消</button>
           </div>
         </div>
@@ -201,7 +232,12 @@
 
         <div class="modal">
           <div class="modal_title">您確定要檢舉此文章嗎？</div>
-          <input v-model="reportReason" type="text" placeholder="請描述檢舉原因" maxlength="100" />
+          <input
+            v-model="reportReason"
+            type="text"
+            placeholder="請描述檢舉原因"
+            maxlength="100"
+          />
           <div v-if="reportError" class="error">{{ reportError }}</div>
 
           <div class="modal_button_list">
@@ -219,6 +255,9 @@
 import axios from "axios";
 import { ref, watch } from "vue";
 import { BASE_URL } from "@/assets/js/common.js";
+
+import { useRouter } from "vue-router";
+
 export default {
   data() {
     return {
@@ -319,7 +358,7 @@ export default {
       // 檢舉文字框
       reportReason: "",
       reportError: "",
-      getdataArr: ""
+      getdataArr: "",
     };
   },
 
@@ -336,7 +375,7 @@ export default {
         top: 0,
         behavior: "smooth",
       });
-      this.getForumMessageData(postId)
+      this.getForumMessageData(postId);
     },
 
     // 關閉文章詳細視窗
@@ -412,7 +451,6 @@ export default {
       this.showReportModal = false;
     },
 
-
     //抓論壇資料
     // async getForumData() {
     //   this.posts = []
@@ -471,13 +509,10 @@ export default {
     // },
 
     //新增文章
-
-
   },
   created() {
-    this.getForumData()
+    this.getForumData();
     // console.log(this.contentError)
-
   },
   mounted() {
     // 當組件被加載時，執行一次搜尋，顯示所有帖子
@@ -517,7 +552,10 @@ export default {
     let posts = ref([]);
     let filteredPosts = ref([]);
     let posts_message = ref([]);
+    const forumPic = ref(null);
+    const router = useRouter();
 
+    let addForumMessage = ref({ article_no: 1, mem_no: 1, commen_content: "" });
 
     const addArticleObject = ref({
       title,
@@ -527,21 +565,31 @@ export default {
       article_views: 0,
       article_likes: 0,
       platform_online: 0,
-      article_image: null
+      article_image: null,
     });
 
+    // console.log(selectedPost);
 
     //抓文章資料
     const getForumData = async () => {
-      posts.value = []
+      posts.value = [];
       try {
         const res = await axios.get(`${BASE_URL}getFrontForumArticle.php`);
         if (!res) throw new Error("沒抓到資料");
         res.data.forEach((element) => {
-          let { article_no: id, article_title: title, article_content: content,
-            mem_no, article_date: data, article_views, article_likes: likes, platform_online,
-            article_image: image, mem_name: name } = element
-          image = `images/img/Forum/${image.split('/').pop()}`
+          let {
+            article_no: id,
+            article_title: title,
+            article_content: content,
+            mem_no,
+            article_date: data,
+            article_views,
+            article_likes: likes,
+            platform_online,
+            article_image: image,
+            mem_name: name,
+          } = element;
+          image = `images/img/Forum/${image.split("/").pop()}`;
           posts.value.push({
             id,
             title,
@@ -556,26 +604,33 @@ export default {
             avatar: "images/img/Forum/ava1.png",
             comments: 0,
             showPopup: false,
-          })
-        })
-        filteredPosts.value = [...posts.value]
+          });
+        });
+        filteredPosts.value = [...posts.value];
       } catch (err) {
         console.error(err);
       }
     };
 
-
     ///抓文章留言資料
-
     const getForumMessageData = async (postId) => {
-      posts_message.value = []
+      posts_message.value = [];
       try {
         const formData = new FormData();
-        formData.append("id", postId)
-        const res = await axios.post(`${BASE_URL}getFrontForumMessage.php`, formData);
+        formData.append("id", postId);
+        const res = await axios.post(
+          `${BASE_URL}getFrontForumMessage.php`,
+          formData
+        );
         if (!res) throw new Error("沒抓到資料");
         res.data.forEach((element) => {
-          let { comment_no: id, article_no, mem_no, mem_name: name, commen_content: txt } = element
+          let {
+            comment_no: id,
+            article_no,
+            mem_no,
+            mem_name: name,
+            commen_content: txt,
+          } = element;
           posts_message.value.push({
             id,
             article_no,
@@ -583,46 +638,94 @@ export default {
             name,
             txt,
             avatar: "images/img/Forum/ava2.png",
-          })
-        })
+            // avatar
+          });
+        });
       } catch (err) {
         console.error(err);
       }
     };
 
-
-
-
-
-
-
-
-
     // 新增文章
-
     const addForumData = async () => {
       try {
         const formData = new FormData();
         Object.keys(addArticleObject.value).forEach((key) => {
-          formData.append(`${key}`, addArticleObject.value[key])
-        })
-        formData.set('image', postFormPic.value.files[0]);
-        const res = await axios.post(`${BASE_URL}postFrontForumArticle.php`, formData,
+          formData.append(`${key}`, addArticleObject.value[key]);
+        });
+        formData.set("image", postFormPic.value.files[0]);
+        const res = await axios.post(
+          `${BASE_URL}postFrontForumArticle.php`,
+          formData,
           {
             headers: {
-              'Content-Type': 'multipart/form-data',
+              "Content-Type": "multipart/form-data",
             },
           }
         );
-        alert(`${res.data.msg}`)
+        alert(`${res.data.msg}`);
       } catch (err) {
         console.error(err);
       }
     };
 
+    // 臨時頁面
+    const reloadPage = () => {
+      router.go(0);
+    };
 
+    // 刪除文章
+    const deleteForumData = async (articleNo) => {
+      console.log(forumPic.value.src.split());
 
+      try {
+        const formData = new FormData();
 
+        formData.append("article_no", articleNo);
+        formData.set(
+          "article_image",
+          `images/img/Forum/${forumPic.value.src.split("/").pop()}`
+        );
+        const res = await axios.post(
+          `${BASE_URL}deleteFrontForum.php`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        alert(`${res.data.msg}`);
+        reloadPage();
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    // 新增留言
+    const addForumMessageData = async (articleNo) => {
+      try {
+        addForumMessage.value.article_no = articleNo;
+        addForumMessage.value.mem_no = 1; // 先寫死1
+        const formData = new FormData();
+        Object.keys(addForumMessage.value).forEach((key) => {
+          formData.append(`${key}`, addForumMessage.value[key]);
+        });
+        // formData.set("image", postFormPic.value.files[0]);
+        const res = await axios.post(
+          `${BASE_URL}postFrontForumArticleMessage.php`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        alert(`${res.data.msg}`);
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
     watch(title, (newValue) => {
       if (newValue.trim() === "" || newValue.length < 8) {
@@ -676,7 +779,7 @@ export default {
       }
       await addForumData();
 
-      getForumData()
+      getForumData();
       // 在此處處理提交後的邏輯，例如將數據發送到伺服器
       console.log(title.value, content.value, image.value);
       showForm.value = false;
@@ -685,7 +788,6 @@ export default {
       image.value = null;
       imagePreview.value = null;
 
-    
       // getForumData()
     };
 
@@ -706,9 +808,13 @@ export default {
       filteredPosts,
       getForumData,
       getForumMessageData,
-      posts_message
+      posts_message,
+      addForumMessage,
+      addForumMessageData,
+      deleteForumData,
+      forumPic,
+      reloadPage,
     };
-
   },
 };
 </script>

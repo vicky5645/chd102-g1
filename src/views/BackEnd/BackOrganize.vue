@@ -436,7 +436,7 @@ export default {
               },
             }
           );
-          alert(`${res.data.msg}`);
+          alert("修改成功");
           this.showModal = false;
         }
       } catch (error) {
@@ -519,25 +519,33 @@ export default {
     },
 
     // delete
-    async deleteAnnouncement() {
-      try {
-        const index = this.organizeData.findIndex(
-          (item) => item.org_no === this.org_no
-        );
-        if (index !== -1) {
-          const res = await axios({
-            method: "post",
-            url: `${BASE_URL}/deleteOrganize.php`,
-            data: { id: this.currentItem.org_no },
-          });
-          alert(`${res.data.msg}`);
-        }
-      } catch (error) {
-        console.error("An error occurred:", error);
-        alert("刪除失敗請重新操作");
+    deleteAnnouncement() {
+      const index = this.organizeData.findIndex(
+        (item) => item.org_no === this.org_no
+      );
+      if (index !== -1) {
+        this.organizeData.splice(index, 1);
+        this.showModal = false;
       }
-      this.getOrganizeData();
-      this.showModal = false;
+
+      //傳送資料庫要刪除的項目
+      const data = new URLSearchParams();
+      data.append("org_no", this.currentItem.org_no);
+
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}deleteOrganize.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          location.reload();
+          alert("刪除成功！");
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          alert("刪除失敗！");
+        });
     },
 
     //新增
@@ -553,7 +561,7 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         });
-        alert(`${res.data.msg}`);
+        alert("新增成功!");
       } catch (error) {
         console.error("An error occurred:", error);
         alert("新增失敗,請重新操作");

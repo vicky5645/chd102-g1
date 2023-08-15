@@ -1,4 +1,8 @@
 <template>
+  <main>
+    <div class="back_button" @click="$router.go(-1)">
+        <i class="fa fa-angle-left" aria-hidden="true"></i> 返回清單
+  </div>
   <div class="wrapper_card">
     <div class="card-form">
       <div class="card-list">
@@ -6,16 +10,32 @@
           <div class="card-item__side -front">
             <div class="card-item__focus" v-bind:class="{'-active' : focusElementStyle }" v-bind:style="focusElementStyle" ref="focusElement"></div>
             <div class="card-item__cover">
-              <img
-              v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + currentCardBackground + '.jpeg'" class="card-item__bg">
+              <!-- <img
+              v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + currentCardBackground + '.jpeg'" class="card-item__bg"> -->
+              <Images
+              :imgURL="`images/credit-card/cardBackground/${currentCardBackground}.jpeg`"
+              class="card-item__bg"
+              />
             </div>
             
             <div class="card-item__wrapper">
               <div class="card-item__top">
-                <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png" class="card-item__chip">
+                <!-- <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png" class="card-item__chip"> -->
+                <Images
+              :imgURL="`images/credit-card/chip.png`"
+              class="card-item__chip"
+              />
                 <div class="card-item__type">
                   <transition name="slide-fade-up">
-                    <img v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + getCardType + '.png'" v-if="getCardType" v-bind:key="getCardType" alt="" class="card-item__typeImg">
+                    <!-- <img v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + getCardType + '.png'" v-if="getCardType" v-bind:key="getCardType" alt="" class="card-item__typeImg"> -->
+
+                    <Images
+                    :imgURL="`images/credit-card/cardType/${getCardType}.png`"
+                    v-if="getCardType"
+                    v-bind:key="getCardType"
+                    alt=""
+                    class="card-item__typeImg"
+                    />
                   </transition>
                 </div>
               </div>
@@ -97,8 +117,12 @@
           </div>
           <div class="card-item__side -back">
             <div class="card-item__cover">
-              <img
-              v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + currentCardBackground + '.jpeg'" class="card-item__bg">
+              <!-- <img
+              v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + currentCardBackground + '.jpeg'" class="card-item__bg"> -->
+              <Images
+              :imgURL="`images/credit-card/cardBackground/${currentCardBackground}.jpeg`"
+              class="card-item__bg"
+              />
             </div>
             <div class="card-item__band"></div>
             <div class="card-item__cvv">
@@ -110,13 +134,22 @@
 
               </div>
                 <div class="card-item__type">
-                    <img v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + getCardType + '.png'" v-if="getCardType" class="card-item__typeImg">
+                    <!-- <img v-bind:src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + getCardType + '.png'" v-if="getCardType" class="card-item__typeImg"> -->
+                    <Images
+                    :imgURL="`images/credit-card/cardType/${getCardType}.png`"
+                    v-if="getCardType"
+                    class="card-item__typeImg"
+                    />
                 </div>
             </div>
           </div>
         </div>
       </div>
       <div class="card-form__inner">
+        <div class="priceInfo">
+          應付金額
+          <span class="price">4900</span>
+        </div>
         <div class="card-input">
           <label for="cardNumber" class="card-input__label">信用卡卡號</label>
           <input type="text" id="cardNumber" class="card-input__input" v-maska data-maska="#### #### #### ####" v-model="cardNumber" v-on:focus="focusInput" v-on:blur="blurInput" data-ref="cardNumber" autocomplete="off">
@@ -157,12 +190,13 @@
       </div>
     </div>
   </div>
+  </main>
 </template>
 <script>
 export default {
     data() {
     return {
-      currentCardBackground: Math.floor(Math.random()* 25 + 1), // just for fun :D
+      currentCardBackground: Math.floor(Math.random()* 25 + 1),
       cardName: "",
       cardNumber: "",
       cardMonth: "",

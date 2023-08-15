@@ -231,14 +231,16 @@ export default {
       }
     },
 
-    toNextPage() {
-      return this.validate() ? "/custom-tickets" : "";
-    },
+    // toNextPage() {
+    //   // return this.validate() ? "/custom-tickets" : "";
+    //   return this.validate() ? "/payment" : "";
+    // },
 
     confirm() {
       if (this.validate()) {
         // 選擇有效，繼續購票流程
-        this.$router.replace(this.toNextPage());
+        // this.$router.replace(this.toNextPage());
+        this.$router.push({ name: 'paymentForBooking' });
       } else {
         // 選擇無效，顯示錯誤消息
         alert("人數與選擇的座位數不符合，請重新確認");
@@ -378,9 +380,9 @@ export default {
       </div>
 
       <div class="btn primary" @click="confirm">
-        <router-link :to="toNextPage">
+        <!-- <router-link :to="toNextPage"> -->
           <span>確認購票</span>
-        </router-link>
+        <!-- </router-link> -->
       </div>
     </section>
   </div>

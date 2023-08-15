@@ -171,20 +171,20 @@ const routesUser = [
   },
   {
     path: "/payment",
-    name: "payment",
+    name: "paymentForMall",
     component: () =>
-      import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/Payment.vue"),
+      import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/PaymentForMall.vue"),
     meta: {
-      title: "信用卡付款畫面",
+      title: "信用卡付款畫面", //商城專用
     },
   },
   {
-    path: "/payment2",
-    name: "payment2",
+    path: "/payment",
+    name: "paymentForBooking",
     component: () =>
-      import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/Payment2.vue"),
+      import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/PaymentForBooking.vue"),
     meta: {
-      title: "信用卡付款畫面",
+      title: "信用卡付款畫面", //訂票專用
     },
   },
   {
@@ -471,11 +471,19 @@ const router = createRouter({
 
 // Vue Router 4 寫法可不用next()
 router.beforeEach((to, from) => {
-  if (to.name === 'payment' && from.name !== 'checkout') {
-    // 如果目標路由是 "payment"，但不是從 "checkout" 來的，則導向 "online-mall"
+  if (to.name == 'paymentForMall' && from.name !== 'checkout' ){
+    // 如果目標路由是 "PaymentForMall"，但不是從 "checkout" 來的，則導向 "online-mall"
     return { name: 'online-mall'}
   }
 });
+
+router.beforeEach((to, from) => {
+  if (to.name == 'paymentForBooking' && from.name !== 'select-info' ){
+    // 如果目標路由是 "PaymentForBooking"，但不是從 "select-info" 來的，則導向 "online-booking"
+    return { name: 'online-booking'}
+  }
+});
+
 
 
 //每次切換頁面時都是置頂

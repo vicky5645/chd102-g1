@@ -17,8 +17,9 @@ hr{
     }
     .wrap{
         form{
-            padding: 10px 0;
+            // padding: 10px 0;
             border-bottom: 1px dashed map-get($GrayColors, Gray5);
+            padding-bottom: 10px;
         }
         .selectInfo{
             .recipient{
@@ -26,26 +27,29 @@ hr{
                 border-bottom: 1px dashed map-get($GrayColors, Gray5);
                 margin-bottom: 10px;
                 .recipientInfo{
-                    display: flex;
-                    gap: 20px;
-                    .recipientName{
-                        font-weight: 600;
+                    #recipientName,
+                    #recipientPhone{
+                        max-width: 200px;
                     }
-                }
-                .address{
-                    display: flex;
-                    gap: 10px;
+                    #recipientAddress{
+                        max-width: 440px;
+                    }
                 }
             }
         }
         .detailsInfo{
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 8px;
             margin-bottom: 10px;
+            height: 100%;
             .orderList{
                 display: flex;
                 align-items: center;
                 gap: 10px;
                 cursor: pointer;
                 margin: 10px 0;
+                user-select: none;
                 i {
                     transition: all .08s ease;
                 }
@@ -53,21 +57,26 @@ hr{
             .orderDetails{
                 // overflow: auto;
                 // height: 100px;
-                // width: 300px;
+                width: 100%;
                 margin: 2px 0;
                 // border: 1px solid map-get($GrayColors, Gray5);
                 border-top: 1px solid map-get($GrayColors, Gray5);
                 border-bottom: 1px solid map-get($GrayColors, Gray5);
                 // background-color: #fff;
+                .orderItem + .orderItem {
+                    border-top: 1px solid #ccc;
+                }
                 .orderItem{
                     width: 100%;
                     display: flex;
                     align-items: center;
-                    padding: 5px;
+                    padding: 8px 0;
                     // border: 1px solid #ccc;
                     // background-color: #fff;
                     // box-shadow: 1px 1px 3px #ccc;
-                    border-bottom: 1px solid #ccc;
+                    // border-bottom: 1px solid #ccc;
+                    user-select: none;
+
                     .orderPic{
                         width: 50px;
                         height: 50px;
@@ -83,8 +92,13 @@ hr{
                     }
                     .orderInfo{
                         display: flex;
-                        gap: 10px;
+                        flex-direction: column;
+                        // gap: 10px;
                         padding-right: 5px;
+                        // width:160px;
+                        // overflow: hidden;
+                        // text-overflow: ellipsis;
+                        // white-space: nowrap;
                     }
                     .orderQty,
                     .orderPrice{
@@ -99,17 +113,36 @@ hr{
     }
     .checkOut{
         .btn-checkOut{
-            background-color: $linkColor;
-            color: #fff;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            border: none;
+            // background-color: $linkColor;
+            // color: #fff;
+            // padding: 10px 24px;
+            // border-radius: 8px;
+            // font-size: 16px;
+            // font-weight: 600;
+            // border: none;
+            margin-bottom: 30px;
         }
     }
 }
 
+.title{
+    padding-left: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.typeStyle {
+    background-color: #fff;
+    width: 100%;
+    height: 40px;
+    border-radius: 4px;
+    box-shadow: none;
+    border: 1px solid #ced6e0;
+    transition: all 0.3s ease-in-out;
+    font-size: 18px;
+    padding: 4px 16px;
+    color: #1a3b5d;
+    margin-bottom: 8px;
+}
 
 //斷點: min-width:768px
 @include pad {
@@ -118,7 +151,7 @@ hr{
             display: flex;
             justify-content: space-between;
             border-bottom: 1px dashed $color;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             .selectInfo{
                 width: 40%;
                 form{
@@ -131,12 +164,24 @@ hr{
             .detailsInfo{
                 display: flex;
                 flex-direction: column;
-                width: 40%;
+                width: 55%;
                 .orderList{
                     margin: 0 0 10px 0;
                 }
                 .orderDetails{
-                    min-height: 300px;
+                    // min-height: 300px;
+                    .orderItem{
+                        .orderInfo{
+                            // gap: 10px;
+                            flex-direction: row;
+                            align-items: center;
+                            .orderGroup{
+                                margin-left: auto;
+                                display: flex;
+                                flex-direction: column;
+                            }
+                        }
+                    }
                 }
                 .totalPrice{
                     margin-top: auto;
@@ -157,3 +202,35 @@ hr{
         }
     }
 }
+
+//斷點: min-width:1024px
+@include pc {
+    .checkPage{
+        .wrap{
+            .detailsInfo{
+                .orderDetails{
+                    .orderItem{
+                        .orderInfo{
+                            .orderGroup{
+                                display: flex;
+                                flex-direction: row;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//斷點: min-width:1200px
+@include tv {
+    .checkPage{
+        .wrap{
+            .detailsInfo{
+                width: 45%;
+            }
+        }
+    }
+}
+
