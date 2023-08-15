@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import MainHeader from '@/components/MainHeader.vue'
-import MainFooter from '@/components/MainFooter.vue'
+import MainHeader from "@/components/MainHeader.vue";
+import MainFooter from "@/components/MainFooter.vue";
 export default {
   components: {
     MainHeader,
@@ -16,14 +16,22 @@ export default {
   },
   computed: {
     hasStartView() {
-      const isStart = this.$route.matched.some(route => route.name === 'start');
-      const isBackEnd = this.$route.matched.some(route => route.name === 'backend');
-      const isBackLogin = this.$route.matched.some(route => route.name === 'backendlogin');
+      const isStart = this.$route.matched.some(
+        (route) => route.name === "start"
+      );
+      const isBackEnd = this.$route.matched.some(
+        (route) => route.name === "backend"
+      );
+      const isBackLogin = this.$route.matched.some(
+        (route) => route.name === "backendlogin"
+      );
       return isStart || isBackEnd || isBackLogin;
     },
-  }
-}
+  },
+  // mounted() {
+  //   svg_icon('.custom-svg', 'currentColor');
+  // },
+};
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

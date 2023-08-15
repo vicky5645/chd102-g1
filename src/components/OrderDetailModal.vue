@@ -4,7 +4,10 @@
     <div class="modal-content row">
       <!-- 顯示訂單詳情 -->
       <div class="col col-md-6">
-        <Images :imgURL="`${orderDetail.image}`" :alt="`${orderDetail.title}`" />
+        <Images
+          :imgURL="`${orderDetail.image}`"
+          :alt="`${orderDetail.title}`"
+        />
       </div>
       <div class="col col-md-6">
         <!-- <h3>訂單詳情</h3> -->
@@ -34,7 +37,7 @@ export default {
   },
   methods: {
     closeModal() {
-      this.$emit('close-modal');
+      this.$emit("close-modal");
     },
   },
 };
@@ -52,7 +55,7 @@ export default {
 }
 
 .pageMask {
-  background-color: rgba(black, .3);
+  background-color: rgba(black, 0.3);
   width: 100vw;
   height: 100vh;
   position: fixed;

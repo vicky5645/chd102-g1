@@ -11,7 +11,7 @@ export default {
       startSale: "2025-01-18 12:00",
       count: 1,
       maxCount: 6,
-      price:0,
+      price: 41888,
 
       packageList: [],
       packageDataItem: [],
@@ -194,7 +194,7 @@ export default {
 
   computed: {
     totalBooking() {
-      return this.price = this.packageDataItem.origin * this.count;
+      return (this.price = this.packageDataItem.origin * this.count);
     },
   },
 
@@ -246,8 +246,8 @@ export default {
       if (this.validate()) {
         // 選擇有效，繼續購票流程
         // this.$router.replace(this.toNextPage());
-        this.$store.commit('getTotalBooking', this.price);
-        this.$router.push({ name: 'paymentForBooking' });
+        this.$store.commit("getTotalBooking", this.price);
+        this.$router.push({ name: "paymentForBooking" });
       } else {
         // 選擇無效，顯示錯誤消息
         alert("人數與選擇的座位數不符合，請重新確認");
@@ -388,7 +388,7 @@ export default {
 
       <div class="btn primary" @click="confirm">
         <!-- <router-link :to="toNextPage"> -->
-          <span>確認購票</span>
+        <span>確認購票</span>
         <!-- </router-link> -->
       </div>
     </section>
