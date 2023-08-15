@@ -4,7 +4,7 @@ header("Content-Type: application/json;charset=utf-8");
 
 require_once("connect_chd102g1.php");
 
-const MY_DIR = "../../images/online-mall"; 
+const MY_DIR = "../images/online-mall"; 
 // const SQL_IMG_PATH = "images/online-mall";
 
 
@@ -61,7 +61,7 @@ if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
 
         //刪除原位置的圖檔
 		$prod_file = $_POST["old_file"];// test.png
-		$filePath = MY_DIR . "/" . $prod_file; //../../images/online-mall/test.png
+		$filePath = MY_DIR . "/" . $prod_file; //../images/online-mall/test.png
         if (file_exists($filePath)) { //判斷該路徑圖檔存在才進行刪除
             unlink($filePath);
         }

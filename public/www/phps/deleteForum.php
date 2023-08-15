@@ -24,7 +24,7 @@ try {
     $forum->execute();
 
     $article_image_file = $_POST["article_image_file"];
-    $filePath = "../../$article_image_file";
+    $filePath = "../$article_image_file";
     unlink($filePath); // 將檔案刪除
 
     $msg = "已刪除文章";

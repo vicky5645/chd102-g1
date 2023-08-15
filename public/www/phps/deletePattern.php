@@ -12,7 +12,7 @@ header('Access-Control-Allow-Origin:*');
 		$pattern->execute();
 		
 		$pattern_file = $_POST["pattern_file"];// images/pattern/2.svg
-		$filePath = "../../$pattern_file";
+		$filePath = "../$pattern_file";
 		unlink($filePath); // 將檔案刪除
 
 		$msg = "已刪除圖片";

@@ -21,7 +21,7 @@ try {
 	$article->execute();
 	
 	$article_image = $_POST["article_image"]; // images/pattern/2.svg
-	$filePath = "../../$article_image";
+	$filePath = "../$article_image";
 	if(file_exists($filePath)){ // 檢查檔案是否存在
 		unlink($filePath);// 將檔案刪除
 	}

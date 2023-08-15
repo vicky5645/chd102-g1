@@ -2,6 +2,7 @@
 node_modules
 /dist
 public/www/phps/connect_chd102g1.php
+public/phps/connect_chd102g1.php
 
 
 # local env files

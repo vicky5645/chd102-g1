@@ -4,7 +4,7 @@ header("Content-Type: application/json;charset=utf-8");
 
 require_once("connect_chd102g1.php");
 
-const MY_DIR = "../../images/img/Forum";
+const MY_DIR = "../images/img/Forum";
 const SQL_IMG_PATH = "images/img/Forum";
 
 

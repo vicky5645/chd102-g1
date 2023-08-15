@@ -5,7 +5,7 @@ $type = isset($_POST["type"]) ? $_POST["type"] : '';
 
 
 if($type == 'addImg') {
-  $dir = "../../images/pattern/"; //指定所要上傳的路徑
+  $dir = "../images/pattern/"; //指定所要上傳的路徑
   if(file_exists($dir)===false){
       mkdir($dir); //make directory
   }
