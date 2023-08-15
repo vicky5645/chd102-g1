@@ -21,10 +21,7 @@ export default {
       const isBackLogin = this.$route.matched.some(route => route.name === 'backendlogin');
       return isStart || isBackEnd || isBackLogin;
     },
-  },
-  // mounted() {
-  //   svg_icon('.custom-svg', 'currentColor');
-  // },
+  }
 }
 </script>
 

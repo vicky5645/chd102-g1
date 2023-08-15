@@ -81,7 +81,6 @@
 </template>
 
 <script>
-// import svg_icon from "@/js/svgcolor.js";
 export default {
   data() {
     return {

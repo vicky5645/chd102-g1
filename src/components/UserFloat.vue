@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, onMounted  } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { firebaseAuth } from "@/assets/config/firebase.js";
@@ -86,6 +86,10 @@ const emit = defineEmits(["closeUser", "goLoginUser"]);
 
 const store = useStore();
 const router = useRouter();
+
+onMounted(() => {
+  svg_icon(".custom-svg", "currentColor");
+});
 
 const logoutUser = function () {
   // 登出
