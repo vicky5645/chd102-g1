@@ -1,9 +1,8 @@
 <!-- 後台行程景點 -->
 <template>
-  <!-- {{ currentItem_pkg_no }}
-  <p>{{ changeArray(2) }}</p>
-  <p>packageData:: {{ PackageData }}</p>
-  <p>Spot:: {{ SpotData }}</p> -->
+  <!-- <p>{{ changeArray(1) }}</p> -->
+  <!-- <p>packageData:: {{ PackageData }}</p> -->
+  <!-- <p>Spot:: {{ SpotData }}</p> -->
   <br />
   <!-- select bar -->
   <div class="search_new">
@@ -64,22 +63,6 @@
           </button>
         </td>
       </tr>
-      <!-- <tr v-for="(item, index) in filteredItems" :key="index">
-        <th scope="row">{{ item.pkg_no }}</th>
-        <td class="ellipsis">{{ item.spot_no }}</td>
-        <td class="ellipsis">{{ item.spot_sort }}</td>
-        <td class="ellipsis">{{ `第${item.pkg_howday}天` }}</td> -->
-      <!-- <td style="text-align: right">
-          <button
-            type="button"
-            class="btn btn-outline-primary"
-            style="margin-left: auto"
-            @click="openModal(item)"
-          >
-            查看
-          </button>
-        </td> -->
-      <!-- </tr> -->
     </tbody>
 
     <p v-if="filteredItems.length === 0" class="text-danger">
@@ -403,12 +386,33 @@ export default {
     selectOption(fk, selected) {
       this.selectFieldKey[fk] = parseInt(this.$refs[selected].value);
     },
-    // model
-    saveChanges() {
+    // edit model
+    saveChanges(item, itemIndex) {
       // 在這裡更新資料
       // 如有需要，你也可以將 currentItem 傳到後端
       this.currentItem = { ...this.backupItem };
       this.showModal = false;
+      //傳送資料庫的資料
+      const data = new FormData(); // POST 表單資料
+      data.append("pkg_no", item.pkg_no);
+      data.append("spot_no", item.spot_no);
+      data.append("spot_sort", item.spot_sort);
+      data.append("pkg_howday", item.pkg_howday);
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}editPackagePass.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          // 重新取得資料
+          alert("已修改行程景點成功！");
+          this.getdataFromMySQL();
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          console.log("修改失敗！");
+        });
     },
     cancelChanges() {
       this.currentItem_pkg_no = null;
