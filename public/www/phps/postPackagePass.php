@@ -1,5 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin:*');
+header("Content-Type:application/json;charset=utf-8");
+$type = isset($_POST["type"]) ? $_POST["type"] : '';
 
     try {
       require_once("./connect_chd102g1.php");
@@ -7,18 +9,17 @@ header('Access-Control-Allow-Origin:*');
         VALUES (:pkg_no, :spot_no, :spot_sort, :pkg_howday);";
       $pkg = $pdo->prepare($sql);
 
-      // pkg_no 這裡是AUTO_INCREMENT，不需要設定
       $pkg->bindValue(":pkg_no", $_POST["pkg_no"]);
       $pkg->bindValue(":spot_no", $_POST["spot_no"]);
       $pkg->bindValue(":spot_sort", $_POST["spot_sort"]);
       $pkg->bindValue(":pkg_howday", $_POST["pkg_howday"]);
       $pkg->execute();
-      // echo "新增成功~<br>";
+
+      $msg = "新增成功~";
     } catch (PDOException $e) {
-      echo "錯誤行號 : ", $e->getLine(), "<br>";
-      echo "錯誤原因 : ", $e->getMessage(), "<br>";
-      //echo "系統暫時不能正常運行，請稍後再試<br>";  
+      $msg = "error_line: " . $e->getLine() . ", error_msg: " . $e->getMessage();
     }
 
-
+$result = ["msg" => $msg];
+echo json_encode($result);
   ?>

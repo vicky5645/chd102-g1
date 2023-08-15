@@ -160,7 +160,7 @@
             >
             <input
               type="file"
-              accept="image/*"
+              accept="image/svg+xml"
               class="form-control"
               name="news_img"
               id="inputGroupFile02"
@@ -289,7 +289,7 @@
                 >
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/svg+xml"
                   class="form-control"
                   name="news_img"
                   id="inputGroupFile01"

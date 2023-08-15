@@ -1,16 +1,23 @@
 <!-- 後台行程景點 -->
 <template>
-selectFieldKey {{ selectFieldKey }}
+  <!-- <p>packageData:: {{ PackageData }}</p>
+  <p>Spot:: {{ SpotData }}</p>
+  selectPkg {{ selectPkg }}
+  <br /> -->
   <!-- select bar -->
   <div class="search_new">
-    <div class="col-md-2"><select ref="selected" class="form-select" @change="selectOption">
+    <!-- <div class="col-md-2">
+      <select ref="selected" class="form-select" @change="selectPkgOption">
         <option ref="select" value="0">全部查詢</option>
-        <option ref="select" value="1">公告編號</option>
-        <option ref="select" value="2">公告標題</option>
-        <option ref="select" value="3">公告類型</option>
-        <option ref="select" value="4">公告內容</option>
-        <option ref="select" value="5">公告時間</option>
-      </select></div>
+        <option
+          ref="select"
+          v-for="(item, index) in PackageData"
+          :value="index"
+        >
+          {{ ` ${index} - ${item}` }}
+        </option>
+      </select>
+    </div> -->
     <div class="input-group">
       <input
         v-model="searchText"
@@ -38,8 +45,7 @@ selectFieldKey {{ selectFieldKey }}
         <th scope="col">景點編號</th>
         <th scope="col">景點排序</th>
         <th scope="col">第幾天</th>
-
-        <th scope="col"></th>
+        <!-- <th scope="col"></th> -->
       </tr>
     </thead>
     <tbody>
@@ -48,7 +54,7 @@ selectFieldKey {{ selectFieldKey }}
         <td class="ellipsis">{{ item.spot_no }}</td>
         <td class="ellipsis">{{ item.spot_sort }}</td>
         <td class="ellipsis">{{ `第${item.pkg_howday}天` }}</td>
-        <td style="text-align: right">
+        <!-- <td style="text-align: right">
           <button
             type="button"
             class="btn btn-outline-primary"
@@ -57,7 +63,7 @@ selectFieldKey {{ selectFieldKey }}
           >
             查看
           </button>
-        </td>
+        </td> -->
       </tr>
     </tbody>
 
@@ -98,7 +104,6 @@ selectFieldKey {{ selectFieldKey }}
               >行程編號</span
             >
             <input
-              disabled
               v-model="currentItem.pkg_no"
               name="pkg_no"
               type="text"
@@ -220,6 +225,9 @@ selectFieldKey {{ selectFieldKey }}
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
   >
+    selectFieldKey["fk1"] {{ selectFieldKey["fk1"] }}
+    <br>
+    selectFieldKey["fk2"] {{ selectFieldKey["fk2"] }}
     <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
         <div class="modal-header">
@@ -236,30 +244,61 @@ selectFieldKey {{ selectFieldKey }}
                 <span class="input-group-text" id="inputGroup-sizing-lg"
                   >行程編號</span
                 >
-                <input
+                <!-- <input
                   v-model="newAnnouncement.pkg_no"
                   name="pkg_no"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
-                />
+                /> -->
+                <!-- <div class="col-md-2"> -->
+                  <select
+                    ref="selected1"
+                    class="form-select"
+                    @change="selectOption('fk1', 'selected1')"
+                  >
+                    <option ref="select" value="0">-請選擇-</option>
+                    <option
+                      ref="select"
+                      v-for="(item, index) in PackageData"
+                      :value="index"
+                    >
+                      {{ ` ${index} - ${item}` }}
+                    </option>
+                  </select>
+                <!-- </div> -->
               </div>
 
               <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
                   >景點編號</span
                 >
-                <input
+                <!-- <input
                   v-model="newAnnouncement.spot_no"
                   name="spot_no"
                   type="text"
                   class="form-control"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-lg"
-                />
+                /> -->
+                <!-- <div class="col-md-2"> -->
+                  <select
+                    ref="selected2"
+                    class="form-select"
+                    @change="selectOption('fk2', 'selected2')"
+                  >
+                    <option ref="select" value="0">-請選擇-</option>
+                    <option
+                      ref="select"
+                      v-for="(item, index) in SpotData"
+                      :value="index"
+                    >
+                      {{ ` ${index} - ${item}` }}
+                    </option>
+                  </select>
+                <!-- </div> -->
               </div>
-
               <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
                   >景點排序</span
@@ -318,7 +357,9 @@ import { BASE_URL } from "@/assets/js/common.js";
 export default {
   data() {
     return {
-      dataFromMySQL: [],
+      PackagePassData: [],
+      PackageData: [],
+      SpotData: [],
       // items: [
       //   {
       //     pkg_no: 1,
@@ -329,7 +370,13 @@ export default {
       // ],
       // search
       searchText: "",
-      selectFieldKey: 0,
+      selectPkg: 0,
+      selectFieldKey: {
+        fk1: 0,
+        fk2: 0,
+      },
+      // selectFieldKey1: 0,
+      // selectFieldKey2: 0,
       // model
       currentItem: {},
       backupItem: {},
@@ -349,19 +396,22 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.dataFromMySQL;
+        return this.PackagePassData;
       }
 
-      return this.dataFromMySQL.filter((item) =>
+      return this.PackagePassData.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
   },
 
   methods: {
+    selectPkgOption() {
+      this.selectPkg = parseInt(this.$refs.selected.value);
+    },
     //選擇篩選欄位
-    selectOption() {
-      this.selectFieldKey = parseInt(this.$refs.selected.value)
+    selectOption(fk, selected) {
+      this.selectFieldKey[fk] = parseInt(this.$refs[selected].value);
     },
     // model
     saveChanges() {
@@ -370,7 +420,6 @@ export default {
       this.currentItem = { ...this.backupItem };
       this.showModal = false;
     },
-
     cancelChanges() {
       this.currentItem = { ...this.backupItem };
       this.showModal = false;
@@ -403,35 +452,57 @@ export default {
       };
       reader.readAsDataURL(file);
     },
-
     // new model
     submitAnnouncement() {
+      console.log(!this.newAnnouncement.spot_sort);
       if (
-        !this.newAnnouncement.id ||
-        !this.newAnnouncement.name ||
-        !this.newAnnouncement.qty
+        this.selectFieldKey["fk1"] == 0 ||
+        this.selectFieldKey["fk2"] == 0 ||
+        !this.newAnnouncement.spot_sort ||
+        !this.newAnnouncement.pkg_howday
       ) {
+        this.clearAnnouncement;
         alert("所有欄位都必須填寫！");
         return;
       }
+      // 準備要傳送的資料
+      const data = new FormData(); // POST 表單資料
+      data.append("pkg_no", this.selectFieldKey["fk1"]);
+      data.append("spot_no", this.selectFieldKey["fk2"]);
+      data.append("spot_sort", this.newAnnouncement.spot_sort);
+      data.append("pkg_howday", this.newAnnouncement.pkg_howday);
 
-      console.log(this.newAnnouncement);
+      console.log("data:",data);
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}postPackagePass.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          // 重新取得資料
+          alert("新增成功！");
+          this.getPackagePassData();
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+        });
       this.clearAnnouncement();
-      this.newAnnouncement = {
-        id: "",
-        name: "",
-        qty: "",
-      };
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);
       modalInstance.hide();
     },
 
     clearAnnouncement() {
+      this.selectFieldKey["fk1"] = 0 ;
+      this.selectFieldKey["fk2"] = 0 ;
+      this.$refs["selected1"].value = 0;
+      this.$refs["selected2"].value = 0;
       this.newAnnouncement = {
-        id: "",
-        name: "",
-        qty: "",
+        pkg_no: "",
+        spot_no: "",
+        spot_sort: "",
+        pkg_howday: "",
       };
     },
 
@@ -446,14 +517,49 @@ export default {
       }
     },
     //取資料
-    async getdataFromMySQL() {
+    async getPackagePassData() {
       await axios
         .get(`${BASE_URL}getPackagePass.php`)
         .then((response) => {
-          this.dataFromMySQL = response.data;
+          this.PackagePassData = response.data;
 
           // 確認是否成功
-          console.log("Data retrieved from MySQL:", "dataFromMySQL");
+          console.log("Data retrieved from MySQL:", "PackagePassData");
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data:", error);
+        });
+    },
+    async getPackageData() {
+      await axios
+        .get(`${BASE_URL}getPackage.php`)
+        .then((response) => {
+          // 使用 reduce 遍歷並將 pkg_no 與 pkg_name 配對添加到 PackageData
+          const data = response.data;
+
+          this.PackageData = data.reduce((allData, item) => {
+            allData[item.pkg_no] = item.pkg_name;
+            return allData;
+          }, {});
+
+          // console.log(`${BASE_URL}getPackage.php`);
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data:", error);
+        });
+    },
+    async getSpotData() {
+      await axios
+        .get(`${BASE_URL}getSpot.php`)
+        .then((response) => {
+          // 使用 reduce 遍歷並將 spot_no 與 spot_name 配對添加到 SpotData
+          const data = response.data;
+
+          this.SpotData = data.reduce((allData, item) => {
+            allData[item.spot_no] = item.spot_name;
+            return allData;
+          }, {});
+          // console.log(`${BASE_URL}getSpot.php`);
         })
         .catch((error) => {
           console.error("There was an error fetching the data:", error);
@@ -461,7 +567,9 @@ export default {
     },
   },
   created() {
-    this.getdataFromMySQL();
+    this.getPackagePassData();
+    this.getPackageData();
+    this.getSpotData();
   },
 };
 </script>

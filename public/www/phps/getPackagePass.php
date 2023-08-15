@@ -7,7 +7,7 @@ try {
     // SQL 查詢
     $stmt = $pdo->query("SELECT * FROM package_pass");
     $data = $stmt->fetchAll();
-
+    
 } catch (PDOException $e) {
     throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
