@@ -1,9 +1,10 @@
 <!-- 後台行程景點 -->
 <template>
-  <!-- <p>packageData:: {{ PackageData }}</p>
-  <p>Spot:: {{ SpotData }}</p>
-  selectPkg {{ selectPkg }}
-  <br /> -->
+  <!-- <p>{{changeArray(2)}}</p>
+  <p>packageData:: {{ PackageData }}</p>
+  <p>Spot:: {{ SpotData }}</p> -->
+  <!-- selectPkg {{ selectPkg }} -->
+  <br />
   <!-- select bar -->
   <div class="search_new">
     <!-- <div class="col-md-2">
@@ -42,18 +43,43 @@
     <thead>
       <tr>
         <th scope="col">行程編號</th>
-        <th scope="col">景點編號</th>
         <th scope="col">景點排序</th>
+        <th scope="col">景點編號</th>
         <th scope="col">第幾天</th>
-        <!-- <th scope="col"></th> -->
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in filteredItems" :key="index">
+      <tr v-for="(pkg, pkg_index) in PackageData" :key="index">
+        <th scope="row">{{ pkg_index }}-{{ pkg }}</th>
+        <th scope="row" colspan="3">
+            <div v-for="filteredItem in changeArray(parseInt(pkg_index))">
+              <!-- {{ filteredItem }} -->
+              <!-- 在这里可以使用 filteredItem 进行显示 -->
+              {{ filteredItem.spot_sort }} | {{ filteredItem.spot_no }}.
+              {{
+                `${SpotData[filteredItem.spot_no]} 第${
+                  filteredItem.pkg_howday
+                }天`
+              }}
+            </div>
+        </th>
+        <td style="text-align: right">
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            style="margin-left: auto"
+            @click="openModal(item)"
+          >
+            查看
+          </button>
+        </td>
+      </tr>
+      <!-- <tr v-for="(item, index) in filteredItems" :key="index">
         <th scope="row">{{ item.pkg_no }}</th>
         <td class="ellipsis">{{ item.spot_no }}</td>
         <td class="ellipsis">{{ item.spot_sort }}</td>
-        <td class="ellipsis">{{ `第${item.pkg_howday}天` }}</td>
+        <td class="ellipsis">{{ `第${item.pkg_howday}天` }}</td> -->
         <!-- <td style="text-align: right">
           <button
             type="button"
@@ -64,15 +90,13 @@
             查看
           </button>
         </td> -->
-      </tr>
+      <!-- </tr> -->
     </tbody>
 
     <p v-if="filteredItems.length === 0" class="text-danger">
       * 沒有找到符合搜尋條件的結果
     </p>
   </table>
-
-  <!-- edit modal -->
   <div
     v-if="showModal"
     class="modal fade"
@@ -96,6 +120,150 @@
 
         <!-- modal body -->
         <div
+          style="display: flex; flex-direction: column"
+          class="modal-body gap-2"
+        >
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >行程編號</span
+            >
+            <!-- <input
+              v-model="currentItem.pkg_no"
+              name="pkg_no"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            /> -->
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >景點編號</span
+            >
+            <!-- <input
+              disabled
+              v-model="currentItem.pkg_no"
+              name="pkg_no"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            /> -->
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >景點排序</span
+            >
+            <!-- <input
+              v-model="currentItem.spot_sort"
+              name="spot_sort"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            /> -->
+          </div>
+
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >第幾天</span
+            >
+            <!-- <input
+              v-model="currentItem.pkg_howday"
+              name="pkg_howday"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            /> -->
+          </div>
+          <!-- <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >圖案檔案</span
+            >
+            <input
+              disabled
+              v-model="currentItem.pattern_file"
+              name="pattern_file"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div> -->
+          <!-- <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >上傳檔案</span
+            >
+            <input
+              type="file"
+              class="form-control"
+              accept="image"
+              name="news_img"
+              id="inputGroupFile02"
+              @change="handleFileUpload"
+            />
+          </div> -->
+          <!-- <div class="model_body_pic">
+            <Images
+              v-if="currentItem.pattern_file && !newAnnouncement.pattern_file"
+              :imgURL="`${currentItem.pattern_file}`"
+              :alt="`Image preview`"
+            />
+            <img
+              v-if="newAnnouncement.pattern_file"
+              :src="`${newAnnouncement.pattern_file}`"
+              :alt="`Image preview`"
+              :id="`imgPreview`"
+            />
+          </div> -->
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+            @click="deleteAnnouncement"
+          >
+            刪除圖案
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            @click.prevent="saveChanges"
+          >
+            儲存變更
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- edit modal old -->
+  <!-- <div
+    v-if="showModal"
+    class="modal fade"
+    id="itemModal"
+    tabindex="-1"
+    aria-labelledby="itemModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" style="max-width: 80%">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="itemModalLabel">修改行程景點</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            @click="cancelChanges"
+          ></button>
+        </div> -->
+
+  <!-- modal body -->
+  <!-- <div
           style="display: flex; flex-direction: column"
           class="modal-body gap-2"
         >
@@ -152,8 +320,8 @@
               aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-lg"
             />
-          </div>
-          <!-- <div class="input-group input-group-lg">
+          </div> -->
+  <!-- <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
               >圖案檔案</span
             >
@@ -167,7 +335,7 @@
               aria-describedby="inputGroup-sizing-lg"
             />
           </div> -->
-          <!-- <div class="input-group input-group-lg">
+  <!-- <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
               >上傳檔案</span
             >
@@ -180,7 +348,7 @@
               @change="handleFileUpload"
             />
           </div> -->
-          <div class="model_body_pic">
+  <!-- <div class="model_body_pic">
             <Images
               v-if="currentItem.pattern_file && !newAnnouncement.pattern_file"
               :imgURL="`${currentItem.pattern_file}`"
@@ -215,7 +383,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- new modal -->
   <div
@@ -226,7 +394,7 @@
     aria-hidden="true"
   >
     selectFieldKey["fk1"] {{ selectFieldKey["fk1"] }}
-    <br>
+    <br />
     selectFieldKey["fk2"] {{ selectFieldKey["fk2"] }}
     <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
@@ -253,20 +421,20 @@
                   aria-describedby="inputGroup-sizing-lg"
                 /> -->
                 <!-- <div class="col-md-2"> -->
-                  <select
-                    ref="selected1"
-                    class="form-select"
-                    @change="selectOption('fk1', 'selected1')"
+                <select
+                  ref="selected1"
+                  class="form-select"
+                  @change="selectOption('fk1', 'selected1')"
+                >
+                  <option ref="select" value="0">-請選擇-</option>
+                  <option
+                    ref="select"
+                    v-for="(item, index) in PackageData"
+                    :value="index"
                   >
-                    <option ref="select" value="0">-請選擇-</option>
-                    <option
-                      ref="select"
-                      v-for="(item, index) in PackageData"
-                      :value="index"
-                    >
-                      {{ ` ${index} - ${item}` }}
-                    </option>
-                  </select>
+                    {{ ` ${index} - ${item}` }}
+                  </option>
+                </select>
                 <!-- </div> -->
               </div>
 
@@ -283,20 +451,20 @@
                   aria-describedby="inputGroup-sizing-lg"
                 /> -->
                 <!-- <div class="col-md-2"> -->
-                  <select
-                    ref="selected2"
-                    class="form-select"
-                    @change="selectOption('fk2', 'selected2')"
+                <select
+                  ref="selected2"
+                  class="form-select"
+                  @change="selectOption('fk2', 'selected2')"
+                >
+                  <option ref="select" value="0">-請選擇-</option>
+                  <option
+                    ref="select"
+                    v-for="(item, index) in SpotData"
+                    :value="index"
                   >
-                    <option ref="select" value="0">-請選擇-</option>
-                    <option
-                      ref="select"
-                      v-for="(item, index) in SpotData"
-                      :value="index"
-                    >
-                      {{ ` ${index} - ${item}` }}
-                    </option>
-                  </select>
+                    {{ ` ${index} - ${item}` }}
+                  </option>
+                </select>
                 <!-- </div> -->
               </div>
               <div class="input-group input-group-lg">
@@ -348,7 +516,11 @@
     </div>
   </div>
 </template>
-
+<style lang="scss" scoped>
+// * {
+//   border: 1px solid #000;
+// }
+</style>
 <script>
 import axios from "axios";
 import { Modal } from "bootstrap";
@@ -406,6 +578,12 @@ export default {
   },
 
   methods: {
+    changeArray(pkg_index) {
+      const filteredArray = this.PackagePassData.filter(
+        (item) => item.pkg_no === pkg_index
+      );
+      return filteredArray.sort((a, b) => a.spot_sort - b.spot_sort);
+    },
     selectPkgOption() {
       this.selectPkg = parseInt(this.$refs.selected.value);
     },
@@ -472,7 +650,7 @@ export default {
       data.append("spot_sort", this.newAnnouncement.spot_sort);
       data.append("pkg_howday", this.newAnnouncement.pkg_howday);
 
-      console.log("data:",data);
+      console.log("data:", data);
       // 使用 Axios 發送 POST 請求
       axios
         .post(`${BASE_URL}postPackagePass.php`, data)
@@ -494,8 +672,8 @@ export default {
     },
 
     clearAnnouncement() {
-      this.selectFieldKey["fk1"] = 0 ;
-      this.selectFieldKey["fk2"] = 0 ;
+      this.selectFieldKey["fk1"] = 0;
+      this.selectFieldKey["fk2"] = 0;
       this.$refs["selected1"].value = 0;
       this.$refs["selected2"].value = 0;
       this.newAnnouncement = {
