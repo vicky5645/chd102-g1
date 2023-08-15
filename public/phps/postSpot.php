@@ -1,6 +1,6 @@
 <?php 
 if($_FILES["image"]["error"] === 0) {
-  $dir = "../../images/tmp/"; //指定所要上傳的路徑
+  $dir = "../images/tmp/"; //指定所要上傳的路徑
   if(file_exists($dir)===false){
       mkdir($dir); //make directory
   }

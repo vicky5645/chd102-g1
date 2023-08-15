@@ -4,7 +4,7 @@ header("Content-Type: application/json;charset=utf-8");
 
 require_once("connect_chd102g1.php");
 
-const MY_DIR = "../../images/img/announcements";
+const MY_DIR = "../images/img/announcements"; 
 const SQL_IMG_PATH = "images/img/announcements";
 
 
@@ -47,42 +47,27 @@ $result = ["msg" => $msg];
 
 if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
     try {
-        $sql = "UPDATE announcement SET anno_title = :anno_title, anno_type = :anno_type, anno_content = :anno_content, anno_file = :anno_file WHERE anno_no = :anno_no";
+        $sql = "INSERT INTO announcement(anno_title, anno_type, anno_content, anno_date, anno_file) VALUES (:anno_title, :anno_type, :anno_content, CURRENT_TIMESTAMP ,:anno_file)";
         $products = $pdo->prepare($sql);
-        $products->bindValue(":anno_no", $_POST["id"]);
         $products->bindValue(":anno_title", $_POST["title"]);
         $products->bindValue(":anno_type", $_POST["type"]);
         $products->bindValue(":anno_content", $_POST["content"]);
-        $products->bindValue(":anno_file", $final_img_path);
+        $products->bindValue(":anno_file", $final_img_path); // 使用已儲存的檔案名稱或路徑
         $products->execute();
-
-        $msg = "更新成功";
-        $result["msg"] = $msg;
-        $result["image"] = $banner;
-        $result["anno_no"] = $_POST["id"];
+        $msg = "新增成功";
+        $result = [
+            "msg" => $msg,
+            "image" => $banner,
+            "anno_title" => $_POST["title"]
+        ];
     } catch (PDOException $e) {
-        $msg = "資料庫寫入失敗，錯誤行號: " . $e->getLine() . ", 錯誤訊息: " . $e->getMessage();
-        $result["msg"] = $msg;
+        $msg = "資料庫寫入失敗，錯誤行號 : " . $e->getLine() . ", 錯誤訊息 : " . $e->getMessage();
+        $result = ["msg" => $msg];
     }
 }
 }else{
-    try {
-        $sql = "UPDATE announcement SET anno_title = :anno_title, anno_type = :anno_type, anno_content = :anno_content WHERE anno_no = :anno_no";
-        $products = $pdo->prepare($sql);
-        $products->bindValue(":anno_no", $_POST["id"]);
-        $products->bindValue(":anno_title", $_POST["title"]);
-        $products->bindValue(":anno_type", $_POST["type"]);
-        $products->bindValue(":anno_content", $_POST["content"]);
-        $products->execute();
-        $msg = "更新成功";
-        $result = [
-            "msg" => $msg,
-            "anno_no" => $_POST["id"],
-         ];
-    } catch (PDOException $e) {
-        $msg = "資料庫寫入失敗，錯誤行號: " . $e->getLine() . ", 錯誤訊息: " . $e->getMessage();
-        $result["msg"] = $msg;
-    }
+    $msg = "檔案上傳錯誤,或沒上傳檔案";
+    $result = ["msg" => $msg];
 }
 
 echo json_encode($result);

@@ -12,7 +12,7 @@ header('Access-Control-Allow-Origin:*');
 		$spot->execute();
 		
 		$spot_file = $_POST["spot_file"];// images/pattern/2.svg
-		$filePath = "../../$spot_file";
+		$filePath = "../$spot_file";
 		unlink($filePath); // 將檔案刪除
 
 		$msg = "已刪除圖片";

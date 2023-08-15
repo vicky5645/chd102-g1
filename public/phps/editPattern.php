@@ -7,7 +7,7 @@ $type=isset($_POST["type"])?$_POST["type"]:'';
 	try {
 		require_once("./connect_chd102g1.php");
 
-		if($type=='editimg') {
+		if($type=='editImg') {
 			// 接到圖檔內容
 			$base64Image = $_POST['news_img']; // Base64 編碼的圖像數據
 			// 將 Base64 編碼的圖像數據解碼二進制數據
@@ -15,12 +15,12 @@ $type=isset($_POST["type"])?$_POST["type"]:'';
 
 
 			//先刪除原位置的圖檔
-			$spot_file = $_POST["spot_file"];
-			$filePath = "../../$spot_file";
+			$pattern_file = $_POST["pattern_file"];// images/pattern/2.svg
+			$filePath = "../$pattern_file";
 			unlink($filePath); // 將檔案刪除
 
 			//處理新的圖檔-------------------------------
-			$dir = "../../images/tmp/"; //指定所要上傳的路徑
+			$dir = "../images/pattern/"; //指定所要上傳的路徑
 			//---產生主檔名
 			$fileName = uniqid();
 			//---取出副檔名 --這裡用接資料的方式處理
@@ -36,42 +36,38 @@ $type=isset($_POST["type"])?$_POST["type"]:'';
 
 			echo "修改成功<br>";
 
-			$sql = "UPDATE spot 
-					SET `spot_name` = :spot_name, 
-						`spot_info` = :spot_info,
-						`spot_status` = :spot_status,
-						`spot_file` = :spot_file
-					WHERE `spot_no` = :spot_no;";
+			$sql = "UPDATE pattern 
+					SET `pattern_name` = :pattern_name, 
+							`pattern_desc` = :pattern_desc,
+							`pattern_file` = :pattern_file
+					WHERE `pattern_no` = :pattern_no;";
 		
 		
-			$spot = $pdo->prepare($sql); 
+			$pattern = $pdo->prepare($sql); 
 		
-			$spot->bindValue(":spot_no", $_POST["spot_no"]);
-			$spot->bindValue(":spot_name", $_POST["spot_name"]);
-			$spot->bindValue(":spot_info", $_POST["spot_info"]);
-			$spot->bindValue(":spot_status", $_POST["spot_status"]);
-			$spot->bindValue(":spot_file", "images/tmp/$fileName");//添加圖檔路徑
-			$spot->execute();
+			$pattern->bindValue(":pattern_no", $_POST["pattern_no"]);
+			$pattern->bindValue(":pattern_name", $_POST["pattern_name"]);
+			$pattern->bindValue(":pattern_desc", $_POST["pattern_desc"]);
+			$pattern->bindValue(":pattern_file", "images/pattern/$fileName");//添加圖檔路徑
+			$pattern->execute();
 			
 			$msg = "已修改圖片及描述";
 		}else {
 			// "未上傳圖檔，只修改文字";
-			$sql = "UPDATE spot 
-					SET `spot_name` = :spot_name, 
-						`spot_info` = :spot_info,
-						`spot_status` = :spot_status
-					WHERE `spot_no` = :spot_no;";
+			$sql = "UPDATE pattern 
+					SET `pattern_name` = :pattern_name, 
+							`pattern_desc` = :pattern_desc
+					WHERE `pattern_no` = :pattern_no;";
 		
 		
-			$spot = $pdo->prepare($sql); 
+			$pattern = $pdo->prepare($sql); 
 		
-			$spot->bindValue(":spot_no", $_POST["spot_no"]);
-			$spot->bindValue(":spot_name", $_POST["spot_name"]);
-			$spot->bindValue(":spot_info", $_POST["spot_info"]);
-			$spot->bindValue(":spot_status", $_POST["spot_status"]);
-			$spot->execute();
+			$pattern->bindValue(":pattern_no", $_POST["pattern_no"]);
+			$pattern->bindValue(":pattern_name", $_POST["pattern_name"]);
+			$pattern->bindValue(":pattern_desc", $_POST["pattern_desc"]);
+			$pattern->execute();
 		
-			$msg = "已修改資料";
+			$msg = "已修改圖片描述";
 	}
 
 	

@@ -4,8 +4,8 @@ header("Content-Type: application/json;charset=utf-8");
 
 require_once("connect_chd102g1.php");
 
-const MY_DIR = "../../images/img/announcements"; 
-const SQL_IMG_PATH = "images/img/announcements";
+const MY_DIR = "../images/img/Forum";
+const SQL_IMG_PATH = "images/img/Forum";
 
 
 if(isset($_FILES["image"])){
@@ -47,12 +47,16 @@ $result = ["msg" => $msg];
 
 if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
     try {
-        $sql = "INSERT INTO announcement(anno_title, anno_type, anno_content, anno_date, anno_file) VALUES (:anno_title, :anno_type, :anno_content, CURRENT_TIMESTAMP ,:anno_file)";
+        $sql = "INSERT INTO forum(article_title, article_content, mem_no, article_date, article_views, article_likes, platform_online, article_image) VALUES (:article_title, :article_content, :mem_no, CURRENT_TIMESTAMP, :article_views, :article_likes, :platform_online, :article_image)";
         $products = $pdo->prepare($sql);
-        $products->bindValue(":anno_title", $_POST["title"]);
-        $products->bindValue(":anno_type", $_POST["type"]);
-        $products->bindValue(":anno_content", $_POST["content"]);
-        $products->bindValue(":anno_file", $final_img_path); // 使用已儲存的檔案名稱或路徑
+        $products->bindValue(":article_title", $_POST["title"]);
+        $products->bindValue(":article_content", $_POST["content"]);
+        $products->bindValue(":mem_no", $_POST["mem_no"]);
+        $products->bindValue(":article_views", $_POST["article_views"]); 
+        $products->bindValue(":article_likes", $_POST["article_likes"]); 
+        $products->bindValue(":platform_online", $_POST["platform_online"]); 
+        $products->bindValue(":article_image", $final_img_path);
+
         $products->execute();
         $msg = "新增成功";
         $result = [
