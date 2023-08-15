@@ -4,8 +4,16 @@
     <!-- 頁面標題 -->
     <div class="button_and_search">
       <div class="button_list">
-        <button class="selected_button">所有</button>
-        <button class="hot_button">熱門</button>
+        <button
+          ref="allButton"
+          class="selected_button active"
+          @click="returnOriginal"
+        >
+          所有
+        </button>
+        <button ref="hotButton" class="hot_button" @click="hotPostSort">
+          熱門
+        </button>
       </div>
 
       <div class="search_bar">
@@ -52,7 +60,7 @@
           </button>
           <button class="b_message" @click="showArticle(post.id)">
             <img src="../assets/images/img/Forum/message.svg" alt="message" />
-            <span>{{ post.comments }}</span>
+            <!-- <span>{{ post.comments }}</span> -->
           </button>
           <button class="b_share" @click="togglePopup(post)">
             <img src="../assets/images/img/Forum/share.svg" alt="share" />
@@ -77,6 +85,7 @@
         </div>
       </div>
     </div>
+
     <!-- 當沒有文章時的提示 -->
     <div v-else class="no_posts">目前無相關文章，建議您換個關鍵字查找😣</div>
 
@@ -134,6 +143,7 @@
           <div class="data">{{ selectedPost.data }}</div>
         </div>
 
+        <!-- BUG -->
         <!-- 檢舉/刪除按鈕 -->
         <div class="post_more_block">
           <button class="post_more" @click.stop="toggleMenu" ref="button">
@@ -241,19 +251,23 @@
           <div v-if="reportError" class="error">{{ reportError }}</div>
 
           <div class="modal_button_list">
-            <button @click="confirmReport" class="b_sure">確定</button>
+            <button @click="confirmReport(selectedPost.id)" class="b_sure">
+              確定
+            </button>
             <button @click="cancelReport">取消</button>
           </div>
         </div>
       </div>
     </div>
+    <!-- 通知吐司 -->
+    <div id="toast"></div>
   </main>
 </template>
 
 <script>
 // 新增文章
 import axios from "axios";
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { BASE_URL } from "@/assets/js/common.js";
 
 import { useRouter } from "vue-router";
@@ -262,88 +276,12 @@ export default {
   data() {
     return {
       posts: [],
-
-      // posts: [
-      //   {
-      //     id: 1,
-      //     avatar: require("../assets/images/img/Forum/ava1.png"),
-      //     data: "6/23 20:38",
-      //     name: "Lily",
-      //     image: require("../assets/images/img/Forum/f1.png"),
-      //     title: "首次的蒸汽火車體驗",
-      //     content:
-      //       "這是我第一次參加蒸汽火車之旅，體驗真是太棒了！從車窗外看著湖光山色，我感受到了旅行的悠閒與寧靜。整個行程由專業的導遊詳細解說，使我對這段旅程有更深的理解。我會向所有人推薦『漫遊列車之旅』。",
-      //     likes: 0,
-      //     comments: 0,
-      //     showPopup: false,
-      //   },
-      //   {
-      //     id: 2,
-      //     avatar: require("../assets/images/img/Forum/ava1.png"),
-      //     data: "6/17 15:22",
-      //     name: "Aric",
-      //     image: require("../assets/images/img/Forum/f2.jpg"),
-      //     title: "蒸汽火車與手工藝品的完美結合",
-      //     content:
-      //       "這次的旅程不僅讓我體驗了蒸汽火車的迷人魅力，還有機會參與當地的手工藝品製作。這種獨特的體驗讓我深深感受到當地的文化和傳統。",
-      //     likes: 0,
-      //     comments: 0,
-      //     showPopup: false,
-      //   },
-      //   {
-      //     id: 3,
-      //     avatar: require("../assets/images/img/Forum/ava1.png"),
-      //     data: "6/6 09:17",
-      //     name: "Amy",
-      //     image: require("../assets/images/img/Forum/f3.jpg"),
-      //     title: "永續旅遊的承諾",
-      //     content:
-      //       "我非常欣賞『漫遊列車之旅』對於永續旅遊的承諾。知道我的旅程能夠為保護地球出一份力，我覺得非常的開心和有意義。",
-      //     likes: 0,
-      //     comments: 0,
-      //     showPopup: false,
-      //   },
-      //   {
-      //     id: 4,
-      //     avatar: require("../assets/images/img/Forum/ava1.png"),
-      //     data: "6/1 18:50",
-      //     name: "Beeeeee",
-      //     image: require("../assets/images/img/Forum/f4.jpg"),
-      //     title: "美食與美景的雙重享受",
-      //     content:
-      //       "參加了『漫遊列車之旅』的美食之旅，我體驗到了美食與美景的完美結合。優美的風景和美味的食物，讓我在這次的旅程中得到了前所未有的快樂。",
-      //     likes: 0,
-      //     comments: 0,
-      //     showPopup: false,
-      //   },
-      // ],
       // 分類按鈕
       selectedType: "所有",
 
       // 文章詳細視窗
       selectedPost: null, // 選定的文章預設為空
       posts_message: [],
-      // 文章留言
-      // posts_message: [
-      //   {
-      //     id: 1,
-      //     avatar: require("../assets/images/img/Forum/ava2.png"),
-      //     name: "peter",
-      //     txt: "我完全同意你的感受！我上個月也參加了這個旅程，從湖泊到草原的風景真的令人難以忘懷。導遊的專業解說也增添了旅程的樂趣。",
-      //   },
-      //   {
-      //     id: 2,
-      //     avatar: require("../assets/images/img/Forum/ava2.png"),
-      //     name: "Amy",
-      //     txt: "看了你的分享，我也很期待自己的蒸汽火車之旅！已經在計劃中了，希望能和你一樣有個美好的體驗。",
-      //   },
-      //   {
-      //     id: 3,
-      //     avatar: require("../assets/images/img/Forum/ava2.png"),
-      //     name: "wendy",
-      //     txt: "我非常同意你的看法！我也是第一次體驗蒸汽火車旅行，感覺就像被帶回了過去。那種獨特的懷舊風情讓人難以忘懷。",
-      //   },
-      // ],
 
       // 搜尋功能_現有的屬性...
       searchText: "",
@@ -364,19 +302,43 @@ export default {
 
   methods: {
     // 按讚文章
-    likePost(post) {
-      post.likes++; // 將該文章的讚數加1
-    },
+    // async likePost(post) {
+    //   // 假設每次點擊都增加1個讚
+    //   post.article_likes += 1;
+
+    //   try {
+    //     const response = await axios.post(
+    //       `${BASE_URL}postFrontForumArticleLike.php`,
+    //       {
+    //         article_no: post.article_no,
+    //         likeIncrement: 1, // 增加一個讚
+    //       }
+    //     );
+
+    //     // 檢查後端的響應
+    //     if (response.data.status !== "success") {
+    //       // 如果後端更新失敗，還原前端的讚數
+    //       post.article_likes -= 1;
+    //       alert(response.data.message);
+    //     }
+    //   } catch (err) {
+    //     // 如果請求失敗，還原前端的讚數
+    //     post.article_likes -= 1;
+    //     alert("更新讚數時發生錯誤。請稍後再試。");
+    //     console.error(err);
+    //   }
+    // },
 
     // 顯示文章詳細視窗
-    showArticle(postId) {
-      this.selectedPost = this.posts.find((post) => post.id === postId);
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-      this.getForumMessageData(postId);
-    },
+
+    // showArticle(postId) {
+    //   this.selectedPost = this.posts.find((post) => post.id === postId);
+    //   window.scrollTo({
+    //     top: 0,
+    //     behavior: "smooth",
+    //   });
+    //   this.getForumMessageData(postId);
+    // },
 
     // 關閉文章詳細視窗
     closeArticle() {
@@ -450,70 +412,13 @@ export default {
     cancelReport() {
       this.showReportModal = false;
     },
-
-    //抓論壇資料
-    // async getForumData() {
-    //   this.posts = []
-    //   try {
-    //     const res = await axios.get(`${BASE_URL}getFrontForumArticle.php`);
-    //     if (!res) throw new Error("沒抓到資料");
-    //     res.data.forEach((element) => {
-    //       let { article_no: id, article_title: title, article_content: content,
-    //         mem_no, article_date: data, article_views, article_likes: likes, platform_online,
-    //         article_image: image, mem_name: name } = element
-    //       image = `images/img/Forum/${image.split('/').pop()}`
-    //       this.posts.push({
-    //         id,
-    //         title,
-    //         content,
-    //         name,
-    //         mem_no,
-    //         data,
-    //         article_views,
-    //         likes,
-    //         platform_online,
-    //         image,
-    //         avatar: "images/img/Forum/ava1.png",
-    //         comments: 0,
-    //         showPopup: false,
-    //       })
-    //     })
-    //     this.filteredPosts = [...this.posts]
-    //   } catch (err) {
-    //     console.error(err);
-    //   }
-    // },
-    // ///抓文章留言資料
-
-    // async getForumMessageData(postId) {
-    //   this.posts_message = []
-    //   try {
-    //     const formData = new FormData();
-    //     formData.append("id", postId)
-    //     const res = await axios.post(`${BASE_URL}getFrontForumMessage.php`, formData);
-    //     if (!res) throw new Error("沒抓到資料");
-    //     res.data.forEach((element) => {
-    //       let { comment_no: id, article_no, mem_no, mem_name: name, commen_content: txt } = element
-    //       this.posts_message.push({
-    //         id,
-    //         article_no,
-    //         mem_no,
-    //         name,
-    //         txt,
-    //         avatar: "images/img/Forum/ava2.png",
-    //       })
-    //     })
-    //   } catch (err) {
-    //     console.error(err);
-    //   }
-    // },
-
-    //新增文章
   },
+
   created() {
     this.getForumData();
     // console.log(this.contentError)
   },
+
   mounted() {
     // 當組件被加載時，執行一次搜尋，顯示所有帖子
     this.searchArticles();
@@ -554,8 +459,26 @@ export default {
     let posts_message = ref([]);
     const forumPic = ref(null);
     const router = useRouter();
+    const showReportModal = ref(false); // 控制檢舉模态框的显示
+    const reportReason = ref(""); // 存储檢舉的原因
+    const reportError = ref(""); // 存储檢舉时的错误信息
+    const commentError = ref("");
+    let selectedPost = ref(null);
+    const allButton = ref(null);
+    const hotButton = ref(null);
+    const toast = ref(null);
+
+    // let hasBeenLiked = false;
+    // const reportReason = ref("");
+
+    const likedPosts = new Set(); // 用於追踪已被按讚的文章的 Set
 
     let addForumMessage = ref({ article_no: 1, mem_no: 1, commen_content: "" });
+    let reportDetails = ref({
+      article_no: 1,
+      mem_no: 1, // 先寫死1
+      report_content: reportReason,
+    });
 
     const addArticleObject = ref({
       title,
@@ -646,6 +569,22 @@ export default {
       }
     };
 
+    // 顯示文章詳細視窗
+    const showArticle = (postId) => {
+      console.log(postId);
+      console.log(posts.value);
+      posts.value.forEach((post) => {
+        console.log(post.id);
+      });
+      selectedPost.value = posts.value.find((post) => post.id === postId);
+      console.log(selectedPost);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      getForumMessageData(postId);
+    };
+
     // 新增文章
     const addForumData = async () => {
       try {
@@ -705,13 +644,16 @@ export default {
     // 新增留言
     const addForumMessageData = async (articleNo) => {
       try {
+        if (addForumMessage.value.commen_content.length < 8) {
+          showToast("留言至少需要8個字");
+          return; // 中止提交
+        }
         addForumMessage.value.article_no = articleNo;
         addForumMessage.value.mem_no = 1; // 先寫死1
         const formData = new FormData();
         Object.keys(addForumMessage.value).forEach((key) => {
           formData.append(`${key}`, addForumMessage.value[key]);
         });
-        // formData.set("image", postFormPic.value.files[0]);
         const res = await axios.post(
           `${BASE_URL}postFrontForumArticleMessage.php`,
           formData,
@@ -721,10 +663,138 @@ export default {
             },
           }
         );
-        alert(`${res.data.msg}`);
+        showToast(`${res.data.msg}`);
+
+        // 清空輸入框的值
+        addForumMessage.value.commen_content = "";
+
+        // 重新獲取留言數據
+        await getForumMessageData(articleNo);
       } catch (err) {
         console.error(err);
       }
+    };
+
+    // 新增檢舉
+    const confirmReport = async (articleNo) => {
+      try {
+        if (reportReason.value.length < 10) {
+          reportError.value = "請填寫檢舉原因！";
+          return;
+        }
+        console.log(articleNo);
+
+        reportDetails.value.article_no = articleNo;
+        reportDetails.value.mem_no = 1; // 先寫死1
+        const formData = new FormData();
+        // formData.append("article_no", article_no.value); // 假設你有一個ref叫做 article_no
+        // formData.append("mem_no", mem_no.value); // 假設你有一個ref叫做 mem_no
+        Object.keys(reportDetails.value).forEach((key) => {
+          formData.append(key, reportDetails.value[key]);
+        });
+
+        const res = await axios.post(
+          `${BASE_URL}postFrontForumArticleReport.php`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (res.data.msg === "新增成功") {
+          showReportModal.value = false;
+          showToast("檢舉成功！");
+          console.log("Server Response:", res.data);
+        } else {
+          reportError.value = "檢舉失敗，請稍後再試！";
+          console.error("Error:", err);
+        }
+      } catch (err) {
+        // console.error(err);
+        // reportError.value = "檢舉失敗，請稍後再試！";
+        console.error("Error:", err);
+        console.error("Error Response:", err.response);
+        reportError.value = "檢舉失敗，請稍後再試！";
+      }
+
+      reportReason.value = "";
+    };
+
+    const cancelReport = () => {
+      showReportModal.value = false;
+      reportReason.value = "";
+      reportError.value = "";
+    };
+
+    // 按讚文章
+    const likePost = async (post) => {
+      // 檢查該文章是否已經被按讚過
+      if (likedPosts.has(post.id)) {
+        // alert("您已經對這篇文章按過讚了！");
+        showToast("您已經對這篇文章按過讚了！");
+        return;
+      }
+
+      post.article_likes += 1;
+      console.log(post.id);
+
+      // Format data as application/x-www-form-urlencoded
+      const formData = new URLSearchParams();
+      formData.append("article_no", post.id);
+      formData.append("likeIncrement", 1); // 增加一個讚
+
+      try {
+        const response = await axios.post(
+          `${BASE_URL}postFrontForumArticleLike.php`,
+          formData
+        );
+        // ... (保持原先的響應檢查不變)
+      } catch (err) {
+        // 如果請求失敗，還原前端的讚數
+        post.article_likes -= 1;
+        alert("更新讚數時發生錯誤。請稍後再試。");
+        console.error(err);
+        return; // 確保不會在下面的代碼中將文章 ID 加入到 likedPosts
+      }
+
+      // 將該文章 ID 加入到已按讚的文章集合中
+      likedPosts.add(post.id);
+
+      await getForumData();
+      if (selectedPost.value) {
+        showArticle(post.id);
+      }
+    };
+
+    // toast
+    // 在组件挂载完成后，赋值给 toast
+    onMounted(() => {
+      toast.value = document.getElementById("toast");
+    });
+
+    // 定义 showToast 函数
+    function showToast(message) {
+      if (toast.value) {
+        toast.value.innerHTML = message;
+        toast.value.classList.add("show");
+        setTimeout(() => {
+          toast.value.classList.remove("show");
+        }, 3000); // 3 seconds
+      }
+    }
+
+    // 熱門文章排序
+    const hotPostSort = async () => {
+      filteredPosts.value = [...posts.value].sort((a, b) => b.likes - a.likes);
+      allButton.value.classList.remove("active");
+      hotButton.value.classList.add("active");
+    };
+    const returnOriginal = () => {
+      filteredPosts.value = [...posts.value];
+      allButton.value.classList.add("active");
+      hotButton.value.classList.remove("active");
     };
 
     watch(title, (newValue) => {
@@ -774,7 +844,12 @@ export default {
       }
 
       // 如果有错误，不提交
-      if (titleError.value || contentError.value) {
+      if (
+        titleError.value ||
+        contentError.value ||
+        !postFormPic.value.files[0]
+      ) {
+        showToast("所有欄位都要填寫!");
         return;
       }
       await addForumData();
@@ -814,6 +889,20 @@ export default {
       deleteForumData,
       forumPic,
       reloadPage,
+      confirmReport,
+      cancelReport,
+      showReportModal,
+      reportReason,
+      reportError,
+      reportDetails,
+      likePost,
+      selectedPost,
+      showArticle,
+      hotPostSort,
+      returnOriginal,
+      allButton,
+      hotButton,
+      showToast,
     };
   },
 };
