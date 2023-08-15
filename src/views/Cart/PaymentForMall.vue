@@ -148,7 +148,7 @@
       <div class="card-form__inner">
         <div class="priceInfo">
           應付金額
-          <span class="price">4900</span>
+          <span class="price">{{totalPrice}}</span>
         </div>
         <div class="card-input">
           <label for="cardNumber" class="card-input__label">信用卡卡號</label>
@@ -207,7 +207,8 @@ export default {
       cardNumberTemp: "",
       isCardFlipped: false,
       focusElementStyle: null,
-      isInputFocused: false
+      isInputFocused: false,
+      totalPrice: this.$store.state.totalPrice
     };
   },
   mounted() {

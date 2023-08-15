@@ -11,7 +11,7 @@ export default {
       startSale: "2025-01-18 12:00",
       count: 1,
       maxCount: 6,
-      price: 36888,
+      price:0,
 
       packageList: [],
       packageDataItem: [],
@@ -192,6 +192,12 @@ export default {
     };
   },
 
+  computed: {
+    totalBooking() {
+      return this.price = this.packageDataItem.origin * this.count;
+    },
+  },
+
   methods: {
     reduce() {
       //禁止購票數<0
@@ -240,6 +246,7 @@ export default {
       if (this.validate()) {
         // 選擇有效，繼續購票流程
         // this.$router.replace(this.toNextPage());
+        this.$store.commit('getTotalBooking', this.price);
         this.$router.push({ name: 'paymentForBooking' });
       } else {
         // 選擇無效，顯示錯誤消息
@@ -285,7 +292,7 @@ export default {
         <p>※本列車行程為包含來回</p>
         <p>販售時間：{{ startSale }}，售完為止</p>
         <p>取票方式：現場取票</p>
-        <p>票價：{{ price }}</p>
+        <p>票價：{{ packageDataItem.origin }}</p>
       </div>
     </section>
 
@@ -368,7 +375,7 @@ export default {
 
     <section class="total">
       <p>
-        總計：<span>{{ price * count }}</span>
+        總計：<span>{{ totalBooking }}</span>
       </p>
     </section>
 

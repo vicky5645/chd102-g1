@@ -484,7 +484,11 @@ router.beforeEach((to, from) => {
   }
 });
 
-
+router.beforeEach((to, from) => {
+  if (to.name == 'checkout' && from.name !== 'cart' ){
+    return { name: 'cart'}
+  }
+});
 
 //每次切換頁面時都是置頂
 router.beforeEach((to, from, next) => {
