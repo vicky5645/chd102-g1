@@ -39,7 +39,7 @@
   </div>
   <div class="detail-modal" v-show="isVisible['deleteUser']">
     <div class="content">
-      <h4 class="text">確定刪除論壇文章</h4>
+      <h4 class="text">確定刪除帳號</h4>
       <div class="subtext text_14">
         <p>請注意，這個操作是不可逆的，一旦刪除帳號，所有相關資料將被永久刪除且無法恢復。請確認您的決定，這將導致您無法再使用該帳號登入並享受我們的服務。</p>
         <p>如果您確定要刪除帳號，請按下確認按鈕以繼續。如有任何疑問或需要協助，請聯繫我們的客服團隊，我們將樂意協助您。</p>

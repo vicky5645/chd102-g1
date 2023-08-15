@@ -7,7 +7,7 @@
             <Images :imgURL="`${userInfo.pattern_file}`" :alt="`avatar`" />
           </template>
           <template v-else>
-            <Images :imgURL="`images/logo/logoBlack.png`" :alt="`avatar`" style="border: 2px solid red"/>
+            <Images :imgURL="`images/logo/logoBlack.png`" :alt="`avatar`" style="border: 2px solid #7AACBF"/>
           </template>
         </div>
         <div v-if="userInfo !== null">
