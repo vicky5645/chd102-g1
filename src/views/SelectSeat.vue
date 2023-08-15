@@ -11,7 +11,7 @@ export default {
       startSale: "2025-01-18 12:00",
       count: 1,
       maxCount: 6,
-      price: 36888,
+      price: 41888,
 
       packageList: [],
       packageDataItem: [],
