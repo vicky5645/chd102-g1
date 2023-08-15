@@ -148,7 +148,7 @@ const routesUser = [
         /* webpackChunkName: "online-booking" */ "@/views/CustomTickets.vue"
       ),
     meta: {
-      title: "客制車票",
+      title: "客製車票",
     },
   },
   {

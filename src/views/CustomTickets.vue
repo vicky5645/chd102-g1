@@ -47,8 +47,8 @@
             class="cus"
             :style="{ color: setting.color || '#F29C50' }"
           >
-            <img
-              :src="`/${icon.pattern_file}`"
+            <Images
+              :imgURL="`${icon.pattern_file}`"
               :class="['custom-svg', 'img']"
               :alt="``"
             />
