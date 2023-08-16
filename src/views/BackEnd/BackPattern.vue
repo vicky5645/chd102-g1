@@ -1,4 +1,4 @@
-<!-- 客製車票圖案管理 -->
+<!-- 車票客製圖案管理 -->
 
 <template>
   <!-- select bar -->
@@ -26,7 +26,7 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">客製車票圖案編號</th>
+        <th scope="col">車票客製圖案編號</th>
         <th scope="col">圖案名稱</th>
         <th scope="col">圖案描述</th>
         <th scope="col">創建日期</th>
@@ -71,7 +71,7 @@
     <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="itemModalLabel">修改客製車票圖案</h5>
+          <h5 class="modal-title" id="itemModalLabel">修改車票客製圖案</h5>
           <button
             type="button"
             class="btn-close"
@@ -88,7 +88,7 @@
         >
           <div class="input-group input-group-lg">
             <span class="input-group-text" id="inputGroup-sizing-lg"
-              >客製車票圖案編號</span
+              >車票客製圖案編號</span
             >
             <input
               disabled
@@ -221,7 +221,7 @@
     <div class="modal-dialog" style="max-width: 80%">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 name="header">新增客製車票圖案</h5>
+          <h5 name="header">新增車票客製圖案</h5>
         </div>
         <div class="modal-body">
           <slot name="body">
@@ -231,7 +231,7 @@
             >
               <!-- <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
-                  >客製車票圖案編號</span
+                  >車票客製圖案編號</span
                 >
                 <input
                   disabled

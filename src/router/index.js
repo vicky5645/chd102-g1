@@ -148,7 +148,7 @@ const routesUser = [
         /* webpackChunkName: "online-booking" */ "@/views/CustomTickets.vue"
       ),
     meta: {
-      title: "客製車票",
+      title: "車票客製",
     },
   },
   {
@@ -173,7 +173,9 @@ const routesUser = [
     path: "/payment",
     name: "paymentForMall",
     component: () =>
-      import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/PaymentForMall.vue"),
+      import(
+        /* webpackChunkName: "CheckOut" */ "@/views/Cart/PaymentForMall.vue"
+      ),
     meta: {
       title: "信用卡付款畫面", //商城專用
     },
@@ -182,7 +184,9 @@ const routesUser = [
     path: "/payment",
     name: "paymentForBooking",
     component: () =>
-      import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/PaymentForBooking.vue"),
+      import(
+        /* webpackChunkName: "CheckOut" */ "@/views/Cart/PaymentForBooking.vue"
+      ),
     meta: {
       title: "信用卡付款畫面", //訂票專用
     },
@@ -191,7 +195,9 @@ const routesUser = [
     path: "/orderConfirmed",
     name: "orderConfirmed",
     component: () =>
-      import(/* webpackChunkName: "CheckOut" */ "@/views/Cart/OrderConfirmed.vue"),
+      import(
+        /* webpackChunkName: "CheckOut" */ "@/views/Cart/OrderConfirmed.vue"
+      ),
     meta: {
       title: "訂單完成畫面",
     },
@@ -362,7 +368,7 @@ const routesUser = [
           ),
         name: "BackPattern",
         meta: {
-          title: "客製車票圖案",
+          title: "車票客製圖案",
         },
       },
       {
