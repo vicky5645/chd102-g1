@@ -68,6 +68,8 @@
 
 <script>
 import {GET} from '@/plugin/axios'
+import axios from "axios";
+import { BASE_URL } from "@/assets/js/common.js";
 import BreadCrumbs from '@/components/BreadCrumbs.vue'
 export default {
   components: {
@@ -84,7 +86,9 @@ export default {
       //商品分類列是否顯示
       isShow: true,
       searchText: '',
-      // 商品資料(僅在進入畫面時去取一次資料)
+      // MySQL原始商品資料(僅在進入畫面時去取一次資料)
+      dataFromMySQL: [777],
+      // 替換新key值的商品資料
       productData: [],
       // 呈現的商品資料(針對productData來搜尋篩選)
       productDisplay: [],
@@ -99,30 +103,6 @@ export default {
           i: "fa-solid fa-cart-shopping"
         }
       },
-      // breadCrumbs: [
-      //   {
-      //     index: "Goods",
-      //     link: "index.html",
-      //     color: "color:#9CA3AF;"
-      //   },
-      //   {
-      //     index: "Detail",
-      //     link: "detail.html",
-      //     color: "color:#9CA3AF;"
-      //   },
-      //   {
-      //     index: "Pricing",
-      //     link: "pricing.html",
-      //     color: "color:#F29C50;"
-      //   }
-      // ],
-      // tabActive: 1,
-      // categoryItem: {
-      //   1: "所有商品",
-      //   2: "熱銷商品",
-      //   3: "食品",
-      //   4: "玩具"
-      // },
       categoryItem: [
         { type: "所有商品" },
         { type: "熱銷商品" },
@@ -133,12 +113,16 @@ export default {
       ]
     }
   },
-  created() {
-    // 取得API
-    GET('/data/productData.json').then(res => {
-      this.productData = res
-      this.updateDisplay()
-    })
+  created () {
+    //取得API
+    // GET('/data/productData.json').then(res => {
+    //   this.productData = res;
+    //   this.updateDisplay();
+    // })
+
+    this.getData();
+    // console.log('執行created',this.dataFromMySQL);
+    // console.log('執行created',typeof this.dataFromMySQL);
   },
   mounted() {
     // 監聽視窗大小改變事件
@@ -203,6 +187,38 @@ export default {
       setTimeout(() => {
                 this.addSuccess = false;
             }, 800);
+    },
+    //抓資料
+    async getData() {
+      const type = "get"; // 設定要執行的操作，這裡是取得資料
+        try {
+          const res = await axios.get(`${BASE_URL}getProduct.php?type=${type}`)
+          this.dataFromMySQL = res.data;
+        }catch(error) {
+          console.error("There was an error fetching the data:", error);
+        };
+      this.getNewData();
+      this.productDisplay = this.productData;
+    },
+    //解析資料庫key值
+    getNewData() {
+      this.productData = [];
+      this.dataFromMySQL.forEach((item) => {
+      const newData = {
+        id: item.prod_no,
+        title: item.prod_name,
+        type: item.prod_type,
+        price: item.prod_price,
+        description: item.prod_summary,
+        status: item.prod_status,
+        image: `images/online-mall/${item.prod_file}`,
+        hot: item.prod_hot,
+        isFavorite: false,
+        amount: 1,
+        totalPrice: 0,
+      };
+        this.productData.push(newData);
+      });
     },
   },
   beforeUnmount() {

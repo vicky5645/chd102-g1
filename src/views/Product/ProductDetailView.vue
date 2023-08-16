@@ -20,10 +20,11 @@
         <div class="product_data_left">
 
         <div class="big_pic">
-          <Images :imgURL="`${bigPic}`" :alt="`${productDataItem.title}`" />
+          <Images :imgURL="productDataItem.image" :alt="`${productDataItem.title}`" />
+          <!-- <Images :imgURL="`${bigPic}`" :alt="`${productDataItem.title}`" /> -->
           <!-- <img :src="bigPic" :alt="productDataItem.title"> -->
         </div>
-        <div class="small_pic_list" style="display: none;">
+        <!-- <div class="small_pic_list">
           <div
             v-for="(pic, index) in smallPics"
             :key="index"
@@ -31,9 +32,8 @@
             @click="changeBigPic(pic)"
           >
           <Images :imgURL="`${pic}`" :alt="`clock`" />
-            <!-- <img :src="pic" alt="clock" /> -->
           </div>
-        </div>
+        </div> -->
 
         </div>
         <div class="product_data_right">
@@ -176,6 +176,8 @@
 
 <script>
 import {GET} from '@/plugin/axios'
+import axios from "axios";
+import { BASE_URL } from "@/assets/js/common.js";
 import BreadCrumbs from "@/components/BreadCrumbs.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation } from "swiper/modules";
@@ -192,7 +194,8 @@ export default {
   data(){
     return {
       modules: [Navigation],
-      productData: null,
+      dataFromMySQL: [],
+      productData: [],
       productDataItem: [],
       addSuccess: false,
       isButtonDisabled: false,
@@ -222,12 +225,12 @@ export default {
       buttons: ["規格1", "規格2"],
 
       // 點擊小圖換大圖
-      bigPic: "",
-      smallPics: [
-        "images/img/ProductDetails/p2.png",
-        "images/img/ProductDetails/p3.png",
-        "images/img/ProductDetails/p4.png"
-      ],
+      // bigPic: "",
+      // smallPics: [
+      //   "images/img/ProductDetails/p2.png",
+      //   "images/img/ProductDetails/p3.png",
+      //   "images/img/ProductDetails/p4.png"
+      // ],
 
       // content 區塊切換
       selectedTab: "Tab1", 
@@ -244,96 +247,82 @@ export default {
         "退貨和換貨：我們承諾提供高品質的商品和服務。如果您對我們的商品不滿意，請在收到商品後的7天內聯繫我們，我們將為您安排退貨或換貨。商品必須保持原狀，未經使用或損壞，並且包裝完整。退貨運費由顧客承擔。",
       ],
       // 推薦商品
-      allProducts: [
-        {
-          name: "小黃復古拍立得",
-          image: "images/img/project/1.jpg",
-        },
-        {
-          name: "泥漿去角質霜",
-          image: "images/img/project/2.jpg",
-        },
-        {
-          name: "真的皮的復古皮鞋",
-          image: "images/img/project/3.jpg",
-        },
-        {
-          name: "大地色包包",
-          image: "images/img/project/4.jpg",
-        },
-        {
-          name: "可站立復古拍立得(黑)",
-          image: "images/img/project/5.jpg",
-        },
-        {
-          name: "森林系後背包",
-          image: "images/img/project/6.jpg",
-        },
-        {
-          name: "可站立復古拍立得(白)",
-          image: "images/img/project/7.jpg",
-        },
-        {
-          name: "青春活力勾勾籃球鞋",
-          image: "images/img/project/8.jpg",
-        },
-      ],
-      currentProducts: [],
-      productsKey: 0,
-      slideDirection: "slide-right",
+      // allProducts: [
+      //   {
+      //     name: "小黃復古拍立得",
+      //     image: "images/img/project/1.jpg",
+      //   },
+      //   {
+      //     name: "泥漿去角質霜",
+      //     image: "images/img/project/2.jpg",
+      //   },
+      //   {
+      //     name: "真的皮的復古皮鞋",
+      //     image: "images/img/project/3.jpg",
+      //   },
+      //   {
+      //     name: "大地色包包",
+      //     image: "images/img/project/4.jpg",
+      //   },
+      //   {
+      //     name: "可站立復古拍立得(黑)",
+      //     image: "images/img/project/5.jpg",
+      //   },
+      //   {
+      //     name: "森林系後背包",
+      //     image: "images/img/project/6.jpg",
+      //   },
+      //   {
+      //     name: "可站立復古拍立得(白)",
+      //     image: "images/img/project/7.jpg",
+      //   },
+      //   {
+      //     name: "青春活力勾勾籃球鞋",
+      //     image: "images/img/project/8.jpg",
+      //   },
+      // ],
+      //currentProducts: [],
+      //productsKey: 0,
+      //slideDirection: "slide-right",
     }
   },
   watch: {
     "$route.params.id"(id) {
-      this.productDataItem = this.productData[`${parseFloat(id)-1}`];
-      this.bigPic = this.productDataItem.image;
+      // this.productDataItem = this.productData[`${parseFloat(id)-1}`];
+      this.productDataItem = this.productData.find(item => item.id === parseInt(this.$route.params.id));
+      // this.bigPic = this.productDataItem.image;
     },
   },
   // 推薦商品
   created() {
+    this.getData();
     // 取得API
-    GET('/data/productData.json').then(res => {
-      this.productData = res
-      this.productDataItem = this.productData[`${parseFloat(this.$route.params.id)-1}`];
-      this.bigPic = this.productDataItem.image;
-    })
-    this.currentProducts = this.allProducts.slice(0, 4); // 初始化 currentProducts
+    // GET('/data/productData.json').then(res => {
+    //   this.productData = res
+    //   this.productDataItem = this.productData[`${parseFloat(this.$route.params.id)-1}`];
+    //   this.bigPic = this.productDataItem.image;
+    // })
+    //this.currentProducts = this.allProducts.slice(0, 4); // 初始化 currentProducts
   },
   // setup() {
   //   const store = useStore();
   // },
   methods: {
     // 規格按鈕
-    ttest() {
-      console.log(this.productData);
-    },
     increment() {
-      // only increment if quantity is less than 10
-      // if (this.quantity < 10) {
-      //   this.quantity++;
-      // }
       if (this.productDataItem.amount < 10) {
         this.productDataItem.amount++;
       }
-      console.log(this.productDataItem.amount);
     },
     decrement() {
-      // only decrement if quantity is greater than 1
-      // if (this.quantity > 1) {
-      //   this.quantity--;
-      // }
       if (this.productDataItem.amount > 1) {
         this.productDataItem.amount--;
       }
-      console.log(this.productDataItem.amount);
     },
     goCartInfo() {
       this.$router.push({ path: "/cart" });
     },
     // 加入購物車
-    // addToCart() {
-    //   this.$store.commit("addToCart",this.productDataItem);
-    // },
     addToCart() {
       this.$store.commit("addToCart",this.productDataItem);
       this.addSuccess = true;
@@ -348,39 +337,72 @@ export default {
       this.goCartInfo();
     },
     clickTest() {
-      console.log(this.productDataItem.price)
-      console.log(this.$store.state.isLogin)
+      console.log(this.$route.params.id);
+      console.log(this.productData);
     },
     // 點擊小圖換大圖
-    selectButton(button) {
-      this.selectedButton = button;
-    },
-    changeBigPic(pic) {
-      this.bigPic = pic;
-    },
+    // selectButton(button) {
+    //   this.selectedButton = button;
+    // },
+    // changeBigPic(pic) {
+    //   this.bigPic = pic;
+    // },
 
     // 推薦商品
-    nextProducts() {
-      if (this.productsKey < Math.ceil(this.allProducts.length / 4) - 1) {
-        this.productsKey++;
-        this.slideDirection = "slide-right";
-        this.currentProducts = this.allProducts.slice(
-          this.productsKey * 4,
-          this.productsKey * 4 + 4
-        );
-      }
+    // nextProducts() {
+    //   if (this.productsKey < Math.ceil(this.allProducts.length / 4) - 1) {
+    //     this.productsKey++;
+    //     this.slideDirection = "slide-right";
+    //     this.currentProducts = this.allProducts.slice(
+    //       this.productsKey * 4,
+    //       this.productsKey * 4 + 4
+    //     );
+    //   }
+    // },
+    // previousProducts() {
+    //   if (this.productsKey > 0) {
+    //     this.productsKey--;
+    //     this.slideDirection = "slide-left";
+    //     this.currentProducts = this.allProducts.slice(
+    //       this.productsKey * 4,
+    //       this.productsKey * 4 + 4
+    //     );
+    //   }
+    // }
+    //抓資料
+    async getData() {
+      const type = "get"; // 設定要執行的操作，這裡是取得資料
+        try {
+          const res = await axios.get(`${BASE_URL}getProduct.php?type=${type}`)
+          this.dataFromMySQL = res.data;
+        }catch(error) {
+          console.error("There was an error fetching the data:", error);
+        };
+      this.getNewData();
+      this.productDataItem = this.productData.find(item => item.id === parseInt(this.$route.params.id));
+      // this.bigPic = this.productDataItem.image;
     },
-    previousProducts() {
-      if (this.productsKey > 0) {
-        this.productsKey--;
-        this.slideDirection = "slide-left";
-        this.currentProducts = this.allProducts.slice(
-          this.productsKey * 4,
-          this.productsKey * 4 + 4
-        );
-      }
-    }
-  },
+    //解析資料庫key值
+    getNewData() {
+      this.productData = [];
+      this.dataFromMySQL.forEach((item) => {
+      const newData = {
+        id: item.prod_no,
+        title: item.prod_name,
+        type: item.prod_type,
+        price: item.prod_price,
+        description: item.prod_summary,
+        status: item.prod_status,
+        image: `images/online-mall/${item.prod_file}`,
+        hot: item.prod_hot,
+        isFavorite: false,
+        amount: 1,
+        totalPrice: 0,
+      };
+        this.productData.push(newData);
+      });
+    },
+  }
 };
 </script>
 
