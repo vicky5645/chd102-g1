@@ -44,12 +44,17 @@
     <template v-else>
       <p class="article_card_no">暫時沒有相關公告，換個關鍵字查查吧😣</p>
     </template>
+    <LoadingAni v-if="$store.state.Loading" />
   </main>
 </template>
 
 <script>
+import LoadingAni from '@/components/Loading.vue';
 import { GET } from '@/plugin/axios'
 export default {
+  components: {
+    LoadingAni
+  },
   data() {
     return {
       // 圖片
@@ -113,6 +118,7 @@ export default {
       );
     },
     async backgetAnnouncementData() {
+      this.$store.state.Loading = true
       await this.$store.dispatch("getAnnouncementData")
       this.airticles = []
       this.$store.state.AnnouncementData.forEach(element => {
@@ -130,6 +136,9 @@ export default {
         })
       });
       this.filteredArticles = this.airticles
+      setTimeout(() => {
+        this.$store.commit('closeLoading')
+      }, 500)
     },
   },
   created() {

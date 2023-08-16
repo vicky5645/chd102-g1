@@ -16,10 +16,7 @@
         <div v-else>Guest</div>
       </div>
       <div class="link-list">
-        <router-link
-          to="/user/"
-          :class="{ active: $route.name === 'userinfo' }"
-        >
+        <router-link to="/user/" :class="{ active: $route.name === 'userinfo' }">
           <li>
             <div class="icon-24">
               <i class="fa-solid fa-gear"></i>
@@ -27,10 +24,7 @@
             <span class="label">帳號設定</span>
           </li>
         </router-link>
-        <router-link
-          to="/user/order"
-          :class="{ active: $route.name === 'userorder' }"
-        >
+        <router-link to="/user/order" :class="{ active: $route.name === 'userorder' }">
           <li>
             <div class="icon-24">
               <i class="fa-solid fa-list-ul"></i>
@@ -38,10 +32,7 @@
             <span class="label">訂單管理</span>
           </li>
         </router-link>
-        <router-link
-          to="/user/forum"
-          :class="{ active: $route.name === 'userforum' }"
-        >
+        <router-link to="/user/forum" :class="{ active: $route.name === 'userforum' }">
           <li>
             <div class="icon-24">
               <i class="fa-regular fa-comments"></i>
@@ -49,10 +40,7 @@
             <span class="label">論壇訊息</span>
           </li>
         </router-link>
-        <router-link
-          to="/user/like"
-          :class="{ active: $route.name === 'userlike' }"
-        >
+        <router-link to="/user/like" :class="{ active: $route.name === 'userlike' }">
           <li>
             <div class="icon-24">
               <i class="fa-solid fa-heart"></i>
@@ -71,27 +59,15 @@
     <div class="modal-content row">
       <div class="preview">
         <p>圖片預覽</p>
-        <Images
-          v-if="this.userInfo.pattern_file && !this.newImage.member_file"
-          :imgURL="`${this.userInfo.pattern_file}`"
-          alt=""
-        />
-        <img
-          v-if="this.newImage.member_file"
-          :src="`${this.newImage.member_file}`"
-          :alt="`Image preview`"
-          :id="`imgPreview`"
-        />
+        <Images v-if="this.userInfo.pattern_file && !this.newImage.member_file" :imgURL="`${this.userInfo.pattern_file}`"
+          alt="" />
+        <img v-if="this.newImage.member_file" :src="`${this.newImage.member_file}`" :alt="`Image preview`"
+          :id="`imgPreview`" />
       </div>
       <!-- 選圖片上傳-->
       <div class="upload-file">
         <p>新增/變更圖片</p>
-        <input
-          type="file"
-          name="memImage"
-          accept="image/*"
-          @change="fileUpload"
-        />
+        <input type="file" name="memImage" accept="image/*" @change="fileUpload" />
 
         <!-- 取消/儲存 -->
         <div class="wrap">
@@ -218,10 +194,10 @@ export default {
       try {
         const response = await axios.post(`${BASE_URL}getMember.php`);
         this.userInfo = response.data.find((element) => {
-          return element.mem_no === this.userInfo.mem_no
+          return parseInt(element.mem_no) === parseInt(this.$store.state.userInfo.mem_no)
         })
         svg_icon(".custom-svg", "currentColor");
-
+      
         // 確認是否成功
         console.log("Data retrieved from MySQL:", "dataFromMySQL");
       } catch (error) {
@@ -248,12 +224,14 @@ export default {
   .preview {
     // margin: auto;
     width: 100%;
+
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
   }
+
   .upload-file {
     margin: auto;
 
@@ -266,11 +244,14 @@ export default {
     .wrap {
       display: flex;
       justify-content: space-around;
+
       button {
         color: white;
         border-radius: 10px;
+
         &.cancel {
           background-color: #d1d5db;
+
           &:hover {
             background-color: darken(#d1d5db, 20);
           }
@@ -278,6 +259,7 @@ export default {
 
         &.save {
           background-color: #302af2;
+
           &:hover {
             background-color: darken(#302af2, 20);
           }
