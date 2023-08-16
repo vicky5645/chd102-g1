@@ -31,6 +31,18 @@
       min-height: 44px;
       display: flex;
       transition: all 0.5s;
+      & li {
+        .icon-24 + span {
+          width: auto;
+          margin-right: auto;
+        }
+        span {
+          width: 100%;
+          text-align: center;
+          // background-color: gold;
+        }
+      }
+      
       &.active{
         background-color: rgba(#B3CEE2,30%);
         font-weight: bold;
@@ -42,11 +54,20 @@
         color: $linkColor;
       }
     }
-    li {
+    .setting {
+      padding-top: $space;
+      padding-bottom: $space;
+      border-bottom: 1px solid map-get($BrandColors, Secondary2);
+    }
+    .login {
+      border-top: 1px solid map-get($BrandColors, Secondary2);
+    }
+    & li {
+      width: 100%;
       list-style: none;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: space-between;
       column-gap: 20px;
     }
   }

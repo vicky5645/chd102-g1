@@ -22,11 +22,7 @@
         >
           <li>
             <div class="icon-24">
-              <img
-                class="custom-svg"
-                src="@/assets/images/icon/basic/settings.svg"
-                alt="settings-icon"
-              />
+              <i class="fa-solid fa-gear"></i>
             </div>
             <span class="label">帳號設定</span>
           </li>
@@ -37,11 +33,7 @@
         >
           <li>
             <div class="icon-24">
-              <img
-                class="custom-svg"
-                src="@/assets/images/icon/basic/list.svg"
-                alt="list-icon"
-              />
+              <i class="fa-solid fa-list-ul"></i>
             </div>
             <span class="label">訂單管理</span>
           </li>
@@ -52,11 +44,7 @@
         >
           <li>
             <div class="icon-24">
-              <img
-                class="custom-svg"
-                src="@/assets/images/icon/basic/message_writing.svg"
-                alt="message_writing"
-              />
+              <i class="fa-regular fa-comments"></i>
             </div>
             <span class="label">論壇訊息</span>
           </li>
@@ -121,7 +109,6 @@ import { toHandlers } from "vue";
 import axios from "axios";
 import { BASE_URL } from "@/assets/js/common.js";
 
-// import svg_icon from "@/js/svgcolor.js";
 export default {
   data() {
     return {
@@ -231,7 +218,6 @@ export default {
       try {
         const response = await axios.post(`${BASE_URL}getMember.php`, data);
         this.userInfo = response.data;
-        svg_icon(".custom-svg", "currentColor");
 
         // 確認是否成功
         console.log("Data retrieved from MySQL:", "dataFromMySQL");

@@ -1,15 +1,27 @@
 <template>
   <div class="userPage cartFloat" v-show="userStatus">
     <div class="link-list">
-      <router-link to="/user">
-        <li style="width: 100%">
-          <div class="icon-24">
-            <img
-              class="custom-svg"
-              src="@/assets/images/icon/basic/member-login.svg"
-              alt="list-icon"
-            />
-          </div>
+      <router-link to="/user" class="setting">
+        <li>
+          <template
+            v-if="
+              $store.state.userInfo !== null &&
+              $store.state.userInfo.pattern_file !== null
+            "
+          >
+            <div class="icon-24 avatar">
+              <Images
+                :imgURL="`${$store.state.userInfo.pattern_file}`"
+                :alt="`avatar`"
+              />
+            </div>
+          </template>
+          <template v-else>
+            <div class="icon-24">
+              <i class="fa-solid fa-user"></i>
+            </div>
+          </template>
+
           <template v-if="$store.state.userInfo">
             <span
               style="
@@ -30,30 +42,24 @@
               >Hello, Guest</span
             >
           </template>
-          <img
-            class="custom-svg"
-            src="@/assets/images/icon/basic/settings.svg"
-            alt="settings-icon"
-          />
+          <div class="icon-24">
+            <i class="fa-solid fa-gear"></i>
+          </div>
         </li>
       </router-link>
       <router-link to="/user/order">
         <li>
-          <img
-            class="custom-svg"
-            src="@/assets/images/icon/basic/list.svg"
-            alt="list-icon"
-          />
+          <div class="icon-24">
+            <i class="fa-solid fa-list-ul"></i>
+          </div>
           <span>訂單管理</span>
         </li>
       </router-link>
       <router-link to="/user/forum">
         <li>
-          <img
-            class="custom-svg"
-            src="@/assets/images/icon/basic/message_writing.svg"
-            alt="message_writing"
-          />
+          <div class="icon-24">
+            <i class="fa-regular fa-comments"></i>
+          </div>
           <span>論壇訊息</span>
         </li>
       </router-link>
@@ -66,7 +72,9 @@
         </li>
       </router-link>
       <router-link to="/login" class="login" @click="handleLogout">
-        <li>登出</li>
+        <li>
+          <span> 登出 </span>
+        </li>
       </router-link>
     </div>
   </div>
@@ -74,7 +82,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, onMounted  } from "vue";
+import { defineProps, defineEmits, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { firebaseAuth } from "@/assets/config/firebase.js";
@@ -87,10 +95,6 @@ const emit = defineEmits(["closeUser", "goLoginUser"]);
 const store = useStore();
 const router = useRouter();
 
-onMounted(() => {
-  svg_icon(".custom-svg", "currentColor");
-});
-
 const logoutUser = function () {
   // 登出
   signOut(firebaseAuth)
@@ -101,12 +105,11 @@ const logoutUser = function () {
       store.commit("deleteUser"); // 使用 VueX mutations -> 清除使用者資料
       location.reload(); //刷新頁面
       if ($route.name === "login") {
-        return
+        return;
       } else {
         // router.push({ name: "login" }); //跳轉
         this.$router.push("/about");
       }
-      
     })
     .catch((error) => {
       // An error happened.
@@ -127,6 +130,16 @@ const handleLogout = () => {
 </script>
 
 <style lang="scss" scoped>
+.avatar {
+  border: 1px solid #7AACBF;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  img{
+    object-fit: cover;
+  }
+}
 .pageMask {
   background-color: transparent;
   width: 100vw;

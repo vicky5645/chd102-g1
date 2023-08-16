@@ -28,9 +28,6 @@ export default {
       return isStart || isBackEnd || isBackLogin;
     },
   },
-  // mounted() {
-  //   svg_icon('.custom-svg', 'currentColor');
-  // },
 };
 </script>
 

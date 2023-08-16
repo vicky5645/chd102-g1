@@ -85,6 +85,7 @@
             @include size(120px);
             margin: $space * 2;
             img {
+              border: 2px solid map-get($BrandColors, Secondary2);
               border-radius: (120px / 2);
             }
           }
