@@ -194,10 +194,7 @@
   </form>
 
   <!-- new modal -->
-  <form
-    action="http://localhost:80/phps/postSpot.php"
-    method="post"
-    enctype="multipart/form-data"
+  <div
     class="modal fade"
     id="itemNewModal"
     tabindex="-1"
@@ -316,7 +313,7 @@
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -402,6 +399,12 @@ export default {
       }
 
       const file = files[0];
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        alert("檔案大小超過 2MB");
+        event.target.value = ""; // 清空
+        return;
+      }
       const reader = new FileReader();
 
       reader.onload = (e) => {
@@ -433,6 +436,8 @@ export default {
       data.append("spot_name", this.currentItem.spot_name);
       data.append("spot_info", this.currentItem.spot_info);
       data.append("spot_status", this.currentItem.spot_status);
+      
+      data.append("news_filename", newModel.pattern_file_name);
 
       if (imgFile) {
         data.append("type", "editimg");
@@ -459,10 +464,43 @@ export default {
 
     // new model
     submitAnnouncement() {
+      const newModel = this.newAnnouncement;
+      const imgFile = this.newAnnouncement.spot_file;
       if (!this.newAnnouncement.spot_name || !this.newAnnouncement.spot_info) {
         alert("所有欄位都必須填寫！");
         return;
       }
+
+      // 準備要傳送的資料
+      const data = new FormData(); // POST 表單資料
+      data.append("spot_no", newModel.spot_no);
+      data.append("spot_name", newModel.spot_name);
+      data.append("spot_info", newModel.spot_info);
+      data.append("spot_status", newModel.spot_status);
+      data.append("news_filename", this.newAnnouncement.spot_file_name);
+
+      if (newModel.spot_file) {
+        data.append("type", "addImg");
+        data.append("news_img", imgFile);
+      }
+
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}postSpot.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          // 重新取得資料
+          alert("新增成功！");
+          this.getdataFromMySQL();
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          alert("新增失敗！");
+        });
+
+      this.clearAnnouncement();
 
       const modalEl = document.getElementById("itemNewModal");
       const modalInstance = Modal.getInstance(modalEl);

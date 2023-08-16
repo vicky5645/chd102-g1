@@ -1,17 +1,33 @@
-<?php 
-if($_FILES["image"]["error"] === 0) {
+<?php
+header('Access-Control-Allow-Origin:*');
+header("Content-Type:application/json;charset=utf-8");
+$type = isset($_POST["type"]) ? $_POST["type"] : '';
+
+
+if ($type == 'addImg') {
   $dir = "../images/tmp/"; //指定所要上傳的路徑
   if(file_exists($dir)===false){
       mkdir($dir); //make directory
   }
 
-  $from = $_FILES["image"]["tmp_name"];
+  // 接到圖檔內容
+  $base64Image = $_POST['news_img']; // Base64 編碼的圖像數據
+  // 將 Base64 編碼的圖像數據解碼二進制數據
+  $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Image));
 
-  $to = $dir . $_FILES["image"]["name"];
+  //處理檔名 -> 建立唯一性--------------------
+  //---產生主檔名
+  $fileName = uniqid(); //13個隨機字符
+  //---取出副檔名   
+  $newsFileName = $_POST['news_filename']; //test.gif
+  $fileExt = pathInfo($newsFileName, PATHINFO_EXTENSION);
 
-  $fileName = $_FILES["image"]["name"]; // 將檔案名稱設定給 $fileName
-  if(copy($from, $to)){
-    //寫入資料庫
+  $fileName = "$fileName.$fileExt"; //用uniqid()去串接副檔名
+
+  //儲存圖檔到指定路徑
+  $newfilePath = $dir . $fileName;
+  if(file_put_contents($newfilePath, $imageData)){
+    // 成功新增圖檔後，執行資料庫
     try {
       require_once("./connect_chd102g1.php");
       $sql = "insert into spot (`spot_no`, `spot_name`, `spot_info`, `spot_status`, `spot_file`)
