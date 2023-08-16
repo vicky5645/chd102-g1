@@ -198,11 +198,15 @@
             /> -->
           </div>
           <div class="model_body_pic">
-            <img
+            <Images
+                :imgURL="getProcessedImgURL(currentItem.article_image)"
+                :alt="`${currentItem.article_title}`"
+              />
+            <!-- <img
               v-if="currentItem.article_image"
-              :src="'/' + currentItem.article_image"
+              :src="'images/img/Forum' + currentItem.article_image"
               alt="Image preview"
-            />
+            /> -->
             <!-- NOTE 上線換這個 -->
             <!-- <img
               v-if="currentItem.article_image"
@@ -277,6 +281,9 @@ export default {
   },
 
   methods: {
+    getProcessedImgURL(imageURL) {
+      return `images/img/Forum/${imageURL.split("/").pop()}`;
+    },
     // model
     // edit php
     saveChanges() {
