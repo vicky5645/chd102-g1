@@ -4,33 +4,28 @@
   <!-- select bar -->
   <div class="search_new">
     <div class="input-group">
-      <input
-        v-model="searchText"
-        type="text"
-        class="form-control"
-        placeholder="輸入文字查詢"
-        aria-label="Search"
-      />
+      <input v-model="searchText" type="text" class="form-control" placeholder="輸入文字查詢" aria-label="Search" />
     </div>
   </div>
 
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">商品訂單編號</th>
-        <th scope="col">商品編號</th>
-        <th scope="col">價格</th>
-        <th scope="col">數量</th>
-
-        <th scope="col"></th>
+        <th scope="col">訂單編號</th>
+        <th scope="col">商品類型</th>
+        <th scope="col">訂單總價</th>
+        <th scope="col">商品數量</th>
+        <th scope="col">訂單日期</th>
       </tr>
     </thead>
-    <!-- <tbody>
-      <tr v-for="(item, index) in filteredItems" :key="index">
-        <th scope="row">{{ item.id }}</th>
-        <td class="ellipsis">{{ item.name }}</td>
-        <td class="ellipsis">{{ item.qty }}</td>
-        <td style="text-align: right">
+    <tbody>
+      <tr v-for="(item, index) in filteredItems" :key="item.productOrderNumber">
+        <th scope="row">{{ item.productOrderNumber }}</th>
+        <td class="ellipsis">{{ item.productItem }}</td>
+        <td class="ellipsis">{{ item.price }}</td>
+        <td class="ellipsis">{{ item.quantity }}</td>
+        <td class="ellipsis">{{ item.date }}</td>
+        <!-- <td style="text-align: right">
           <button
             type="button"
             class="btn btn-outline-primary"
@@ -39,9 +34,9 @@
           >
             查看
           </button>
-        </td>
+        </td> -->
       </tr>
-    </tbody> -->
+    </tbody>
 
     <p v-if="filteredItems.length === 0" class="text-danger">
       * 沒有找到符合搜尋條件的結果
@@ -57,10 +52,27 @@ export default {
     return {
       items: [
         {
-          // id: 1,
-          // name: "綠野號",
-          // qty: 40,
+          productOrderNumber: 202402231,
+          productItem: '列車模型',
+          price: 1000,
+          quantity: 3,
+          date: '2024-02-11'
         },
+        {
+          productOrderNumber: 202402351,
+          productItem: "火車懷錶",
+          price: 2000,
+          quantity: 2,
+          date: '2024-02-13'
+        },
+        {
+          productOrderNumber: 202402683,
+          productItem: "超讚大獎章",
+          price: 3000,
+          quantity: 6,
+          date: '2024-02-13'
+        },
+
       ],
       // search
       searchText: "",
@@ -188,14 +200,17 @@ export default {
     white-space: nowrap;
   }
 }
+
 .ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 80px; // 設定你希望的寬度
 }
+
 .model_body_pic {
   width: 100%;
+
   img {
     width: 100%;
     height: 100%;
