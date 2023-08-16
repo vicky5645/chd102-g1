@@ -663,7 +663,7 @@ export default {
     getData() {
       const type = "get"; // 設定要執行的操作，這裡是取得資料
     axios
-      .get(`${BASE_URL}/getProduct.php?type=${type}`)
+      .get(`${BASE_URL}getProduct.php?type=${type}`)
       .then((response) => {
         this.dataFromMySQL = response.data;
       })
@@ -684,7 +684,7 @@ export default {
   // mounted() {
   //   const type = "get"; // 設定要執行的操作，這裡是取得資料
   //   axios
-  //     .get(`${BASE_URL}/getProduct.php?type=${type}`)
+  //     .get(`${BASE_URL}getProduct.php?type=${type}`)
   //     .then((response) => {
   //       this.dataFromMySQL = response.data;
   //     })
