@@ -13,11 +13,11 @@
                     <h4 class="title">運送方式</h4>
                     <form action="">
                         <div>
-                            <input type="radio" id="delivery-home" name="delivery" value="" checked>
+                            <input type="radio" id="delivery-home" name="delivery" value="1" checked>
                             <label for="delivery-home">【宅配】</label>
                         </div>
                         <div>
-                            <input type="radio" id="delivery-inStore" name="delivery" value="">
+                            <input type="radio" id="delivery-inStore" name="delivery" value="2">
                             <label for="delivery-inStore">【車站取貨】</label>
                         </div>
                     </form>
@@ -35,11 +35,11 @@
                     <h4 class="title">付款方式</h4>
                     <form action="">
                         <div>
-                            <input type="radio" id="creditCard" name="pay" value="" checked>
+                            <input type="radio" id="creditCard" name="pay" value="1" v-model="paymentMethod">
                             <label for="creditCard">信用卡付款</label>
                         </div>
                         <div>
-                            <input type="radio" id="cashOnDelivery" name="pay" value="">
+                            <input type="radio" id="cashOnDelivery" name="pay" value="2" v-model="paymentMethod">
                             <label for="cashOnDelivery">取貨付款</label>
                         </div>
                     </form>
@@ -75,6 +75,7 @@ export default {
             mem_name:"",
             mem_mobile:"",
             mem_addr:"",
+            paymentMethod:"1",
         }
     },
     components: {
@@ -111,7 +112,12 @@ export default {
         },
         goPayment() {
             // alert("即將跳轉信用卡付款頁面！");
-            this.$router.push('/payment');
+            if (this.paymentMethod === '1') {
+                this.$router.push('/payment');
+            } else if (this.paymentMethod === '2') {
+                this.$store.commit('clearCart');
+                this.$router.push('/orderConfirmed');
+            }
         }
     }
 }

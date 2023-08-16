@@ -506,7 +506,7 @@ router.beforeEach((to, from) => {
 });
 
 router.beforeEach((to, from) => {
-  if (to.name == 'orderConfirmed' && (from.name !== 'paymentForMall' && from.name !== 'paymentForBooking')){
+  if (to.name == 'orderConfirmed' && (from.name !== 'paymentForMall' && from.name !== 'paymentForBooking' && from.name !== 'checkout')){
     return { name: 'about'}
   }
 });
