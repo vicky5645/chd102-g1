@@ -1,4 +1,5 @@
 <template>
+  <LoadingAni v-if="$store.state.Loading" />
   <MainHeader v-if="!hasStartView"></MainHeader>
 
   <router-view />
@@ -9,10 +10,12 @@
 <script>
 import MainHeader from "@/components/MainHeader.vue";
 import MainFooter from "@/components/MainFooter.vue";
+import LoadingAni from '@/components/Loading.vue';
 export default {
   components: {
     MainHeader,
     MainFooter,
+    LoadingAni
   },
   computed: {
     hasStartView() {
