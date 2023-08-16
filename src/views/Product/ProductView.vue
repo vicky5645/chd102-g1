@@ -52,7 +52,7 @@
                 </div>
               </router-link>
               <router-link :to="`/productDetail/${item.id}`">
-                <h3>{{ item.title }}</h3>
+                <h3 :title="item.title">{{ item.title }}</h3>
               </router-link>
               <div class="price">
                 <span>{{ item.price }}</span>
