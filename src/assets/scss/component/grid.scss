@@ -38,16 +38,16 @@ main {
     max-width: $layoutWidth;
     margin: auto;
 //     width: 100%;
-    padding-left: var(--gs-gap);
-    padding-right: var(--gs-gap);
+    padding-left: var(--gs-gap) !important;
+    padding-right: var(--gs-gap) !important;
 }
 .row{
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
     align-content: flex-start;
-    margin-left: calc(var(--gs-gap) * -1);
-    margin-right: calc(var(--gs-gap) * -1);
+    margin-left: calc(var(--gs-gap) * -1) !important;
+    margin-right: calc(var(--gs-gap) * -1) !important;
 }
 [class*='col-'],
 .col{

@@ -25,11 +25,11 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col" class="chooseSurch">公告編號</th>
-        <th scope="col" class="chooseSurch">公告標題</th>
-        <th scope="col" class="chooseSurch">公告類型</th>
-        <th scope="col" class="chooseSurch">公告內容</th>
-        <th scope="col" class="chooseSurch">公告時間</th>
+        <th scope="col" class="chooseSurch active">公告編號</th>
+        <th scope="col" class="chooseSurch active">公告標題</th>
+        <th scope="col" class="chooseSurch active">公告類型</th>
+        <th scope="col" class="chooseSurch active">公告內容</th>
+        <th scope="col" class="chooseSurch active">公告時間</th>
         <th scope="col">公告圖片</th>
         <th scope="col"></th>
       </tr>
@@ -272,6 +272,7 @@ export default {
       // 在這裡更新資料
       // 如有需要，你也可以將 currentItem 傳到後端
       // this.currentItem = { ...this.backupItem };
+      this.$store.state.Loading = true
       try {
         const index = this.AnnouncementArr.findIndex((item) => item.id === this.currentItem.id);
         if (index !== -1) {
@@ -389,6 +390,7 @@ export default {
 
     //刪除
     async deleteAnnouncement() {
+      this.$store.state.Loading = true
       try {
         const index = this.AnnouncementArr.findIndex((item) => item.id === this.currentItem.id);
         if (index !== -1) {
@@ -414,6 +416,7 @@ export default {
 
     //新增
     async addAnnouncements() {
+      this.$store.state.Loading = true
       try {
         const formData = new FormData();
         Object.keys(this.newAnnouncement).forEach((key) => {
