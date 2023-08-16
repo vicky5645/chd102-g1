@@ -273,6 +273,9 @@ section.package-list {
 }
 
 @media screen and (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
   section.spot-filter {
     .filter {
       .inner {
@@ -361,10 +364,6 @@ section.package-list {
 }
 
 @media screen and (max-width: 415px) {
-  .container {
-    padding: 0 1rem;
-  }
-
   section.spot-filter {
     .spot-list {
       display: flex;

@@ -213,7 +213,11 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 //google 守門人
-import { signInWithPopup, GoogleAuthProvider, getAdditionalUserInfo  } from "firebase/auth";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  getAdditionalUserInfo,
+} from "firebase/auth";
 const provider = new GoogleAuthProvider();
 // 檢查使用者的登錄狀態
 import authMixin from "@/assets/js/authMixin.js";
@@ -340,7 +344,7 @@ export default {
             console.log("註冊成功userInfo", returnUserInfo);
             // this.$store.commit("updateUser", returnUserInfo);
             // 推送新會員資料進資料庫
-            this.postBackMember(returnUserInfo,name,email,password);
+            this.postBackMember(returnUserInfo, name, email, password);
             // 在註冊成功後跳轉到其他介面
             // this.isRegistered = false;
             // this.step = 5;
@@ -366,13 +370,13 @@ export default {
       }
     },
     // 傳送資料到後台會員資料庫
-    postBackMember(userObj,name,email,password) {
+    postBackMember(userObj, name, email, password) {
       let mem = {};
       // mem["mem_no"] = userObj.uid // 讓資料庫自己生成，登入後會把uid傳到store去使用
-      mem["mem_email"] = userObj.email
-      mem["mem_name"] = userObj.displayName? userObj.displayName: name
-      mem["mem_acc"] = email? email: "other" 
-      mem["mem_pwd"] = password? password: "other" 
+      mem["mem_email"] = userObj.email;
+      mem["mem_name"] = userObj.displayName ? userObj.displayName : name;
+      mem["mem_acc"] = email ? email : "other";
+      mem["mem_pwd"] = password ? password : "other";
 
       const data = new FormData(); // POST 表單資料
       // data.append("mem_no", mem["mem_no"]); // 讓資料庫自己生成
@@ -406,20 +410,20 @@ export default {
           const additionalUserInfo = getAdditionalUserInfo(result);
 
           if (additionalUserInfo && additionalUserInfo.isNewUser) {
-            console.log("首次註冊的用戶")
+            console.log("首次註冊的用戶");
             // 推送新會員資料進資料庫
-            this.postBackMember(userInfo,'name','email','password');
+            this.postBackMember(userInfo, "name", "email", "password");
             this.$router.push("/about");
             // location.reload(); //刷新頁面
           } else {
-            console.log("已註冊用戶，使用登入流程")
+            console.log("已註冊用戶，使用登入流程");
             this.$router.push("/about");
           }
 
           // const credential = GoogleAuthProvider.credentialFromResulsignInGoogleedential.accessToken;
           this.$store.commit("setIsLogin", true); // 使用 commit 來改變狀態
           window.alert("google 登入成功");
-          
+
           // 這裡傳送的是 firebase 的資料 (已改用authMixin 檢查後推送)
           // this.$store.commit("updateUser", userInfo);
         })

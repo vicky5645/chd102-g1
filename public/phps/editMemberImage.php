@@ -16,11 +16,11 @@ $type=isset($_POST["type"])?$_POST["type"]:'';
 
 			//先刪除原位置的圖檔
 			$pattern_file = $_POST["pattern_file"];
-			$filePath = "../../$pattern_file";
+			$filePath = "../$pattern_file";
 			unlink($filePath); // 將檔案刪除
 
 			//處理新的圖檔-------------------------------
-			$dir = "../../images/member/"; //指定所要上傳的路徑
+			$dir = "../images/member/"; //指定所要上傳的路徑
 			//---產生主檔名
 			$fileName = uniqid();
 			//---取出副檔名 --這裡用接資料的方式處理
@@ -57,7 +57,7 @@ $type=isset($_POST["type"])?$_POST["type"]:'';
 			$imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Image));
 
 			//處理新的圖檔-------------------------------
-			$dir = "../../images/member/"; //指定所要上傳的路徑
+			$dir = "../images/member/"; //指定所要上傳的路徑
 			//---產生主檔名
 			$fileName = uniqid();
 			//---取出副檔名 --這裡用接資料的方式處理
