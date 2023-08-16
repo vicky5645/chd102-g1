@@ -33,7 +33,7 @@
               <label>帳號</label>
             </div>
             <div class="input-wrap login">
-              <input v-model="password" type="text" placeholder="" required />
+              <input v-model="password" type="password" placeholder="" required />
               <label>密碼</label>
             </div>
 
@@ -115,7 +115,7 @@
                   <div class="inputBox">
                     <span>密碼</span>
                     <input
-                      type="text"
+                      type="password"
                       class="payment-address-input"
                       v-model="register.pswReg"
                       required="required"
@@ -125,7 +125,7 @@
                   <div class="inputBox">
                     <span>再次輸入密碼</span>
                     <input
-                      type="text"
+                      type="password"
                       class="payment-nation-input"
                       required="required"
                       v-model="register.pswConfirmReg"
@@ -156,7 +156,7 @@
                   value="註冊會員"
                 />
               </div>
-              <span @click="isRegistered = false">返回會員登入</span>
+              <!-- <span @click="isRegistered = false">返回會員登入</span> -->
             </form>
           </div>
           <div class="login-wrap-pic">
@@ -200,6 +200,12 @@
       <p>🚂 請重新登入 ↩️</p>
       <button type="button" @click="modifySuccess">返回會員登入</button>
     </section>
+    <section class="enter-modify-success" v-if="step === 6">
+      <p>🚀 請驗證信箱 🎉</p>
+      信箱驗證收到後立即跳轉
+      <!-- <div class="error-message">{{ errorMsg }}</div> -->
+      <button type="button" @click="sendVerification">驗證信箱</button>
+    </section>
   </div>
 </template>
 
@@ -228,6 +234,7 @@ export default {
   name: "login",
   data() {
     return {
+      existUser: null,
       username: "",
       password: "",
       loginStatus: false,
@@ -276,10 +283,6 @@ export default {
     closeModal() {
       this.$emit("emit-status");
     },
-    // getUserName(userEmail) {
-    //   const userName = userEmail.split("@")[0];
-    //   this.$store.commit("setName", userName);
-    // },
     checkLogin() {
       if (this.username === "" || this.password === "") return;
       signInWithEmailAndPassword(firebaseAuth, this.username, this.password)
@@ -341,13 +344,22 @@ export default {
           .then((userCredential) => {
             // 註冊成功，您可以在這裡處理相應的動作
             const returnUserInfo = userCredential.user;
+            this.existUser = returnUserInfo;
             console.log("註冊成功userInfo", returnUserInfo);
+            console.log("註冊emailVerified", returnUserInfo.emailVerified);
             // this.$store.commit("updateUser", returnUserInfo);
             // 推送新會員資料進資料庫
             this.postBackMember(returnUserInfo, name, email, password);
+
             // 在註冊成功後跳轉到其他介面
-            // this.isRegistered = false;
-            // this.step = 5;
+            this.isRegistered = false;
+            // this.step = 5; // 進入註冊成功
+            this.step = 6; // 進入驗證信箱介面
+            //清空註冊輸入內容
+            this.register.nameReg = "";
+            this.register.emailReg = "";
+            this.register.pswReg = "";
+            this.register.pswConfirmReg = "";
           })
           .catch((error) => {
             // 註冊失敗，處理錯誤訊息
@@ -393,7 +405,7 @@ export default {
           // 請求成功後的處理
           console.log(response.data);
           // location.reload(); //刷新頁面
-          alert("已新增帳號！");
+          console.log("已新增帳號！");
         })
         .catch((error) => {
           // 請求失敗後的處理
@@ -430,6 +442,25 @@ export default {
         .catch((error) => {
           console.log(`google登入失敗${error}`);
         });
+    },
+    sendVerification() {
+      sendEmailVerification(this.existUser)
+      .then(() => {
+          window.alert('Email verification sent!');
+          this.step = 5; // 進入註冊成功
+      })
+      .catch((error) => {
+          updateErrorInput(error)
+          cleanUserInfo()
+      });
+      // console.log(this.existUser);
+      // this.existUser.reload();
+      // if (this.existUser.emailVerified) {
+      //   this.step = 5; // 驗證成功顯示註冊成功
+      //   alert("Email already verified");
+      // } else {
+      //   alert("Email not verified");
+      // }
     },
     checkEmail() {
       if (!this.memEmail) {

@@ -117,7 +117,7 @@
                   class="list-group-item list-group-item-action"
                   :class="{ active: $route.name === 'BackPattern' }"
                 >
-                  客製車票圖案
+                  車票客製圖案
                 </button>
               </router-link>
 
