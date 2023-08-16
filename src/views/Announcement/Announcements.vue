@@ -50,7 +50,7 @@
 
 <script>
 import LoadingAni from '@/components/Loading.vue';
-import { GET } from '@/plugin/axios'
+import { GET } from '@/plugin/axios';
 export default {
   components: {
     LoadingAni
