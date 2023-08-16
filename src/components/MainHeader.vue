@@ -6,11 +6,13 @@
     @goShoppingMall="goShoppingMall"
   />
   <UserFloat
+    :getUserInfo = "getMemberData"
     :userStatus="userStatus"
     @closeUser="userStatus = false"
     @goLoginUser="goLoginUser"
   />
   <header>
+    <!-- {{ getMemberData }} -->
     <nav>
       <router-link to="/roaming-orbit">
         <div class="logo">
@@ -96,9 +98,9 @@
             </router-link>
           </div>
         </template>
-        <template v-slot:slotfooter>
+        <!-- <template v-slot:slotfooter>
           <div class="link-list"></div>
-        </template>
+        </template> -->
       </MainSidebar>
       <div
         class="pageMask"
@@ -131,6 +133,7 @@ export default {
   },
   data() {
     return {
+      // getMemberData: {} 引入的變數資料取用
       openSidebar: false,
       cartStatus: false,
       userStatus: false,

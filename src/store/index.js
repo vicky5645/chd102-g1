@@ -5,7 +5,7 @@ const updateStorage = (cart) => {
 //使用者資料傳到localStorage
 const updateStorageLogin = (newUser) => {
   // 只能保存字串，這裡將JavaScript 處理成 JSON
-  localStorage.setItem("my-user", JSON.stringify(newUser));
+  sessionStorage.setItem("my-user", JSON.stringify(newUser));
 };
 import axios from "axios";
 import { BASE_URL } from "@/assets/js/common.js";
@@ -83,7 +83,7 @@ export default createStore({
     //刪除localStorage使用者資料
     deleteUser(state) {
       state.userInfo = null;
-      localStorage.removeItem("my-user");
+      sessionStorage.removeItem("my-user");
     },
     updateCart(state, newData) {
       state.cart = [...newData];
@@ -195,8 +195,8 @@ export default createStore({
     // },
     //接受 commit 觸發 mutation
     initStorageLogin({ commit }) {
-      //指定 localStorage 中 'my-user'的資料
-      const user = localStorage.getItem("my-user");
+      //指定 sessionStorage 中 'my-user'的資料
+      const user = sessionStorage.getItem("my-user");
       commit("setIsLogin", false);
       // 假如沒有建立'my-user'就結束操作
       if (!user) return;

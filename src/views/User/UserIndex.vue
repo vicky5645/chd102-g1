@@ -220,7 +220,6 @@ export default {
         this.userInfo = response.data.find((element) => {
           return element.mem_no === this.userInfo.mem_no
         })
-        svg_icon(".custom-svg", "currentColor");
 
         // 確認是否成功
         console.log("Data retrieved from MySQL:", "dataFromMySQL");
@@ -229,9 +228,6 @@ export default {
       }
     },
   },
-  // mounted() {
-  //   this.userInfo = this.getdataFromMySQL;
-  // },
   created() {
     this.userInfo = this.$store.state.userInfo;
     this.getdataFromMySQL();

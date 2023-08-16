@@ -1,17 +1,12 @@
 <template>
-  <div class="userPage cartFloat" v-show="userStatus">
+  <div class="userPage cartFloat" v-if="userStatus">
     <div class="link-list">
       <router-link to="/user" class="setting">
         <li>
-          <template
-            v-if="
-              $store.state.userInfo !== null &&
-              $store.state.userInfo.pattern_file !== null
-            "
-          >
+          <template v-if="getUserInfo !== null && getUserInfo[0].pattern_file">
             <div class="icon-24 avatar">
               <Images
-                :imgURL="`${$store.state.userInfo.pattern_file}`"
+                :imgURL="`${getUserInfo[0].pattern_file}`"
                 :alt="`avatar`"
               />
             </div>
@@ -22,14 +17,14 @@
             </div>
           </template>
 
-          <template v-if="$store.state.userInfo">
+          <template v-if="getUserInfo[0]">
             <span
               style="
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
               "
-              >Hello, {{ $store.state.userInfo.mem_name }}</span
+              >Hello, {{ getUserInfo[0].mem_name }}</span
             >
           </template>
           <template v-else>
@@ -82,14 +77,13 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, onMounted } from "vue";
+import { defineProps, defineEmits, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { firebaseAuth } from "@/assets/config/firebase.js";
 import { signOut } from "firebase/auth";
-
 //data
-const props = defineProps(["userStatus"]);
+const props = defineProps(["userStatus", "getUserInfo"]);
 const emit = defineEmits(["closeUser", "goLoginUser"]);
 
 const store = useStore();
@@ -103,13 +97,8 @@ const logoutUser = function () {
       store.commit("setIsLogin", false);
       // store.commit("setName", "");
       store.commit("deleteUser"); // 使用 VueX mutations -> 清除使用者資料
-      location.reload(); //刷新頁面
-      if ($route.name === "login") {
-        return;
-      } else {
-        // router.push({ name: "login" }); //跳轉
-        this.$router.push("/about");
-      }
+      // location.reload(); //刷新頁面
+      this.$router.push("/login");
     })
     .catch((error) => {
       // An error happened.
@@ -127,16 +116,17 @@ const handleLogout = () => {
   logoutUser(); // 執行 signOut 方法
   closeUser(); // 關閉會員選單
 };
+
 </script>
 
 <style lang="scss" scoped>
 .avatar {
-  border: 1px solid #7AACBF;
+  border: 1px solid #7aacbf;
   border-radius: 50%;
   width: 40px;
   height: 40px;
   overflow: hidden;
-  img{
+  img {
     object-fit: cover;
   }
 }

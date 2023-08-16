@@ -33,7 +33,7 @@ export default {
             // 已接收到資料庫內的會員資料
             if (getData) {
               console.log("getData::mem_name", getData["mem_name"]);
-              // 將資料紀錄在 localStorage 中
+              // 將資料紀錄在 sessionStorage 中
               this.updateUserInfo(this.existUser, getData);
             }
             console.log("已登入帳號");
