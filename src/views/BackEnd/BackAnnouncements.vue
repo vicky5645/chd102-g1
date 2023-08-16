@@ -25,11 +25,11 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">公告編號</th>
-        <th scope="col">公告標題</th>
-        <th scope="col">公告類型</th>
-        <th scope="col">公告內容</th>
-        <th scope="col">公告時間</th>
+        <th scope="col" class="chooseSurch">公告編號</th>
+        <th scope="col" class="chooseSurch">公告標題</th>
+        <th scope="col" class="chooseSurch">公告類型</th>
+        <th scope="col" class="chooseSurch">公告內容</th>
+        <th scope="col" class="chooseSurch">公告時間</th>
         <th scope="col">公告圖片</th>
         <th scope="col"></th>
       </tr>
@@ -50,6 +50,7 @@
           </button>
         </td>
       </tr>
+      <LoadingAni v-if="$store.state.Loading" />
     </tbody>
 
     <p v-if="filteredItems.length === 0" class="text-danger">
@@ -101,7 +102,7 @@
           </div>
           <div class="model_body_pic">
             <Images v-if="currentItem.image && label_toggle" :imgURL="currentItem.image" alt="Image preview" />
-            <img v-else :src="currentItem.image" alt="Image preview" />
+            <img v-else :src="currentItemFileImg" alt="Image preview" />
           </div>
         </div>
 
@@ -159,7 +160,7 @@
                   @change="handleFileUpload" />
               </div>
               <div class="model_body_pic">
-                <img v-if="newAnnouncement.image" :src="newAnnouncement.image" />
+                <img v-if="newAnnouncementFileImg" :src="newAnnouncementFileImg" />
               </div>
             </div>
           </slot>
@@ -180,11 +181,16 @@
 </template>
 
 <script>
+import LoadingAni from '@/components/Loading.vue';
 import { BASE_URL } from "@/assets/js/common.js";
 import { Modal } from "bootstrap";
-import axios from 'axios'
+import axios from 'axios';
 import { left } from "@popperjs/core";
+
 export default {
+  components: {
+    LoadingAni
+  },
   data() {
     return {
       AnnouncementArr: [],
@@ -207,6 +213,8 @@ export default {
       showModal: false,
       showInput: true,
       selectedFile: null,
+      newAnnouncementFileImg: "",
+      currentItemFileImg: "",
       // new model
       newAnnouncement: {
         id: "", // 確保 id 屬性存在
@@ -239,8 +247,23 @@ export default {
 
   methods: {
     //選擇篩選欄位
-    selectOption() {
+    selectOption(event) {
       this.selectFieldKey = parseInt(this.$refs.selected.value)
+      this.selectOptionTitleColor(event)
+    },
+
+    selectOptionTitleColor(event) {
+      const chooseSurch = document.querySelectorAll('.chooseSurch')
+      chooseSurch.forEach((element) => {
+        element.classList.remove('active')
+      })
+      if (!parseInt(event.target.value)) {
+        chooseSurch.forEach((element) => {
+          element.classList.add('active')
+        })
+        return
+      }
+      chooseSurch[parseInt(event.target.value) - 1].classList.add('active')
     },
 
     // model
@@ -258,6 +281,7 @@ export default {
           })
           if (this.$refs.change_img.files[0]) {
             formData.set('image', this.$refs.change_img.files[0]);
+            formData.set('FilePath', this.currentItem.image);
           }
           const res = await axios.post(`${BASE_URL}updateBackendAnnouncements.php`, formData,
             {
@@ -266,15 +290,13 @@ export default {
               },
             })
           alert(`${res.data.msg}`);
-          this.showModal = false;
+          this.backgetAnnouncementData();
+          // this.showModal = false;
         }
-
       } catch (error) {
         console.error("An error occurred:", error);
         alert("修改失敗請重新操作")
       }
-
-      this.backgetAnnouncementData();
       this.showModal = false;
     },
 
@@ -316,9 +338,9 @@ export default {
       const reader = new FileReader();
       reader.onload = (e) => {
         if (event.target === this.$refs.change_img) {
-          this.currentItem.image = e.target.result;
+          this.currentItemFileImg = e.target.result;
         } else {
-          this.newAnnouncement.image = e.target.result;
+          this.newAnnouncementFileImg = e.target.result;
         }
         this.label_toggle = false;
       };
@@ -373,15 +395,19 @@ export default {
           const res = await axios({
             method: 'post',
             url: `${BASE_URL}deleteBackendAnnouncements.php`,
-            data: { id: this.currentItem.id },
+            data: {
+              id: this.currentItem.id,
+              FilePath: this.currentItem.image
+            },
           });
           alert(`${res.data.msg}`)
+          this.backgetAnnouncementData();
         }
       } catch (error) {
         console.error("An error occurred:", error);
         alert("刪除失敗請重新操作")
       }
-      this.backgetAnnouncementData();
+
       this.showModal = false;
     },
 
@@ -401,11 +427,12 @@ export default {
             },
           })
         alert(`${res.data.msg}`)
+        this.backgetAnnouncementData();
       } catch (error) {
         console.error("An error occurred:", error);
         alert("新增失敗,請重新操作")
       }
-      this.backgetAnnouncementData();
+
     },
 
     //圖片路徑
@@ -415,6 +442,7 @@ export default {
 
     //取資料
     async backgetAnnouncementData() {
+      this.$store.state.Loading = true
       await this.$store.dispatch("getAnnouncementData")
       this.AnnouncementArr = []
       this.$store.state.AnnouncementData.forEach(element => {
@@ -429,6 +457,9 @@ export default {
           image
         })
       });
+      setTimeout(() => {
+        this.$store.commit('closeLoading')
+      }, 500)
     },
 
 
@@ -436,11 +467,17 @@ export default {
   //一開始取資料
   created() {
     this.backgetAnnouncementData();
+    //結束loading
+
   },
 };
 </script>
 
 <style lang="scss" scoped>
+tbody {
+  position: relative;
+}
+
 .search_new {
   display: flex;
   gap: 12px;
@@ -479,5 +516,9 @@ h5 {
 
 .modal-footer {
   justify-content: center;
+}
+
+.active {
+  color: #f29c50
 }
 </style>

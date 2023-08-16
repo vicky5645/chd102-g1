@@ -55,6 +55,13 @@ if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
         $products->bindValue(":anno_content", $_POST["content"]);
         $products->bindValue(":anno_file", $final_img_path);
         $products->execute();
+            
+        
+        $image_path = $_POST["FilePath"];
+		$image_current_path = "../../$image_path";
+        if (file_exists($image_current_path)) { 
+		unlink($image_current_path); 
+        } 
 
         $msg = "更新成功";
         $result["msg"] = $msg;

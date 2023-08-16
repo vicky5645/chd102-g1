@@ -37,6 +37,9 @@ export default createStore({
 
     // 論壇資料
     AnnouncementData: [],
+
+    //Loading
+    Loading : true
   },
   getters: {
     cartList(state) {
@@ -150,6 +153,9 @@ export default createStore({
         return accumulator + item.totalPrice;
       }, 0);
     },
+    closeLoading(state) {
+      state.Loading = false
+    }
   },
   actions: {
     async getAnnouncementData(context, value) {
