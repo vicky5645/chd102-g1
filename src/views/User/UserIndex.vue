@@ -196,8 +196,6 @@ export default {
         this.userInfo = response.data.find((element) => {
           return parseInt(element.mem_no) === parseInt(this.$store.state.userInfo.mem_no)
         })
-        svg_icon(".custom-svg", "currentColor");
-      
         // 確認是否成功
         console.log("Data retrieved from MySQL:", "dataFromMySQL");
       } catch (error) {
@@ -205,9 +203,6 @@ export default {
       }
     },
   },
-  // mounted() {
-  //   this.userInfo = this.getdataFromMySQL;
-  // },
   created() {
     this.userInfo = this.$store.state.userInfo;
     this.getdataFromMySQL();

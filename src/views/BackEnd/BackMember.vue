@@ -43,11 +43,8 @@
         <td class="ellipsis">{{ item.mem_name }}</td>
         <td class="ellipsis">
           {{
-            item.mem_salutation === 0
-              ? "先生"
-              : item.mem_salutation === 1
-              ? "小姐"
-              : "NA"
+            item.mem_salutation !== null
+              ? item.mem_salutation : ""
           }}
         </td>
         <td class="ellipsis">{{ item.mem_email }}</td>
@@ -83,7 +80,7 @@
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" style="max-width: 80%">
+    <div class="modal-dialog" style="max-width: auto">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="itemModalLabel">查看會員資料</h5>

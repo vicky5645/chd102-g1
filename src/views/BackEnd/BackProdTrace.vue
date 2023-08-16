@@ -23,8 +23,8 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in paginatedItems" :key="index">
-        <th scope="row">{{ item.memNo }}</th>
-        <td class="ellipsis">{{ item.prodNo }}</td>
+        <th scope="row">{{ item.mem_no }}</th>
+        <td class="ellipsis">{{ item.prod_no }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -72,7 +72,7 @@
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" style="max-width: 80%">
+    <div class="modal-dialog" style="max-width: auto">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="itemModalLabel">查看商品收藏</h5>
@@ -95,7 +95,7 @@
               >會員編號</span
             >
             <input
-              v-model="currentItem.memNo"
+              v-model="currentItem.mem_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -107,7 +107,7 @@
               >商品編號</span
             >
             <input
-              v-model="currentItem.prodNo"
+              v-model="currentItem.prod_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -141,56 +141,59 @@
 
 <script>
 import { Modal } from "bootstrap";
+import axios from "axios";
+import { BASE_URL } from "@/assets/js/common.js";
 
 export default {
   data() {
     return {
-      items: [
-        {
-          memNo: 1,
-          prodNo: 3,
-        },
-        {
-          memNo: 1,
-          prodNo: 2,
-        },
-        {
-          memNo: 1,
-          prodNo: 1,
-        },
-        {
-          memNo: 3,
-          prodNo: 3,
-        },
-        {
-          memNo: 7,
-          prodNo: 3,
-        },
-        {
-          memNo: 12,
-          prodNo: 2,
-        },
-        {
-          memNo: 15,
-          prodNo: 3,
-        },
-        {
-          memNo: 16,
-          prodNo: 3,
-        },
-        {
-          memNo: 19,
-          prodNo: 3,
-        },
-        {
-          memNo: 22,
-          prodNo: 2,
-        },
-        {
-          memNo: 26,
-          prodNo: 1,
-        },
-      ],
+      dataFromMySQL: [],
+      // items: [
+      //   {
+      //     memNo: 1,
+      //     prodNo: 3,
+      //   },
+      //   {
+      //     memNo: 1,
+      //     prodNo: 2,
+      //   },
+      //   {
+      //     memNo: 1,
+      //     prodNo: 1,
+      //   },
+      //   {
+      //     memNo: 3,
+      //     prodNo: 3,
+      //   },
+      //   {
+      //     memNo: 7,
+      //     prodNo: 3,
+      //   },
+      //   {
+      //     memNo: 12,
+      //     prodNo: 2,
+      //   },
+      //   {
+      //     memNo: 15,
+      //     prodNo: 3,
+      //   },
+      //   {
+      //     memNo: 16,
+      //     prodNo: 3,
+      //   },
+      //   {
+      //     memNo: 19,
+      //     prodNo: 3,
+      //   },
+      //   {
+      //     memNo: 22,
+      //     prodNo: 2,
+      //   },
+      //   {
+      //     memNo: 26,
+      //     prodNo: 1,
+      //   },
+      // ],
       // search
       searchText: "",
       // model
@@ -209,10 +212,10 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.items;
+        return this.dataFromMySQL;
       }
 
-      return this.items.filter((item) =>
+      return this.dataFromMySQL.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
@@ -273,6 +276,23 @@ export default {
       )
         this.currentPage++;
     },
+    //取資料
+    async getdataFromMySQL() {
+      await axios
+        .get(`${BASE_URL}getProdTrace.php`)
+        .then((response) => {
+          this.dataFromMySQL = response.data;
+
+          // 確認是否成功
+          // console.log("Data retrieved from MySQL:", "dataFromMySQL");
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data:", error);
+        });
+    },
+  },
+  created() {
+    this.getdataFromMySQL();
   },
 };
 </script>

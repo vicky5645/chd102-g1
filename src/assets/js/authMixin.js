@@ -33,7 +33,7 @@ export default {
             // 已接收到資料庫內的會員資料
             if (getData) {
               console.log("getData::mem_name", getData["mem_name"]);
-              // 將資料紀錄在 localStorage 中
+              // 將資料紀錄在 sessionStorage 中
               this.updateUserInfo(this.existUser, getData);
             }
             console.log("已登入帳號");
@@ -48,7 +48,7 @@ export default {
     updateUserInfo(existUser, getData) {
       // Your update user info logic here
       const userInfo = {
-        uid: existUser.uid,
+        // uid: existUser.uid,
         mem_no: getData["mem_no"],
         mem_name: getData["mem_name"],
         mem_salutation: getData["mem_salutation"],

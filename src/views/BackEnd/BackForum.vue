@@ -200,7 +200,7 @@
           <div class="model_body_pic">
             <!-- <img
               v-if="currentItem.article_image"
-              :src="'/' + currentItem.article_image"
+              :src="'images/img/Forum' + currentItem.article_image"
               alt="Image preview"
             /> -->
             <!-- NOTE 上線換這個 -->
@@ -277,6 +277,9 @@ export default {
   },
 
   methods: {
+    getProcessedImgURL(imageURL) {
+      return `images/img/Forum/${imageURL.split("/").pop()}`;
+    },
     // model
     // edit php
     saveChanges() {
