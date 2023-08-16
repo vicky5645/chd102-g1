@@ -1,9 +1,9 @@
 <template>
   <footer id="mainFooter">
     <div class="mainFooter-top-wrap">
-      <a
+      <router-link
+        to="/Attractions"
         class="pic"
-        href="/Attractions"
         @mouseover="showTooltip"
         @mouseout="hideTooltip"
       >
@@ -11,7 +11,7 @@
           <img src="../../public/images/footer/footer_map.png" alt="網站地圖" />
         </div>
         <div v-if="tooltipVisible" class="tooltip-modal">網站地圖</div>
-      </a>
+      </router-link>
       <div class="txt">
         名稱｜軌道漫遊股份有限公司・地址｜桃園市陽明山鐵路932號・電話｜03-314-8763
       </div>
