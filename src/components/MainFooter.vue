@@ -94,12 +94,12 @@ footer {
     }
   }
 
-  // .mainFooter-under-wrap {
-  //   p {
-  //     a {
-  //     }
-  //   }
-  // }
+  .mainFooter-under-wrap {
+    p {
+      margin-bottom: 0;
+      // a {}
+    }
+  }
 }
 @keyframes bounce {
   0%,
