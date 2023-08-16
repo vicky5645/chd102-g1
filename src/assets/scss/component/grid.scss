@@ -30,8 +30,8 @@ html{
 }
 main {
     &.product_page , &.product {
-        padding-left: $space * 5;
-        padding-right: $space * 5;
+        padding-left: $space * 2;
+        padding-right: $space * 2;
     }
 }
 .container {

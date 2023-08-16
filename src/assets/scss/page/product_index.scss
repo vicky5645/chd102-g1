@@ -158,6 +158,11 @@ $topBarheight: 44px;
         box-shadow: 10px #00000033;
         $btnSize: 45px;
         //收藏及購物車的長寬
+        h3 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
         .cardFavorite,
         .cardCart{
             font-size: 24px;
