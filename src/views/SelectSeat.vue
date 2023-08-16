@@ -15,6 +15,7 @@ export default {
 
       packageList: [],
       packageDataItem: [],
+      selectedCar: "",
 
       pass: [
         {
@@ -232,7 +233,7 @@ export default {
     //驗證人數與座位數是否相符
     validate() {
       const selectedSeats = this.getSelectedSeats();
-      if (selectedSeats.length === this.count) {
+      if (selectedSeats.length === this.count && this.selectedCar) {
         return true;
       }
     },
@@ -250,7 +251,7 @@ export default {
         this.$router.push({ name: "paymentForBooking" });
       } else {
         // 選擇無效，顯示錯誤消息
-        alert("人數與選擇的座位數不符合，請重新確認");
+        alert("尚未選擇車廂或人數與選擇的座位數不符合，請重新確認");
       }
     },
     //----------------------
@@ -302,7 +303,7 @@ export default {
       <div class="choose-option">
         <div class="select-car">
           <label for="">車廂選擇：</label>
-          <select class="select" name="car">
+          <select class="select" name="car" v-model="selectedCar">
             <option value="">---請選擇車廂---</option>
             <option value="car1">第一車廂</option>
             <option value="car2">第二車廂</option>
@@ -674,6 +675,44 @@ section.next-step {
     }
   }
 }
+@media screen and (max-width: 1061px) {
+  section.seat-pic {
+    margin: 0.5rem 0;
+
+    height: 1225px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    // position: relative;
+    // aspect-ratio: 3/1;
+    .whole {
+      transform-origin: top left;
+      transform: rotate(90deg) translateY(-685px);
+      width: 1100px;
+      // position: absolute;
+      // top: 0;
+      // left: 0;
+      .seat-area {
+        .num {
+          transform: rotate(-90deg);
+        }
+        .A {
+          transform: rotate(-90deg);
+        }
+
+        .B {
+          transform: rotate(-90deg);
+        }
+      }
+    }
+
+    .seat-color {
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
+}
 
 @media screen and (max-width: 768px) {
   .container {
@@ -696,27 +735,10 @@ section.next-step {
     flex-direction: column;
     justify-content: space-between;
 
-    // position: relative;
-    // aspect-ratio: 3/1;
     .whole {
       transform-origin: top left;
       transform: rotate(90deg) translateY(-450px);
       width: 1100px;
-      // position: absolute;
-      // top: 0;
-      // left: 0;
-      .seat-area {
-        .num {
-          transform: rotate(-90deg);
-        }
-        .A {
-          transform: rotate(-90deg);
-        }
-
-        .B {
-          transform: rotate(-90deg);
-        }
-      }
     }
   }
 
@@ -783,27 +805,10 @@ section.next-step {
     flex-direction: column;
     justify-content: space-between;
 
-    // position: relative;
-    // aspect-ratio: 3/1;
     .whole {
       transform-origin: top left;
       transform: rotate(90deg) translateY(-315px);
       width: 1100px;
-      // position: absolute;
-      // top: 0;
-      // left: 0;
-      .seat-area {
-        .num {
-          transform: rotate(-90deg);
-        }
-        .A {
-          transform: rotate(-90deg);
-        }
-
-        .B {
-          transform: rotate(-90deg);
-        }
-      }
     }
 
     .seat-color {
