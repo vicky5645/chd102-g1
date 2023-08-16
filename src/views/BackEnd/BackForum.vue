@@ -200,7 +200,7 @@
           <div class="model_body_pic">
             <img
               v-if="currentItem.article_image"
-              :src="currentItem.article_image"
+              :src="'/' + currentItem.article_image"
               alt="Image preview"
             />
           </div>
@@ -296,7 +296,7 @@ export default {
       // this.currentItem = { ...this.backupItem };
       this.showModal = false;
     },
-    
+
     openModal(item) {
       this.currentItem = item;
       this.showModal = true;

@@ -143,7 +143,6 @@
           <div class="data">{{ selectedPost.data }}</div>
         </div>
 
-        <!-- BUG -->
         <!-- 檢舉/刪除按鈕 -->
         <div class="post_more_block">
           <button class="post_more" @click.stop="toggleMenu" ref="button">
@@ -513,21 +512,39 @@ export default {
             mem_name: name,
           } = element;
           image = `images/img/Forum/${image.split("/").pop()}`;
-          posts.value.push({
-            id,
-            title,
-            content,
-            name,
-            mem_no,
-            data,
-            article_views,
-            likes,
-            platform_online,
-            image,
-            avatar: "images/img/Forum/ava1.png",
-            comments: 0,
-            showPopup: false,
-          });
+          // 判斷只會顯示上架文章
+          if (platform_online === 0) {
+            posts.value.push({
+              id,
+              title,
+              content,
+              name,
+              mem_no,
+              data,
+              article_views,
+              likes,
+              platform_online,
+              image,
+              avatar: "images/img/Forum/avatar.svg",
+              comments: 0,
+              showPopup: false,
+            });
+            // posts.value.push({
+            //   id,
+            //   title,
+            //   content,
+            //   name,
+            //   mem_no,
+            //   data,
+            //   article_views,
+            //   likes,
+            //   platform_online,
+            //   image,
+            //   avatar: "images/img/Forum/ava1.png",
+            //   comments: 0,
+            //   showPopup: false,
+            // });
+          }
         });
         filteredPosts.value = [...posts.value];
       } catch (err) {
@@ -560,7 +577,7 @@ export default {
             mem_no,
             name,
             txt,
-            avatar: "images/img/Forum/ava2.png",
+            avatar: "images/img/Forum/avatar.svg",
             // avatar
           });
         });
