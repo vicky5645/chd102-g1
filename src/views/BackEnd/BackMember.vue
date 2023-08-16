@@ -80,7 +80,7 @@
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" style="max-width: 80%">
+    <div class="modal-dialog" style="max-width: auto">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="itemModalLabel">查看會員資料</h5>

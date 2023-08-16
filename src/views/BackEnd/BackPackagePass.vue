@@ -78,7 +78,7 @@
     aria-labelledby="itemModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog" style="max-width: 80%">
+    <div class="modal-dialog" style="max-width: auto">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="itemModalLabel">修改行程景點</h5>
@@ -190,7 +190,7 @@
     selectFieldKey["fk1"] {{ selectFieldKey["fk1"] }}
     <br />
     selectFieldKey["fk2"] {{ selectFieldKey["fk2"] }}
-    <div class="modal-dialog" style="max-width: 80%">
+    <div class="modal-dialog" style="max-width: auto">
       <div class="modal-content">
         <div class="modal-header">
           <h5 name="header">新增行程景點</h5>

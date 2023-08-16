@@ -23,8 +23,8 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in paginatedItems" :key="index">
-        <th scope="row">{{ item.memNo }}</th>
-        <td class="ellipsis">{{ item.pkgNo }}</td>
+        <th scope="row">{{ item.mem_no }}</th>
+        <td class="ellipsis">{{ item.pkg_no }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -93,7 +93,7 @@
               >會員編號</span
             >
             <input
-              v-model="currentItem.memNo"
+              v-model="currentItem.mem_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -105,7 +105,7 @@
               >行程編號</span
             >
             <input
-              v-model="currentItem.pkgNo"
+              v-model="currentItem.pkg_no"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -139,56 +139,59 @@
 
 <script>
 import { Modal } from "bootstrap";
+import axios from "axios";
+import { BASE_URL } from "@/assets/js/common.js";
 
 export default {
   data() {
     return {
-      items: [
-        {
-          memNo: 1,
-          pkgNo: 3,
-        },
-        {
-          memNo: 1,
-          pkgNo: 2,
-        },
-        {
-          memNo: 1,
-          pkgNo: 1,
-        },
-        {
-          memNo: 3,
-          pkgNo: 3,
-        },
-        {
-          memNo: 7,
-          pkgNo: 3,
-        },
-        {
-          memNo: 12,
-          pkgNo: 2,
-        },
-        {
-          memNo: 15,
-          pkgNo: 3,
-        },
-        {
-          memNo: 16,
-          pkgNo: 3,
-        },
-        {
-          memNo: 19,
-          pkgNo: 3,
-        },
-        {
-          memNo: 22,
-          pkgNo: 2,
-        },
-        {
-          memNo: 26,
-          pkgNo: 1,
-        },
-      ],
+      dataFromMySQL: [],
+      // items: [
+      //   {
+      //     memNo: 1,
+      //     pkgNo: 3,
+      //   },
+      //   {
+      //     memNo: 1,
+      //     pkgNo: 2,
+      //   },
+      //   {
+      //     memNo: 1,
+      //     pkgNo: 1,
+      //   },
+      //   {
+      //     memNo: 3,
+      //     pkgNo: 3,
+      //   },
+      //   {
+      //     memNo: 7,
+      //     pkgNo: 3,
+      //   },
+      //   {
+      //     memNo: 12,
+      //     pkgNo: 2,
+      //   },
+      //   {
+      //     memNo: 15,
+      //     pkgNo: 3,
+      //   },
+      //   {
+      //     memNo: 16,
+      //     pkgNo: 3,
+      //   },
+      //   {
+      //     memNo: 19,
+      //     pkgNo: 3,
+      //   },
+      //   {
+      //     memNo: 22,
+      //     pkgNo: 2,
+      //   },
+      //   {
+      //     memNo: 26,
+      //     pkgNo: 1,
+      //   },
+      // ],
       // search
       searchText: "",
       // model
@@ -207,10 +210,10 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.items;
+        return this.dataFromMySQL;
       }
 
-      return this.items.filter((item) =>
+      return this.dataFromMySQL.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
@@ -271,6 +274,23 @@ export default {
       )
         this.currentPage++;
     },
+    //取資料
+    async getdataFromMySQL() {
+      await axios
+        .get(`${BASE_URL}getPackageTrace.php`)
+        .then((response) => {
+          this.dataFromMySQL = response.data;
+
+          // 確認是否成功
+          // console.log("Data retrieved from MySQL:", "dataFromMySQL");
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data:", error);
+        });
+    },
+  },
+  created() {
+    this.getdataFromMySQL();
   },
 };
 </script>
