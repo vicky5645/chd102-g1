@@ -3,10 +3,10 @@
     <div class="link-list">
       <router-link to="/user" class="setting">
         <li>
-          <template v-if="getUserInfo !== null && getUserInfo[0].pattern_file">
+          <template v-if="$store.state.userInfo !== null && $store.state.userInfo.pattern_file">
             <div class="icon-24 avatar">
               <Images
-                :imgURL="`${getUserInfo[0].pattern_file}`"
+                :imgURL="`${$store.state.userInfo.pattern_file}`"
                 :alt="`avatar`"
               />
             </div>
@@ -17,14 +17,14 @@
             </div>
           </template>
 
-          <template v-if="getUserInfo[0]">
+          <template v-if="$store.state.userInfo">
             <span
               style="
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
               "
-              >Hello, {{ getUserInfo[0].mem_name }}</span
+              >Hello, {{ $store.state.userInfo.mem_name }}</span
             >
           </template>
           <template v-else>

@@ -48,7 +48,7 @@ export default {
     updateUserInfo(existUser, getData) {
       // Your update user info logic here
       const userInfo = {
-        uid: existUser.uid,
+        // uid: existUser.uid,
         mem_no: getData["mem_no"],
         mem_name: getData["mem_name"],
         mem_salutation: getData["mem_salutation"],

@@ -43,11 +43,8 @@
         <td class="ellipsis">{{ item.mem_name }}</td>
         <td class="ellipsis">
           {{
-            item.mem_salutation === 0
-              ? "先生"
-              : item.mem_salutation === 1
-              ? "小姐"
-              : "NA"
+            item.mem_salutation !== null
+              ? item.mem_salutation : ""
           }}
         </td>
         <td class="ellipsis">{{ item.mem_email }}</td>

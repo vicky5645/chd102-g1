@@ -3,7 +3,8 @@
     <h1 class="h4">帳號設定</h1>
     <hr />
     <div class="user-control-content">
-      <!-- {{ $store.state.userInfo }} -->
+      <!-- {{ userInfo }}
+      {{ $store.state.userInfo }} -->
       <div class="input-wrap">
         <label for="name" class="caption">姓名</label>
         <input
@@ -15,7 +16,7 @@
       </div>
       <div class="input-wrap">
         <label for="gender" class="caption">性別</label>
-        <select id="gender-options" v-model="model">
+        <select id="gender-options" v-model="userInfo.mem_salutation">
           <option disabled checked>-請選擇-</option>
           <option v-for="item in gender" :value="item.value">
             {{ item.value }}
@@ -38,6 +39,7 @@
       <div class="input-wrap long">
         <label for="email" class="caption" required>聯絡 E-mail(必填)</label>
         <input
+          disabled
           type="email"
           id="email"
           v-if="userInfo"
@@ -46,7 +48,18 @@
       </div>
     </div>
     <div class="right">
-      <button type="submit" class="btn disable radius">儲存</button>
+      <template v-if="isUserInfoChanged">
+        <button
+          type="button"
+          class="btn radius primary"
+          @click="saveChanges(userInfo)"
+        >
+          儲存
+        </button>
+      </template>
+      <template v-else>
+        <button type="button" class="btn radius disable">儲存</button>
+      </template>
     </div>
     <hr />
     <h4>帳號安全</h4>
@@ -104,11 +117,14 @@
 </template>
 
 <script>
+import axios from "axios";
+import { BASE_URL } from "@/assets/js/common.js";
 export default {
   data() {
     return {
+      isUserInfoChanged: false,
+      start: false,
       userInfo: null,
-
       // userInfo: {
       //   mem_no: 1,
       //   mem_name: "",
@@ -127,11 +143,9 @@ export default {
       gender: [
         {
           value: "男性",
-          label: "男性",
         },
         {
           value: "女性",
-          label: "女性",
         },
       ],
     };
@@ -146,6 +160,98 @@ export default {
     showOrderDetail(itemOrder) {
       this.isModalVisible = true;
       this.orderDetail = itemOrder;
+    },
+    // edit model
+    async saveChanges(item) {
+      //傳送資料庫的資料
+      const data = new FormData(); // POST 表單資料
+      data.append("mem_no", item.mem_no);
+      data.append("mem_name", item.mem_name);
+      data.append("mem_salutation", item.mem_salutation);
+      data.append("mem_email", item.mem_email);
+      data.append("mem_mobile", item.mem_mobile);
+      // 使用 Axios 發送 POST 請求
+      await axios
+        .post(`${BASE_URL}editMember.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          console.log(response.data);
+          // 重新取得資料
+          alert("已修改會員成功！");
+          // this.getdataFromMySQL();
+          this.getMember(item.mem_email, (MemberData) => {
+            const getData = MemberData[0];
+            // console.log("getData::", getData);
+
+            // 已接收到資料庫內的會員資料
+            if (getData) {
+              console.log("getData::mem_name", getData["mem_name"]);
+              // 將資料紀錄在 sessionStorage 中
+              this.updateUserInfo(getData);
+            }
+            location.reload();
+          });
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          console.log("修改失敗！");
+        });
+    },
+    updateUserInfo(getData) {
+      // Your update user info logic here
+      const userInfo = {
+        // uid: getData["uid"],
+        mem_no: getData["mem_no"],
+        mem_name: getData["mem_name"],
+        mem_salutation: getData["mem_salutation"],
+        mem_email: getData["mem_email"],
+        mem_mobile: getData["mem_mobile"],
+        mem_addr: getData["mem_addr"],
+        mem_acc: getData["mem_acc"],
+        mem_pwd: getData["mem_pwd"],
+        pattern_file: getData["pattern_file"],
+      };
+      this.$store.commit("updateUser", userInfo);
+    },
+    getMember(userEmail, callback) {
+      const data = new FormData(); // POST 表單資料
+      data.append("type", "authMixin");
+      data.append("mem_email", userEmail);
+
+      // if (this.existUser !== null && this.getMemberData.length === 0) {
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post(`${BASE_URL}getMember.php`, data)
+        .then((response) => {
+          // 請求成功後的處理
+          this.userInfo = response.data;
+          console.log("取得資料庫會員資料！");
+          // 調用回調函數處理data
+          if (callback) {
+            callback(this.userInfo);
+          }
+        })
+        .catch((error) => {
+          // 請求失敗後的處理
+          console.error(error);
+          console.log("接收失敗！");
+        });
+      // }
+    },
+  },
+  watch: {
+    userInfo: {
+      handler(newVal, oldVal) {
+        if (
+          JSON.stringify(newVal) !== JSON.stringify(this.$store.state.userInfo)
+        ) {
+          this.isUserInfoChanged = true;
+        } else {
+          this.isUserInfoChanged = false;
+        }
+      },
+      deep: true,
     },
   },
   created() {

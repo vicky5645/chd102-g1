@@ -6,7 +6,6 @@
     @goShoppingMall="goShoppingMall"
   />
   <UserFloat
-    :getUserInfo = "getMemberData"
     :userStatus="userStatus"
     @closeUser="userStatus = false"
     @goLoginUser="goLoginUser"
