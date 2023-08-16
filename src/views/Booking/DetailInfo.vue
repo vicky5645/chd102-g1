@@ -330,7 +330,11 @@ section.next-step {
       <template v-if="!stageList"> 沒有資料喔~ </template>
       <template v-else>
         <swiper-slide v-for="(item, index) in swiperImg" :key="index">
-          <img :src="item.link" alt="" />
+          <Images
+              :imgURL="`${item.link}`"
+              :alt="``"
+            />
+          <!-- <img :src="item.link" alt="" /> -->
 
           <!-- <Images :imgURL="`${item.spotImage}`" :alt="``" /> -->
           <!-- <img :src="item.spotImage" alt="" /> -->
@@ -438,19 +442,19 @@ export default {
 
       swiperImg: [
         {
-          link: "/images/spot/09.jpg",
+          link: "images/spot/09.jpg",
         },
         {
-          link: "/images/spot/01.jpg",
+          link: "images/spot/01.jpg",
         },
         {
-          link: "/images/spot/03.jpg",
+          link: "images/spot/03.jpg",
         },
         {
-          link: "/images/spot/13.jpg",
+          link: "images/spot/13.jpg",
         },
         {
-          link: "/images/spot/12.png",
+          link: "images/spot/12.png",
         },
       ],
 
