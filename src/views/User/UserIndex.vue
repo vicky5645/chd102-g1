@@ -201,23 +201,28 @@ export default {
         // location.reload(); //刷新頁面
 
         alert("修改成功！");
-
-        // this.getdataFromMySQL();
       } catch (error) {
         // 請求失敗後的處理
         console.error(error);
         alert("修改失敗！");
       }
-      this.$router.go(0);
+
+      // location.reload();
+      this.getdataFromMySQL();
+      // this.userInfo = this.$store.state.userInfo;
     },
     //取資料
     async getdataFromMySQL() {
-      const data = new FormData(); // POST 表單資料
+      // this.userInfo = null;
+      // const data = new FormData();  POST 表單資料
       // data.append("type", "authMixin");
       // data.append("mem_email", this.$store.state.userInfo.mem_email);
       try {
-        const response = await axios.post(`${BASE_URL}getMember.php`, data);
-        this.userInfo = response.data;
+        const response = await axios.get(`${BASE_URL}getMember.php`);
+
+        this.userInfo = response.data[this.userInfo.mem_no - 1];
+        // console.log(this.userInfo);
+        svg_icon(".custom-svg", "currentColor");
 
         // 確認是否成功
         console.log("Data retrieved from MySQL:", "dataFromMySQL");
@@ -230,8 +235,10 @@ export default {
   //   this.userInfo = this.getdataFromMySQL;
   // },
   created() {
-    // this.getdataFromMySQL();
+    // console.log(this.$store.state.userInfo);
+
     this.userInfo = this.$store.state.userInfo;
+    this.getdataFromMySQL();
   },
 };
 </script>

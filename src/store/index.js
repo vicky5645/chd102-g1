@@ -1,13 +1,13 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
 const updateStorage = (cart) => {
-  localStorage.setItem('my-cart', JSON.stringify(cart))
-}
+  localStorage.setItem("my-cart", JSON.stringify(cart));
+};
 //使用者資料傳到localStorage
 const updateStorageLogin = (newUser) => {
   // 只能保存字串，這裡將JavaScript 處理成 JSON
-  localStorage.setItem('my-user', JSON.stringify(newUser))
-}
-import axios from 'axios';
+  localStorage.setItem("my-user", JSON.stringify(newUser));
+};
+import axios from "axios";
 import { BASE_URL } from "@/assets/js/common.js";
 export default createStore({
   state: {
@@ -166,7 +166,9 @@ export default createStore({
   actions: {
     async getAnnouncementData(context, value) {
       try {
-        const res = await axios.get(`${BASE_URL}selectBackendAnnouncements.php`);
+        const res = await axios.get(
+          `${BASE_URL}selectBackendAnnouncements.php`
+        );
         if (!res) throw new Error("沒抓到資料");
         context.commit("setAnnouncementData", res.data);
       } catch (err) {
