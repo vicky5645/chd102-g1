@@ -197,7 +197,6 @@ export default {
         );
 
         // 請求成功後的處理
-        console.log(response.data);
         // location.reload(); //刷新頁面
 
         alert("修改成功！");
@@ -209,7 +208,6 @@ export default {
 
       // location.reload();
       this.getdataFromMySQL();
-      // this.userInfo = this.$store.state.userInfo;
     },
     //取資料
     async getdataFromMySQL() {
@@ -218,10 +216,10 @@ export default {
       // data.append("type", "authMixin");
       // data.append("mem_email", this.$store.state.userInfo.mem_email);
       try {
-        const response = await axios.get(`${BASE_URL}getMember.php`);
-
-        this.userInfo = response.data[this.userInfo.mem_no - 1];
-        // console.log(this.userInfo);
+        const response = await axios.post(`${BASE_URL}getMember.php`);
+        this.userInfo = response.data.find((element) => {
+          return element.mem_no === this.userInfo.mem_no
+        })
         svg_icon(".custom-svg", "currentColor");
 
         // 確認是否成功
@@ -235,8 +233,6 @@ export default {
   //   this.userInfo = this.getdataFromMySQL;
   // },
   created() {
-    // console.log(this.$store.state.userInfo);
-
     this.userInfo = this.$store.state.userInfo;
     this.getdataFromMySQL();
   },

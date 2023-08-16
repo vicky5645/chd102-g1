@@ -39,6 +39,9 @@ export default createStore({
 
     // 論壇資料
     AnnouncementData: [],
+
+    //Loading
+    Loading : true
   },
   getters: {
     cartList(state) {
@@ -160,8 +163,10 @@ export default createStore({
     clearCart(state) {
       state.cart = [];
       updateStorage(state.cart);
+    },
+    closeLoading(state) {
+      state.Loading = false
     }
-      
   },
   actions: {
     async getAnnouncementData(context, value) {
