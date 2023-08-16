@@ -41,7 +41,7 @@ export default createStore({
     AnnouncementData: [],
 
     //Loading
-    Loading : true
+    Loading : false
   },
   getters: {
     cartList(state) {
