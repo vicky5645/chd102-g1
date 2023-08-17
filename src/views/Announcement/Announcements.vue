@@ -44,7 +44,7 @@
     <template v-else>
       <p class="article_card_no">暫時沒有相關公告，換個關鍵字查查吧😣</p>
     </template>
-    <LoadingAni v-if="$store.state.Loading" />
+    <!-- <LoadingAni v-if="$store.state.Loading" /> -->
   </main>
 </template>
 
@@ -52,9 +52,9 @@
 import LoadingAni from '@/components/Loading.vue';
 import { GET } from '@/plugin/axios';
 export default {
-  components: {
-    LoadingAni
-  },
+  // components: {
+  //   LoadingAni
+  // },
   data() {
     return {
       // 圖片
@@ -138,7 +138,7 @@ export default {
       this.filteredArticles = this.airticles
       setTimeout(() => {
         this.$store.commit('closeLoading')
-      }, 500)
+      }, 300)
     },
   },
   created() {

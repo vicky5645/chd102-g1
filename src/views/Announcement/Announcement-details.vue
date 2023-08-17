@@ -19,7 +19,7 @@
       </div>
       <p>{{ airticlesItem.content }}</p>
     </div>
-    <LoadingAni v-if="$store.state.Loading" />
+    <!-- <LoadingAni v-if="$store.state.Loading" /> -->
   </main>
 </template>
 
@@ -27,9 +27,9 @@
 import LoadingAni from '@/components/Loading.vue';
 import { GET } from '@/plugin/axios';
 export default {
-  components: {
-    LoadingAni
-  },
+  // components: {
+  //   LoadingAni
+  // },
   data() {
     return {
       // 圖片
@@ -80,7 +80,7 @@ export default {
       // this.airticlesItem = this.airticles[`${parseFloat(this.$route.params.id)}`];
       setTimeout(() => {
         this.$store.commit('closeLoading')
-      }, 500)
+      }, 300)
     },
   },
   props: {

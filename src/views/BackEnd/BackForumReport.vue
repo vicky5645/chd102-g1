@@ -305,7 +305,7 @@ export default {
       const formData = new FormData();
       formData.append("report_no", this.currentItem.report_no);
       formData.append("report_type", this.currentItem.report_type);
-
+      this.$store.state.Loading = true
       axios
         .post(`${MAC_URL}/editForumReport.php`, formData)
         .then((response) => {
@@ -319,6 +319,9 @@ export default {
         .catch((error) => {
           console.error("There was an error updating the article:", error);
         });
+        setTimeout(() => {
+        this.$store.commit('closeLoading')
+      }, 300)
     },
 
     cancelChanges() {
@@ -376,7 +379,7 @@ export default {
 
       const formData = new FormData();
       formData.append("report_no", report_no);
-
+      this.$store.state.Loading = true
       axios
         .post(`${MAC_URL}/deleteForumReport.php`, formData)
         .then((response) => {
@@ -388,9 +391,13 @@ export default {
           console.error("There was an error deleting the article:", error);
           alert("刪除失敗！");
         });
+        setTimeout(() => {
+        this.$store.commit('closeLoading')
+      }, 300)
     },
 
     getReport() {
+      this.$store.state.Loading = true
       const type = "get"; // 設定要執行的操作，這裡是取得資料
       axios
         .get(`${MAC_URL}/getForumReport.php?type=${type}`)
@@ -401,6 +408,9 @@ export default {
         .catch((error) => {
           console.error("There was an error fetching the data:", error);
         });
+        setTimeout(() => {
+        this.$store.commit('closeLoading')
+      }, 300)
     },
   },
 

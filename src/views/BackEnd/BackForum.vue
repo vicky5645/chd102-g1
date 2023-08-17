@@ -286,7 +286,7 @@ export default {
       const formData = new FormData();
       formData.append("article_no", this.currentItem.article_no);
       formData.append("platform_online", this.currentItem.platform_online);
-
+      this.$store.state.Loading = true
       axios
         .post(`${MAC_URL}/editForum.php`, formData)
         .then((response) => {
@@ -299,6 +299,9 @@ export default {
         .catch((error) => {
           console.error("There was an error updating the article:", error);
         });
+        setTimeout(() => {
+        this.$store.commit('closeLoading')
+      }, 300)
     },
 
     cancelChanges() {
@@ -326,11 +329,10 @@ export default {
       if (!confirm("您確定要刪除此文章嗎？")) {
         return; // 如果用戶選擇“取消”，則退出函數
       }
-
       const formData = new FormData();
       formData.append("article_no", article_no);
       formData.append("article_image_file", article_image_file);
-
+      this.$store.state.Loading = true
       axios
         .post(`${MAC_URL}/deleteForum.php`, formData)
         .then((response) => {
@@ -342,9 +344,13 @@ export default {
           console.error("There was an error deleting the article:", error);
           alert("刪除失敗！");
         });
+        setTimeout(() => {
+        this.$store.commit('closeLoading')
+      }, 300)
     },
 
     getArticles() {
+      this.$store.state.Loading = true
       const type = "get"; // 設定要執行的操作，這裡是取得資料
       axios
         .get(`${MAC_URL}/getForum.php?type=${type}`)
@@ -355,6 +361,9 @@ export default {
         .catch((error) => {
           console.error("There was an error fetching the data:", error);
         });
+        setTimeout(() => {
+        this.$store.commit('closeLoading')
+      }, 300)
     },
   },
 

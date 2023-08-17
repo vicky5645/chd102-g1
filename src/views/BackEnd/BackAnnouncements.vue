@@ -50,7 +50,7 @@
           </button>
         </td>
       </tr>
-      <LoadingAni v-if="$store.state.Loading" />
+      <!-- <LoadingAni v-if="$store.state.Loading" /> -->
     </tbody>
 
     <p v-if="filteredItems.length === 0" class="text-danger">
@@ -188,9 +188,9 @@ import axios from 'axios';
 import { left } from "@popperjs/core";
 
 export default {
-  components: {
-    LoadingAni
-  },
+  // components: {
+  //   LoadingAni
+  // },
   data() {
     return {
       AnnouncementArr: [],
@@ -462,7 +462,7 @@ export default {
       });
       setTimeout(() => {
         this.$store.commit('closeLoading')
-      }, 500)
+      }, 300)
     },
 
 

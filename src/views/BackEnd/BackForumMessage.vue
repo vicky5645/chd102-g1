@@ -260,7 +260,7 @@ export default {
       const formData = new FormData();
       formData.append("comment_no", comment_no);
 
-
+      this.$store.state.Loading = true
       axios
         .post(`${MAC_URL}/deleteForumMessage.php`, formData)
         .then((response) => {
@@ -272,9 +272,13 @@ export default {
           console.error("There was an error deleting the article:", error);
           alert("刪除失敗！");
         });
+        setTimeout(() => {
+        this.$store.commit('closeLoading')
+      }, 300)
     },
 
     getComment() {
+      this.$store.state.Loading = true
       const type = "get";
       axios
         .get(`${MAC_URL}/getForumMessage.php?type=${type}`)
@@ -285,6 +289,9 @@ export default {
         .catch((error) => {
           console.error("There was an error fetching the data:", error);
         });
+        setTimeout(() => {
+        this.$store.commit('closeLoading')
+      }, 300)
     },
   },
 
