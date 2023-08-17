@@ -50,7 +50,7 @@
           </button>
         </td>
       </tr>
-      <LoadingAni v-if="$store.state.Loading" />
+      <!-- <LoadingAni v-if="$store.state.Loading" /> -->
     </tbody>
 
     <p v-if="filteredItems.length === 0" class="text-danger">
@@ -181,16 +181,16 @@
 </template>
 
 <script>
-import LoadingAni from '@/components/Loading.vue';
+// import LoadingAni from '@/components/Loading.vue';
 import { BASE_URL } from "@/assets/js/common.js";
 import { Modal } from "bootstrap";
 import axios from 'axios';
 import { left } from "@popperjs/core";
 
 export default {
-  components: {
-    LoadingAni
-  },
+  // components: {
+  //   LoadingAni
+  // },
   data() {
     return {
       AnnouncementArr: [],
