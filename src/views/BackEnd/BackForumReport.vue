@@ -268,9 +268,13 @@ export default {
       let filtered = this.dataForumReport; // 使用從資料庫取得的資料
 
       if (this.radio1Checked) {
-        filtered = filtered.filter((item) => item.report_type === 0); // 根據需要修改條件
+        // filtered = filtered.filter((item) => item.report_type === 0); // 根據需要修改條件
+        filtered = filtered.filter((item) => item.report_type == 0); // 根據需要修改條件
+        console.log(`273filtered:${filtered}`)
       } else if (this.radio2Checked) {
-        filtered = filtered.filter((item) => item.report_type === 1); // 根據需要修改條件
+        // filtered = filtered.filter((item) => item.report_type === 1); // 根據需要修改條件
+        filtered = filtered.filter((item) => item.report_type == 1); // 根據需要修改條件
+        console.log(`277filtered:${filtered}`)
       }
 
       if (this.searchText) {
