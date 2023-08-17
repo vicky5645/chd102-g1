@@ -2,13 +2,13 @@
   {
     "id": 1,
     "name": "忘卻之湖",
-    "pic1": "images/travel/Lake/lake1.jpg",
-    "pic2": "images/travel/Lake/lake2.jpg",
+    "pic1": "images/travel/lake/lake1.jpg",
+    "pic2": "images/travel/lake/lake2.jpg",
     "desc1": "忘卻之湖是一個遠離塵囂的避世之地,讓您逃離日常煩囂,重新與自然連結。您可以漫步於湖邊的迴廊,呼吸著新鮮的空氣,欣賞著四季變幻的美景。在這個寧靜的環境中,您可以深度放鬆、擁抱內心的寧靜。",
     "desc2": "湖泊周圍環繞著壯麗的山脈,湖水如翡翠般清澈,湖面倒影著蔚藍天空和青翠的樹木。置身於這片自然環境中,您將感受到大自然的奧秘與純粹,彷彿置身於一幅動人的畫卷中。",
-    "slide1": "images/travel/Lake/lake3.jpg",
-    "slide2": "images/travel/Lake/lake4.jpg",
-    "slide3": "images/travel/Lake/lake5.jpg"
+    "slide1": "images/travel/lake/lake3.jpg",
+    "slide2": "images/travel/lake/lake4.jpg",
+    "slide3": "images/travel/lake/lake5.jpg"
   },
   {
     "id": 2,
@@ -24,13 +24,13 @@
   {
     "id": 3,
     "name": "銀月山脈",
-    "pic1": "images/travel/Mountain/mountain1.jpg",
-    "pic2": "images/travel/Mountain/mountain4.jpg",
+    "pic1": "images/travel/mountain/mountain1.jpg",
+    "pic2": "images/travel/mountain/mountain4.jpg",
     "desc1": "在銀月山脈的寧靜中,當夜幕降臨,美麗的極光綻放出無限的魅力。無數綠色、粉紅色和紫色的光束在黑暗的天空中舞動,像是神秘的幻影穿梭於宇宙之間。這一刻,您將親眼見證大自然最璀璨的繪畫,沉浸在極光的神秘氛圍中。",
     "desc2": "此外,銀月山脈也是觀測星空和銀河的絕佳地點。遠離城市的光害,您將沉浸在澄澈的夜空中,目睹無數璀璨的星星和銀河系。無限遙遠的宇宙將展現在您的眼前,令人驚嘆不已。在這個星際奇觀的舞台上,您將感受到宇宙的浩瀚和無限可能",
-    "slide1": "images/travel/Mountain/mountain3.jpg",
-    "slide2": "images/travel/Mountain/mountain5.jpg",
-    "slide3": "images/travel/Mountain/mountain2.jpg"
+    "slide1": "images/travel/mountain/mountain3.jpg",
+    "slide2": "images/travel/mountain/mountain5.jpg",
+    "slide3": "images/travel/mountain/mountain2.jpg"
   },
   {
     "id": 4,
