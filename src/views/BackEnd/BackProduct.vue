@@ -545,6 +545,12 @@ export default {
       }
 
       const file = files[0];
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        alert("檔案大小超過 2MB");
+        event.target.value = ""; // 清空
+        return;
+      }
       const reader = new FileReader();
       console.log(file.name);
 

@@ -331,6 +331,12 @@ export default {
         return;
       }
       const file = files[0];
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        alert("檔案大小超過 2MB");
+        event.target.value = ""; // 清空
+        return;
+      }
       this.fileExtension = file.name.split('.').pop().toLowerCase();
       if (!this.validExtensions.some(item => item === this.fileExtension)) {
         event.target.value = "";

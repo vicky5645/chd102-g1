@@ -124,6 +124,12 @@ export default {
       }
 
       const file = files[0];
+      const maxSize = 1 * 1024 * 1024; // 1MB
+      if (file.size > maxSize) {
+        alert("檔案大小超過 1MB");
+        event.target.value = ""; // 清空
+        return;
+      }
       const reader = new FileReader();
 
       reader.onload = (e) => {
