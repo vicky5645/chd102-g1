@@ -244,7 +244,8 @@ export default {
     // },
 
     confirm() {
-      if (this.$store.isLogin) {
+      if (this.$store.state.isLogin) {
+        console.log(this.$store.state.isLogin)
         // 選擇有效，繼續購票流程
         // this.$router.replace(this.toNextPage());   
         if (this.validate()) {
