@@ -13,7 +13,7 @@ body {
   //一般內文
   & p:not(.type):not(.subtext > p){
     font-weight: 300!important;
-    color: map-get($GrayColors, Gray4 )!important;
+    // color: map-get($GrayColors, Gray4 )!important;
   }
   & .introCard p {
     color: rgba(map-get($GrayColors, White ),.8)!important;

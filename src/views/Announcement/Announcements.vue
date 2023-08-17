@@ -34,7 +34,7 @@
           <p class="type" :class="article.type === '重要' ? 'important' : 'normal'">
             {{ article.type }} <span>{{ article.date }}</span>
           </p>
-          <h3>{{ article.title }}</h3>
+          <h3 class="h3">{{ article.title }}</h3>
           <p class="card_txt_content">{{ article.content }}</p>
           <!-- <router-link :to="`/announcement-details/${article.id}`" class="more">查看更多</router-link> -->
           <router-link :to="`/announcement-details/${index + 1}`" class="more">查看更多</router-link>
