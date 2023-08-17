@@ -28,6 +28,42 @@
         <th scope="col">付款方式</th>
         <th scope="col"></th>
       </tr>
+      <tr>
+        <th scope="col" style="font-weight: 400;">202402231</th>
+        <th scope="col" style="font-weight: 400;">2024-02-11</th>
+        <th scope="col" style="font-weight: 400;">1</th>
+        <th scope="col" style="font-weight: 400;">3600</th>
+        <th scope="col" style="font-weight: 400;">配送中</th>
+        <th scope="col" style="font-weight: 400;">小明</th>
+        <th scope="col" style="font-weight: 400;"></th>
+        <th scope="col" style="font-weight: 400;"></th>
+        <th scope="col" style="font-weight: 400;">貨到付款</th>
+        <th scope="col" style="font-weight: 400;"></th>
+      </tr>
+      <tr>
+        <th scope="col" style="font-weight: 400;">202402351</th>
+        <th scope="col" style="font-weight: 400;">2024-02-13</th>
+        <th scope="col" style="font-weight: 400;">2</th>
+        <th scope="col" style="font-weight: 400;">3600</th>
+        <th scope="col" style="font-weight: 400;">配送中</th>
+        <th scope="col" style="font-weight: 400;">麥大明</th>
+        <th scope="col" style="font-weight: 400;">0912345678</th>
+        <th scope="col" style="font-weight: 400;">320桃園市中壢區復興路46號9樓</th>
+        <th scope="col" style="font-weight: 400;">宅配</th>
+        <th scope="col" style="font-weight: 400;"></th>
+      </tr>
+            <tr>
+        <th scope="col" style="font-weight: 400;">202402683</th>
+        <th scope="col" style="font-weight: 400;">2024-02-13</th>
+        <th scope="col" style="font-weight: 400;">3</th>
+        <th scope="col" style="font-weight: 400;">3600</th>
+        <th scope="col" style="font-weight: 400;">準備中</th>
+        <th scope="col" style="font-weight: 400;">老王</th>
+        <th scope="col" style="font-weight: 400;">0912345678</th>
+        <th scope="col" style="font-weight: 400;">320台北市信義區忠孝東路999號9樓</th>
+        <th scope="col" style="font-weight: 400;">宅配</th>
+        <th scope="col" style="font-weight: 400;"></th>
+      </tr>
     </thead>
     <!-- <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">

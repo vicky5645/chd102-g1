@@ -20,7 +20,7 @@
         <div class="topBar">
           <h2>所有商品</h2>
           <div class="searchBar">
-            <input type="search" placeholder="輸入關鍵字查詢" v-model="searchText">
+            <input type="search" placeholder="輸入關鍵字查詢" v-model="searchText" v-on:keyup.enter="updateDisplay">
             <button @click="updateDisplay"><i class="fa-solid fa-magnifying-glass"></i>search</button>
           </div>
         </div>
