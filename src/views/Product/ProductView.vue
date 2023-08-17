@@ -87,7 +87,7 @@ export default {
       isShow: true,
       searchText: '',
       // MySQL原始商品資料(僅在進入畫面時去取一次資料)
-      dataFromMySQL: [777],
+      dataFromMySQL: [],
       // 替換新key值的商品資料
       productData: [],
       // 呈現的商品資料(針對productData來搜尋篩選)
@@ -119,10 +119,7 @@ export default {
     //   this.productData = res;
     //   this.updateDisplay();
     // })
-
     this.getData();
-    // console.log('執行created',this.dataFromMySQL);
-    // console.log('執行created',typeof this.dataFromMySQL);
   },
   mounted() {
     // 監聽視窗大小改變事件
@@ -147,7 +144,6 @@ export default {
       this.empty = false;
       if (this.categoryItem[index].type === '所有商品') {
         this.productDisplay = this.productData;
-        console.log(typeof this.productDisplay)
         return this.productDisplay;
       } else if (this.categoryItem[index].type === '熱銷商品') {
         this.productDisplay = this.productData.filter(item => item.hot).concat(this.productData.filter(item => !item.hot));
@@ -205,14 +201,14 @@ export default {
       this.productData = [];
       this.dataFromMySQL.forEach((item) => {
       const newData = {
-        id: item.prod_no,
+        id: parseInt(item.prod_no),
         title: item.prod_name,
         type: item.prod_type,
-        price: item.prod_price,
+        price: parseInt(item.prod_price),
         description: item.prod_summary,
-        status: item.prod_status,
+        status: parseInt(item.prod_status),
         image: `images/online-mall/${item.prod_file}`,
-        hot: item.prod_hot,
+        hot: parseInt(item.prod_hot),
         isFavorite: false,
         amount: 1,
         totalPrice: 0,

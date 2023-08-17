@@ -289,7 +289,7 @@ export default {
   watch: {
     "$route.params.id"(id) {
       // this.productDataItem = this.productData[`${parseFloat(id)-1}`];
-      this.productDataItem = this.productData.find(item => item.id === parseInt(this.$route.params.id));
+      this.productDataItem = this.productData.find(item => parseInt(item.id) === parseInt(this.$route.params.id));
       // this.bigPic = this.productDataItem.image;
     },
   },
@@ -387,14 +387,14 @@ export default {
       this.productData = [];
       this.dataFromMySQL.forEach((item) => {
       const newData = {
-        id: item.prod_no,
+        id: parseInt(item.prod_no),
         title: item.prod_name,
         type: item.prod_type,
-        price: item.prod_price,
+        price: parseInt(item.prod_price),
         description: item.prod_summary,
-        status: item.prod_status,
+        status: parseInt(item.prod_status),
         image: `images/online-mall/${item.prod_file}`,
-        hot: item.prod_hot,
+        hot: parseInt(item.prod_hot),
         isFavorite: false,
         amount: 1,
         totalPrice: 0,

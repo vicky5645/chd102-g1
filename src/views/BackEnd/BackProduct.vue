@@ -419,6 +419,7 @@ export default {
     return {
       //後台抓取的商品資料
       dataFromMySQL: [],
+      productData: [],
       // search
       searchText: "",
       // modal
@@ -456,16 +457,17 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.dataFromMySQL;
+        console.log(this.productData)
+        return this.productData;
       }
 
-      return this.dataFromMySQL.filter((item) =>
+      return this.productData.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
     //新增商品時的新ID
     getNewProductId() {
-      this.newProduct.prod_no = parseInt(this.dataFromMySQL[this.dataFromMySQL.length - 1].prod_no) + 1;
+      this.newProduct.prod_no = parseInt(this.productData[this.productData.length - 1].prod_no) + 1;
     },
     newPage() {
       return Math.ceil(this.filteredItems.length / 10);
@@ -508,7 +510,7 @@ export default {
     async saveChanges() {
       this.$store.state.Loading = true
       try {
-        const index = this.dataFromMySQL.findIndex((item) => item.prod_no === this.currentItem.prod_no);
+        const index = this.productData.findIndex((item) => item.prod_no === this.currentItem.prod_no);
         if (index !== -1) {
           const formData = new FormData();
           Object.keys(this.currentItem).forEach((key) => {
@@ -516,7 +518,7 @@ export default {
           })
           if (this.$refs.change_img.files[0]) {
             formData.set('image', this.$refs.change_img.files[0]);
-            formData.set('old_file', this.dataFromMySQL[index].prod_file)
+            formData.set('old_file', this.productData[index].prod_file)
           }
           const res = await axios.post(`${BASE_URL}updateBackendProduct.php`, formData,
             {
@@ -643,14 +645,14 @@ export default {
     async deleteProduct() {
       this.$store.state.Loading = true
       try {
-        const index = this.dataFromMySQL.findIndex((item) => item.prod_no === this.currentItem.prod_no);
+        const index = this.productData.findIndex((item) => item.prod_no === this.currentItem.prod_no);
         if (index !== -1) {
           const res = await axios({
             method: 'post',
             url: `${BASE_URL}deleteBackendProduct.php`,
             data: {
                prod_no: this.currentItem.prod_no,
-               old_file: this.dataFromMySQL[index].prod_file
+               old_file: this.productData[index].prod_file
               },
           });
           alert(`${res.data.msg}`)
@@ -679,6 +681,14 @@ export default {
       .get(`${BASE_URL}getProduct.php?type=${type}`)
       .then((response) => {
         this.dataFromMySQL = response.data;
+        this.productData = this.dataFromMySQL.map((item) =>{
+          item.prod_no =parseInt(item.prod_no),
+          item.prod_price = parseInt(item.prod_price),
+          item.prod_status = parseInt(item.prod_status),
+          item.prod_hot = parseInt(item.prod_hot);
+          return item;
+      })
+      console.log(this.productData);
       })
       .catch((error) => {
         console.error("There was an error fetching the data:", error);
@@ -686,6 +696,14 @@ export default {
       setTimeout(() => {
         this.$store.commit('closeLoading')
       }, 300)
+      // this.productData = this.dataFromMySQL.map((item) =>{
+      //     item.prod_no =parseInt(item.prod_no),
+      //     item.prod_price = parseInt(item.prod_price),
+      //     item.prod_status = parseInt(item.prod_status),
+      //     item.prod_hot = parseInt(item.prod_hot);
+      //     return item;
+      // })
+      // console.log(this.dataFromMySQL)
     },
     testBug() {
       console.log(formData)
