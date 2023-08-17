@@ -861,8 +861,9 @@
 
                         .left_title_text {
 
-                            font-size: 108px;
+                            // font-size: 108px;
                             text-align: center;
+                            padding-top: 16px; font-size: 48px; writing-mode: vertical-lr; letter-spacing: 16px;
                         }
                     }
 

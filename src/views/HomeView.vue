@@ -172,7 +172,7 @@
                     <img src="@\assets\images\img\index_pic\index_leaves.png">
                   </div>
                   <router-link to="/Attractions">
-                    <div>
+                    <div class="btn big secondary2 radius">
                       更多介紹 >
                     </div>
                   </router-link>

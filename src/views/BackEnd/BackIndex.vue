@@ -288,9 +288,7 @@
 
 <script>
 // @ is an alias to /src
-// bootstrap
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap";
+// import "bootstrap";
 
 export default {
   components: {},
@@ -301,6 +299,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "bootstrap/dist/css/bootstrap.min.css";
 .logo_title {
   display: flex;
   align-items: center;
