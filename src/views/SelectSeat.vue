@@ -244,14 +244,19 @@ export default {
     // },
 
     confirm() {
-      if (this.validate()) {
+      if (this.$store.isLogin) {
         // 選擇有效，繼續購票流程
-        // this.$router.replace(this.toNextPage());
-        this.$store.commit("getTotalBooking", this.price);
-        this.$router.push({ name: "paymentForBooking" });
+        // this.$router.replace(this.toNextPage());   
+        if (this.validate()) {
+          this.$store.commit("getTotalBooking", this.price);
+          this.$router.push({ name: "paymentForBooking" });
+        } else {
+          window.alert("尚未選擇車廂或人數與選擇的座位數不符合，請重新確認");
+        }
+        
       } else {
-        // 選擇無效，顯示錯誤消息
-        alert("尚未選擇車廂或人數與選擇的座位數不符合，請重新確認");
+        window.alert("請先登入會員！");
+        this.$router.push('/login');
       }
     },
     //----------------------
