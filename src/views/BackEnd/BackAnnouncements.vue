@@ -181,7 +181,7 @@
 </template>
 
 <script>
-import LoadingAni from '@/components/Loading.vue';
+// import LoadingAni from '@/components/Loading.vue';
 import { BASE_URL } from "@/assets/js/common.js";
 import { Modal } from "bootstrap";
 import axios from 'axios';

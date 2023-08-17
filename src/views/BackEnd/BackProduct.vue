@@ -40,7 +40,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in newFilteredItems" :key="index">
+      <tr v-for="(item, index) in newFilteredItems" :key="item.prod_no">
         <th scope="row">{{ item.prod_no }}</th>
         <td class="ellipsis" :title="item.prod_name">{{ item.prod_name }}</td>
         <td class="ellipsis" :title="item.prod_name">{{ item.prod_type }}</td>
@@ -409,8 +409,12 @@
 import axios from "axios";
 import { Modal } from "bootstrap";
 import { BASE_URL } from "@/assets/js/common.js";
+import LoadingAni from '@/components/Loading.vue';
 
 export default {
+  components: {
+    LoadingAni
+  },
   data() {
     return {
       //後台抓取的商品資料
@@ -502,6 +506,7 @@ export default {
 
     //儲存變更
     async saveChanges() {
+      this.$store.state.Loading = true
       try {
         const index = this.dataFromMySQL.findIndex((item) => item.prod_no === this.currentItem.prod_no);
         if (index !== -1) {
@@ -630,6 +635,7 @@ export default {
 
     // 刪除商品
     async deleteProduct() {
+      this.$store.state.Loading = true
       try {
         const index = this.dataFromMySQL.findIndex((item) => item.prod_no === this.currentItem.prod_no);
         if (index !== -1) {
@@ -661,6 +667,7 @@ export default {
 
       //抓資料
     getData() {
+      this.$store.state.Loading = true
       const type = "get"; // 設定要執行的操作，這裡是取得資料
     axios
       .get(`${BASE_URL}getProduct.php?type=${type}`)
@@ -670,6 +677,9 @@ export default {
       .catch((error) => {
         console.error("There was an error fetching the data:", error);
       });
+      setTimeout(() => {
+        this.$store.commit('closeLoading')
+      }, 300)
     },
     testBug() {
       console.log(formData)
