@@ -228,7 +228,7 @@
               </p>
             </div>
             <div class="ItineraryMix">
-              <img src="@/assets/images/about/IB2_2.png" alt="" />
+              <img src="@/assets/images/about/ac02.png" alt="" />
               <div class="txtBox">
                 <p>
                   忘卻之湖也提供各種戶外活動，滿足探險家的渴望。您可以划船遊湖，感受湖水的柔軟觸感，並欣賞湖畔的風光。在湖邊野餐、垂釣，與家人朋友共度美好時光。對於愛好攝影的您，這裡更是一個絕佳的拍攝地點，捕捉湖泊在不同時間和光線下的獨特美景。
@@ -295,7 +295,7 @@
               </p>
             </div>
             <div class="pic">
-              <img src="@/assets/images/about/IB2_5.png" alt="" />
+              <img src="@/assets/images/about/ac04.png" alt="" />
             </div>
           </div>
           <div class="ItineraryDetail6">
@@ -368,7 +368,7 @@
               </p>
             </div>
             <div class="ItineraryMix">
-              <img src="@/assets/images/about/IB2_5.png" alt="" />
+              <img src="@/assets/images/about/ac04.png" alt="" />
               <div class="txtBox">
                 <p>
                   銀狐溫泉也提供多種不同風格的湯池，每一個湯池都有獨特的特色，如露天湯、木造湯屋和岩石湯等，讓您盡情享受不同的溫泉體驗。無論是在寒冷的冬季還是溫暖的夏季，銀狐溫泉都能帶給您恢復活力的感覺。
@@ -407,7 +407,7 @@
               </p>
             </div>
             <div class="pic">
-              <img src="@/assets/images/about/IB2_2.png" alt="" />
+              <img src="@/assets/images/about/ac02.png" alt="" />
             </div>
           </div>
           <div class="buyTickets">
