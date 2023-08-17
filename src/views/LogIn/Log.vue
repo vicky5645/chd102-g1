@@ -306,8 +306,8 @@ export default {
             // window.alert("請前往註冊");
             this.errorMsg = "請前往註冊";
           } else {
-            window.alert(`error::${error}`);
-            this.errorMsg = `${error}帳號或密碼輸入錯誤${errorCode}`;
+            // window.alert(`error::${error}`);
+            this.errorMsg = `帳號或密碼輸入錯誤${errorCode}`;
           }
         });
     },

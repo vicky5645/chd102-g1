@@ -19,18 +19,18 @@ $caption : 13px;
 
 .text {
   /* body/text-18-regular */
-  font-size: $body;
-  font-weight: 400;
+  font-size: $body!important;
+  font-weight: 400!important;
   line-height: 34px; /* 188.889% */
   letter-spacing: -0.18px;
   align-self: stretch;
   &.bold {
     /* body/text-18-md */
-    font-weight: 500;
+    font-weight: 500!important;
   }
   &_14 {
     /* button/text-14-regular */
-    font-size: $sm-font;
+    font-size: $sm-font!important;
     line-height: 20px; /* 142.857% */
   }
 }
