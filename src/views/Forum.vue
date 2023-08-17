@@ -513,7 +513,8 @@ export default {
           } = element;
           image = `images/img/Forum/${image.split("/").pop()}`;
           // 判斷只會顯示上架文章
-          if (platform_online === 0) {
+          if (platform_online == 0) {
+            console.log(`517行${posts.value}`)
             posts.value.push({
               id,
               title,
