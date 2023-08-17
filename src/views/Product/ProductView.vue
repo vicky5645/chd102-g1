@@ -42,7 +42,7 @@
               <button class="cardCart" @click="addToCart(index)">
                 <i :class="goodsBtn.cart.i"></i>
               </button>
-              <div class="hot-tag" v-if="item.hot">
+              <div class="hot-tag" v-show="item.hot">
                 <span>HOT</span>
               </div>
               <router-link :to="`/productDetail/${item.id}`">

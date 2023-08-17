@@ -22,7 +22,7 @@
       "title": "火車懷錶",
       "price": 1200,
       "isFavorite": true,
-      "image": "images/img/ProductDetails/p1.png",
+      "image": "images/online-mall/p1.png",
       "description": [
         "超時尚的火車主題懷錶，精緻設計，可隨身攜帶，是時尚愛好者的最佳時尚配件。"
       ]
@@ -108,7 +108,7 @@
       "title": "火車懷錶",
       "price": 1200,
       "isFavorite": true,
-      "image": "images/img/ProductDetails/p1.png"
+      "image": "images/online-mall/p1.png"
     },
     {
       "id": 2,

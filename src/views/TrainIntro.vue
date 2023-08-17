@@ -80,7 +80,7 @@
           </div>
           <div class="imgS2">
             <img
-              src="../assets/images/about/bqgcmcisdwruhffazpof.webp"
+              src="../assets/images/about/IB2_3.webp"
               alt=""
             />
           </div>
