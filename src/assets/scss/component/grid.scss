@@ -57,3 +57,18 @@ main {
     margin-bottom: 10px;
 }
 
+.gg_row{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    margin-left: calc(var(--gs-gap) * -1) !important;
+    margin-right: calc(var(--gs-gap) * -1) !important;
+}
+[class*='gg_col-'],
+.gg_col{
+    box-sizing: border-box; 
+    padding-left: var(--gs-gap); 
+    padding-right: var(--gs-gap);
+    margin-bottom: 10px;
+}

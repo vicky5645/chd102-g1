@@ -147,7 +147,7 @@
       }"
       class="productSwiper"
     >
-        <swiper-slide v-for="(item, index) in productData" :key="index">
+        <swiper-slide v-for="(item, index) in productData" :key="item.id">
           <!-- <Images :imgURL="`${item.image}`" :alt="`${item.title}`" /> -->
           <router-link :to="`/productDetail/${item.id}`">
           <div class="recommendedCard">

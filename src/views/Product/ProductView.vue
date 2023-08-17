@@ -10,7 +10,7 @@
         </button>
         <transition name="accordion" mode="out-in">
           <ul class="categoryItem" v-show="isShow">
-            <li v-for="(item, key) in [...categoryItem]" @click="updateTab(key)">
+            <li v-for="(item, key) in [...categoryItem]" :key="item.type" @click="updateTab(key)">
               {{ item.type }}<i class="fa-solid fa-chevron-right"></i>
             </li>
           </ul>
@@ -24,10 +24,10 @@
             <button @click="updateDisplay"><i class="fa-solid fa-magnifying-glass"></i>search</button>
           </div>
         </div>
-        <!-- <div v-if="productData.length > 0 && tabActive == 1" class="productList row row-cols-lg-3 row-cols-2"> -->
-        <div class="productList row row-cols-lg-3 row-cols-2">
+        <!-- <div v-if="productData.length > 0 && tabActive == 1" class="productList row gg_row-cols-lg-3 gg_row-cols-2"> -->
+        <div class="productList gg_row gg_row-cols-lg-3 gg_row-cols-2">
           <div class="empty" v-show="empty">目前未上架相關商品或已售完</div>
-          <div v-for="item, index in productDisplay" :key="item.id" class="col">
+          <div v-for="item, index in productDisplay" :key="item.id" class="gg_col">
             <div class="card">
               <div class="icon-container" :class="{ showing: addSuccess && index === currentIndex }">
                 <svg class="icon" viewBox="0 0 100 100" width="80" height="80">
