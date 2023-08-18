@@ -26,45 +26,22 @@
         <th scope="col">收件人電話</th>
         <th scope="col">收件地址</th>
         <th scope="col">付款方式</th>
-        <th scope="col"></th>
-      </tr>
-      <tr>
-        <th scope="col" style="font-weight: 400;">202402231</th>
-        <th scope="col" style="font-weight: 400;">2024-02-11</th>
-        <th scope="col" style="font-weight: 400;">1</th>
-        <th scope="col" style="font-weight: 400;">3600</th>
-        <th scope="col" style="font-weight: 400;">配送中</th>
-        <th scope="col" style="font-weight: 400;">小明</th>
-        <th scope="col" style="font-weight: 400;"></th>
-        <th scope="col" style="font-weight: 400;"></th>
-        <th scope="col" style="font-weight: 400;">貨到付款</th>
-        <th scope="col" style="font-weight: 400;"></th>
-      </tr>
-      <tr>
-        <th scope="col" style="font-weight: 400;">202402351</th>
-        <th scope="col" style="font-weight: 400;">2024-02-13</th>
-        <th scope="col" style="font-weight: 400;">2</th>
-        <th scope="col" style="font-weight: 400;">3600</th>
-        <th scope="col" style="font-weight: 400;">配送中</th>
-        <th scope="col" style="font-weight: 400;">麥大明</th>
-        <th scope="col" style="font-weight: 400;">0912345678</th>
-        <th scope="col" style="font-weight: 400;">320桃園市中壢區復興路46號9樓</th>
-        <th scope="col" style="font-weight: 400;">宅配</th>
-        <th scope="col" style="font-weight: 400;"></th>
-      </tr>
-            <tr>
-        <th scope="col" style="font-weight: 400;">202402683</th>
-        <th scope="col" style="font-weight: 400;">2024-02-13</th>
-        <th scope="col" style="font-weight: 400;">3</th>
-        <th scope="col" style="font-weight: 400;">3600</th>
-        <th scope="col" style="font-weight: 400;">準備中</th>
-        <th scope="col" style="font-weight: 400;">老王</th>
-        <th scope="col" style="font-weight: 400;">0912345678</th>
-        <th scope="col" style="font-weight: 400;">320台北市信義區忠孝東路999號9樓</th>
-        <th scope="col" style="font-weight: 400;">宅配</th>
-        <th scope="col" style="font-weight: 400;"></th>
       </tr>
     </thead>
+    <tbody>
+      <tr v-for="(item, index) in filteredItems" :key="item.order_no">
+        <th scope="col">{{ item.order_no }}</th>
+        <th scope="col">{{ item.order_date }}</th>
+        <th scope="col">{{ item.mem_no }}</th>
+        <th scope="col">{{ item.order_total }}</th>
+        <th scope="col">{{ OrderStatus(item) }}</th>
+        <th scope="col">{{ item.recipient }}</th>
+        <th scope="col">{{ item.recipient_tele }}</th>
+        <th scope="col">{{ item.recipient_address }}</th>
+        <th scope="col">{{ OrderPayType(item) }}</th>
+      </tr>
+      
+    </tbody>
     <!-- <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">
         <th scope="row">{{ item.id }}</th>
@@ -87,21 +64,38 @@
       * 沒有找到符合搜尋條件的結果
     </p>
   </table>
+  <!-- footer page-->
+  <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" v-for="index in newPage" :key="index">
+      <button class="page-link" @click="page = index"> {{ index }} </button>
+    </li>
+  </ul>
+</nav>
 </template>
 
 <script>
+import axios from "axios";
+import { BASE_URL } from "@/assets/js/common.js";
 import { Modal } from "bootstrap";
 
 export default {
   data() {
     return {
-      items: [
-        {
-          // id: 1,
-          // name: "綠野號",
-          // qty: 40,
-        },
-      ],
+      dataFromMySQL: [],
+      productOrderData: [],
+      page: 1,
+      newOrder: {
+        order_no: "", //商品訂單編號 PK
+        order_date: "", //商品訂購日期
+        mem_no: "", //會員編號 FK
+        order_total: "", //商品訂單金額
+        order_status: "", //訂單出貨狀態
+        recipient: "", //收件人
+        recipient_tele: "", //收件人電話
+        recipient_address: "", //收件地址
+        pay: "" //付款方式
+      },
       // search
       searchText: "",
       // model
@@ -109,26 +103,32 @@ export default {
       backupItem: {},
       showModal: false,
       selectedFile: null,
-      // new model
-      newAnnouncement: {
-        id: "", // 確保 id 屬性存在
-        name: "",
-        qty: "",
-      },
     };
   },
 
   computed: {
-    // search
+    //search
     filteredItems() {
       if (this.searchText === "") {
-        return this.items;
+        return this.productOrderData;
       }
 
-      return this.items.filter((item) =>
+      return this.productOrderData.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
+    newPage() {
+      return Math.ceil(this.filteredItems.length / 10);
+    },
+    newFilteredItems() {
+      const begin = (this.page - 1) * 10
+      const end = this.page * 10
+      return this.filteredItems.slice(begin, end);
+    },
+  },
+
+  created () {
+    this.getData();
   },
 
   methods: {
@@ -139,7 +139,37 @@ export default {
       this.currentItem = { ...this.backupItem };
       this.showModal = false;
     },
-
+    OrderPayType(item) {
+      return item.pay === 0 ? '信用卡' : '貨到付款';
+    },
+    OrderStatus(item) {
+      return item.order_status === 0 ? '準備中' : '配送中';
+    },
+    //抓資料
+      getData() {
+      this.$store.state.Loading = true
+      axios
+      .get(`${BASE_URL}getProductOrder.php`)
+      .then((response) => {
+        this.dataFromMySQL = response.data;
+        this.productOrderData = this.dataFromMySQL.map((item) =>{
+          item.order_no =parseInt(item.order_no),
+          item.mem_no = parseInt(item.mem_no),
+          item.order_total = parseInt(item.order_total),
+          item.order_status = parseInt(item.order_status);
+          item.pay = parseInt(item.pay);
+          return item;
+      })
+      console.log('success')
+      console.log(this.productOrderData);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data:", error);
+      });
+      setTimeout(() => {
+        this.$store.commit('closeLoading')
+      }, 300)
+    },
     cancelChanges() {
       this.currentItem = { ...this.backupItem };
       this.showModal = false;
@@ -219,6 +249,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+thead{
+    th {
+    font-weight: 700;
+  }
+}
+tbody{
+    th {
+    font-weight: 400;
+  }
+}
+
 .search_new {
   display: flex;
   gap: 12px;

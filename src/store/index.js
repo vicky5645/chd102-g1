@@ -28,7 +28,7 @@ export default createStore({
     isLogin: false,
     cart: [],
     totalPrice: 0,
-
+    recipient: null,
     //總票價
     totalBooking: 0,
     //景點
@@ -55,6 +55,9 @@ export default createStore({
     },
   },
   mutations: {
+    setRecipient(state, recipient) {
+      state.recipient = recipient;
+    },
     setAnnouncementData(state, payload) {
       state.AnnouncementData = [...payload];
     },
