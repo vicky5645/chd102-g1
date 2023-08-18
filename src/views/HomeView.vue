@@ -293,9 +293,9 @@ export default {
         {
           number: 1,
           attraction_inside_class: 'first_attraction_inside',
-          title: '楓夢仙境',
+          title: '景觀公園',
           title_bg_color: '#f29c50',
-          main_text: `楓夢仙境是一個寬廣的大公園,<br>
+          main_text: `景觀公園是一個寬廣的大公園,<br>
                   以其迷人的紅棕色楓葉和可愛的小孩雕像而聞名。<br>
                   這個公園為遊客提供了一個和大自然親密接觸的機會,<br>
                   讓人們沉浸在美麗的秋天景色中。`},
@@ -309,9 +309,9 @@ export default {
         {
           number: 3,
           attraction_inside_class: 'third_attraction_inside',
-          title: '幽秘湖泊',
+          title: '忘卻之湖',
           title_bg_color: '#7aacbf',
-          main_text: `深藏於青山綠谷之中,幽秘湖泊猶如一個神秘的秘境。湖面平靜如鏡,周圍群山環繞,湖水清澈見底。在湖邊散步,您將被自然的寧靜與美麗所包圍。湖泊四季變幻的景色,都令人陶醉其中。`
+          main_text: `深藏於青山綠谷之中,忘卻之湖猶如一個神秘的秘境。湖面平靜如鏡,周圍群山環繞,湖水清澈見底。在湖邊散步,您將被自然的寧靜與美麗所包圍。湖泊四季變幻的景色,都令人陶醉其中。`
         }],
       attraction_card_pic_data: [require('@/assets/images/img/index_pic/index_maple_tree_card.png'), require('@/assets/images/img/index_pic/index_ pasture_card.png'), require('@/assets/images/img/index_pic/index_lake_card.png')],
 
