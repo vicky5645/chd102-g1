@@ -2,16 +2,16 @@
   <!-- {{ products }} -->
   <!-- {{ userOrders.products }} -->
   <!-- {{ userInfo.mem_no }} -->
-  <br>
-  <br>
+  <!-- <br>
+  <br> -->
   <!-- {{ proOrderData }} -->
   <!-- 
   <Images
                   :imgURL="`images/online-mall/${item.prod_file}`"
                   :alt="`${item.prod_name}`"
                 /> -->
-  <br />
-  <br />
+  <!-- <br />
+  <br /> -->
   <!-- {{ productData }} -->
   <div class="settings">
     <h1 class="h4">訂單管理</h1>
@@ -109,7 +109,7 @@
                           <span>{{ item.order_date }}</span>
                         </div>
                       </template>
-                      <h3 class="h3">{{ item.title }}</h3>
+                      <h3 class="h3">{{ item.prod_name }}</h3>
                     </div>
                     <div class="des-right">
                       <div class="price h2">$ {{ item.price }}</div>
