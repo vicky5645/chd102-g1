@@ -193,6 +193,8 @@
   </main>
 </template>
 <script>
+import { BASE_URL } from "@/assets/js/common.js";
+import axios from 'axios';
 export default {
     data() {
     return {
@@ -273,6 +275,37 @@ export default {
       }, 300);
       vm.isInputFocused = false;
     },
+    // newDate() {
+    //   const currentDate = new Date();
+    //   const year = currentDate.getFullYear();
+    //   const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // 月份從 0 開始，需要加 1
+    //   const day = currentDate.getDate().toString().padStart(2, '0');
+    //   const formattedDate = `${year}-${month}-${day}`;
+    //   return formattedDate;
+    // },
+    async postOrder() {
+        this.$store.state.Loading = true;
+        try {
+          const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}postProductOrder.php`,
+            data: this.$store.state.recipient
+          });
+          if (res.data.msg === "訂單成功送出") {
+            this.$store.commit('clearCart');
+          } else {
+            alert("發生錯誤請稍後再嘗試");
+            return;
+          }
+        //   alert(`${res.data.msg}`);
+        } catch (error) {
+            console.error("An error occurred:", error);
+            // alert("發生錯誤請稍後再嘗試");
+        }
+        setTimeout(() => {
+        this.$store.commit('closeLoading'),this.$router.push('/orderConfirmed')
+      }, 300)
+        },
     submitOrder() {
       if (
         this.cardNumber == "" ||
@@ -283,8 +316,7 @@ export default {
       ) {
         window.alert('請確實填寫所有欄位');
       } else {
-        this.$store.commit('clearCart');
-        this.$router.push('/orderconfirmed');
+        this.postOrder();
       }
     }
   }
