@@ -204,11 +204,15 @@
               alt="Image preview"
             /> -->
             <!-- NOTE 上線換這個 -->
-            <img
+            <!-- <img
               v-if="currentItem.article_image"
               :src="'/chd102/g1/' + currentItem.article_image"
               alt="Image preview"
-            />
+            /> -->
+            <Images
+                :imgURL="getProcessedImgURL(currentItem.article_image)"
+                :alt="`${currentItem.article_title}`"
+              />
           </div>
         </div>
 
