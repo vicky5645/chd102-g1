@@ -430,13 +430,14 @@ export default {
       //傳送資料庫的資料
       // 修改圖檔時，接收變數
       let imgFile = this.newAnnouncement.spot_file;
+      const newModel = this.newAnnouncement;
 
-      const data = new URLSearchParams(); //這不需要?
+      const data = new FormData(); // POST 表單資料
       data.append("spot_no", this.currentItem.spot_no);
       data.append("spot_name", this.currentItem.spot_name);
       data.append("spot_info", this.currentItem.spot_info);
       data.append("spot_status", this.currentItem.spot_status);
-      
+
       data.append("news_filename", newModel.pattern_file_name);
 
       if (imgFile) {
@@ -446,14 +447,16 @@ export default {
         data.append("news_img", imgFile);
         console.log("news_img", imgFile);
       }
+
       // 使用 Axios 發送 POST 請求
       axios
         .post(`${BASE_URL}editSpot.php`, data)
         .then((response) => {
           // 請求成功後的處理
-          // console.log(response.data);
-          location.reload(); //刷新頁面
-          alert("修改成功！");
+          console.log(response.data);
+          // 重新取得資料
+          alert("已修改圖案成功！");
+          this.getdataFromMySQL();
         })
         .catch((error) => {
           // 請求失敗後的處理
@@ -499,6 +502,7 @@ export default {
           console.error(error);
           alert("新增失敗！");
         });
+      this.getdataFromMySQL();
 
       this.clearAnnouncement();
 
@@ -547,19 +551,21 @@ export default {
         });
     },
 
-    getdataFromMySQL() {},
+    //取資料
+    async getdataFromMySQL() {
+      // 設定要執行的操作，這裡是取得資料
+      axios
+        .get(`${BASE_URL}/getSpot.php`)
+        .then((response) => {
+          this.dataFromMySQL = response.data;
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data:", error);
+        });
+    },
   },
-  // 抓 php 資料
-  mounted() {
-    // 設定要執行的操作，這裡是取得資料
-    axios
-      .get(`${BASE_URL}/getSpot.php`)
-      .then((response) => {
-        this.dataFromMySQL = response.data;
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the data:", error);
-      });
+  created() {
+    this.getdataFromMySQL();
   },
 };
 </script>
