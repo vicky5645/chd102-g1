@@ -507,7 +507,7 @@ section.package-list {
         <Icon
           :type="item.heartType"
           class="heart"
-          @click="toggleHeart(index)"
+          @click="toggleHeart(item, $event)"
         />
 
         <div class="sale" v-show="item.sale == true">
@@ -530,7 +530,9 @@ export default {
       currentIndex: -1,
 
       ascending: true,
+
       colorToggle: true,
+
       arrowTypePrice: "fa-solid fa-caret-up",
       arrowTypeTime: "fa-solid fa-caret-up",
       arrowTypeRemain: "fa-solid fa-caret-up",
@@ -646,11 +648,10 @@ export default {
     },
     // ---------------------------
     //愛心切換
-    toggleHeart(index) {
-      this.packageList[index].heartType =
-        this.packageList[index].heartType === "md-heart-outline"
-          ? "md-heart"
-          : "md-heart-outline";
+    toggleHeart(item, event) {
+      item.heartType =
+        item.heartType === "md-heart-outline" ? "md-heart" : "md-heart-outline";
+      console.log(item.heartType);
     },
     //升降冪切換arrow
     toggleArrowPrice() {
