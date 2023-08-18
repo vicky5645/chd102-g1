@@ -12,7 +12,8 @@ header("Content-Type:application/json;charset=utf-8");
                 `pkg_name` = :pkg_name,
                 `pkg_desc` = :pkg_desc,
                 `train_no` = :train_no,
-                `conductor` = :conductor
+                `conductor` = :conductor,
+                `cover_file` = :cover_file
                 WHERE `pkg_no` = :pkg_no;";
     
     
@@ -25,6 +26,7 @@ header("Content-Type:application/json;charset=utf-8");
         $pkg->bindValue(":pkg_desc", $_POST["pkg_desc"]);
         $pkg->bindValue(":train_no", $_POST["train_no"]);
         $pkg->bindValue(":conductor", $_POST["conductor"]);
+        $pkg->bindValue(":cover_file", $_POST["cover_file"]);
         $pkg->execute();
     
         $msg = "已修改資料";

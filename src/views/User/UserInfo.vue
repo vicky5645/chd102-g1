@@ -3,8 +3,6 @@
     <h1 class="h4">帳號設定</h1>
     <hr />
     <div class="user-control-content">
-      <!-- {{ userInfo }}
-      {{ $store.state.userInfo }} -->
       <div class="input-wrap">
         <label for="name" class="caption">姓名</label>
         <input

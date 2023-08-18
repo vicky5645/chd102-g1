@@ -1,6 +1,5 @@
 <template>
   <section class="custom-tickets title">
-    {{ dataFromMySQL }}
     <div class="container">
       <h2 class="h2">{{ $route.meta.title }}</h2>
     </div>

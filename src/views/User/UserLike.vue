@@ -25,8 +25,9 @@
     </transition>
     <hr />
     <div class="user-control-content">
-      <div class="card-out" >
+      <div class="card-out">
         <template v-if="checkedItem == '商品'">
+          <p v-if="products.length == 0">沒有商品收藏喔~</p>
           <div class="card" v-for="item in products">
             <router-link :to="`/productDetail/${item.prod_no}`">
               <div class="cradPic">
@@ -71,6 +72,7 @@
           </div>
         </template>
         <template v-else-if="checkedItem == '行程'">
+          <p v-if="packages.length == 0">沒有行程收藏喔~</p>
           <div class="card" v-for="item in packages">
             <router-link :to="`/booking-info/${item.pkg_no}`">
               <div class="cradPic">
@@ -128,7 +130,7 @@
             </div>
           </div>
         </template>
-        <template v-else> 目前沒有心儀的商品~ </template>
+        <p v-if="PackageTrace == false">目前沒有心儀的商品~</p>
       </div>
     </div>
   </div>
@@ -203,12 +205,17 @@ export default {
       userInfo: "",
       PackageTrace: [],
       userPackage: [],
+
       ProdTrace: [],
+
       userProdTrace: [],
       ProductData: [],
       products: [],
+
+      userPkgTrace: [],
       packageData: [],
       packages: [],
+
       favoriteOrders: {
         ["products"]: [],
         ["packages"]: [],
@@ -287,7 +294,7 @@ export default {
           this.PackageTrace = response.data;
 
           // 出現指定會員的行程收藏資料
-          this.userProdTrace = response.data.filter((element) => {
+          this.userPkgTrace = response.data.filter((element) => {
             return element.mem_no === this.userInfo.mem_no;
           });
 
@@ -306,6 +313,10 @@ export default {
           this.ProdTrace = response.data;
 
           // 出現指定會員的商品收藏資料
+          this.userProdTrace = response.data.filter((element) => {
+            return element.mem_no === this.userInfo.mem_no;
+          });
+
           this.favoriteOrders["packages"] = response.data.filter((element) => {
             return element.mem_no === this.userInfo.mem_no;
           });
@@ -325,21 +336,12 @@ export default {
         .get(`${BASE_URL}getProduct.php?type=${type}`)
         .then((response) => {
           this.productData = response.data;
-          // 出現指定會員的商品收藏資料
-          // this.Products = response.data.filter((element) => {
-          //   return element.prod_no === this.ProdTrace.prod_no;
-          // });
-          // this.Products = this.ProductData.filter((product) => {
-          //   return this.ProdTrace.some(
-          //     (trace) => trace.prod_no === product.prod_no
-          //   );
-          // });
-          this.products = this.ProdTrace.map((trace) => {
+          // 抓取會員對應的商品收藏資料
+          this.products = this.userProdTrace.map((trace) => {
             const matchedProduct = this.productData.find(
               (product) => product.prod_no === trace.prod_no
             );
-            this.favoriteOrders["products"] = this.products
-            // this.favoriteOrders["products"]["type"] = "商品";
+            this.favoriteOrders["products"] = this.products;
             return matchedProduct;
           });
         })
@@ -352,13 +354,12 @@ export default {
         .get(`${BASE_URL}/getPackage.php`)
         .then((response) => {
           this.packageData = response.data;
-
-          this.packages = this.PackageTrace.map((trace) => {
+          // 抓取會員對應的行程收藏資料
+          this.packages = this.userPkgTrace.map((trace) => {
             const matchedProduct = this.packageData.find(
               (pgk) => pgk.pkg_no === trace.pkg_no
             );
-            this.favoriteOrders["packages"] = this.packages
-            // this.favoriteOrders["packages"]["type"] = "行程";
+            this.favoriteOrders["packages"] = this.packages;
             return matchedProduct;
           });
         })

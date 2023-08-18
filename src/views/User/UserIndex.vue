@@ -7,7 +7,7 @@
             <Images :imgURL="`${userInfo.pattern_file}`" :alt="`avatar`" />
           </template>
           <template v-else>
-            <Images :imgURL="`images/logo/logoBlack.png`" :alt="`avatar`" />
+            <Images :imgURL="`images/img/Forum/avatar.svg`" :alt="`avatar`" />
           </template>
         </div>
         <div v-if="userInfo !== null">
@@ -182,6 +182,7 @@ export default {
         // location.reload(); //刷新頁面
 
         alert("修改成功！");
+        location.reload();
       } catch (error) {
         // 請求失敗後的處理
         console.error(error);

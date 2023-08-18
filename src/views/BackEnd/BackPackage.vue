@@ -33,6 +33,7 @@
         <!-- <th scope="col">班次編號</th> -->
         <th scope="col">列車編號</th>
         <th scope="col">車長</th>
+        <th scope="col">行程封面</th>
         <!-- <th scope="col">備註</th> -->
         <th scope="col"></th>
       </tr>
@@ -47,6 +48,7 @@
         <td class="ellipsis">{{ item.pkg_desc }}</td>
         <td class="ellipsis">{{ item.train_no }}</td>
         <td class="ellipsis">{{ item.conductor }}</td>
+        <td class="ellipsis">{{ item.cover_file }}</td>
         <td style="text-align: right">
           <button
             type="button"
@@ -172,6 +174,19 @@
             <input
               v-model="currentItem.conductor"
               name="conductor"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >行程封面</span
+            >
+            <input
+              v-model="currentItem.cover_file"
+              name="cover_file"
               type="text"
               class="form-control"
               aria-label="Sizing example input"
@@ -313,6 +328,19 @@
                   aria-describedby="inputGroup-sizing-lg"
                 />
               </div>
+              <div class="input-group input-group-lg">
+                <span class="input-group-text" id="inputGroup-sizing-lg"
+                  >行程封面(路徑)</span
+                >
+                <input
+                  v-model="newAnnouncement.cover_file"
+                  name="cover_file"
+                  type="text"
+                  class="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-lg"
+                />
+              </div>
 
               <!-- <div class="input-group input-group-lg">
                 <span class="input-group-text" id="inputGroup-sizing-lg"
@@ -339,7 +367,11 @@
             >
               取消
             </button>
-            <button class="btn btn-primary" @click="submitAnnouncement()">
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="submitAnnouncement()"
+            >
               確定新增
             </button>
           </slot>
@@ -374,6 +406,7 @@ export default {
         pkg_desc: "",
         train_no: "",
         conductor: "",
+        cover_file: "",
       },
     };
   },
@@ -453,6 +486,7 @@ export default {
       data.append("pkg_desc", this.currentItem.pkg_desc);
       data.append("train_no", this.currentItem.train_no);
       data.append("conductor", this.currentItem.conductor);
+      data.append("cover_file", this.currentItem.cover_file);
 
       axios
         .post(`${BASE_URL}editPackage.php`, data)
@@ -476,7 +510,8 @@ export default {
         !this.newAnnouncement.pkg_name ||
         !this.newAnnouncement.pkg_desc ||
         !this.newAnnouncement.train_no ||
-        !this.newAnnouncement.conductor
+        !this.newAnnouncement.conductor ||
+        !this.newAnnouncement.cover_file
       ) {
         alert("所有欄位都必須填寫！");
         return;
@@ -490,6 +525,7 @@ export default {
       data.append("pkg_desc", this.newAnnouncement.pkg_desc);
       data.append("train_no", this.newAnnouncement.train_no);
       data.append("conductor", this.newAnnouncement.conductor);
+      data.append("cover_file", this.newAnnouncement.cover_file);
       // 使用 Axios 發送 POST 請求
       axios
         .post(`${BASE_URL}postPackage.php`, data)
