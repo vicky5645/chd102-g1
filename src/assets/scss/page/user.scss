@@ -179,6 +179,7 @@
         }
         // 訂單與收藏卡片樣式
         & .cradPic{
+          width: 100%;
           height: 100%;
           overflow: hidden;
           border-radius: $space;
@@ -320,6 +321,9 @@
             .des-title {
               @include text-18-md;
               margin-bottom: $space;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
             @include pad {
               display: flex;
