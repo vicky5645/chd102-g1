@@ -36,6 +36,15 @@
           v-model="userInfo.mem_mobile"
         />
       </div>
+       <div class="input-wrap long">
+        <label for="addr" class="caption">地址</label>
+        <input
+          type="text"
+          id="addr"
+          v-if="userInfo"
+          v-model="userInfo.mem_addr"
+        />
+      </div>
       <div class="input-wrap long">
         <label for="email" class="caption" required>聯絡 E-mail(必填)</label>
         <input
@@ -170,6 +179,7 @@ export default {
       data.append("mem_salutation", item.mem_salutation);
       data.append("mem_email", item.mem_email);
       data.append("mem_mobile", item.mem_mobile);
+      data.append("mem_addr", item.mem_addr);
       // 使用 Axios 發送 POST 請求
       await axios
         .post(`${BASE_URL}editMember.php`, data)

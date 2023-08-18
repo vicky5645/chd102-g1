@@ -54,10 +54,10 @@ $caption : 13px;
 }
 .h4 {
   /* table/text-16-regular */
-  font-size: $h4; /* $h4 : 20px; */
-  font-weight: 400;
-  line-height: 24px; /* 150% */
-  letter-spacing: -0.16px;
+  font-size: $h4!important; /* $h4 : 20px; */
+  font-weight: 400!important;
+  line-height: 24px!important; /* 150% */
+  letter-spacing: -0.16px!important;
 }
 .label {
   /* label/text-16-light */

@@ -9,7 +9,8 @@ header("Content-Type:application/json;charset=utf-8");
                 SET `mem_name` = :mem_name, 
                         `mem_salutation` = :mem_salutation,
                         `mem_email` = :mem_email,
-                        `mem_mobile` = :mem_mobile                
+                        `mem_mobile` = :mem_mobile,
+                        `mem_addr` = :mem_addr                
                         WHERE `mem_no` = :mem_no;";
     
     
@@ -19,6 +20,7 @@ header("Content-Type:application/json;charset=utf-8");
         $pkg->bindValue(":mem_salutation", $_POST["mem_salutation"]);
         $pkg->bindValue(":mem_email", $_POST["mem_email"]);
         $pkg->bindValue(":mem_mobile", $_POST["mem_mobile"]);
+        $pkg->bindValue(":mem_addr", $_POST["mem_addr"]);
         $pkg->bindParam(":mem_no", $_POST["mem_no"]);
         $pkg->execute();
     
