@@ -25,9 +25,9 @@
     </transition>
     <hr />
     <div class="user-control-content">
-      <div class="card-out" v-for="(item, index) in Products" :key="item.prod_no">
+      <div class="card-out" >
         <template v-if="checkedItem == '商品'">
-          <div class="card">
+          <div class="card" v-for="item in products">
             <router-link :to="`/productDetail/${item.prod_no}`">
               <div class="cradPic">
                 <Images
@@ -71,10 +71,13 @@
           </div>
         </template>
         <template v-else-if="checkedItem == '行程'">
-          <div class="card" v-for="(item, index) in packages" :key="item.pkg_no">
+          <div class="card" v-for="item in packages">
             <router-link :to="`/booking-info/${item.pkg_no}`">
               <div class="cradPic">
-                <Images :imgURL="`${item.image}`" :alt="`${item.pkg_name}`" />
+                <Images
+                  :imgURL="`${item.cover_file}`"
+                  :alt="`${item.pkg_name}`"
+                />
               </div>
             </router-link>
             <div class="content">
@@ -125,6 +128,7 @@
             </div>
           </div>
         </template>
+        <template v-else> 目前沒有心儀的商品~ </template>
       </div>
     </div>
   </div>
@@ -202,17 +206,21 @@ export default {
       ProdTrace: [],
       userProdTrace: [],
       ProductData: [],
-      Products: [],
+      products: [],
       packageData: [],
       packages: [],
+      favoriteOrders: {
+        ["products"]: [],
+        ["packages"]: [],
+      },
     };
   },
   created() {
     // 取得API
-    GET("/data/userData.json").then((res) => {
-      this.userData = res;
-      this.updateDisplay();
-    });
+    // GET("/data/userData.json").then((res) => {
+    //   this.userData = res;
+    // });
+    this.updateDisplay();
     this.userInfo = this.$store.state.userInfo;
     this.getPackageTrace();
     this.getProdTrace();
@@ -229,29 +237,23 @@ export default {
   methods: {
     updateDisplay() {
       this.empty = false;
-      if (this.searchText === "") {
-        this.productDisplay = this.userData.favorite_products;
-      } else {
-        this.productDisplay = this.userData.filter((item) =>
-          item.title.includes(this.searchText)
-        );
-        this.isEmpty();
-      }
+      this.productDisplay = this.favoriteOrders.products;
+      this.isEmpty();
     },
     updateTab(index) {
       this.empty = false;
       if (this.categoryItem[index].type === "商品") {
-        this.productDisplay = this.userData.favorite_products;
+        this.productDisplay = this.favoriteOrders.products;
         // console.log(typeof this.productDisplay)
         return this.productDisplay;
       } else if (this.categoryItem[index].type === "行程") {
-        this.productDisplay = this.userData.favorite_orders;
-        // this.productDisplay = this.userData.filter(item => item.hot === true)
+        this.productDisplay = this.favoriteOrders.packages;
         return this.productDisplay;
       }
-      this.productDisplay = this.userData.filter(
-        (item) => item.type === this.categoryItem[index].type
-      );
+      this.productDisplay = this.favoriteOrders.products;
+      // this.productDisplay = this.favoriteOrders.filter(
+      //   (item) => item.type === this.categoryItem[index].type
+      // );
       this.isEmpty();
     },
     isEmpty() {
@@ -285,7 +287,7 @@ export default {
           this.PackageTrace = response.data;
 
           // 出現指定會員的行程收藏資料
-          this.userPackage = response.data.filter((element) => {
+          this.userProdTrace = response.data.filter((element) => {
             return element.mem_no === this.userInfo.mem_no;
           });
 
@@ -304,7 +306,7 @@ export default {
           this.ProdTrace = response.data;
 
           // 出現指定會員的商品收藏資料
-          this.userProdTrace = response.data.filter((element) => {
+          this.favoriteOrders["packages"] = response.data.filter((element) => {
             return element.mem_no === this.userInfo.mem_no;
           });
 
@@ -322,7 +324,7 @@ export default {
       axios
         .get(`${BASE_URL}getProduct.php?type=${type}`)
         .then((response) => {
-          this.ProductData = response.data;
+          this.productData = response.data;
           // 出現指定會員的商品收藏資料
           // this.Products = response.data.filter((element) => {
           //   return element.prod_no === this.ProdTrace.prod_no;
@@ -332,10 +334,12 @@ export default {
           //     (trace) => trace.prod_no === product.prod_no
           //   );
           // });
-          this.Products = this.ProdTrace.map((trace) => {
-            const matchedProduct = this.ProductData.find(
+          this.products = this.ProdTrace.map((trace) => {
+            const matchedProduct = this.productData.find(
               (product) => product.prod_no === trace.prod_no
             );
+            this.favoriteOrders["products"] = this.products
+            // this.favoriteOrders["products"]["type"] = "商品";
             return matchedProduct;
           });
         })
@@ -353,6 +357,8 @@ export default {
             const matchedProduct = this.packageData.find(
               (pgk) => pgk.pkg_no === trace.pkg_no
             );
+            this.favoriteOrders["packages"] = this.packages
+            // this.favoriteOrders["packages"]["type"] = "行程";
             return matchedProduct;
           });
         })

@@ -38,8 +38,12 @@
     </thead>
     <tbody>
       <tr v-for="(pkg, pkg_index) in PackageData" :key="index">
-        <th scope="row">{{ pkg_index }}-{{ pkg }}</th>
-        <th scope="row" colspan="3">
+        <td scope="row">
+          <div>
+            {{ pkg_index }}-{{ pkg }}
+          </div>
+        </td>
+        <td scope="row" colspan="3">
           <div
             v-for="filteredItem in changeArray(parseInt(pkg_index))"
             class="form-control"
@@ -51,7 +55,7 @@
               `${SpotData[filteredItem.spot_no]} 第${filteredItem.pkg_howday}天`
             }}
           </div>
-        </th>
+        </td>
         <td style="text-align: right">
           <button
             type="button"

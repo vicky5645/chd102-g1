@@ -104,34 +104,34 @@
   ],
   "favorite_products": [
     {
-      "id": 1,
-      "title": "火車懷錶",
-      "price": 1200,
+      "prod_no": 1,
+      "prod_name": "火車懷錶",
+      "prod_price": 1200,
       "isFavorite": true,
-      "image": "images/online-mall/p1.png"
+      "prod_file": "p1.png"
     },
     {
-      "id": 2,
-      "title": "火車叉叉",
-      "price": 22.3,
+      "prod_no": 2,
+      "prod_name": "火車叉叉",
+      "prod_price": 22.3,
       "isFavorite": true,
-      "image": "images/online-mall/fork.png"
+      "prod_file": "fork.png"
     },
     {
-      "id": 3,
-      "title": "車車模型",
-      "price": 180,
+      "prod_no": 3,
+      "prod_name": "車車模型",
+      "prod_price": 180,
       "isFavorite": true,
-      "image": "images/online-mall/Train_model.png"
+      "prod_file": "Train_model.png"
     }
   ],
   "favorite_orders": [
     {
-      "id": 1,
+      "pkg_no": 1,
       "order_date": "2023-06-15",
-      "price": 36888,
+      "pkg_price": 36888,
       "order_status": 1,
-      "title": "探尋島嶼之美，搭乘耀眼的七星豪華列車",
+      "pkg_name": "探尋島嶼之美，搭乘耀眼的七星豪華列車",
       "title2": "—————「SEVEN STARS ROAMING」",
       "image": "images/spot/07.jpg",
       "seat": 20,
@@ -139,11 +139,11 @@
       "train": "星光漫遊列車"
     },
     {
-      "id": 2,
+      "pkg_no": 2,
       "order_date": "2025-04-18",
-      "price": 41888,
+      "pkg_price": 41888,
       "order_status": 1,
-      "title": "探尋島嶼之美，搭乘尊爵的ROYAL豪華列車",
+      "pkg_name": "探尋島嶼之美，搭乘尊爵的ROYAL豪華列車",
       "title2": "——————————「ROYAL EXPRESS」",
       "image": "images/spot/09.jpg",
       "seat": 20,

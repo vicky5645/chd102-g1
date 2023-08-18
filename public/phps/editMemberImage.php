@@ -21,6 +21,9 @@ $type=isset($_POST["type"])?$_POST["type"]:'';
 
 			//處理新的圖檔-------------------------------
 			$dir = "../images/member/"; //指定所要上傳的路徑
+			if (file_exists($dir) === false) {
+				mkdir($dir); //make directory
+			}
 			//---產生主檔名
 			$fileName = uniqid();
 			//---取出副檔名 --這裡用接資料的方式處理

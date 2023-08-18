@@ -40,7 +40,7 @@
 
     <tbody>
       <tr v-for="(item, index) in filteredItems" :key="index">
-        <th scope="row">{{ item.pkg_no }}</th>
+        <td scope="row">{{ item.pkg_no }}</td>
         <td class="ellipsis">{{ item.pkg_price }}</td>
         <td class="ellipsis">{{ pkgStatus(item.pkg_status) }}</td>
         <td class="ellipsis">{{ item.pkg_name }}</td>
