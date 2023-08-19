@@ -16,7 +16,10 @@
         <div v-else>Guest</div>
       </div>
       <div class="link-list">
-        <router-link to="/user/" :class="{ active: $route.name === 'userinfo' }">
+        <router-link
+          to="/user/"
+          :class="{ active: $route.name === 'userinfo' }"
+        >
           <li>
             <div class="icon-24">
               <i class="fa-solid fa-gear"></i>
@@ -24,7 +27,10 @@
             <span class="label">帳號設定</span>
           </li>
         </router-link>
-        <router-link to="/user/order" :class="{ active: $route.name === 'userorder' }">
+        <router-link
+          to="/user/order"
+          :class="{ active: $route.name === 'userorder' }"
+        >
           <li>
             <div class="icon-24">
               <i class="fa-solid fa-list-ul"></i>
@@ -32,7 +38,10 @@
             <span class="label">訂單管理</span>
           </li>
         </router-link>
-        <router-link to="/user/forum" :class="{ active: $route.name === 'userforum' }">
+        <router-link
+          to="/user/forum"
+          :class="{ active: $route.name === 'userforum' }"
+        >
           <li>
             <div class="icon-24">
               <i class="fa-regular fa-comments"></i>
@@ -40,7 +49,10 @@
             <span class="label">論壇訊息</span>
           </li>
         </router-link>
-        <router-link to="/user/like" :class="{ active: $route.name === 'userlike' }">
+        <router-link
+          to="/user/like"
+          :class="{ active: $route.name === 'userlike' }"
+        >
           <li>
             <div class="icon-24">
               <i class="fa-solid fa-heart"></i>
@@ -59,15 +71,33 @@
     <div class="modal-content row">
       <div class="preview">
         <p>圖片預覽</p>
-        <Images v-if="this.userInfo.pattern_file && !this.newImage.member_file" :imgURL="`${this.userInfo.pattern_file}`"
-          alt="" />
-        <img v-if="this.newImage.member_file" :src="`${this.newImage.member_file}`" :alt="`Image preview`"
-          :id="`imgPreview`" />
+        <Images
+          v-if="this.userInfo.pattern_file && !this.newImage.member_file"
+          :imgURL="`${this.userInfo.pattern_file}`"
+          alt=""
+        />
+        <img
+          v-if="this.newImage.member_file && !encodedSVG"
+          :src="`${this.newImage.member_file}`"
+          :alt="`Image preview`"
+          :id="`imgPreview`"
+        />
+        <img
+          v-if="encodedSVG"
+          :src="`${encodedSVG}`"
+          :alt="`Image preview`"
+          :id="`imgPreview`"
+        />
       </div>
       <!-- 選圖片上傳-->
       <div class="upload-file">
         <p>新增/變更圖片</p>
-        <input type="file" name="memImage" accept="image/*" @change="fileUpload" />
+        <input
+          type="file"
+          name="memImage"
+          accept="image/*"
+          @change="fileUpload"
+        />
 
         <!-- 取消/儲存 -->
         <div class="wrap">
@@ -107,6 +137,7 @@ export default {
       //   mem_pwd: "password1",
       //   pattern_file: "https://picsum.photos/100/100/?random=22",
       // },
+      encodedSVG: null,
     };
   },
 
@@ -115,6 +146,7 @@ export default {
       this.newImage["member_file"] = null;
 
       this.isModalVisible = !this.isModalVisible;
+      this.encodedSVG = null;
     },
 
     fileUpload(event) {
@@ -133,8 +165,15 @@ export default {
       const reader = new FileReader();
 
       reader.onload = (e) => {
-        this.newImage.member_file = e.target.result;
         this.newImage.member_file_name = file.name;
+        if (file.name.toLowerCase().endsWith(".svg")) {
+          const encodedSVG = e.target.result.split(",")[1];
+          this.newImage.member_file = encodedSVG;
+          this.encodedSVG = e.target.result;
+
+        } else {
+          this.newImage.member_file = e.target.result;
+        }
       };
       reader.readAsDataURL(file);
     },
@@ -201,8 +240,11 @@ export default {
       try {
         const response = await axios.post(`${BASE_URL}getMember.php`);
         this.userInfo = response.data.find((element) => {
-          return parseInt(element.mem_no) === parseInt(this.$store.state.userInfo.mem_no)
-        })
+          return (
+            parseInt(element.mem_no) ===
+            parseInt(this.$store.state.userInfo.mem_no)
+          );
+        });
         // 確認是否成功
         console.log("Data retrieved from MySQL:", "dataFromMySQL");
       } catch (error) {
