@@ -23,7 +23,7 @@
       <tr v-for="(item, index) in filteredItems" :key="item.productOrderNumber">
         <td scope="row">{{ item.order_no }}</td>
         <td class="ellipsis">{{ item.prod_name }}</td>
-        <td class="ellipsis">{{ item.price }}</td>
+        <td class="ellipsis">{{ item.price * item.quantity}}</td>
         <td class="ellipsis">{{ item.quantity }}</td>
         <td class="ellipsis">{{ item.order_date }}</td>
         <!-- <td style="text-align: right">

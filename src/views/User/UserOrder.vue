@@ -100,7 +100,7 @@
                       <h3 class="h3">{{ item.prod_name }}</h3>
                     </div>
                     <div class="des-right">
-                      <div class="price h2">$ {{ item.price }}</div>
+                      <div class="price h2">$ {{ item.price * item.quantity }}</div>
                     </div>
                   </div>
                 </div>

@@ -26,6 +26,7 @@
         <p v-if="orderDetail.recipient">收件人：{{ orderDetail.recipient }}</p>
         <p v-if="orderDetail.recipient_address">收件地址：{{ orderDetail.recipient_address }}</p>
         <p v-if="orderDetail.pay">付款方式：{{ OrderPayType(orderDetail.pay) }}</p>
+        <p v-if="orderDetail.quantity">購買數量 : {{ orderDetail.quantity }}</p>
         <!-- 關閉按鈕 -->
         <!-- <button @click="closeModal">關閉</button> -->
         <div class="icon-24 error" @click="closeModal">
