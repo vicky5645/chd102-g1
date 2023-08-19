@@ -400,7 +400,6 @@ export default {
       this.currentItem = {};
       this.showModal = false;
       this.clearAnnouncement();
-      this.encodedSVG = null;
     },
     openModal(item) {
       this.currentItem = item;
@@ -487,7 +486,7 @@ export default {
           console.error(error);
           alert("修改失敗！");
         });
-      // this.clearAnnouncement();
+      this.clearAnnouncement();
     },
     // new modal
     submitAnnouncement() {
@@ -545,6 +544,7 @@ export default {
         pattern_file: null,
         pattern_file_name: null,
       };
+      this.encodedSVG = null;
     },
 
     // 刪除

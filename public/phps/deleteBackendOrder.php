@@ -7,6 +7,14 @@
     $datas = json_decode($json, true); 
     try {
         require_once("connect_chd102g1.php");
+
+        // 先刪除相關的訂單項目
+        $ItemsSql = "DELETE FROM order_item WHERE order_no = :order_no";
+        $OrderItems = $pdo->prepare($ItemsSql);
+        $OrderItems->bindValue(":order_no", $datas["order_no"]);
+        $OrderItems->execute();
+
+
         $sql ="DELETE FROM product_order WHERE order_no = :order_no";
         $products = $pdo->prepare( $sql ); 
         $products->bindValue(":order_no", $datas["order_no"]);

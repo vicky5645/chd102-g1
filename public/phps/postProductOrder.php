@@ -26,6 +26,29 @@ require_once("connect_chd102g1.php");
         $order->bindValue(":recipient_address", $datas["recipient_address"]);
         $order->bindValue(":pay", $datas["pay"]);
         $order->execute();
+
+
+        // 訂單項目處理，取得剛插入的訂單號ID
+        $orderNo = $pdo->lastInsertId();
+
+        $orderItems = $datas['orderItems'];
+        foreach ($orderItems as $item) {
+            $prod_no = (int) $item['prod_no'];
+            $price = (float) $item['price'];
+            $quantity = (int) $item['quantity'];
+
+            $orderItemSql = "INSERT INTO order_item (`order_no`, `prod_no`, `price`, `quantity`) 
+                        VALUES (:order_no, :prod_no, :price, :quantity)";
+            $orderItemStmt = $pdo->prepare($orderItemSql);
+            // :order_no 使用上面訂單號ID
+            $orderItemStmt->bindValue(':order_no', $orderNo, PDO::PARAM_INT); 
+            $orderItemStmt->bindValue(":prod_no", $prod_no);
+            $orderItemStmt->bindValue(":price", $price);
+            $orderItemStmt->bindValue(":quantity", $quantity);
+            $orderItemStmt->execute();
+        }
+
+
         $msg = "訂單成功送出";
         $result = [
             "msg" => $msg,

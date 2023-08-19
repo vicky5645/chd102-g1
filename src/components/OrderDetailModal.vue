@@ -23,8 +23,18 @@
         <p>訂單日期：{{ orderDetail.order_date }}</p>
         <!-- 其他訂單詳細內容... -->
         <p v-for="item in orderDetail.description">{{ item }}</p>
+        <p v-if="orderDetail.recipient">收件人：{{ orderDetail.recipient }}</p>
+        <p v-if="orderDetail.recipient_address">收件地址：{{ orderDetail.recipient_address }}</p>
+        <p v-if="orderDetail.pay">付款方式：{{ OrderPayType(orderDetail.pay) }}</p>
         <!-- 關閉按鈕 -->
         <!-- <button @click="closeModal">關閉</button> -->
+        <div class="icon-24 error" @click="closeModal">
+        <img
+          class="custom-svg"
+          src="@/assets/images/icon/menu/close_big.svg"
+          alt="close_big-icon"
+        />
+      </div>
       </div>
     </div>
   </div>
@@ -47,12 +57,20 @@ export default {
     closeModal() {
       this.$emit("close-modal");
     },
+    OrderPayType(item) {
+      return item.pay === 0 ? '信用卡' : '取貨付款';
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 /* 定義彈出視窗 */
+.icon-24.error{
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
 .modal {
   // background-color: #fff;
   position: fixed;

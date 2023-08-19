@@ -83,6 +83,7 @@ export default {
                 recipient_tele:"",
                 recipient_address:"",
                 pay:"1",
+                orderItems: [] // 存訂單項目
             },
             paymentMethod:"1",
         }
@@ -91,7 +92,7 @@ export default {
         CheckOutList
     },
     computed: {
-    ...mapGetters(['totalPrice']),
+    ...mapGetters(['totalPrice','cartList']),
     },
     created() {
         // 取得API
@@ -103,6 +104,7 @@ export default {
     },
     created() {
         this.$store.commit("calculateSum");
+        this.addCartItemsToOrder();
     },
     methods: {
         toggleCheckList() {
@@ -157,6 +159,17 @@ export default {
             this.recipient.order_total = parseInt(this.$store.state.totalPrice);
             this.recipient.pay = parseInt(this.paymentMethod);
             this.$store.commit('setRecipient',this.recipient);
+        },
+        // 取得對應的訂單項目
+        addCartItemsToOrder() {
+            const orderItems = this.cartList.map(item => {
+                return {
+                    prod_no: item.id,
+                    price: item.price,
+                    quantity: item.amount
+                };
+            });
+            this.recipient.orderItems = orderItems;
         },
         goPayment() {
             // alert("即將跳轉信用卡付款頁面！");
