@@ -26,19 +26,30 @@
         <th scope="col">收件人電話</th>
         <th scope="col">收件地址</th>
         <th scope="col">付款方式</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="(item, index) in filteredItems" :key="item.order_no">
         <th scope="col">{{ item.order_no }}</th>
-        <th scope="col">{{ item.order_date }}</th>
-        <th scope="col">{{ item.mem_no }}</th>
-        <th scope="col">{{ item.order_total }}</th>
-        <th scope="col">{{ OrderStatus(item) }}</th>
-        <th scope="col">{{ item.recipient }}</th>
-        <th scope="col">{{ item.recipient_tele }}</th>
-        <th scope="col">{{ item.recipient_address }}</th>
-        <th scope="col">{{ OrderPayType(item) }}</th>
+        <td scope="col">{{ item.order_date }}</td>
+        <td scope="col">{{ item.mem_no }}</td>
+        <td scope="col">{{ item.order_total }}</td>
+        <td scope="col">{{ OrderStatus(item) }}</td>
+        <td scope="col">{{ item.recipient }}</td>
+        <td scope="col">{{ item.recipient_tele }}</td>
+        <td scope="col">{{ item.recipient_address }}</td>
+        <td scope="col">{{ OrderPayType(item) }}</td>
+        <td style="text-align: right">
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            style="margin-left: auto"
+            @click="openModal(item)"
+          >
+            查看
+          </button>
+        </td>
       </tr>
       
     </tbody>
@@ -72,6 +83,176 @@
     </li>
   </ul>
 </nav>
+
+<!-- edit modal -->
+<div
+    v-show="showModal"
+    class="modal fade"
+    id="itemModal"
+    tabindex="-1"
+    aria-labelledby="itemModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" style="max-width: 80%">
+      <div class="modal-content" style="margin: auto">
+        <div class="modal-header">
+          <h5 class="modal-title" id="itemModalLabel">訂單詳細資訊</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            @click="cancelChanges"
+          ></button>
+        </div>
+
+        <!-- modal body -->
+        <div
+          style="display: flex; flex-direction: column"
+          class="modal-body gap-2"
+        >
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >商品編號</span
+            >
+            <input
+              disabled
+              v-model="currentItem.order_no"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >商品訂購日期</span
+            >
+            <input
+              disabled
+              v-model="currentItem.order_date"
+              name="order_order_date"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >會員編號
+            </span>
+            <input
+                  disabled
+                  v-model="currentItem.mem_no"
+                  name="order_mem_no"
+                  type="text"
+                  class="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-lg"
+                />
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >商品訂單金額</span
+            >
+            <input
+            disabled
+              v-model="currentItem.order_total"
+              name="order_order_total"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >訂單出貨狀態</span
+            >
+            <select class="form-select" v-model="currentItem.order_status">
+              <option value="0">準備中</option>
+              <option value="1">配送中</option>
+            </select>
+          </div>
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >收件人</span
+            >
+                <input
+                  v-model="currentItem.recipient"
+                  name="order_recipient"
+                  type="text"
+                  class="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-lg"
+                />
+          </div>
+
+          <div class="input-group input-group-lg">
+                <span class="input-group-text" id="inputGroup-sizing-lg"
+                  >收件人電話</span
+                >
+                <input
+                  v-model="currentItem.recipient_tele"
+                  name="order_recipient_tele"
+                  type="number"
+                  class="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-lg"
+                />
+              </div>
+
+          <div class="input-group input-group-lg">
+            <span class="input-group-text" id="inputGroup-sizing-lg"
+              >收件地址</span
+            >
+            <input
+              v-model="currentItem.recipient_address"
+              name="order_recipient_address"
+              type="text"
+              class="form-control"
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg"
+            />
+          </div>
+          <div class="input-group input-group-lg">
+                <span class="input-group-text" id="inputGroup-sizing-lg"
+                  >付款方式</span
+                >
+                <input
+                  disabled
+                  v-model="currentItemPayType"
+                  type="text"
+                  class="form-control"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-lg"
+                />
+              </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+            @click="deleteOrder"
+          >
+            刪除訂單
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            @click="saveChanges"
+          >
+            儲存變更
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -85,7 +266,10 @@ export default {
       dataFromMySQL: [],
       productOrderData: [],
       page: 1,
-      newOrder: {
+      // search
+      searchText: "",
+      // model
+      currentItem: {
         order_no: "", //商品訂單編號 PK
         order_date: "", //商品訂購日期
         mem_no: "", //會員編號 FK
@@ -94,12 +278,8 @@ export default {
         recipient: "", //收件人
         recipient_tele: "", //收件人電話
         recipient_address: "", //收件地址
-        pay: "" //付款方式
+        pay: "" //付款方式 0:信用卡 1:取貨付款
       },
-      // search
-      searchText: "",
-      // model
-      currentItem: {},
       backupItem: {},
       showModal: false,
       selectedFile: null,
@@ -125,6 +305,12 @@ export default {
       const end = this.page * 10
       return this.filteredItems.slice(begin, end);
     },
+    currentItemPayType() {
+      return this.currentItem.pay === 0 ? '信用卡' : '取貨付款';
+    },
+    currentItemStatus() {
+      return this.currentItem.order_status === 0 ? '準備中' : '配送中';
+    },
   },
 
   created () {
@@ -140,7 +326,7 @@ export default {
       this.showModal = false;
     },
     OrderPayType(item) {
-      return item.pay === 0 ? '信用卡' : '貨到付款';
+      return item.pay === 0 ? '信用卡' : '取貨付款';
     },
     OrderStatus(item) {
       return item.order_status === 0 ? '準備中' : '配送中';
@@ -153,7 +339,8 @@ export default {
       .then((response) => {
         this.dataFromMySQL = response.data;
         this.productOrderData = this.dataFromMySQL.map((item) =>{
-          item.order_no =parseInt(item.order_no),
+          item.order_no = parseInt(item.order_no),
+          item.order_date = item.order_date.split(" ")[0];
           item.mem_no = parseInt(item.mem_no),
           item.order_total = parseInt(item.order_total),
           item.order_status = parseInt(item.order_status);
@@ -171,11 +358,24 @@ export default {
       }, 300)
     },
     cancelChanges() {
-      this.currentItem = { ...this.backupItem };
       this.showModal = false;
     },
+    // openModal(item) {
+    //   this.currentItem = item;
+    //   this.showModal = true;
+
+    //   this.$nextTick(() => {
+    //     const modalElement = document.getElementById("itemModal");
+    //     const modalInstance = new Modal(modalElement);
+    //     modalInstance.show();
+
+    //     modalElement.addEventListener("hide.bs.modal", () => {
+    //       this.showModal = false;
+    //     });
+    //   });
+    // },
     openModal(item) {
-      this.currentItem = item;
+      this.currentItem = { ...item }; //一層深拷貝
       this.showModal = true;
 
       this.$nextTick(() => {
@@ -244,6 +444,56 @@ export default {
         this.showModal = false;
       }
     },
+        // 刪除訂單
+        async deleteOrder() {
+      this.$store.state.Loading = true
+      try {
+        const index = this.productOrderData.findIndex((item) => item.order_no === this.currentItem.order_no);
+        if (index !== -1) {
+          const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}deleteBackendOrder.php`,
+            data: {
+              order_no: this.currentItem.order_no,
+              },
+          });
+          alert(`${res.data.msg}`)
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+        alert("刪除失敗請重新操作")
+      }
+      this.getData();
+      this.showModal = false;
+    },
+        //儲存變更
+        async saveChanges() {
+      this.$store.state.Loading = true
+      try {
+        // const index = this.productData.findIndex((item) => item.order_no === this.currentItem.order_no);
+        // if (index !== -1) {
+          const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}updateBackendOrder.php`,
+            data: {
+              order_no: this.currentItem.order_no, //商品訂單編號 PK
+              order_status: this.currentItem.order_status, //訂單出貨狀態
+              recipient: this.currentItem.recipient, //收件人
+              recipient_tele: this.currentItem.recipient_tele, //收件人電話
+              recipient_address: this.currentItem.recipient_address, //收件地址
+            }
+          });
+          alert(`${res.data.msg}`)
+        // }
+
+      } catch (error) {
+        console.error("An error occurred:", error);
+        alert("修改失敗請重新操作")
+      }
+
+      this.getData();
+      this.showModal = false;
+    },
   },
 };
 </script>
@@ -292,4 +542,11 @@ h5 {
 .modal-footer {
   justify-content: center;
 }
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 </style>
