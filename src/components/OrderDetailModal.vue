@@ -4,10 +4,18 @@
     <div class="modal-content row">
       <!-- 顯示訂單詳情 -->
       <div class="col col-md-6">
-        <Images
-          :imgURL="`${orderDetail.image}`"
-          :alt="`${orderDetail.title}`"
-        />
+        <template v-if="orderDetail.prod_file">
+          <Images
+            :imgURL="`images/online-mall/${orderDetail.prod_file}`"
+            :alt="`${orderDetail.prod_name}`"
+          />
+        </template>
+        <template v-else>
+          <Images
+            :imgURL="`${orderDetail.image}`"
+            :alt="`${orderDetail.title}`"
+          />
+        </template>
       </div>
       <div class="col col-md-6">
         <!-- <h3>訂單詳情</h3> -->

@@ -1,6 +1,7 @@
 <!-- 後台商品訂單項目 -->
 
 <template>
+  <!-- {{ dataFromMySQL }} -->
   <!-- select bar -->
   <div class="search_new">
     <div class="input-group">
@@ -20,11 +21,11 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in filteredItems" :key="item.productOrderNumber">
-        <th scope="row">{{ item.productOrderNumber }}</th>
-        <td class="ellipsis">{{ item.productItem }}</td>
+        <td scope="row">{{ item.order_no }}</td>
+        <td class="ellipsis">{{ item.prod_name }}</td>
         <td class="ellipsis">{{ item.price }}</td>
         <td class="ellipsis">{{ item.quantity }}</td>
-        <td class="ellipsis">{{ item.date }}</td>
+        <td class="ellipsis">{{ item.order_date }}</td>
         <!-- <td style="text-align: right">
           <button
             type="button"
@@ -36,6 +37,23 @@
           </button>
         </td> -->
       </tr>
+      <!-- <tr v-for="(item, index) in filteredItems" :key="item.productOrderNumber">
+        <th scope="row">{{ item.productOrderNumber }}</th>
+        <td class="ellipsis">{{ item.productItem }}</td>
+        <td class="ellipsis">{{ item.price }}</td>
+        <td class="ellipsis">{{ item.quantity }}</td>
+        <td class="ellipsis">{{ item.date }}</td> -->
+        <!-- <td style="text-align: right">
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            style="margin-left: auto"
+            @click="openModal(item)"
+          >
+            查看
+          </button>
+        </td> -->
+      <!-- </tr> -->
     </tbody>
 
     <p v-if="filteredItems.length === 0" class="text-danger">
@@ -46,10 +64,42 @@
 
 <script>
 import { Modal } from "bootstrap";
+import axios from "axios";
+import { BASE_URL } from "@/assets/js/common.js";
 
 export default {
   data() {
     return {
+      dataFromMySQL: [],
+      // dataFromMySQL: [
+      //   {
+      //     order_date: '2024-02-11',
+      //     order_no: 202402231,
+      //     price: ,
+      //     productItem: '列車模型',
+      //     prod_no: ,
+      //     prod_price: 1000,
+      //     quantity: 3,
+      //   },
+      //   {
+      //     order_date: '2024-02-13',
+      //     order_no: 202402351,
+      //     price: ,
+      //     productItem: "火車懷錶",
+      //     prod_no: ,
+      //     prod_price: 2000,
+      //     quantity: 2,
+      //   },
+      //   {
+      //     order_date: '2024-02-13',
+      //     order_no: 202402683,
+      //     price: ,
+      //     productItem: "超讚大獎章",
+      //     prod_no: ,
+      //     prod_price: 3000,
+      //     quantity: 6,
+      //   },
+      // ],
       items: [
         {
           productOrderNumber: 202402231,
@@ -72,7 +122,6 @@ export default {
           quantity: 6,
           date: '2024-02-13'
         },
-
       ],
       // search
       searchText: "",
@@ -94,13 +143,22 @@ export default {
     // search
     filteredItems() {
       if (this.searchText === "") {
-        return this.items;
+        return this.dataFromMySQL;
       }
 
-      return this.items.filter((item) =>
+      return this.dataFromMySQL.filter((item) =>
         Object.values(item).some((val) => String(val).includes(this.searchText))
       );
     },
+    // filteredItems() {
+    //   if (this.searchText === "") {
+    //     return this.items;
+    //   }
+
+    //   return this.items.filter((item) =>
+    //     Object.values(item).some((val) => String(val).includes(this.searchText))
+    //   );
+    // },
   },
 
   methods: {
@@ -186,6 +244,23 @@ export default {
         this.showModal = false;
       }
     },
+    //取資料
+    async getdataFromMySQL() {
+      await axios
+        .get(`${BASE_URL}getOrderItem.php`)
+        .then((response) => {
+          this.dataFromMySQL = response.data;
+
+          // 確認是否成功
+          // console.log("Data retrieved from MySQL:", "dataFromMySQL");
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the data:", error);
+        });
+    },
+  },
+  created() {
+    this.getdataFromMySQL();
   },
 };
 </script>

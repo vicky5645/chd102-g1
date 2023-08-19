@@ -1,18 +1,4 @@
 <template>
-  <!-- {{ products }} -->
-  <!-- {{ userOrders.products }} -->
-  <!-- {{ userInfo.mem_no }} -->
-  <!-- <br>
-  <br> -->
-  <!-- {{ proOrderData }} -->
-  <!-- 
-  <Images
-                  :imgURL="`images/online-mall/${item.prod_file}`"
-                  :alt="`${item.prod_name}`"
-                /> -->
-  <!-- <br />
-  <br /> -->
-  <!-- {{ productData }} -->
   <div class="settings">
     <h1 class="h4">訂單管理</h1>
     <div class="top-space">
@@ -62,12 +48,12 @@
           </button>
         </div>
       </template>
-      <template v-if="listDisplay.length === 0"> 還沒有買過東西喔~ </template>
+      <template v-if="products.length === 0"> 還沒有買過東西喔~ </template>
       <template v-else>
         <template v-if="checkedItem == '商品訂單'">
           <div
             class="card-out"
-            v-for="(item, index) in listDisplay"
+            v-for="(item, index) in products"
             :key="item.order_no"
           >
             <div class="card">
@@ -82,18 +68,20 @@
                   <span>{{ item.order_date }}</span>
                 </div>
               </template>
-              <router-link :to="`/productDetail/${item.order_no}`">
+              <!-- <router-link :to="`/productDetail/${item.order_no}`"> -->
+              <div @click="showOrderDetail(item)">
                 <div class="cradPic">
                   <Images
-                  :imgURL="`images/online-mall/${item.prod_file}`"
-                  :alt="`${item.prod_name}`"
-                /> 
+                    :imgURL="`images/online-mall/${item.prod_file}`"
+                    :alt="`${item.prod_name}`"
+                  />
                   <!-- <Images
                     :imgURL="`${item.image}`"
                     :alt="`${item.prod_name}`"
                   /> -->
                 </div>
-              </router-link>
+              </div>
+              <!-- </router-link> -->
               <div class="content">
                 <div class="card-top">
                   <div class="des">
@@ -160,7 +148,7 @@
                           <span>{{ item.order_date }}</span>
                         </div>
                         <h3 class="h3 clamp-2">
-                          {{ item.title }}{{ item.title2 }}
+                          {{ item.title }}{{ item.prod_summary }}
                         </h3>
                         <div class="more">
                           <p class="bold">剩餘座位 {{ item.seat }}</p>
@@ -310,6 +298,7 @@ export default {
       // userOrders: {
       //   products: [],
       // },
+      // mergedData: [],
     };
   },
   created() {
@@ -317,10 +306,10 @@ export default {
     // 取得API
     GET("/data/userData.json").then((res) => {
       this.userData = res;
-      this.updateDisplay();
     });
     this.getMemberOrder();
     this.getData();
+    // this.updateDisplay();
   },
   mounted() {
     // 監聽視窗大小改變事件
@@ -394,7 +383,7 @@ export default {
       // data.append("mem_no", this.userInfo.mem_no);
       // data.append("type", "getOrder");
       await axios
-        .get(`${BASE_URL}getMemberOrder.php`, {
+        .get(`${BASE_URL}getOrderItem.php`, {
           params: {
             mem_no: this.userInfo.mem_no,
             type: "getOrder",
@@ -403,6 +392,42 @@ export default {
         .then((response) => {
           this.proOrderData = response.data;
 
+          // 抓取訂單編號對應的商品資料
+          // this.products = this.userProdTrace.map((trace) => {
+          //   const matchedProduct = this.proOrderData.find(
+          //     (product) => product.order_no === trace.order_no
+          //   );
+          //   this.favoriteOrders["products"] = this.products;
+          //   return matchedProduct;
+          // });
+          // 使用 reduce 方法合併相同 order_no 的項目
+          // 未成功
+          // this.mergedData = proOrderData.reduce((result, currentItem) => {
+          //   // 在結果陣列中找尋是否已經有相同 order_no 的項目
+          //   const existingItem = result.find(
+          //     (item) => item.order_no === currentItem.order_no
+          //   );
+
+          //   if (existingItem) {
+          //     // 如果已經有相同 order_no 的項目，將當前項目的相關屬性合併進去
+          //     existingItem.prod_name.push(currentItem.prod_name);
+          //     existingItem.prod_price.push(currentItem.prod_price);
+          //     existingItem.prod_file.push(currentItem.prod_file);
+          //   } else {
+          //     // 如果結果陣列中還沒有相同 order_no 的項目，創建一個新的項目
+          //     result.push({
+          //       order_no: currentItem.order_no,
+          //       order_date: currentItem.order_date,
+          //       // ... 其他屬性
+          //       prod_name: [currentItem.prod_name],
+          //       prod_price: [currentItem.prod_price],
+          //       prod_file: [currentItem.prod_file],
+          //     });
+          //   }
+          //   console.log(result);
+          //   return result;
+          // }, []);
+
           // 確認是否成功
           console.log("Data retrieved from MySQL:", "dataFromMySQL");
         })
@@ -410,7 +435,7 @@ export default {
           console.error("There was an error fetching the data:", error);
         });
     },
-    //抓資料
+    //抓資料 -- 舊方式之後要改
     getData() {
       const type = "get"; // 設定要執行的操作，這裡是取得資料
       axios

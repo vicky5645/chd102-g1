@@ -7,7 +7,7 @@ try {
   //引入連線工作的檔案
   require_once("./connect_chd102g1.php");
 
-  // if ($type == 'getOrder') {
+  if ($type == 'getOrder') {
     // 檢查會員的商品訂單 
 
     $sql = "SELECT 
@@ -22,7 +22,9 @@ try {
             po.pay,
             oi.price,
             oi.quantity,
-            p.prod_name
+            p.prod_name,
+            p.prod_price,
+            p.prod_file
         FROM product_order po
         JOIN order_item oi ON po.order_no = oi.order_no
         JOIN product p ON oi.prod_no = p.prod_no
@@ -36,11 +38,30 @@ try {
     $data = $stmt->fetchAll();
 
 
-  // } else {
-  //   // SQL 查詢
-  //   $stmt = $pdo->query("SELECT * FROM member");
-  //   $data = $stmt->fetchAll();
-  // }
+  } else {
+    // SQL 查詢
+    // $stmt = $pdo->query("SELECT * FROM member");
+    // $data = $stmt->fetchAll();
+    $sql = "SELECT 
+            oi.order_no,
+            oi.prod_no,
+            oi.price,
+            oi.quantity,
+            po.order_date,
+            p.prod_price,
+            p.prod_name
+        FROM order_item oi
+        JOIN product_order po ON oi.order_no = po.order_no
+        JOIN product p ON oi.prod_no = p.prod_no";
+        // WHERE `mem_no` = :mem_no;
+        // WHERE po.order_status = 1; -- 1 表示已出貨";
+
+
+    $stmt = $pdo->prepare($sql);
+    // $stmt->bindValue(":mem_no", $_GET["mem_no"]);
+    $stmt->execute();
+    $data = $stmt->fetchAll();
+  }
 
 } catch (PDOException $e) {
   throw new PDOException($e->getMessage(), (int) $e->getCode());
