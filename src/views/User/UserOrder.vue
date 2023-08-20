@@ -48,17 +48,26 @@
           </button>
         </div>
       </template>
+      <template v-else>
+        <div class="tab-btn-out">
+          <button
+            v-for="(item, key) in nowStatusPro"
+            :class="{ active: key === tabActivePro }"
+            class="text tab-btn-package btn"
+            @click="productTab(key)"
+          >
+            {{ item }}
+          </button>
+        </div>
+      </template>
       <template v-if="products.length === 0"> 還沒有買過東西喔~ </template>
       <template v-else>
         <template v-if="checkedItem == '商品訂單'">
-          <div
-            class="card-out"
-            v-for="(item, index) in userOrders"
-            :key="item.order_no"
-          >
-            <div class="card">
-              <!-- 手機版卡片，訂單編號顯示位置 -->
-              <!-- <template v-if="!isShow"> -->
+          <template v-for="(item, index) in userOrders" :key="item.order_no">
+            <div class="card-out" v-if="item.order_status == tabActivePro">
+              <div class="card">
+                <!-- 手機版卡片，訂單編號顯示位置 -->
+                <!-- <template v-if="!isShow"> -->
                 <div class="show-mobile bold">
                   訂單編號:
                   <span>{{ item.order_no }}</span>
@@ -67,23 +76,23 @@
                   訂購日期:
                   <span>{{ item.order_date }}</span>
                 </div>
-              <!-- </template> -->
-              <!-- <router-link :to="`/productDetail/${item.order_no}`"> -->
-              <div @click="showOrderDetail(item)">
-                <div class="cradPic">
-                  <Images
-                    :imgURL="`images/online-mall/${item.order_item[0].prod_file}`"
-                    :alt="`${item.prod_name}`"
-                  />
+                <!-- </template> -->
+                <!-- <router-link :to="`/productDetail/${item.order_no}`"> -->
+                <div @click="showOrderDetail(item)">
+                  <div class="cradPic">
+                    <Images
+                      :imgURL="`images/online-mall/${item.order_item[0].prod_file}`"
+                      :alt="`${item.prod_name}`"
+                    />
+                  </div>
                 </div>
-              </div>
-              <!-- </router-link> -->
-              <div class="content">
-                <div class="card-top">
-                  <div class="des">
-                    <div class="des-text">
-                      <!-- 桌機版卡片，訂單編號顯示位置 -->
-                      <!-- <template v-if="isShow"> -->
+                <!-- </router-link> -->
+                <div class="content">
+                  <div class="card-top">
+                    <div class="des">
+                      <div class="des-text">
+                        <!-- 桌機版卡片，訂單編號顯示位置 -->
+                        <!-- <template v-if="isShow"> -->
                         <div class="hidden-mobile bold">
                           訂單編號:
                           <span>{{ item.order_no }}</span>
@@ -92,36 +101,39 @@
                           訂購日期:
                           <span>{{ item.order_date }}</span>
                         </div>
-                      <!-- </template> -->
-                      <p v-for="oi in item.order_item">
-                        {{
-                          `${oi.prod_name} × ${oi.quantity} = ${oi.price * oi.quantity}`
-                        }}
-                      </p>
-                      <h3 class="h3">{{ item.prod_name }}</h3>
-                    </div>
-                    <div class="des-right">
-                      <div class="price h2">$ {{ item.order_total }}</div>
+                        <!-- </template> -->
+                        <p v-for="oi in item.order_item">
+                          {{
+                            `${oi.prod_name} × ${oi.quantity} = ${
+                              oi.price * oi.quantity
+                            }`
+                          }}
+                        </p>
+                        <h3 class="h3">{{ item.prod_name }}</h3>
+                      </div>
+                      <div class="des-right">
+                        <div class="price h2">$ {{ item.order_total }}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="card-bottom">
-                  <div class="btn-space">
-                    <button
-                      type="submit"
-                      class="btn other radius"
-                      @click="showOrderDetail(item)"
-                    >
-                      詳細
-                    </button>
-                    <button type="submit" class="btn primary radius">
-                      聯絡客服
-                    </button>
+                  <div class="card-bottom">
+                    <div class="btn-space">
+                      <button
+                        type="submit"
+                        class="btn other radius"
+                        @click="showOrderDetail(item)"
+                      >
+                        詳細
+                      </button>
+                      <button type="submit" class="btn primary radius">
+                        聯絡客服
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </template>
         </template>
         <template v-else>
           <template v-for="(item, index) in listDisplay">
@@ -292,6 +304,9 @@ export default {
       categoryItem: [{ type: "商品訂單" }, { type: "購票訂單" }],
       tabActive: 0,
       nowStatus: ["即將出發", "已出發", "已取消"],
+      // 商品出貨狀態
+      tabActivePro: 0,
+      nowStatusPro: ["準備中", "配送中", "已取消"],
       userInfo: {},
       proOrderData: [],
       products: [],
@@ -334,6 +349,10 @@ export default {
     // 分類按鈕
     packageTab(index) {
       this.tabActive = index;
+    },
+    // 出貨分類按鈕
+    productTab(index) {
+      this.tabActivePro = index;
     },
     updateTab(index) {
       this.empty = false;

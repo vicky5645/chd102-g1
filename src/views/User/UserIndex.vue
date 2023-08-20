@@ -260,6 +260,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.user {
+  min-height: calc(100vh - 60px - 255px);
+}
 .avatar {
   cursor: pointer;
 }
