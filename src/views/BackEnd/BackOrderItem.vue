@@ -1,7 +1,6 @@
 <!-- 後台商品訂單項目 -->
 
 <template>
-  <!-- {{ dataFromMySQL }} -->
   <!-- select bar -->
   <div class="search_new">
     <div class="input-group">
@@ -20,7 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in filteredItems" :key="item.productOrderNumber">
+      <tr v-for="(item, index) in filteredItems" :key="parseInt(item.order_no)">
         <td scope="row">{{ item.order_no }}</td>
         <td class="ellipsis">{{ item.prod_name }}</td>
         <td class="ellipsis">{{ item.price * item.quantity}}</td>
@@ -100,29 +99,29 @@ export default {
       //     quantity: 6,
       //   },
       // ],
-      items: [
-        {
-          productOrderNumber: 202402231,
-          productItem: '列車模型',
-          price: 1000,
-          quantity: 3,
-          date: '2024-02-11'
-        },
-        {
-          productOrderNumber: 202402351,
-          productItem: "火車懷錶",
-          price: 2000,
-          quantity: 2,
-          date: '2024-02-13'
-        },
-        {
-          productOrderNumber: 202402683,
-          productItem: "超讚大獎章",
-          price: 3000,
-          quantity: 6,
-          date: '2024-02-13'
-        },
-      ],
+      // items: [
+      //   {
+      //     productOrderNumber: 202402231,
+      //     productItem: '列車模型',
+      //     price: 1000,
+      //     quantity: 3,
+      //     date: '2024-02-11'
+      //   },
+      //   {
+      //     productOrderNumber: 202402351,
+      //     productItem: "火車懷錶",
+      //     price: 2000,
+      //     quantity: 2,
+      //     date: '2024-02-13'
+      //   },
+      //   {
+      //     productOrderNumber: 202402683,
+      //     productItem: "超讚大獎章",
+      //     price: 3000,
+      //     quantity: 6,
+      //     date: '2024-02-13'
+      //   },
+      // ],
       // search
       searchText: "",
       // model
@@ -235,15 +234,15 @@ export default {
     },
 
     // delete announcement
-    deleteAnnouncement() {
-      const index = this.items.findIndex(
-        (item) => item.id === this.currentItem.id
-      );
-      if (index !== -1) {
-        this.items.splice(index, 1);
-        this.showModal = false;
-      }
-    },
+    // deleteAnnouncement() {
+    //   const index = this.items.findIndex(
+    //     (item) => item.id === this.currentItem.id
+    //   );
+    //   if (index !== -1) {
+    //     this.items.splice(index, 1);
+    //     this.showModal = false;
+    //   }
+    // },
     //取資料
     async getdataFromMySQL() {
       await axios

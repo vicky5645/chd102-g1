@@ -53,32 +53,28 @@
         <template v-if="checkedItem == '商品訂單'">
           <div
             class="card-out"
-            v-for="(item, index) in products"
+            v-for="(item, index) in userOrders"
             :key="item.order_no"
           >
             <div class="card">
               <!-- 手機版卡片，訂單編號顯示位置 -->
-              <template v-if="!isShow">
-                <div class="label show-mobile">
+              <!-- <template v-if="!isShow"> -->
+                <div class="show-mobile bold">
                   訂單編號:
                   <span>{{ item.order_no }}</span>
                 </div>
-                <div class="label show-mobile">
+                <div class="show-mobile bold">
                   訂購日期:
                   <span>{{ item.order_date }}</span>
                 </div>
-              </template>
+              <!-- </template> -->
               <!-- <router-link :to="`/productDetail/${item.order_no}`"> -->
               <div @click="showOrderDetail(item)">
                 <div class="cradPic">
                   <Images
-                    :imgURL="`images/online-mall/${item.prod_file}`"
+                    :imgURL="`images/online-mall/${item.order_item[0].prod_file}`"
                     :alt="`${item.prod_name}`"
                   />
-                  <!-- <Images
-                    :imgURL="`${item.image}`"
-                    :alt="`${item.prod_name}`"
-                  /> -->
                 </div>
               </div>
               <!-- </router-link> -->
@@ -87,20 +83,25 @@
                   <div class="des">
                     <div class="des-text">
                       <!-- 桌機版卡片，訂單編號顯示位置 -->
-                      <template v-if="isShow">
-                        <div class="label hidden-mobile">
+                      <!-- <template v-if="isShow"> -->
+                        <div class="hidden-mobile bold">
                           訂單編號:
                           <span>{{ item.order_no }}</span>
                         </div>
-                        <div class="label hidden-mobile">
+                        <div class="hidden-mobile bold">
                           訂購日期:
                           <span>{{ item.order_date }}</span>
                         </div>
-                      </template>
+                      <!-- </template> -->
+                      <p v-for="oi in item.order_item">
+                        {{
+                          `${oi.prod_name} × ${oi.quantity} = ${oi.price * oi.quantity}`
+                        }}
+                      </p>
                       <h3 class="h3">{{ item.prod_name }}</h3>
                     </div>
                     <div class="des-right">
-                      <div class="price h2">$ {{ item.price * item.quantity }}</div>
+                      <div class="price h2">$ {{ item.order_total }}</div>
                     </div>
                   </div>
                 </div>
@@ -294,11 +295,7 @@ export default {
       userInfo: {},
       proOrderData: [],
       products: [],
-      productData: [],
-      // userOrders: {
-      //   products: [],
-      // },
-      // mergedData: [],
+      userOrders: {},
     };
   },
   created() {
@@ -308,7 +305,7 @@ export default {
       this.userData = res;
     });
     this.getMemberOrder();
-    this.getData();
+    // this.getData();
     // this.updateDisplay();
   },
   mounted() {
@@ -376,6 +373,51 @@ export default {
     hideDetail(itemOrder) {
       this.isVisible[itemOrder] = false;
     },
+    // 處理訂單項目
+    makeOrderItems(yourData) {
+      const userOrders = yourData.reduce((result, currentItem) => {
+        // 在結果陣列中找尋是否已經有相同 order_no 的項目
+        const existingOrder = result.find(
+          (item) => item.order_no === currentItem.order_no
+        );
+
+        if (existingOrder) {
+          // 如果已經有相同 order_no 的項目，將當前項目的產品資訊添加到 order_item 中
+          existingOrder.order_item.push({
+            price: currentItem.price,
+            quantity: currentItem.quantity,
+            prod_name: currentItem.prod_name,
+            prod_price: currentItem.prod_price,
+            prod_file: currentItem.prod_file,
+          });
+        } else {
+          // 如果結果陣列中還沒有相同 order_no 的項目，創建一個新的項目
+          result.push({
+            order_no: currentItem.order_no,
+            order_date: currentItem.order_date,
+            mem_no: currentItem.mem_no,
+            order_total: currentItem.order_total,
+            order_status: currentItem.order_status,
+            recipient: currentItem.recipient,
+            recipient_tele: currentItem.recipient_tele,
+            recipient_address: currentItem.recipient_address,
+            pay: currentItem.pay,
+            order_item: [
+              {
+                price: currentItem.price,
+                quantity: currentItem.quantity,
+                prod_name: currentItem.prod_name,
+                prod_price: currentItem.prod_price,
+                prod_file: currentItem.prod_file,
+              },
+            ],
+          });
+        }
+
+        return result;
+      }, []);
+      this.userOrders = userOrders;
+    },
     // 取資料
     async getMemberOrder() {
       //傳送資料庫要對應回傳的內容
@@ -391,6 +433,12 @@ export default {
         })
         .then((response) => {
           this.proOrderData = response.data;
+          // this.products = this.productOrder
+          this.makeOrderItems(this.proOrderData);
+
+          this.products = this.proOrderData.filter(
+            (product) => product !== null
+          );
 
           // 抓取訂單編號對應的商品資料
           // this.products = this.userProdTrace.map((trace) => {
@@ -430,53 +478,6 @@ export default {
 
           // 確認是否成功
           console.log("Data retrieved from MySQL:", "dataFromMySQL");
-        })
-        .catch((error) => {
-          console.error("There was an error fetching the data:", error);
-        });
-    },
-    //抓資料 -- 舊方式之後要改
-    getData() {
-      const type = "get"; // 設定要執行的操作，這裡是取得資料
-      axios
-        .get(`${BASE_URL}getProduct.php?type=${type}`)
-        .then((response) => {
-          this.productData = response.data;
-          // 抓取會員對應的商品收藏資料
-          this.products = this.proOrderData.map((order) => {
-            const matchedProduct = this.productData.find(
-              (product) => product.prod_name === order.prod_name
-            );
-            if (matchedProduct) {
-              const productOrder = {
-                order_no: order.order_no,
-                order_date: order.order_date,
-                mem_no: order.mem_no,
-                order_total: order.order_total,
-                order_status: order.order_status,
-                recipient: order.recipient,
-                recipient_tele: order.recipient_tele,
-                recipient_address: order.recipient_address,
-                pay: order.pay,
-                price: order.price,
-                quantity: order.quantity,
-                prod_name: order.prod_name,
-                // Add additional fields from matchedProduct if needed
-                prod_summary: matchedProduct.prod_summary,
-                prod_price: matchedProduct.prod_price,
-                prod_status: matchedProduct.prod_status,
-                prod_file: matchedProduct.prod_file,
-                prod_type: matchedProduct.prod_type,
-                prod_hot: matchedProduct.prod_hot,
-              };
-              return productOrder;
-            } else {
-              return null;
-            }
-            // this.userOrders["products"] = this.products;
-            // return matchedProduct;
-          });
-          this.products = this.products.filter((product) => product !== null);
         })
         .catch((error) => {
           console.error("There was an error fetching the data:", error);
