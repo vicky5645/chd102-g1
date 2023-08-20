@@ -165,7 +165,6 @@
         }
         & .tab-btn-out{ 
           grid-column: span 3; 
-          background-color: red;
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           > .tab-btn-package {
