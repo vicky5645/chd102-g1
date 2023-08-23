@@ -2,7 +2,11 @@ import { createStore } from "vuex";
 const updateStorage = (cart) => {
   localStorage.setItem("my-cart", JSON.stringify(cart));
 };
+<<<<<<< HEAD
 //使用者資料傳到SessionStorage
+=======
+//使用者資料傳到sessionStorage
+>>>>>>> vicky
 const updateStorageLogin = (newUser) => {
   // 只能保存字串，這裡將JavaScript 處理成 JSON
   sessionStorage.setItem("my-user", JSON.stringify(newUser));
@@ -80,10 +84,10 @@ export default createStore({
     //更新使用者資料
     updateUser(state, newUser) {
       state.userInfo = newUser;
-      //取得使用者資料的同時建立localStorage'my-user'
+      //取得使用者資料的同時建立sessionStorage'my-user'
       updateStorageLogin(state.userInfo);
     },
-    //刪除localStorage使用者資料
+    //刪除sessionStorage使用者資料
     deleteUser(state) {
       state.userInfo = null;
       sessionStorage.removeItem("my-user");
