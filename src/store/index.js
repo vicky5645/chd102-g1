@@ -2,7 +2,7 @@ import { createStore } from "vuex";
 const updateStorage = (cart) => {
   localStorage.setItem("my-cart", JSON.stringify(cart));
 };
-//使用者資料傳到localStorage
+//使用者資料傳到sessionStorage
 const updateStorageLogin = (newUser) => {
   // 只能保存字串，這裡將JavaScript 處理成 JSON
   sessionStorage.setItem("my-user", JSON.stringify(newUser));
@@ -41,7 +41,7 @@ export default createStore({
     AnnouncementData: [],
 
     //Loading
-    Loading : false
+    Loading: false,
   },
   getters: {
     cartList(state) {
@@ -80,10 +80,10 @@ export default createStore({
     //更新使用者資料
     updateUser(state, newUser) {
       state.userInfo = newUser;
-      //取得使用者資料的同時建立localStorage'my-user'
+      //取得使用者資料的同時建立sessionStorage'my-user'
       updateStorageLogin(state.userInfo);
     },
-    //刪除localStorage使用者資料
+    //刪除sessionStorage使用者資料
     deleteUser(state) {
       state.userInfo = null;
       sessionStorage.removeItem("my-user");
@@ -168,8 +168,8 @@ export default createStore({
       updateStorage(state.cart);
     },
     closeLoading(state) {
-      state.Loading = false
-    }
+      state.Loading = false;
+    },
   },
   actions: {
     async getAnnouncementData(context, value) {
